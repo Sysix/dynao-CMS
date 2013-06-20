@@ -7,15 +7,15 @@ class sql {
 	static $DB_host;
 	static $DB_user;
 	static $DB_password;
-	static $DB_datenbank;	
+	static $DB_datenbank;
 	
 	var $query;
 	var $result;
-	var $counter;
 	
+	var $counter = 0;
 	
 	// SQL Functionen
-	var $sql;
+	static $sql;
 	
 	// Verbindung zur Datenbank
 	static public function connect($host, $user, $pw, $db) {
@@ -25,9 +25,9 @@ class sql {
 		self::$DB_password = $pw;
 		self::$DB_datenbank = $db;
 		
-		$this->sql = new MySQLi(self::$DB_host, self::$DB_user, self::$DB_password, self::$DB_datenbank);
+		self::$sql = new MySQLi(self::$DB_host, self::$DB_user, self::$DB_password, self::$DB_datenbank);
 		
-		if($this->sql->connect_error) {
+		if($sql->connect_error) {
 				// new Exception();
 		}
 		
@@ -36,11 +36,9 @@ class sql {
 	}
 	
 	// Query durchführen
-	public function sql($query) {
+	public function query($query) {
 		
-		$this->query = $query;
-	
-		$this->sql->query($query);
+		$this->query = self::$sql->query($query);
 		
 		return $this;
 		
@@ -48,17 +46,17 @@ class sql {
 	
 	// Ruckgabe der Einträge als Array
 	// Standart = Nur Spaltenname
-	public function result($query = false, $typ = MYSQL_ASSOC) {
+	public function result($query = false, $type = MYSQL_ASSOC) {
 		
 		if($query) {
-			$this->sql($query);
+			$this->query($query);
 		}
 		
-		if(!in_array($typ,[MYSQLI_NUM, MYSQLI_ASSOC, MYSQLI_BOTH])) {
+		if(!in_array($type, array(MYSQLI_NUM, MYSQLI_ASSOC, MYSQLI_BOTH))) { #[MYSQLI_NUM, MYSQLI_ASSOC, MYSQLI_BOTH]
 				// new Exception();
 		}
 
-		$this->result = $this->sql->fetch_array($typ);
+		$this->result = $this->query->fetch_array($type);
 		
 		return $this;
 		
@@ -68,27 +66,47 @@ class sql {
 	public function num($query = false) {
 	
 		if(!$query) {
-			
-			return $this->sql->num_rows;
-			
-		} else {
-			
-			$sql = new sql();
-			$sql->get($query);
-			return $sql->num();
+			return $this->query->num_rows;
 			
 		}
+			
+		$sql = new sql();
+		$sql->result($query);
+		return $sql->num();
 	
 	}
 	
 	// Ausgabe der Spalte 
-	public function get($row, $default = false) {
-	
-		if(isset($this->result[$this->counter][$row])) {
-			return 	$this->result[$this->counter][$row];
+	public function get($row) {
+		
+		if(isset($this->result[$row])) {
+			
+			return 	$this->result[$row];
+			
+		} else {
+			// new Exception('Feld "'.$row.'" exestiert nicht');
 		}
 		
-		return $default;
+	}
+	
+	// Ausgabe der Einträge, für die Whileschleife
+	public function next() {		
+		
+		$this->counter++;
+		
+		if($this->isNext()) {
+			
+			// Nächsten Datensatz laden
+			$this->result();
+			
+		}
+		
+	}
+	
+	// ABfrage ob noch der Counter benutzt werden kann
+	public function isNext() {
+		
+		return $this->counter < $this->num();
 		
 	}
 
