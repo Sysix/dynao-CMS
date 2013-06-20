@@ -27,7 +27,7 @@ class sql {
 		
 		self::$sql = new MySQLi(self::$DB_host, self::$DB_user, self::$DB_password, self::$DB_datenbank);
 		
-		if($sql->connect_error) {
+		if(self::$sql->connect_error) {
 				// new Exception();
 		}
 		
@@ -86,6 +86,8 @@ class sql {
 		} else {
 			// new Exception('Feld "'.$row.'" exestiert nicht');
 		}
+		
+		return false;
 		
 	}
 	
