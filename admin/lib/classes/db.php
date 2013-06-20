@@ -2,24 +2,34 @@
 
 // Klasse für die Verbindung zur SQL Datenbank
 // Verwendung von MYSQLI
-class db extends mysqli {
+class sql {
 
 	static $DB_host;
 	static $DB_user;
 	static $DB_password;
-	static $DB_datenbank;
+	static $DB_datenbank;	
 	
+	var $query;
 	var $result;
+	var $counter;
+	
+	
+	// SQL Functionen
+	var $sql;
 	
 	// Verbindung zur Datenbank
 	static public function connect($host, $user, $pw, $db) {
 	
-		self::DB_host = $host;
-		self::DB_user = $user;
-		self::DB_password = $pw;
-		self::DB_datenbank = $db;
+		self::$DB_host = $host;
+		self::$DB_user = $user;
+		self::$DB_password = $pw;
+		self::$DB_datenbank = $db;
 		
-		parent::__construct(self::DB_host, self::DB_user, self::DB_password, self::DB_datenbank);
+		$this->sql = new MySQLi(self::$DB_host, self::$DB_user, self::$DB_password, self::$DB_datenbank);
+		
+		if($this->sql->connect_error) {
+				// new Exception();
+		}
 		
 		// Zukünftige Abfrage falls was falsch geloffen ist		
 	
@@ -27,26 +37,30 @@ class db extends mysqli {
 	
 	// Query durchführen
 	public function sql($query) {
-	
-		$this->result = parent::query($query);
 		
-		// Falls ein Fehler ist, ausspucken
+		$this->query = $query;
+	
+		$this->sql->query($query);
+		
+		return $this;
 		
 	}
 	
 	// Ruckgabe der Einträge als Array
 	// Standart = Nur Spaltenname
-	public function array($typ = MYSQL_ASSOC) { // $query = false, $typ = MYSQL_ASSOC
+	public function result($query = false, $typ = MYSQL_ASSOC) {
 		
-		/*
-		if(!$query) {
-			$query = $this->result;
+		if($query) {
+			$this->sql($query);
 		}
-		*/
 		
-		// Abfrage ob $typ gültig ist
+		if(!in_array($typ,[MYSQLI_NUM, MYSQLI_ASSOC, MYSQLI_BOTH])) {
+				// new Exception();
+		}
+
+		$this->result = $this->sql->fetch_array($typ);
 		
-		return parent::fetch_array($typ);
+		return $this;
 		
 	}
 	
@@ -54,11 +68,28 @@ class db extends mysqli {
 	public function num($query = false) {
 	
 		if(!$query) {
-			return parent::num_rows;
+			
+			return $this->sql->num_rows;
+			
 		} else {
-			return mysqli_num_rows(mysqli_query($query));
+			
+			$sql = new sql();
+			$sql->get($query);
+			return $sql->num();
+			
 		}
 	
+	}
+	
+	// Ausgabe der Spalte 
+	public function get($row, $default = false) {
+	
+		if(isset($this->result[$this->counter][$row])) {
+			return 	$this->result[$this->counter][$row];
+		}
+		
+		return $default;
+		
 	}
 
 }
