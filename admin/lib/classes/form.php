@@ -61,6 +61,24 @@ class form {
 	
 	public function addTextField($name, $value, $attributes = array()) {
 		
+		$attributes = array_merge(array('intern::type'=>'text'), $attributes);
+		
+		return $this->addField($name, $value, 'formText', $attributes);
+		
+	}
+	
+	public function addPasswordField($name, $value, $attributes = array()) {
+		
+		$attributes = array_merge(array('intern::type'=>'password'), $attributes);
+		
+		return $this->addField($name, $value, 'formText', $attributes);
+		
+	}
+	
+	public function addHiddenField($name, $value, $attributes = array()) {
+		
+		$attributes = array_merge(array('intern::type'=>'hidden'), $attributes);
+		
 		return $this->addField($name, $value, 'formText', $attributes);
 		
 	}
