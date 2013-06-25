@@ -12,7 +12,7 @@ class table {
 	
 	function __construct($id = '', $class = '', $attributes= array() ) {
 		// wenn addSection nicht ausgeführt rows zu tbody adden
-		$this->current_section = $this->tbody_array[0];
+		$this->current_section = &$this->tbody_array[0];
 		
 		if(!empty($id))
 			$attributes['id'] = $id;
@@ -20,7 +20,7 @@ class table {
 		if(!empty($class)) 
 			$attributes['class'] = $class;
 			
- 		$this->tableStr = '\n<table'.$this->convertAttr($attributes).'>\n';
+ 		$this->tableStr = PHP_EOL.'<table'.$this->convertAttr($attributes).'>'.PHP_EOL;
 	}
 	
 	//rows zu der zuletzt aufgerufenden Section hinzufügen
@@ -28,14 +28,14 @@ class table {
 		
 		switch ($section) {
 			case 'thead':
- 				$ref = $this->thead;
+ 				$ref = &$this->thead;
 				break;
 			case 'tfoot':
-				$ref = $this->tfoot;
+				$ref = &$this->tfoot;
 				break;
 				
 			default: // tbody
-				$ref = $this->tbody_array[];
+				$ref = &$this->tbody_array[count($this->tbody_array)];
 		}
 		
 		if(!empty($class)) 
@@ -44,7 +44,7 @@ class table {
 		$ref['attr'] = $attributes;
 		$ref['rows'] = array();
 		
-		$this->current_section = $ref;
+		$this->current_section = &$ref;
 		
 	}
 	
@@ -53,10 +53,10 @@ class table {
 		if(!empty($class)) 
 			$attributes['class'] = $class;
 		
-		$this->tableStr.= '<caption'.$this->convertAttr($attributes).'>'.$cap.'</caption>\n';
+		$this->tableStr .= '<caption'.$this->convertAttr($attributes).'>'.$cap.'</caption>'.PHP_EOL;
 	}
 	
-	protected function convertAttr($attrributes) {
+	protected function convertAttr($attributes) {
 		
 		$str = '';
 		foreach($attributes as $key=>$val) {
@@ -72,6 +72,7 @@ class table {
 		
 		if(!empty($class)) 
 			$attributes['class'] = $class;
+		
 		
 		$this->current_section['rows'][] = array(
 			'attr' => $attributes,
@@ -102,8 +103,7 @@ class table {
 		
 		// zur letzten row der letzten section hinzufügen
 		$count = count( $this->current_section['rows'] );
-		$curRow = $this->current_section['rows'][$count-1];
-		$curRow['cells'][] = $cell;
+		$this->current_section['rows'][$count-1]['cells'][] = $cell;
 		
 	}
 	
@@ -113,7 +113,7 @@ class table {
 		
 		foreach( $cells as $cell ) {
 			$tag = ($cell['type'] == 'data')? 'td': 'th';			
-			$str .= '<'.$tag.$this->convertAttr($cell['attr']).'>'.$cell['data'].'</'.$tag.'>\n';
+			$str .= '<'.$tag.$this->convertAttr($cell['attr']).'>'.$cell['data'].'</'.$tag.'>'.PHP_EOL;
 		}
 		
 		return $str;
@@ -122,15 +122,15 @@ class table {
 	
 	protected function getSection($sec, $tag) {
 		
- 	$attr = !empty($sec['attr'])? $this->addAttribs($sec['attr']) : '';
+ 	$attr = !empty($sec['attr'])? $this->convertAttr($sec['attr']) : '';
 	
-	$str = '<'.$tag.$attr.'>\n';
+	$str = '<'.$tag.$attr.'>'.PHP_EOL;
 	
 		foreach($sec['rows'] as $row) {
-			$str .= '<tr'.$this->convertAttr($row['attr']).'>\n'.$this->getRowCells($row['cells']).'</tr>\n';
+			$str .= '<tr'.$this->convertAttr($row['attr']).'>'.PHP_EOL.$this->getRowCells($row['cells']).'</tr>'.PHP_EOL;
 		}
 		
-		$str .= '</'.$tag.'>\n';
+		$str .= '</'.$tag.'>'.PHP_EOL;
 		
 		return $str;
 		
@@ -149,7 +149,7 @@ class table {
 				
 		}
 		
- 		$this->tableStr .= '</table>\n';
+ 		$this->tableStr .= '</table>'.PHP_EOL;
 		return $this->tableStr;
 		
 	}
