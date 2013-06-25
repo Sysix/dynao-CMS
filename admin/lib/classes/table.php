@@ -1,15 +1,15 @@
 <?php
 
 class table {
-    
+	
 	protected $thead = array();
 	protected $tfoot = array();
 	protected $tbody_array = array();
-
+	
 	protected $current_section;
-    
+	
 	protected $tableStr = '';
-    
+	
 	function __construct($id = '', $class = '', $attributes= array() ) {
 		// wenn addSection nicht ausgeführt rows zu tbody adden
 		$this->current_section = $this->tbody_array[0];
@@ -19,10 +19,10 @@ class table {
 			
 		if(!empty($class)) 
 			$attributes['class'] = $class;
-        
+			
  		$this->tableStr = '\n<table'.$this->convertAttr($attributes).'>\n';
 	}
-    
+	
 	//rows zu der zuletzt aufgerufenden Section hinzufügen
 	public function addSection($section, $class = '', $attributes = array() ) {
 		
@@ -33,19 +33,19 @@ class table {
 			case 'tfoot':
 				$ref = $this->tfoot;
 				break;
-            
+				
 			default: // tbody
 				$ref = $this->tbody_array[];
-        }
-        
+		}
+	
 		$ref['class'] = $class;
 		$ref['attr'] = $attributes;
 		$ref['rows'] = array();
-        
+		
 		$this->current_section = $ref;
 		
-    }
-    
+	}
+	
 	public function addCaption($cap, $class = '', $attributes = array() ) {
 		
 		if(!empty($class)) 
@@ -53,7 +53,7 @@ class table {
 		
 		$this->tableStr.= '<caption'.$this->convertAttr($attributes).'>'.$cap.'</caption>\n';
 	}
-    
+	
 	protected function convertAttr($attrributes) {
 		
 		$str = '';
@@ -64,20 +64,20 @@ class table {
 		return $str;
 		
 	}
-    
+	
 	public function addRow($class = '', $attributes = array() ) {
-        // rows zur letzten Section hinzufügen
+		// rows zur letzten Section hinzufügen
 		
 		if(!empty($class)) 
 			$attributes['class'] = $class;
 		
-        $this->current_section['rows'][] = array(
-            'attr' => $attributes,
-            'cells' => array()
-        );
-        
-    }
-    
+		$this->current_section['rows'][] = array(
+			'attr' => $attributes,
+			'cells' => array()
+		);
+		
+	}
+	
 	public function addCell($data = '', $class = '', $type = 'data', $attributes = array() ) {
 		
 		if(!empty($class)) 
@@ -87,8 +87,8 @@ class table {
 			'data' => $data,
 			'type' => $type,
 			'attr' => $attributes
-        );
-        
+		);
+		
 		if(empty($this->current_section['rows'])) {
 			try {
 				throw new Exception('vor addCell erst addRow');
@@ -97,14 +97,14 @@ class table {
 				echo "<p>Error: $msg</p>";
 			}
 		}
-        
+		
 		// zur letzten row der letzten section hinzufügen
 		$count = count( $this->current_section['rows'] );
 		$curRow = $this->current_section['rows'][$count-1];
 		$curRow['cells'][] = $cell;
 		
 	}
-    
+	
 	protected function getRowCells($cells) {
 		
 		$str = '';
@@ -114,44 +114,44 @@ class table {
 			$str .= '<'.$tag.$this->convertAttr($cell['attsr']).'>'.$cell['data'].'</'.$tag.'>\n';
 		}
 		
-        return $str;
+		return $str;
 		
-    }
+	}
 	
 	protected function getSection($sec, $tag) {
 		
  	$attr = !empty($sec['attr'])? $this->addAttribs($sec['attr']) : '';
-        
-		$str = '<'.$tag.$attr.'>\n';
-        
+	
+	$str = '<'.$tag.$attr.'>\n';
+	
 		foreach($sec['rows'] as $row) {
 			$str .= '<tr'.$this->convertAttr($row['attr']).'>\n'.$this->getRowCells($row['cells']).'</tr>\n';
 		}
-        
+		
 		$str .= '</'.$tag.'>\n';
-        
+		
 		return $str;
 		
 	}
-    
+	
 	public function show() {
-        
+		
 		// section und die rows/cells 
 		$this->tableStr .= !empty($this->thead)? $this->getSection($this->thead, 'thead'): '';
 		$this->tableStr .= !empty($this->tfoot)? $this->getSection($this->tfoot, 'tfoot'): '';
-        
+		
  		foreach( $this->tbody_array as $sec ) {
 			
 			if(!empty($sec))
 				$this->tableStr .= $this->getSection($sec, 'tbody');
 				
 		}
-        
+		
  		$this->tableStr .= '</table>\n';
 		return $this->tableStr;
 		
-    }
-    
+	}
+	
 }
 
 ?>
