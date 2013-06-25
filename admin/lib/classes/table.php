@@ -2,131 +2,154 @@
 
 class table {
     
-    private $thead = array();
-    private $tfoot = array();
-    private $tbody_array = array();
+	protected $thead = array();
+	protected $tfoot = array();
+	protected $tbody_array = array();
 
-    private $current_section;
+	protected $current_section;
     
-    private $tableStr = '';
+	protected $tableStr = '';
     
-    function __construct($id = '', $class = '', $attr_ar = array() ) {
-        // wenn addSection nicht ausgeführt rows zu tbody adden
-        $this->current_section = &$this->tbody_array[0];
+	function __construct($id = '', $class = '', $attributes= array() ) {
+		// wenn addSection nicht ausgeführt rows zu tbody adden
+		$this->current_section = $this->tbody_array[0];
+		
+		if(!empty($id))
+			$attributes['id'] = $id;
+			
+		if(!empty($class)) 
+			$attributes['class'] = $class;
         
-        $this->tableStr = "\n<table" . ( !empty($id)? " id=\"$id\"": '' ) . 
-            ( !empty($class)? " class=\"$class\"": '' ) . $this->addAttribute( $attr_ar ).">\n";
-    }
+ 		$this->tableStr = '\n<table'.$this->convertAttr($attributes).'>\n';
+	}
     
 	//rows zu der zuletzt aufgerufenden Section hinzufügen
-    function addSection($section, $class = '', $attr_ar = array() ) {
-        switch ($section) {
-            case 'thead':
-                $ref = &$this->thead;
-                break;
-            case 'tfoot':
-                $ref = &$this->tfoot;
-                break;
-            case 'tbody':
-                $ref = &$this->tbody_array[ count($this->tbody_array) ];
-                break;
+	public function addSection($section, $class = '', $attributes = array() ) {
+		
+		switch ($section) {
+			case 'thead':
+ 				$ref = $this->thead;
+				break;
+			case 'tfoot':
+				$ref = $this->tfoot;
+				break;
             
-            default: // tbody
-                $ref = &$this->tbody_array[count($this->tbody_array) ];
+			default: // tbody
+				$ref = $this->tbody_array[];
         }
         
-        $ref['class'] = $class;
-        $ref['atts'] = $attr_ar;
-        $ref['rows'] = array();
+		$ref['class'] = $class;
+		$ref['attr'] = $attributes;
+		$ref['rows'] = array();
         
-        $this->current_section = &$ref;
+		$this->current_section = $ref;
+		
     }
     
-    public function addCaption($cap, $class = '', $attr_ar = array() ) {
-        $this->tableStr.= "<caption" . (!empty($class)? " class=\"$class\"": '') .
-            $this->addAttribute($attr_ar) . '>' . $cap . "</caption>\n";
-    }
+	public function addCaption($cap, $class = '', $attributes = array() ) {
+		
+		if(!empty($class)) 
+			$attributes['class'] = $class;
+		
+		$this->tableStr.= '<caption'.$this->convertAttr($attributes).'>'.$cap.'</caption>\n';
+	}
     
-    private function addAttribute( $attr_ar ) {
-        $str = '';
-        foreach( $attr_ar as $key=>$val ) {
-            $str .= " $key=\"$val\"";
-        }
-        return $str;
-    }
+	protected function convertAttr($attrributes) {
+		
+		$str = '';
+		foreach($attributes as $key=>$val) {
+			$str .= ' '.$key.'="'.$val.'"';
+		}
+		
+		return $str;
+		
+	}
     
-    function addRow($class = '', $attr_ar = array() ) {
+	public function addRow($class = '', $attributes = array() ) {
         // rows zur letzten Section hinzufügen
+		
+		if(!empty($class)) 
+			$attributes['class'] = $class;
+		
         $this->current_section['rows'][] = array(
-            'class' => $class,
-            'atts' => $attr_ar,
+            'attr' => $attributes,
             'cells' => array()
         );
         
     }
     
-    function addCell($data = '', $class = '', $type = 'data', $attr_ar = array() ) {
-        $cell = array(
-            'data' => $data,
-            'class' => $class,
-            'type' => $type,
-            'atts' => $attr_ar
+	public function addCell($data = '', $class = '', $type = 'data', $attributes = array() ) {
+		
+		if(!empty($class)) 
+			$attributes['class'] = $class;
+		
+		$cell = array(
+			'data' => $data,
+			'type' => $type,
+			'attr' => $attributes
         );
         
-        if ( empty($this->current_section['rows']) ) {
-            try {
-                throw new Exception('vor addCell erst addRow');
-            } catch(Exception $ex) {
-                $msg = $ex->getMessage();
-                echo "<p>Error: $msg</p>";
-            }
-        }
+		if(empty($this->current_section['rows'])) {
+			try {
+				throw new Exception('vor addCell erst addRow');
+			} catch(Exception $ex) {
+				$msg = $ex->getMessage();
+				echo "<p>Error: $msg</p>";
+			}
+		}
         
-        // zur letzten row der letzten section hinzufügen
-        $count = count( $this->current_section['rows'] );
-        $curRow = &$this->current_section['rows'][$count-1];
-        $curRow['cells'][] = &$cell;
-    }
+		// zur letzten row der letzten section hinzufügen
+		$count = count( $this->current_section['rows'] );
+		$curRow = $this->current_section['rows'][$count-1];
+		$curRow['cells'][] = $cell;
+		
+	}
     
-    private function getRowCells($cells) {
-        $str = '';
-        foreach( $cells as $cell ) {
-            $tag = ($cell['type'] == 'data')? 'td': 'th';
-            $str .= ( !empty( $cell['class'] )? "    <$tag class=\"{$cell['class']}\"": "    <$tag" ) . 
-                    $this->addAttribute( $cell['atts'] ) . ">" . $cell['data'] . "</$tag>\n";
-        }
+	protected function getRowCells($cells) {
+		
+		$str = '';
+		
+		foreach( $cells as $cell ) {
+			$tag = ($cell['type'] == 'data')? 'td': 'th';			
+			$str .= '<'.$tag.$this->convertAttr($cell['attsr']).'>'.$cell['data'].'</'.$tag.'>\n';
+		}
+		
         return $str;
+		
     }
+	
+	protected function getSection($sec, $tag) {
+		
+ 	$attr = !empty($sec['attr'])? $this->addAttribs($sec['attr']) : '';
+        
+		$str = '<'.$tag.$attr.'>\n';
+        
+		foreach($sec['rows'] as $row) {
+			$str .= '<tr'.$this->convertAttr($row['attr']).'>\n'.$this->getRowCells($row['cells']).'</tr>\n';
+		}
+        
+		$str .= '</'.$tag.'>\n';
+        
+		return $str;
+		
+	}
     
-    function show() {
+	public function show() {
         
-        // section und die rows/cells 
-        $this->tableStr .= !empty($this->thead)? $this->getSection($this->thead, 'thead'): '';
-        $this->tableStr .= !empty($this->tfoot)? $this->getSection($this->tfoot, 'tfoot'): '';
+		// section und die rows/cells 
+		$this->tableStr .= !empty($this->thead)? $this->getSection($this->thead, 'thead'): '';
+		$this->tableStr .= !empty($this->tfoot)? $this->getSection($this->tfoot, 'tfoot'): '';
         
-        foreach( $this->tbody_array as $sec ) {
-            $this->tableStr .= !empty($sec)? $this->getSection($sec, 'tbody'): '';
-        }
+ 		foreach( $this->tbody_array as $sec ) {
+			
+			if(!empty($sec))
+				$this->tableStr .= $this->getSection($sec, 'tbody');
+				
+		}
         
-        $this->tableStr .= "</table>\n";
-        return $this->tableStr;
-    }
-    
-    private function getSection($sec, $tag) {
-        $class = !empty($sec['class'])? " class=\"{$sec['class']}\"": '';
-        $atts = !empty($sec['atts'])? $this->addAttribs( $sec['atts'] ): '';
-        
-        $str = "<$tag" . $class . $atts . ">\n";
-        
-        foreach( $sec['rows'] as $row ) {
-            $str .= ( !empty( $row['class'] ) ? "  <tr class=\"{$row['class']}\"": "  <tr" ) . 
-                    $this->addAttribute( $row['atts'] ) . ">\n" . 
-                    $this->getRowCells( $row['cells'] ) . "  </tr>\n";
-        }
-        
-        $str .= "</$tag>\n";
-        
-        return $str;
+ 		$this->tableStr .= '</table>\n';
+		return $this->tableStr;
+		
     }
     
 }
