@@ -37,8 +37,10 @@ class table {
 			default: // tbody
 				$ref = $this->tbody_array[];
 		}
+		
+		if(!empty($class)) 
+			$attributes['class'] = $class;
 	
-		$ref['class'] = $class;
 		$ref['attr'] = $attributes;
 		$ref['rows'] = array();
 		
@@ -111,7 +113,7 @@ class table {
 		
 		foreach( $cells as $cell ) {
 			$tag = ($cell['type'] == 'data')? 'td': 'th';			
-			$str .= '<'.$tag.$this->convertAttr($cell['attsr']).'>'.$cell['data'].'</'.$tag.'>\n';
+			$str .= '<'.$tag.$this->convertAttr($cell['attr']).'>'.$cell['data'].'</'.$tag.'>\n';
 		}
 		
 		return $str;
