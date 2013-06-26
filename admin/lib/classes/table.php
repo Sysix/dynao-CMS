@@ -9,14 +9,14 @@ class table {
 	protected $tfoot = array();
 	protected $tbody_array = array();
 	
-	protected $caption = array();
-	
 	protected $current_section;
 	
-	protected $tableAttr = array();
+	protected $tableAttr = array();	
+	protected $collsLayout = array();
+	protected $caption = array();
 	
 	
-	function __construct($attributes= array() ) {
+	function __construct($attributes = array()) {
 		// wenn addSection nicht ausgeführt rows zu tbody adden
 		$this->current_section = 0;
 			
@@ -71,6 +71,34 @@ class table {
 	
 	}
 	
+	public function addCollsLayout($cols) {
+	
+		if(!is_array($cols)) {			
+			
+			$col2 = explode(',', $cols);
+			$cols = array();
+			
+			foreach($col2 as $key=>$val) {			
+				$cols[]['width'] = $val;			
+			}			
+			
+		}
+		
+		$this->collsLayout = $cols;
+		
+	}
+	
+	function getCollsLayout() {
+		
+		$cols = '';
+		foreach($this->collsLayout as $val) {
+			$cols .= $this->addTag('col', $val, '', false);
+		}
+		
+		return $this->addTag('colgroup', '', $cols);
+	}
+
+	
 	// Fügt ein HTML Tag hinzu
 	// Name z.B.: td, tr, caption, table,
 	// Value z.B: Inhalt
@@ -86,7 +114,7 @@ class table {
 			
 		} else {
 		
-			return '<'.$name.$attributes.' />'.PHP_EOL;
+			return '<'.$name.$attributes.'>'.PHP_EOL;
 			
 		}
 		
@@ -105,7 +133,7 @@ class table {
 	
 	protected function convertAttr($attributes) {
 		
-		if(!count($attributes))
+		if(!count($attributes) || is_string($attributes))
 			return '';
 		
 		$str = '';
@@ -193,6 +221,8 @@ class table {
 				
 		$return = $this->getCaption();
 		
+		
+		$return .= $this->getCollsLayout();
 		$return .= $this->getSection($this->thead, 'thead');
 		$return .= $this->getSection($this->tfoot, 'tfoot');		
 		
@@ -221,6 +251,9 @@ $inhalt = array(
 $tabelle = new table();
 
 //titel
+
+$tabelle->addCollsLayout('80,20,250,50');
+
 $tabelle->addCaption('Testtabelle', array('id'=> 'testid', 'class'=>'classtest') );
 
 //section "thead" aufrufen, rows werden dieser dann hinzugefügt
@@ -249,4 +282,5 @@ $tabelle->addRow();
     $tabelle->addCell('testfooter', array('colspan'=>4, 'class'=>'foot'));
 	   
 echo $tabelle->show();
+
 ?>
