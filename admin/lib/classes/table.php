@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 class table {
 	
 	protected $thead = array();
@@ -13,21 +16,15 @@ class table {
 	protected $tableAttr = array();
 	
 	
-	function __construct($id = '', $class = '', $attributes= array() ) {
+	function __construct($attributes= array() ) {
 		// wenn addSection nicht ausgeführt rows zu tbody adden
 		$this->current_section = 0;
-		
-		if(!empty($id))
-			$attributes['id'] = $id;
-			
-		if(!empty($class)) 
-			$attributes['class'] = $class;
 			
 		$this->tableAttr = $attributes;
 	}
 	
 	//rows zu der zuletzt aufgerufenden Section hinzufügen
-	public function addSection($section, $class = '', $attributes = array() ) {
+	public function addSection($section, $attributes = array() ) {
 		
 		switch ($section) {
 			case 'thead':
@@ -43,9 +40,6 @@ class table {
 		}
 		
 		$ref = $this->getCurrentSection();
-		
-		if(!empty($class)) 
-			$attributes['class'] = $class;
 	
 		$ref['attr'] = $attributes;
 		$ref['rows'] = array();
@@ -99,12 +93,8 @@ class table {
 		
 	}
 	
-	public function addCaption($cap, $class = '', $attributes = array() ) {
-		
-		if(!empty($class)) 
-			$attributes['class'] = $class;
-		
-		$this->caption = array('value'=>$cap, 'attr'=>$attributes);
+	public function addCaption($value, $attributes = array() ) {		
+		$this->caption = array('value'=>$value, 'attr'=>$attributes);
 	}
 	
 	protected function getCaption() {
@@ -127,11 +117,8 @@ class table {
 		
 	}
 	
-	public function addRow($class = '', $attributes = array() ) {
+	public function addRow($attributes = array() ) {
 		// rows zur letzten Section hinzufügen
-		
-		if(!empty($class)) 
-			$attributes['class'] = $class;
 		
 		$ref = $this->getCurrentSection();
 		
@@ -144,13 +131,12 @@ class table {
 		
 	}
 	
-	public function addCell($data = '', $class = '', $type = 'data', $attributes = array() ) {
+	public function addCell($value = '', $attributes = array() ) {
 		
-		if(!empty($class)) 
-			$attributes['class'] = $class;
+		$type = ($this->current_section === 'thead') ? 'th' : 'td';
 		
 		$cell = array(
-			'data' => $data,
+			'value' => $value,
 			'type' => $type,
 			'attr' => $attributes
 		);
@@ -181,8 +167,7 @@ class table {
 		$str = '';
 		
 		foreach( $cells as $cell ) {
-			$tag = ($cell['type'] == 'data')? 'td': 'th';			
-			$str .= $this->addTag($tag, $cell['attr'], $cell['data']);
+			$str .= $this->addTag($cell['type'], $cell['attr'], $cell['value']);
 		}
 		
 		return $str;
@@ -236,17 +221,17 @@ $inhalt = array(
 $tabelle = new table();
 
 //titel
-$tabelle->addCaption('Testtabelle', 'classtest', array('id'=> 'testid') );
+$tabelle->addCaption('Testtabelle', array('id'=> 'testid', 'class'=>'classtest') );
 
 //section "thead" aufrufen, rows werden dieser dann hinzugefügt
 $tabelle->addSection('thead');
 
 $tabelle->addRow();
     //Header hinzufügen
-    $tabelle->addCell('Name', 'first', 'header');
-    $tabelle->addCell('Anzahl', '', 'header');
-    $tabelle->addCell('Beschreibung', '', 'header');
-	$tabelle->addCell('bla', '', 'header');
+    $tabelle->addCell('Name', array('class'=>'first'));
+    $tabelle->addCell('Anzahl');
+    $tabelle->addCell('Beschreibung');
+	$tabelle->addCell('bla');
     
 //section "tbody" aufrufen, rows werden dieser dann hinzugefügt
 $tabelle->addSection('tbody');
@@ -261,8 +246,7 @@ $tabelle->addSection('tbody');
     }
     
 $tabelle->addRow();
-    $tabelle->addCell('testfooter', 'foot', 'data', array('colspan'=>4) );
-	
-    
+    $tabelle->addCell('testfooter', array('colspan'=>4, 'class'=>'foot'));
+	   
 echo $tabelle->show();
 ?>
