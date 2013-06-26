@@ -6,13 +6,16 @@ class table {
 	protected $tfoot = array();
 	protected $tbody_array = array();
 	
+	protected $caption = array();
+	
 	protected $current_section;
 	
-	protected $tableStr = '';
+	protected $tableAttr = array();
+	
 	
 	function __construct($id = '', $class = '', $attributes= array() ) {
 		// wenn addSection nicht ausgeführt rows zu tbody adden
-		$this->current_section = &$this->tbody_array[0];
+		$this->current_section = 0;
 		
 		if(!empty($id))
 			$attributes['id'] = $id;
@@ -20,7 +23,7 @@ class table {
 		if(!empty($class)) 
 			$attributes['class'] = $class;
 			
- 		$this->tableStr = PHP_EOL.'<table'.$this->convertAttr($attributes).'>'.PHP_EOL;
+		$this->tableAttr = $attributes;
 	}
 	
 	//rows zu der zuletzt aufgerufenden Section hinzufügen
@@ -28,15 +31,18 @@ class table {
 		
 		switch ($section) {
 			case 'thead':
- 				$ref = &$this->thead;
+				$this->current_section = 'thead';	
 				break;
 			case 'tfoot':
-				$ref = &$this->tfoot;
+				$this->current_section = 'tfoot';
 				break;
 				
 			default: // tbody
-				$ref = &$this->tbody_array[count($this->tbody_array)];
+				$this->tbody_array[] = array('rows'=>'');
+				$this->current_section = count($this->tbody_array)-1;
 		}
+		
+		$ref = $this->getCurrentSection();
 		
 		if(!empty($class)) 
 			$attributes['class'] = $class;
@@ -44,7 +50,52 @@ class table {
 		$ref['attr'] = $attributes;
 		$ref['rows'] = array();
 		
-		$this->current_section = &$ref;
+		$this->setCurrentSection($ref);
+		
+	}
+	
+	protected function getCurrentSection() {
+		
+		if($this->current_section === 'thead') {
+			return $this->thead;	
+		} elseif($this->current_section === 'tfoot') {
+			return $this->tfoot;	
+		} else {
+			return $this->tbody_array[$this->current_section];	
+		}
+	}
+	
+	protected function setCurrentSection($section) {
+		
+		if($this->current_section === 'thead') {
+			$this->thead = $section;	
+		} elseif($this->current_section === 'tfoot') {
+			$this->tfoot = $section;	
+		} else {
+			$this->tbody_array[$this->current_section] = $section;	
+		}
+	
+	}
+	
+	// Fügt ein HTML Tag hinzu
+	// Name z.B.: td, tr, caption, table,
+	// Value z.B: Inhalt
+	// Attribute
+	// End: true => <tag></tag> false => <tag />
+	protected function addTag($name, $attributes = array(), $value = '', $end = true) {
+		
+		$attributes = $this->convertAttr($attributes);
+		
+		if($end) {
+		
+			return '<'.$name.$attributes.'>'.$value.'</'.$name.'>'.PHP_EOL;	
+			
+		} else {
+		
+			return '<'.$name.$attributes.' />'.PHP_EOL;
+			
+		}
+		
 		
 	}
 	
@@ -53,10 +104,19 @@ class table {
 		if(!empty($class)) 
 			$attributes['class'] = $class;
 		
-		$this->tableStr .= '<caption'.$this->convertAttr($attributes).'>'.$cap.'</caption>'.PHP_EOL;
+		$this->caption = array('value'=>$cap, 'attr'=>$attributes);
+	}
+	
+	protected function getCaption() {
+		
+		return $this->addTag('caption', $this->caption['attr'], $this->caption['value']);
+		
 	}
 	
 	protected function convertAttr($attributes) {
+		
+		if(!count($attributes))
+			return '';
 		
 		$str = '';
 		foreach($attributes as $key=>$val) {
@@ -73,11 +133,14 @@ class table {
 		if(!empty($class)) 
 			$attributes['class'] = $class;
 		
+		$ref = $this->getCurrentSection();
 		
-		$this->current_section['rows'][] = array(
+		$ref['rows'][] = array(
 			'attr' => $attributes,
 			'cells' => array()
 		);
+		
+		$this->setCurrentSection($ref);
 		
 	}
 	
@@ -92,7 +155,10 @@ class table {
 			'attr' => $attributes
 		);
 		
-		if(empty($this->current_section['rows'])) {
+		$ref = $this->getCurrentSection();
+		
+		/*
+		if(empty($ref['rows'])) {
 			try {
 				throw new Exception('vor addCell erst addRow');
 			} catch(Exception $ex) {
@@ -100,10 +166,13 @@ class table {
 				echo "<p>Error: $msg</p>";
 			}
 		}
+		*/
 		
 		// zur letzten row der letzten section hinzufügen
-		$count = count( $this->current_section['rows'] );
-		$this->current_section['rows'][$count-1]['cells'][] = $cell;
+		$count = count( $ref['rows'] );
+		$ref['rows'][$count-1]['cells'][] = $cell;
+		
+		$this->setCurrentSection($ref);
 		
 	}
 	
@@ -113,7 +182,7 @@ class table {
 		
 		foreach( $cells as $cell ) {
 			$tag = ($cell['type'] == 'data')? 'td': 'th';			
-			$str .= '<'.$tag.$this->convertAttr($cell['attr']).'>'.$cell['data'].'</'.$tag.'>'.PHP_EOL;
+			$str .= $this->addTag($tag, $cell['attr'], $cell['data']);
 		}
 		
 		return $str;
@@ -122,35 +191,31 @@ class table {
 	
 	protected function getSection($sec, $tag) {
 		
- 	$attr = !empty($sec['attr'])? $this->convertAttr($sec['attr']) : '';
+	if(!count($sec))
+		return '';	
 	
-	$str = '<'.$tag.$attr.'>'.PHP_EOL;
-	
+		$str = '';	
 		foreach($sec['rows'] as $row) {
-			$str .= '<tr'.$this->convertAttr($row['attr']).'>'.PHP_EOL.$this->getRowCells($row['cells']).'</tr>'.PHP_EOL;
-		}
+			$str .= $this->addTag('tr', $row['attr'], $this->getRowCells($row['cells']));
+		}		
 		
-		$str .= '</'.$tag.'>'.PHP_EOL;
-		
-		return $str;
+		return $this->addTag($tag, $sec['attr'], $str);
 		
 	}
 	
 	public function show() {
 		
-		// section und die rows/cells 
-		$this->tableStr .= !empty($this->thead)? $this->getSection($this->thead, 'thead'): '';
-		$this->tableStr .= !empty($this->tfoot)? $this->getSection($this->tfoot, 'tfoot'): '';
+				
+		$return = $this->getCaption();
+		
+		$return .= $this->getSection($this->thead, 'thead');
+		$return .= $this->getSection($this->tfoot, 'tfoot');		
 		
  		foreach( $this->tbody_array as $sec ) {
-			
-			if(!empty($sec))
-				$this->tableStr .= $this->getSection($sec, 'tbody');
-				
+				$return .= $this->getSection($sec, 'tbody');				
 		}
 		
- 		$this->tableStr .= '</table>'.PHP_EOL;
-		return $this->tableStr;
+		return $this->addTag('table', $this->tableAttr, PHP_EOL.$return);
 		
 	}
 	
@@ -197,6 +262,7 @@ $tabelle->addSection('tbody');
     
 $tabelle->addRow();
     $tabelle->addCell('testfooter', 'foot', 'data', array('colspan'=>4) );
+	
     
 echo $tabelle->show();
 ?>
