@@ -9,6 +9,8 @@ require('admin/lib/classes/form.php');
 require('admin/lib/classes/form/fields.php');
 require('admin/lib/classes/form/text.php');
 require('admin/lib/classes/form/textarea.php');
+require('admin/lib/classes/form/radio.php');
+require('admin/lib/classes/form/checkbox.php');
 
 sql::connect('localhost', 'c1sysix', 'sysixpw', 'c1dynao');
 
@@ -28,6 +30,17 @@ $field = $form->addPasswordField('pwd', $form->get('pwd'));
 $field->fieldName('Passwort');
 
 $field = $form->addHiddenField('id', 3);
+
+$field = $form->addCheckboxField('personen', '|1|2|3|5|');
+$field->fieldName('Personen');
+foreach(range(1,8) as $val) {
+	$field->add($val, 'Person #'.$val);
+}
+
+$field = $form->addRadioField('mail', 0);
+$field->fieldName('Mail Verstecken?');
+$field->add(1, 'Nein');
+$field->add(0, 'Ja');
 
 echo $form->show();
 

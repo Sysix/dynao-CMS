@@ -25,10 +25,9 @@ class form {
 		
 		$sql = new sql();
 		$this->sql = $sql->query('SELECT * FROM '.$table.' WHERE '.$where.' LIMIT 1');
-		
 		$this->sql->result();
 		
-		if($this->sql->num() == 1) {
+		if($this->sql->num() == 1) {		
 			$this->setMode('edit');
 		}
 		
@@ -60,32 +59,46 @@ class form {
 	}
 	
 	public function addTextField($name, $value, $attributes = array()) {
-		
-		$attributes = array_merge(array('intern::type'=>'text'), $attributes);
-		
-		return $this->addField($name, $value, 'formText', $attributes);
+				
+		$field = $this->addField($name, $value, 'formText', $attributes);
+		$field->addAttribute('type', 'text');
+		return $field;
 		
 	}
 	
 	public function addPasswordField($name, $value, $attributes = array()) {
-		
-		$attributes = array_merge(array('intern::type'=>'password'), $attributes);
-		
-		return $this->addField($name, $value, 'formText', $attributes);
+			
+		$field = $this->addField($name, $value, 'formText', $attributes);
+		$field->addAttribute('type', 'password');
+		return $field;
 		
 	}
 	
 	public function addHiddenField($name, $value, $attributes = array()) {
 		
-		$attributes = array_merge(array('intern::type'=>'hidden'), $attributes);
-		
-		return $this->addField($name, $value, 'formText', $attributes);
-		
+		$field = $this->addField($name, $value, 'formText', $attributes);
+		$field->addAttribute('type', 'hidden');
+		return $field;
+				
 	}
 	
 	public function addTextareaField($name, $value, $attributes = array()) {
 		
 		return $this->addField($name, $value, 'formTextarea', $attributes);
+		
+	}
+	
+	public function addRadioField($name, $value, $attributes = array()) {
+		
+		return $this->addField($name, $value, 'formRadio', $attributes);
+		
+	}
+	
+	public function addCheckboxField($name, $value, $attributes = array()) {
+		
+		$field = $this->addField($name, $value, 'formCheckbox', $attributes);
+		$field->setChecked($value);
+		return $field;
 		
 	}
 	
