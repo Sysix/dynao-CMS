@@ -25,10 +25,17 @@ class form {
 		
 		$sql = new sql();
 		$this->sql = $sql->query('SELECT * FROM '.$table.' WHERE '.$where.' LIMIT 1');
-		$this->sql->result();
 		
-		if($this->sql->num() == 1) {		
-			$this->setMode('edit');
+		if(sql::$sql->field_count) {
+			
+			$this->sql->result();
+			
+			if($this->sql->num() == 1) {
+				$this->setMode('edit');
+			}
+			
+		} else {
+			//throw new Exception();
 		}
 		
 	}
@@ -59,26 +66,23 @@ class form {
 	}
 	
 	public function addTextField($name, $value, $attributes = array()) {
-				
-		$field = $this->addField($name, $value, 'formText', $attributes);
-		$field->addAttribute('type', 'text');
-		return $field;
+		
+		$attributes['type'] = 'text';
+		return $this->addField($name, $value, 'formText', $attributes);
 		
 	}
 	
 	public function addPasswordField($name, $value, $attributes = array()) {
-			
-		$field = $this->addField($name, $value, 'formText', $attributes);
-		$field->addAttribute('type', 'password');
-		return $field;
+		
+		$attributes['type'] = 'password';
+		return $this->addField($name, $value, 'formText', $attributes);
 		
 	}
 	
 	public function addHiddenField($name, $value, $attributes = array()) {
 		
-		$field = $this->addField($name, $value, 'formText', $attributes);
-		$field->addAttribute('type', 'hidden');
-		return $field;
+		$attributes['type'] = 'hidden';
+		return $this->addField($name, $value, 'formText', $attributes);
 				
 	}
 	
@@ -96,9 +100,13 @@ class form {
 	
 	public function addCheckboxField($name, $value, $attributes = array()) {
 		
-		$field = $this->addField($name, $value, 'formCheckbox', $attributes);
-		$field->setChecked($value);
-		return $field;
+		return $this->addField($name, $value, 'formCheckbox', $attributes);
+		
+	}
+	
+	public function addRawField($value) {
+		
+		return $this->addField('', $value, 'formRaw');
 		
 	}
 	

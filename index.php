@@ -11,6 +11,7 @@ require('admin/lib/classes/form/text.php');
 require('admin/lib/classes/form/textarea.php');
 require('admin/lib/classes/form/radio.php');
 require('admin/lib/classes/form/checkbox.php');
+require('admin/lib/classes/form/raw.php');
 
 sql::connect('localhost', 'c1sysix', 'sysixpw', 'c1dynao');
 
@@ -41,6 +42,9 @@ $field = $form->addRadioField('mail', 0);
 $field->fieldName('Mail Verstecken?');
 $field->add(1, 'Nein');
 $field->add(0, 'Ja');
+
+$field = $form->addRawField('Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.');
+$field->fieldName('Informationen');
 
 echo $form->show();
 

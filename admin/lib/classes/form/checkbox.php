@@ -2,20 +2,7 @@
 
 class formCheckbox extends formField {
 	
-	var $checked = array();
-	
 	var $output = array();
-	
-	
-	public function setChecked($checked) {
-	
-		if(!is_array($checked)) {
-			$checked = explode('|', $checked);
-		}
-		
-		$this->checked = $checked;
-		
-	}
 	
 	public function add($name, $value, $attributes = array()) {
 		
@@ -23,7 +10,7 @@ class formCheckbox extends formField {
 		$attributes['value'] = $name;
 		$attributes['name'] = $this->name;	
 		
-		if(in_array($attributes['value'], $this->checked))
+		if(strpos($this->value, '|'.$attributes['value'].'|') !== false)
 			$attributes['checked'] = 'checked';
 			
 		$this->output[$attributes['value']] = '<input'.$this->convertAttr($attributes).'> '.$value; //Name als Key speicher, für Methode del();		
