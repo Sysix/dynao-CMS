@@ -100,7 +100,9 @@ class form {
 	
 	public function addCheckboxField($name, $value, $attributes = array()) {
 		
-		return $this->addField($name, $value, 'formCheckbox', $attributes);
+		$field = $this->addField($name, $value, 'formCheckbox', $attributes);
+		$field->setChecked($value);
+		return $field; 
 		
 	}
 	
