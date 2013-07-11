@@ -12,6 +12,7 @@ class form {
 	var $mode = 'new';
 	
 	var $return = array();
+	var $buttons = array();
 	
 	public function __construct($table, $where, $action, $method = 'post') {
 		
@@ -38,12 +39,14 @@ class form {
 			//throw new Exception();
 		}
 		
+		$this->setButtons();
+		
 	}
 	
 	
 	// Ausgabe der SQL Spalte
 	// Falls nicht drin, dann $default zurück
-	function get($value, $default = false) {
+	public function get($value, $default = false) {
 		
 		if($this->sql->get($value))	{
 		
@@ -55,10 +58,37 @@ class form {
 		
 	}
 	
+	public function setButtons() {
+		
+		$save = $this->addFreeField('save', 'Speichern', 'formText');
+		$save->addAttribute('type', 'submit');
+		$this->buttons[] = $save;
+		
+		if($this->mode == 'edit') {
+			
+			$save_back = $this->addFreeField('save-back', 'Übernehmen', 'formText');
+			$save_back->addAttribute('type', 'submit');
+			$this->buttons[] = $save_back;
+			
+		}
+		
+		$back = $this->addFreeField('back', 'Zurück', 'formText');
+		$back->addAttribute('type', 'button');
+		$back->addAttribute('onlick', 'history.go(-1);return true;');
+		$this->buttons[] = $back;
+		
+	}
+	
+	public function addFreeField($name, $value, $class, $attributes = array()) {
+	
+		return new $class($name, $value, $attributes);
+		
+	}
+	
 	// Ein Element hinzufügen
 	private function addField($name, $value, $class, $attributes = array()) {
 		
-		$field =  new $class($name, $value, $attributes);
+		$field =  $this->addFreeField($name, $value, $class, $attributes);
 		$this->return[] = $field;
 		
 		return $field;
@@ -82,7 +112,9 @@ class form {
 	public function addHiddenField($name, $value, $attributes = array()) {
 		
 		$attributes['type'] = 'hidden';
-		return $this->addField($name, $value, 'formText', $attributes);
+		$field = $this->addFreeField($name, $value, 'formText', $attributes);
+		$this->buttons[] = $field;
+		return $field;
 				
 	}
 	
@@ -100,7 +132,7 @@ class form {
 	
 	public function addCheckboxField($name, $value, $attributes = array()) {
 		
-		$field = $this->addField($name, $value, 'formCheckbox', $attributes);
+		$field = $this->addField($name.'[]', $value, 'formCheckbox', $attributes);
 		$field->setChecked($value);
 		return $field; 
 		
@@ -121,7 +153,7 @@ class form {
 	}
 	
 	// Mode setzten
-	function setMode($mode) {
+	public function setMode($mode) {
 	
 		if(in_array($mode, array('new', 'edit'))) {
 			
@@ -135,7 +167,7 @@ class form {
 		
 	}
 	
-	function show() {
+	public function show() {
 		
 		$return = '<form action="'.$this->action.'" method="'.$this->method.'">'.PHP_EOL;
 		$return .= '<table>'.PHP_EOL;
@@ -155,6 +187,15 @@ class form {
 			$return .= '</tr>'.PHP_EOL;	
 			
 		}
+		
+		$return .='<tr>';
+		$return .='<td></td>';
+		$return .='<td>';
+		foreach($this->buttons as $buttons) {
+			$return .= $buttons->get();	
+		}
+		$return .='</td>';
+		$return .='</tr>';
 		
 		$return .= '</table>'.PHP_EOL;
 		$return .= '</form>';

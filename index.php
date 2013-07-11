@@ -63,6 +63,8 @@ $field->addGroup('Chemische');
 $field->add('antibio', 'Antibiotika');
 $field->add('tabletten', 'Andere Tabletten');
 
+$form->addHiddenField('id', 1);
+
 echo $form->show();
 
 ?>
