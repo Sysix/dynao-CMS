@@ -19,6 +19,22 @@ class formSelect extends formField {
 		
 	}
 	
+	public function setSize($size) {
+		
+		$this->addAttribute('size', $size);
+		
+	}
+	
+	public function setMultiple($multiple = true) {
+		
+		if ($multiple) {
+            $this->addAttribute('multiple', 'multiple');
+        } else {
+            $this->delAttribute('multiple');
+        }
+		
+	}
+	
 	public function addGroup($name, $attributes = array()) {
 	
 		$attributes['label'] = $name;
