@@ -76,6 +76,10 @@ class formSelect extends formField {
 		$attributes = $this->attributes;
 		$attributes['name'] = $this->name;
 		
+		if($this->hasAttribute('multiple')) { 
+			$attributes['name'] .= '[]';
+		}
+		
 		$haveGroups = ($this->currentOpt !== 0);
 		
 		$return = '<select '.$this->convertAttr($attributes).'>'.PHP_EOL;

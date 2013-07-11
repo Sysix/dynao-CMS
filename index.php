@@ -1,5 +1,5 @@
-<?php
-
+﻿<?php
+print_r($_POST);
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -15,7 +15,8 @@ require('admin/lib/classes/form/select.php');
 require('admin/lib/classes/form/button.php');
 require('admin/lib/classes/form/raw.php');
 
-sql::connect('localhost', 'c1sysix', 'sysixpw', 'c1dynao');
+//sql::connect('localhost', 'c1sysix', 'sysixpw', 'c1dynao');
+sql::connect('localhost', 'artstd_12', 'MRpf9v17', 'artstd_db11');
 
 $form = new form('news','id=1','index.php');
 
@@ -54,6 +55,8 @@ $field->add('en', 'England');
 $field->add('us', 'USA');
 
 $field = $form->addSelectField('medizin', '');
+$field->setMultiple();
+$field->setSize(5);
 $field->fieldName('Medizin');
 $field->addGroup('Naturelle');
 $field->add('wurzel', 'Wurzel');
@@ -66,4 +69,5 @@ $form->addHiddenField('id', 1);
 
 echo $form->show();
 
+print_r($form);
 ?>
