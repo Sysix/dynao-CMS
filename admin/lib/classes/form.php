@@ -39,8 +39,6 @@ class form {
 			//throw new Exception();
 		}
 		
-		$this->setButtons();
-		
 	}
 	
 	
@@ -59,23 +57,15 @@ class form {
 	}
 	
 	public function setButtons() {
+				
+		$this->addSubmitField('save', 'Speichern');
 		
-		$save = $this->addFreeField('save', 'Speichern', 'formText');
-		$save->addAttribute('type', 'submit');
-		$this->buttons[] = $save;
-		
-		if($this->mode == 'edit') {
-			
-			$save_back = $this->addFreeField('save-back', 'Übernehmen', 'formText');
-			$save_back->addAttribute('type', 'submit');
-			$this->buttons[] = $save_back;
-			
+		if($this->mode == 'edit') {			
+			$this->addSubmitField('save-back', 'Übernehmen');			
 		}
 		
-		$back = $this->addFreeField('back', 'Zurück', 'formText');
-		$back->addAttribute('type', 'button');
-		$back->addAttribute('onlick', 'history.go(-1);return true;');
-		$this->buttons[] = $back;
+		$back = $this->addButtonField('save-back', 'Zurück');
+		$back->addAttribute('onlick', 'history.go(-1)');
 		
 	}
 	
@@ -88,7 +78,7 @@ class form {
 	// Ein Element hinzufügen
 	private function addField($name, $value, $class, $attributes = array()) {
 		
-		$field =  $this->addFreeField($name, $value, $class, $attributes);
+		$field = new $class($name, $value, $attributes);
 		$this->return[] = $field;
 		
 		return $field;
@@ -116,6 +106,39 @@ class form {
 		$this->buttons[] = $field;
 		return $field;
 				
+	}
+	
+	public function addSubmitField($name, $value, $attributes = array(), $toButtons = true) {
+		
+		$attributes['type'] = 'submit';
+		$field = $this->addFreeField($name, $value, 'formButton', $attributes);
+		if($toButtons) {
+			$this->buttons[] = $field;
+		}
+		return $field;
+		
+	}
+	
+	public function addButtonField($name, $value, $attributes = array(), $toButtons = true) {
+		
+		$attributes['type'] = 'button';
+		$field = $this->addFreeField($name, $value, 'formButton', $attributes);
+		if($toButtons) {
+			$this->buttons[] = $field;
+		}
+		return $field;
+		
+	}
+	
+	public function addResetField($name, $value, $attributes = array(), $toButtons = true) {
+		
+		$attributes['type'] = 'reset';
+		$field = $this->addFreeField($name, $value, 'formButton', $attributes);
+		if($toButtons) {
+			$this->buttons[] = $field;
+		}
+		return $field;
+		
 	}
 	
 	public function addTextareaField($name, $value, $attributes = array()) {
@@ -187,6 +210,9 @@ class form {
 			$return .= '</tr>'.PHP_EOL;	
 			
 		}
+		
+		
+		$this->setButtons();
 		
 		$return .='<tr>';
 		$return .='<td></td>';

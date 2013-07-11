@@ -12,6 +12,7 @@ require('admin/lib/classes/form/textarea.php');
 require('admin/lib/classes/form/radio.php');
 require('admin/lib/classes/form/checkbox.php');
 require('admin/lib/classes/form/select.php');
+require('admin/lib/classes/form/button.php');
 require('admin/lib/classes/form/raw.php');
 
 sql::connect('localhost', 'c1sysix', 'sysixpw', 'c1dynao');
@@ -30,8 +31,6 @@ $field->fieldName('Infotext-de');
 
 $field = $form->addPasswordField('pwd', $form->get('pwd'));
 $field->fieldName('Passwort');
-
-$field = $form->addHiddenField('id', 3);
 
 $field = $form->addCheckboxField('personen', '|1|2|3|5|');
 $field->fieldName('Personen');
