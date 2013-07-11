@@ -28,10 +28,10 @@ class formSelect extends formField {
 	public function setMultiple($multiple = true) {
 		
 		if ($multiple) {
-            $this->addAttribute('multiple', 'multiple');
-        } else {
-            $this->delAttribute('multiple');
-        }
+			$this->addAttribute('multiple', 'multiple');
+		} else {
+			$this->delAttribute('multiple');
+		}
 		
 	}
 	
