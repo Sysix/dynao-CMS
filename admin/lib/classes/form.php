@@ -106,6 +106,14 @@ class form {
 		
 	}
 	
+	public function addSelectField($name, $value, $attributes = array()) {
+		
+		$field = $this->addField($name, $value, 'formSelect', $attributes);
+		$field->setSelected($value);
+		return $field;
+		
+	}
+	
 	public function addRawField($value) {
 		
 		return $this->addField('', $value, 'formRaw');

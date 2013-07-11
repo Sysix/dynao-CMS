@@ -11,6 +11,7 @@ require('admin/lib/classes/form/text.php');
 require('admin/lib/classes/form/textarea.php');
 require('admin/lib/classes/form/radio.php');
 require('admin/lib/classes/form/checkbox.php');
+require('admin/lib/classes/form/select.php');
 require('admin/lib/classes/form/raw.php');
 
 sql::connect('localhost', 'c1sysix', 'sysixpw', 'c1dynao');
@@ -45,6 +46,22 @@ $field->add(0, 'Ja');
 
 $field = $form->addRawField('Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.');
 $field->fieldName('Informationen');
+
+$field = $form->addSelectField('land', '');
+$field->fieldName('Land');
+$field->add('', 'Bitte wählen Sie aus!');
+$field->add('de', 'Deutschland');
+$field->add('en', 'England');
+$field->add('us', 'USA');
+
+$field = $form->addSelectField('medizin', '');
+$field->fieldName('Medizin');
+$field->addGroup('Naturelle');
+$field->add('wurzel', 'Wurzel');
+$field->add('kraut', 'Heilkäruter');
+$field->addGroup('Chemische');
+$field->add('antibio', 'Antibiotika');
+$field->add('tabletten', 'Andere Tabletten');
 
 echo $form->show();
 
