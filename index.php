@@ -5,6 +5,7 @@ ini_set('display_errors', 1);
 
 require('admin/lib/classes/sql.php');
 require('admin/lib/classes/form.php');
+require('admin/lib/classes/type.php');
 
 require('admin/lib/classes/form/fields.php');
 require('admin/lib/classes/form/text.php');
@@ -16,6 +17,8 @@ require('admin/lib/classes/form/button.php');
 require('admin/lib/classes/form/raw.php');
 
 sql::connect('localhost', 'c1sysix', 'sysixpw', 'c1dynao');
+
+echo type::super('title', 'string', 'defaultwert');
 
 $form = new form('news','id=1','index.php');
 
