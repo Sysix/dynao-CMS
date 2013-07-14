@@ -16,57 +16,46 @@ require('admin/lib/classes/form/select.php');
 require('admin/lib/classes/form/button.php');
 require('admin/lib/classes/form/raw.php');
 
-sql::connect('localhost', 'c1sysix', 'sysixpw', 'c1dynao');
+sql::connect('localhost', 'dynao_user', 'dasisteinpasswort', 'dynao');
 
-echo type::super('title', 'string', 'defaultwert');
+$action = type::super('action', 'string');
+$id = type::super('id', 'int', 0);
 
-$form = new form('news','id=1','index.php');
-
-$field = $form->addTextField('title', $form->get('title'), array('class'=>'text'));
-$field->fieldName('News-Titel');
-$field->setSuffix('<small>max. 50 Buchstaben</small>');
-
-$field = $form->addTextareaField('text', $form->get('text'));
-$field->fieldName('Infotext');
-
-$field = $form->addTextareaField('text-de', 'Vorgefertigter Text');
-$field->fieldName('Infotext-de');
-
-$field = $form->addPasswordField('pwd', $form->get('pwd'));
-$field->fieldName('Passwort');
-
-$field = $form->addCheckboxField('personen', '|1|2|3|5|');
-$field->fieldName('Personen');
-foreach(range(1,8) as $val) {
-	$field->add($val, 'Person #'.$val);
+if($action == 'save' || $action == 'save-edit') {
+	
+	$sql = new sql();	
+	$sql->setTable('news');
+	$types = array('title'=>'string', 'text'=>'string');
+					
+	$sql->getPosts($types);
+	$sql->addPost('date', time());
+	
+	
+	if($action == 'save-edit') {
+		$sql->setWhere('id='.$id);
+		$sql->update();
+	} else {
+		$sql->save();	
+	}
+		
 }
 
-$field = $form->addRadioField('mail', 0);
-$field->fieldName('Mail Verstecken?');
-$field->add(1, 'Nein');
-$field->add(0, 'Ja');
+if($action == 'add' ||$action == 'edit') {
 
-$field = $form->addRawField('Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.');
-$field->fieldName('Informationen');
-
-$field = $form->addSelectField('land', '');
-$field->fieldName('Land');
-$field->add('', 'Bitte wählen Sie aus!');
-$field->add('de', 'Deutschland');
-$field->add('en', 'England');
-$field->add('us', 'USA');
-
-$field = $form->addSelectField('medizin', '');
-$field->fieldName('Medizin');
-$field->addGroup('Naturelle');
-$field->add('wurzel', 'Wurzel');
-$field->add('kraut', 'Heilkäruter');
-$field->addGroup('Chemische');
-$field->add('antibio', 'Antibiotika');
-$field->add('tabletten', 'Andere Tabletten');
-
-$form->addHiddenField('id', 1);
-
-echo $form->show();
+	$form = new form('news','id='.$id,'index.php');
+	
+	$field = $form->addTextField('title', $form->get('title'));
+	$field->fieldName('News-Titel');
+	
+	$field = $form->addTextareaField('text', $form->get('text'));
+	$field->fieldName('Infotext');
+	
+	if($action == 'edit') {
+		$form->addHiddenField('id', 1);
+	}
+	
+	echo $form->show();
+	
+}
 
 ?>

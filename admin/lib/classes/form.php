@@ -9,7 +9,7 @@ class form {
 	
 	var $sql;
 	
-	var $mode = 'new';
+	var $mode = 'add';
 	
 	var $return = array();
 	var $buttons = array();
@@ -59,9 +59,11 @@ class form {
 	public function setButtons() {
 				
 		$this->addSubmitField('save', 'Speichern');
+		$this->toAction('save');
 		
-		if($this->mode == 'edit') {			
-			$this->addSubmitField('save-back', 'Übernehmen');			
+		if($this->isEditMode()) {			
+			$this->addSubmitField('save-back', 'Übernehmen');	
+			$this->toAction('save-edit');		
 		}
 		
 		$back = $this->addButtonField('save-back', 'Zurück');
@@ -178,15 +180,27 @@ class form {
 	// Mode setzten
 	public function setMode($mode) {
 	
-		if(in_array($mode, array('new', 'edit'))) {
+		if(in_array($mode, array('add', 'edit'))) {
 			
 			$this->mode = $mode;
 				
-		} else {
-			
-			// new Exception();	
-			
+		} else {			
+			// new Exception();				
 		}
+		
+	}
+	
+	// Post parameter Action setzten
+	public function toAction($action) {
+		
+		$this->addHiddenField('action', $action);
+		
+	}
+	
+	// Ist Edit Mode?
+	public function isEditMode() {
+	
+		return $this->mode == 'edit';
 		
 	}
 	

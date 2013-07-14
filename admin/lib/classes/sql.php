@@ -17,6 +17,11 @@ class sql {
 	// SQL Functionen
 	static $sql;
 	
+	// Zur Speicherung der Einträge
+	var $values = array();
+	var $table;
+	var $where;
+	
 	// Verbindung zur Datenbank
 	static public function connect($host, $user, $pw, $db) {
 	
@@ -105,11 +110,86 @@ class sql {
 		
 	}
 	
-	// ABfrage ob noch der Counter benutzt werden kann
+	// Abfrage ob noch der Counter benutzt werden kann
 	public function isNext() {
 		
 		return $this->counter < $this->num();
 		
+	}
+	
+	//
+	// Methoden zur Speicherung der Einträge
+	// 
+	
+	public function getPosts($post) {
+	
+		if(!is_array($post)) {
+			//throw new Exception();	
+		}
+		
+		foreach($post as $val=>$cast) {
+			$this->values[$val] = type::post($val, $cast, ''); 	
+		}
+		
+		return $this;
+			
+	}
+	
+	public function addPost($name, $val) {
+		
+		$this->values[$name] = $val;
+		
+	}
+	
+	public function delPost($name) {
+	
+		unset($this->values[$name]);
+		
+	}
+	
+	public function setWhere($where) {
+	
+		$this->where = $where;
+		
+		return $this;
+		
+	}
+	
+	public function setTable($table) {
+		
+		$this->table = $table;
+		
+		return $this;
+		
+	}
+	
+	public function save() {
+		
+		$entrys = '';
+		$keys = '';
+		foreach($this->values as $key=>$val) {
+			$keys .= ' `'.$key.'`,';
+			$entrys .= ' "'.$val.'",';				
+		}		
+		
+		$this->query('INSERT INTO `'.$this->table.'` ('.substr($keys, 0, -1).') VALUES ('.substr($entrys, 0, -1).')');
+		
+	}
+	
+	public function update() {
+		
+		$entrys = '';
+		foreach($this->values as $key=>$val) {		
+			$entrys .= ' `'.$key.'` = "'.$val.'",';			
+		}
+		
+		$this->query('UPDATE `'.$this->table.'` SET'.substr($entrys, 0, -1).' WHERE '.$this->where);
+		
+	}
+	
+	public function delete() {
+	
+		$this->query('DELETE FROM `'.$this->table.'` WHERE '.$this->where);
 	}
 
 }
