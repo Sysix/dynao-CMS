@@ -3,12 +3,11 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-
 class table {
 	
 	protected $thead = array();
 	protected $tfoot = array();
-	protected $tbody_array = array();
+	protected $tbody = array();
 	
 	protected $current_section;
 	
@@ -40,8 +39,7 @@ class table {
 				break;
 				
 			default: // tbody
-				$this->tbody_array[] = array();
-				$this->current_section = count($this->tbody_array)-1;
+				$this->current_section = 'tbody';
 		}
 		
 		$ref = $this->getCurrentSection();
@@ -60,7 +58,7 @@ class table {
 		} elseif($this->current_section === 'tfoot') {
 			return $this->tfoot;	
 		} else {
-			return $this->tbody_array[$this->current_section];	
+			return $this->tbody;	
 		}
 	}
 	
@@ -71,7 +69,7 @@ class table {
 		} elseif($this->current_section === 'tfoot') {
 			$this->tfoot = $section;	
 		} else {
-			$this->tbody_array[$this->current_section] = $section;	
+			$this->tbody = $section;	
 		}
 	
 	}
@@ -275,10 +273,7 @@ class table {
 		$return .= $this->getCollsLayout();
 		$return .= $this->getSection($this->thead, 'thead');
 		$return .= $this->getSection($this->tfoot, 'tfoot');		
-		
- 		foreach( $this->tbody_array as $sec ) {
-				$return .= $this->getSection($sec, 'tbody');				
-		}
+		$return .= $this->getSection($this->tbody , 'tbody');				
 		
 		return $this->addTag('table', $this->tableAttr, PHP_EOL.$return);
 		
