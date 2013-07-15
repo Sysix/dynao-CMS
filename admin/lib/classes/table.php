@@ -15,10 +15,13 @@ class table {
 	protected $collsLayout = array();
 	protected $caption = array();
 	
+	protected $sql;
+	var $isSql = false;
+	
 	
 	function __construct($attributes = array()) {
-		// wenn addSection nicht ausgeführt rows zu tbody adden
-		$this->current_section = 0;
+		// wenn addSection nicht ausgeführt rows zu thead adden
+		$this->addSection('thead');
 			
 		$this->tableAttr = $attributes;
 	}
@@ -30,12 +33,13 @@ class table {
 			case 'thead':
 				$this->current_section = 'thead';	
 				break;
+				
 			case 'tfoot':
 				$this->current_section = 'tfoot';
 				break;
 				
 			default: // tbody
-				$this->tbody_array[] = array('rows'=>'');
+				$this->tbody_array[] = array();
 				$this->current_section = count($this->tbody_array)-1;
 		}
 		
@@ -88,7 +92,7 @@ class table {
 		
 	}
 	
-	function getCollsLayout() {
+	protected function getCollsLayout() {
 		
 		$cols = '';
 		foreach($this->collsLayout as $val) {
@@ -114,7 +118,7 @@ class table {
 			
 		} else {
 		
-			return '<'.$name.$attributes.'>'.PHP_EOL;
+			return '<'.$name.$attributes.'>'.$value.PHP_EOL;
 			
 		}
 		
@@ -145,10 +149,35 @@ class table {
 		
 	}
 	
+	public function setSql($query) {
+	
+		$this->sql = new sql();
+		$this->sql->query($query)->result();
+		
+		$this->isSql = true;
+		
+	}
+	
+	public function isNext() {
+	
+		return $this->sql->isNext();
+		
+	}
+	
+	public function get($value) {
+	
+		return $this->sql->get($value);
+		
+	}
+	
 	public function addRow($attributes = array() ) {
 		// rows zur letzten Section hinzufügen
 		
 		$ref = $this->getCurrentSection();
+		
+		// Nächste Zeile == Nächste SQL Eintrag
+		if($this->current_section == 'tbody' && $this->isSql)
+			$this->sql->next();
 		
 		$ref['rows'][] = array(
 			'attr' => $attributes,
@@ -156,6 +185,8 @@ class table {
 		);
 		
 		$this->setCurrentSection($ref);
+		
+		return $this;
 		
 	}
 	
@@ -187,6 +218,22 @@ class table {
 		$ref['rows'][$count-1]['cells'][] = $cell;
 		
 		$this->setCurrentSection($ref);
+		
+		return $this;
+		
+	}
+	
+	public function addCells($values, $attributes = array()) {
+	
+		if(!is_array($values)) return $this;
+		
+		foreach($values as $value) {
+		
+			$this->addCell($value, $attributes);
+			
+		}
+		
+		return $this;
 		
 	}
 	
@@ -248,39 +295,37 @@ $inhalt = array(
 );
 
 
-$tabelle = new table();
-
+$table = new table();
+$table->setSql('SELECT * FROM `job_news`');
 //titel
 
-$tabelle->addCollsLayout('80,20,250,50');
+$table->addCollsLayout('280,20,20,50');
+$table->addCaption('Testtabelle', array('id'=> 'testid', 'class'=>'classtest') );
 
-$tabelle->addCaption('Testtabelle', array('id'=> 'testid', 'class'=>'classtest') );
-
-//section "thead" aufrufen, rows werden dieser dann hinzugefügt
-$tabelle->addSection('thead');
-
-$tabelle->addRow();
-    //Header hinzufügen
-    $tabelle->addCell('Name', array('class'=>'first'));
-    $tabelle->addCell('Anzahl');
-    $tabelle->addCell('Beschreibung');
-	$tabelle->addCell('bla');
+$table->addRow()
+->addCell('Name', array('class'=>'first'))
+->addCell('Anzahl')
+->addCell('Beschreibung')
+->addCell('bla');
     
 //section "tbody" aufrufen, rows werden dieser dann hinzugefügt
-$tabelle->addSection('tbody');
+$table->addSection('tbody');
+
 	//foreach für die Zeilen
-    foreach($inhalt as $produkt) {
-        list($name, $anzahl, $des, $bla) = $produkt;
-        $tabelle->addRow();
-            $tabelle->addCell($name);
-			$tabelle->addCell($anzahl);
-			$tabelle->addCell($des);
-			$tabelle->addCell($bla);
-    }
+while($table->isNext()) {
+	$table->addRow()
+	->addCell($table->get('title'))
+	->addCell($table->get('poster'))
+	->addCell(date('d.m.Y', $table->get('date')))
+	->addCell($table->get('rubric'));
+}
     
-$tabelle->addRow();
-    $tabelle->addCell('testfooter', array('colspan'=>4, 'class'=>'foot'));
+$table->addRow()->addCell('testfooter', array('colspan'=>4, 'class'=>'foot'));
 	   
-echo $tabelle->show();
+echo $table->show();
+
+echo '<pre>';
+print_r($table);
+echo '</pre>';
 
 ?>
