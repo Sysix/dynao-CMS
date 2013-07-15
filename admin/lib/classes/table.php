@@ -3,6 +3,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+
 class table {
 	
 	protected $thead = array();
@@ -170,14 +171,16 @@ class table {
 		
 	}
 	
+	public function next() {
+	
+		$this->sql->next();	
+		
+	}
+	
 	public function addRow($attributes = array() ) {
 		// rows zur letzten Section hinzufügen
 		
 		$ref = $this->getCurrentSection();
-		
-		// Nächste Zeile == Nächste SQL Eintrag
-		if($this->current_section == 'tbody' && $this->isSql)
-			$this->sql->next();
 		
 		$ref['rows'][] = array(
 			'attr' => $attributes,
@@ -251,8 +254,8 @@ class table {
 	
 	protected function getSection($sec, $tag) {
 		
-	if(!count($sec))
-		return '';	
+		if(!count($sec))
+			return '';	
 	
 		$str = '';	
 		foreach($sec['rows'] as $row) {
@@ -288,7 +291,7 @@ class table {
 <?php
 
 $table = new table();
-$table->setSql('SELECT * FROM `job_news`');
+$table->setSql('SELECT * FROM `job_news` ORDER BY date DESC');
 //titel
 
 $table->addCollsLayout('280,20,20,50');
@@ -310,6 +313,8 @@ while($table->isNext()) {
 	->addCell($table->get('poster'))
 	->addCell(date('d.m.Y', $table->get('date')))
 	->addCell($table->get('rubric'));
+	
+	$table->next();
 }
     
 $table->addRow()->addCell('testfooter', array('colspan'=>4, 'class'=>'foot'));
