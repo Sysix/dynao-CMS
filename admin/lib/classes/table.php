@@ -286,14 +286,6 @@ class table {
 ?>
 
 <?php
-//Inhalt als multi array
-$inhalt = array(
-    'test1' => array('Flasche', 2, 'flasche halt', 422),
-    'test2' => array('Eimer', 2, 'eimer voll', 444),
-    'test3' => array('Schale', 2, 'obstschale', 345),
-	'test4' => array('Dose', 2, 'dosenessen', 123)
-);
-
 
 $table = new table();
 $table->setSql('SELECT * FROM `job_news`');
@@ -323,9 +315,5 @@ while($table->isNext()) {
 $table->addRow()->addCell('testfooter', array('colspan'=>4, 'class'=>'foot'));
 	   
 echo $table->show();
-
-echo '<pre>';
-print_r($table);
-echo '</pre>';
 
 ?>
