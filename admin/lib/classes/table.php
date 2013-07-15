@@ -1,5 +1,9 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+
 class table {
 	
 	protected $thead = array();
@@ -8,55 +12,134 @@ class table {
 	
 	protected $current_section;
 	
-	protected $tableStr = '';
+	protected $tableAttr = array();	
+	protected $collsLayout = array();
+	protected $caption = array();
 	
-	function __construct($id = '', $class = '', $attributes= array() ) {
-		// wenn addSection nicht ausgeführt rows zu tbody adden
-		$this->current_section = &$this->tbody_array[0];
-		
-		if(!empty($id))
-			$attributes['id'] = $id;
+	protected $sql;
+	var $isSql = false;
+	
+	
+	function __construct($attributes = array()) {
+		// wenn addSection nicht ausgeführt rows zu thead adden
+		$this->addSection('thead');
 			
-		if(!empty($class)) 
-			$attributes['class'] = $class;
-			
- 		$this->tableStr = PHP_EOL.'<table'.$this->convertAttr($attributes).'>'.PHP_EOL;
+		$this->tableAttr = $attributes;
 	}
 	
 	//rows zu der zuletzt aufgerufenden Section hinzufügen
-	public function addSection($section, $class = '', $attributes = array() ) {
+	public function addSection($section, $attributes = array() ) {
 		
 		switch ($section) {
 			case 'thead':
- 				$ref = &$this->thead;
+				$this->current_section = 'thead';	
 				break;
+				
 			case 'tfoot':
-				$ref = &$this->tfoot;
+				$this->current_section = 'tfoot';
 				break;
 				
 			default: // tbody
-				$ref = &$this->tbody_array[count($this->tbody_array)];
+				$this->tbody_array[] = array();
+				$this->current_section = count($this->tbody_array)-1;
 		}
 		
-		if(!empty($class)) 
-			$attributes['class'] = $class;
+		$ref = $this->getCurrentSection();
 	
 		$ref['attr'] = $attributes;
 		$ref['rows'] = array();
 		
-		$this->current_section = &$ref;
+		$this->setCurrentSection($ref);
 		
 	}
 	
-	public function addCaption($cap, $class = '', $attributes = array() ) {
+	protected function getCurrentSection() {
 		
-		if(!empty($class)) 
-			$attributes['class'] = $class;
+		if($this->current_section === 'thead') {
+			return $this->thead;	
+		} elseif($this->current_section === 'tfoot') {
+			return $this->tfoot;	
+		} else {
+			return $this->tbody_array[$this->current_section];	
+		}
+	}
+	
+	protected function setCurrentSection($section) {
 		
-		$this->tableStr .= '<caption'.$this->convertAttr($attributes).'>'.$cap.'</caption>'.PHP_EOL;
+		if($this->current_section === 'thead') {
+			$this->thead = $section;	
+		} elseif($this->current_section === 'tfoot') {
+			$this->tfoot = $section;	
+		} else {
+			$this->tbody_array[$this->current_section] = $section;	
+		}
+	
+	}
+	
+	public function addCollsLayout($cols) {
+	
+		if(!is_array($cols)) {			
+			
+			$col2 = explode(',', $cols);
+			$cols = array();
+			
+			foreach($col2 as $key=>$val) {			
+				$cols[]['width'] = $val;			
+			}			
+			
+		}
+		
+		$this->collsLayout = $cols;
+		
+	}
+	
+	protected function getCollsLayout() {
+		
+		$cols = '';
+		foreach($this->collsLayout as $val) {
+			$cols .= $this->addTag('col', $val, '', false);
+		}
+		
+		return $this->addTag('colgroup', '', $cols);
+	}
+
+	
+	// Fügt ein HTML Tag hinzu
+	// Name z.B.: td, tr, caption, table,
+	// Value z.B: Inhalt
+	// Attribute
+	// End: true => <tag></tag> false => <tag />
+	protected function addTag($name, $attributes = array(), $value = '', $end = true) {
+		
+		$attributes = $this->convertAttr($attributes);
+		
+		if($end) {
+		
+			return '<'.$name.$attributes.'>'.$value.'</'.$name.'>'.PHP_EOL;	
+			
+		} else {
+		
+			return '<'.$name.$attributes.'>'.$value.PHP_EOL;
+			
+		}
+		
+		
+	}
+	
+	public function addCaption($value, $attributes = array() ) {		
+		$this->caption = array('value'=>$value, 'attr'=>$attributes);
+	}
+	
+	protected function getCaption() {
+		
+		return $this->addTag('caption', $this->caption['attr'], $this->caption['value']);
+		
 	}
 	
 	protected function convertAttr($attributes) {
+		
+		if(!count($attributes) || is_string($attributes))
+			return '';
 		
 		$str = '';
 		foreach($attributes as $key=>$val) {
@@ -67,32 +150,63 @@ class table {
 		
 	}
 	
-	public function addRow($class = '', $attributes = array() ) {
+	public function setSql($query) {
+	
+		$this->sql = new sql();
+		$this->sql->query($query)->result();
+		
+		$this->isSql = true;
+		
+	}
+	
+	public function isNext() {
+	
+		return $this->sql->isNext();
+		
+	}
+	
+	public function get($value) {
+	
+		return $this->sql->get($value);
+		
+	}
+	
+	public function next() {
+	
+		$this->sql->next();	
+		
+	}
+	
+	public function addRow($attributes = array() ) {
 		// rows zur letzten Section hinzufügen
 		
-		if(!empty($class)) 
-			$attributes['class'] = $class;
+		$ref = $this->getCurrentSection();
 		
-		
-		$this->current_section['rows'][] = array(
+		$ref['rows'][] = array(
 			'attr' => $attributes,
 			'cells' => array()
 		);
 		
+		$this->setCurrentSection($ref);
+		
+		return $this;
+		
 	}
 	
-	public function addCell($data = '', $class = '', $type = 'data', $attributes = array() ) {
+	public function addCell($value = '', $attributes = array() ) {
 		
-		if(!empty($class)) 
-			$attributes['class'] = $class;
+		$type = ($this->current_section === 'thead') ? 'th' : 'td';
 		
 		$cell = array(
-			'data' => $data,
+			'value' => $value,
 			'type' => $type,
 			'attr' => $attributes
 		);
 		
-		if(empty($this->current_section['rows'])) {
+		$ref = $this->getCurrentSection();
+		
+		/*
+		if(empty($ref['rows'])) {
 			try {
 				throw new Exception('vor addCell erst addRow');
 			} catch(Exception $ex) {
@@ -100,10 +214,29 @@ class table {
 				echo "<p>Error: $msg</p>";
 			}
 		}
+		*/
 		
 		// zur letzten row der letzten section hinzufügen
-		$count = count( $this->current_section['rows'] );
-		$this->current_section['rows'][$count-1]['cells'][] = $cell;
+		$count = count( $ref['rows'] );
+		$ref['rows'][$count-1]['cells'][] = $cell;
+		
+		$this->setCurrentSection($ref);
+		
+		return $this;
+		
+	}
+	
+	public function addCells($values, $attributes = array()) {
+	
+		if(!is_array($values)) return $this;
+		
+		foreach($values as $value) {
+		
+			$this->addCell($value, $attributes);
+			
+		}
+		
+		return $this;
 		
 	}
 	
@@ -112,8 +245,7 @@ class table {
 		$str = '';
 		
 		foreach( $cells as $cell ) {
-			$tag = ($cell['type'] == 'data')? 'td': 'th';			
-			$str .= '<'.$tag.$this->convertAttr($cell['attr']).'>'.$cell['data'].'</'.$tag.'>'.PHP_EOL;
+			$str .= $this->addTag($cell['type'], $cell['attr'], $cell['value']);
 		}
 		
 		return $str;
@@ -122,35 +254,33 @@ class table {
 	
 	protected function getSection($sec, $tag) {
 		
- 	$attr = !empty($sec['attr'])? $this->convertAttr($sec['attr']) : '';
+		if(!count($sec))
+			return '';	
 	
-	$str = '<'.$tag.$attr.'>'.PHP_EOL;
-	
+		$str = '';	
 		foreach($sec['rows'] as $row) {
-			$str .= '<tr'.$this->convertAttr($row['attr']).'>'.PHP_EOL.$this->getRowCells($row['cells']).'</tr>'.PHP_EOL;
-		}
+			$str .= $this->addTag('tr', $row['attr'], $this->getRowCells($row['cells']));
+		}		
 		
-		$str .= '</'.$tag.'>'.PHP_EOL;
-		
-		return $str;
+		return $this->addTag($tag, $sec['attr'], $str);
 		
 	}
 	
 	public function show() {
 		
-		// section und die rows/cells 
-		$this->tableStr .= !empty($this->thead)? $this->getSection($this->thead, 'thead'): '';
-		$this->tableStr .= !empty($this->tfoot)? $this->getSection($this->tfoot, 'tfoot'): '';
+				
+		$return = $this->getCaption();
+		
+		
+		$return .= $this->getCollsLayout();
+		$return .= $this->getSection($this->thead, 'thead');
+		$return .= $this->getSection($this->tfoot, 'tfoot');		
 		
  		foreach( $this->tbody_array as $sec ) {
-			
-			if(!empty($sec))
-				$this->tableStr .= $this->getSection($sec, 'tbody');
-				
+				$return .= $this->getSection($sec, 'tbody');				
 		}
 		
- 		$this->tableStr .= '</table>'.PHP_EOL;
-		return $this->tableStr;
+		return $this->addTag('table', $this->tableAttr, PHP_EOL.$return);
 		
 	}
 	
@@ -159,44 +289,36 @@ class table {
 ?>
 
 <?php
-//Inhalt als multi array
-$inhalt = array(
-    'test1' => array('Flasche', 2, 'flasche halt', 422),
-    'test2' => array('Eimer', 2, 'eimer voll', 444),
-    'test3' => array('Schale', 2, 'obstschale', 345),
-	'test4' => array('Dose', 2, 'dosenessen', 123)
-);
 
-
-$tabelle = new table();
-
+$table = new table();
+$table->setSql('SELECT * FROM `job_news` ORDER BY date DESC');
 //titel
-$tabelle->addCaption('Testtabelle', 'classtest', array('id'=> 'testid') );
 
-//section "thead" aufrufen, rows werden dieser dann hinzugefügt
-$tabelle->addSection('thead');
+$table->addCollsLayout('280,20,20,50');
+$table->addCaption('Testtabelle', array('id'=> 'testid', 'class'=>'classtest') );
 
-$tabelle->addRow();
-    //Header hinzufügen
-    $tabelle->addCell('Name', 'first', 'header');
-    $tabelle->addCell('Anzahl', '', 'header');
-    $tabelle->addCell('Beschreibung', '', 'header');
-	$tabelle->addCell('bla', '', 'header');
+$table->addRow()
+->addCell('Name', array('class'=>'first'))
+->addCell('Anzahl')
+->addCell('Beschreibung')
+->addCell('bla');
     
 //section "tbody" aufrufen, rows werden dieser dann hinzugefügt
-$tabelle->addSection('tbody');
+$table->addSection('tbody');
+
 	//foreach für die Zeilen
-    foreach($inhalt as $produkt) {
-        list($name, $anzahl, $des, $bla) = $produkt;
-        $tabelle->addRow();
-            $tabelle->addCell($name);
-			$tabelle->addCell($anzahl);
-			$tabelle->addCell($des);
-			$tabelle->addCell($bla);
-    }
+while($table->isNext()) {
+	$table->addRow()
+	->addCell($table->get('title'))
+	->addCell($table->get('poster'))
+	->addCell(date('d.m.Y', $table->get('date')))
+	->addCell($table->get('rubric'));
+	
+	$table->next();
+}
     
-$tabelle->addRow();
-    $tabelle->addCell('testfooter', 'foot', 'data', array('colspan'=>4) );
-    
-echo $tabelle->show();
+$table->addRow()->addCell('testfooter', array('colspan'=>4, 'class'=>'foot'));
+	   
+echo $table->show();
+
 ?>
