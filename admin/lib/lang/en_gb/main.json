@@ -1,0 +1,18 @@
+{
+	#Einstellungen
+	"lang" :			"English",
+	"dateformat" :		"%d.$m.$Y",
+	
+	"yes" :				"yes",
+	"no" :				"no",
+	"name" :			"name",
+	
+	# Aktionen
+	"update" :			"update",
+	"add" :				"add",
+	"edit" :			"edit",
+	"delete" :			"delete",
+	"save" :			"save",
+	"back" :			"back",
+	"apply" :			"apply"
+}

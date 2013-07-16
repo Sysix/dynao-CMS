@@ -1,0 +1,18 @@
+{
+	#Einstellungen
+	"lang" : 			"Deutsch",
+	"dateformat" :		"%d.%m.%Y",
+	
+	"yes" :				"ja",
+	"no" :				"nein",
+	"name" :			"Name",
+	
+	# Aktionen
+	"update" :			"aktualisieren",
+	"add" :				"hinzufügen",
+	"edit" :			"editieren",
+	"delete" :			"löschen",
+	"save" :			"speichern",
+	"back" :			"zurück",
+	"apply" :			"übernehmen"
+}

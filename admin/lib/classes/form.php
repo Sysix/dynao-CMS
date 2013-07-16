@@ -58,15 +58,15 @@ class form {
 	
 	public function setButtons() {
 				
-		$this->addSubmitField('save', 'Speichern');
+		$this->addSubmitField('save', lang::get('save'));
 		$this->toAction('save');
 		
 		if($this->isEditMode()) {			
-			$this->addSubmitField('save-back', 'Übernehmen');	
+			$this->addSubmitField('save-back', lang::get('apply'));	
 			$this->toAction('save-edit');		
 		}
 		
-		$back = $this->addButtonField('save-back', 'Zurück');
+		$back = $this->addButtonField('save-back', lang::get('back'));
 		$back->addAttribute('onlick', 'history.go(-1)');
 		
 	}
