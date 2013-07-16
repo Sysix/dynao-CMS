@@ -3,18 +3,63 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require('admin/lib/classes/sql.php');
-require('admin/lib/classes/form.php');
-require('admin/lib/classes/type.php');
+// Globale Variablen
+$mainClasses = array();
+$subClasses = array();
 
-require('admin/lib/classes/form/fields.php');
-require('admin/lib/classes/form/text.php');
-require('admin/lib/classes/form/textarea.php');
-require('admin/lib/classes/form/radio.php');
-require('admin/lib/classes/form/checkbox.php');
-require('admin/lib/classes/form/select.php');
-require('admin/lib/classes/form/button.php');
-require('admin/lib/classes/form/raw.php');
+function selectClasses($dir) {
+
+    // Globale Variablen einbezihene
+    global $mainClasses;
+    global $subClasses;
+
+    // Ordner öffnen und Dateien in $files speichern
+    $files = scandir($dir);
+
+    // Jede Datei durchforten
+    foreach($files as $file) {
+
+        // Unzulässige Dateien
+        if(in_array($file, array('.', '..'))) {
+            continue;   
+        }
+
+        // Ist Ordner? Wenn ja dann Function erneut aufrufen
+        if(strpos($file, '.php') === false) {
+            selectClasses($dir.'/'.$file);
+            continue;
+        }       
+
+        // Datei einlesen und die ersten 200 Zeichen schauen ob es eine Kindklasse ist oder nicht
+        $section = file_get_contents($dir.'/'.$file, NULL, NULL, 0, 200);
+        $section = preg_match('/class (\w+) extends (\w+)/', $section, $treffer);
+        if(isset($treffer[1])) { # Ist Kindklasse
+            $subClasses[] = $dir.'/'.$file; 
+        } else { # Ist Vaterklasse
+            $mainClasses[] = $dir.'/'.$file;    
+        }
+
+    }
+
+}
+
+// Funktion öffnen
+selectClasses('admin/lib/classes');
+
+// Hauptklasse einbinden
+foreach($mainClasses as $class) {
+    require_once($class);
+}
+
+
+// Kindklassen einbinden
+foreach($subClasses as $class) {
+    require_once($class);
+}
+
+lang::setDefault();
+lang::setLang('de_de');
+
 
 sql::connect('localhost', 'dynao_user', 'dasisteinpasswort', 'dynao');
 
@@ -51,10 +96,39 @@ if($action == 'add' ||$action == 'edit') {
 	$field->fieldName('Infotext');
 	
 	if($action == 'edit') {
-		$form->addHiddenField('id', 1);
+		$form->addHiddenField('id', $id);
 	}
 	
 	echo $form->show();
+	
+} else {
+
+	$table = new table();
+	
+	$table->addRow()
+	->addCell('Titel')
+	->addCell('Datum')
+	->addCell('Aktion');
+	
+	$table->addSection('tbody');
+	
+	$table->setSql('SELECT * FROM news ORDER BY date DESC');
+	while($table->isNext()) {
+		
+		$id = $table->get('id');
+		
+		$edit = '<a href="index.php?action=edit&amp;id='.$id.'">'.lang::get('edit').'</a>';
+		$delete = '<a href="index.php?action=del&amp;id='.$id.'">'.lang::get('delete').'</a>';
+		
+		$table->addRow()
+		->addCell($table->get('title'))
+		->addCell(date('d.m.Y', $table->get('date')))	
+		->addCell($edit.' | '.$delete);
+		
+		$table->next();	
+	}
+	
+	echo $table->show();
 	
 }
 

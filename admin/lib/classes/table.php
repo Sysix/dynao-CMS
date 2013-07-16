@@ -1,8 +1,4 @@
 <?php
-
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 class table {
 	
 	protected $thead = array();
@@ -130,7 +126,11 @@ class table {
 	
 	protected function getCaption() {
 		
-		return $this->addTag('caption', $this->caption['attr'], $this->caption['value']);
+		if(count($this->caption)) {
+			return $this->addTag('caption', $this->caption['attr'], $this->caption['value']);
+		}
+		
+		return '';
 		
 	}
 	
@@ -264,11 +264,9 @@ class table {
 		
 	}
 	
-	public function show() {
-		
+	public function show() {		
 				
 		$return = $this->getCaption();
-		
 		
 		$return .= $this->getCollsLayout();
 		$return .= $this->getSection($this->thead, 'thead');
@@ -280,40 +278,5 @@ class table {
 	}
 	
 }
-
-?>
-
-<?php
-
-$table = new table();
-$table->setSql('SELECT * FROM `job_news` ORDER BY date DESC');
-//titel
-
-$table->addCollsLayout('280,20,20,50');
-$table->addCaption('Testtabelle', array('id'=> 'testid', 'class'=>'classtest') );
-
-$table->addRow()
-->addCell('Name', array('class'=>'first'))
-->addCell('Anzahl')
-->addCell('Beschreibung')
-->addCell('bla');
-    
-//section "tbody" aufrufen, rows werden dieser dann hinzugefügt
-$table->addSection('tbody');
-
-	//foreach für die Zeilen
-while($table->isNext()) {
-	$table->addRow()
-	->addCell($table->get('title'))
-	->addCell($table->get('poster'))
-	->addCell(date('d.m.Y', $table->get('date')))
-	->addCell($table->get('rubric'));
-	
-	$table->next();
-}
-    
-$table->addRow()->addCell('testfooter', array('colspan'=>4, 'class'=>'foot'));
-	   
-echo $table->show();
 
 ?>
