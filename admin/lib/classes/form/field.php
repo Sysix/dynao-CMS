@@ -63,12 +63,8 @@ class formField {
 	}
 	
 	public function delAttribute($name) {
-		
-		if($this->hasAttribute($name)) {
 			
-			unset($this->attributes[$name]);
-				
-		}
+		unset($this->attributes[$name]);
 		
 	}
 	

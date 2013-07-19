@@ -14,7 +14,7 @@ sql::connect('localhost', 'dynao_user', 'dasisteinpasswort', 'dynao');
 $action = type::super('action', 'string');
 $id = type::super('id', 'int', 0);
 
-if($action == 'save' || $action == 'save-edit') {
+if(in_array($action, array('save', 'save-edit', 'delete'))) {
 	
 	$sql = new sql();	
 	$sql->setTable('news');
@@ -27,6 +27,9 @@ if($action == 'save' || $action == 'save-edit') {
 	if($action == 'save-edit') {
 		$sql->setWhere('id='.$id);
 		$sql->update();
+	} elseif($acton == 'delete') {
+		$sql->setWhere('id='.$id);
+		$sql->delete();
 	} else {
 		$sql->save();	
 	}
@@ -72,7 +75,7 @@ if($action == 'add' ||$action == 'edit') {
 		$id = $table->get('id');
 		
 		$edit = '<a href="index.php?action=edit&amp;id='.$id.'">'.lang::get('edit').'</a>';
-		$delete = '<a href="index.php?action=del&amp;id='.$id.'">'.lang::get('delete').'</a>';
+		$delete = '<a href="index.php?action=delete&amp;id='.$id.'">'.lang::get('delete').'</a>';
 		
 		$table->addRow()
 		->addCell($table->get('title'))

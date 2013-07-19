@@ -85,21 +85,21 @@ class form {
 	public function addTextField($name, $value, $attributes = array()) {
 		
 		$attributes['type'] = 'text';
-		return $this->addField($name, $value, 'formText', $attributes);
+		return $this->addField($name, $value, 'formInput', $attributes);
 		
 	}
 	
 	public function addPasswordField($name, $value, $attributes = array()) {
 		
 		$attributes['type'] = 'password';
-		return $this->addField($name, $value, 'formText', $attributes);
+		return $this->addField($name, $value, 'formInput', $attributes);
 		
 	}
 	
 	public function addHiddenField($name, $value, $attributes = array()) {
 		
 		$attributes['type'] = 'hidden';
-		$field = $this->addFreeField($name, $value, 'formText', $attributes);
+		$field = $this->addFreeField($name, $value, 'formInput', $attributes);
 		$this->buttons[] = $field;
 		return $field;
 				

@@ -29,11 +29,9 @@ class formCheckbox extends formField {
 			
 	}
 	
-	public function del($name) {
+	public function del($name) {	
 		
-		if(isset($this->output[$name])) {			
-			unset($this->output[$name]);				
-		}
+			unset($this->output[$name]);
 			
 	}
 	

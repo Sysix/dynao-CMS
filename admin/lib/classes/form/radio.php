@@ -19,9 +19,7 @@ class formRadio extends formField {
 	
 	public function del($name) {
 		
-		if(isset($this->output[$name])) {			
-			unset($this->output[$name]);				
-		}
+		unset($this->output[$name]);		
 			
 	}
 	

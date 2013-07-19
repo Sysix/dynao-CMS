@@ -1,6 +1,6 @@
 <?php
 
-class formText extends formField {
+class formInput extends formField {
 	
 	public function get() {		
 		

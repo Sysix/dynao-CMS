@@ -107,16 +107,9 @@ class table {
 		
 		$attributes = $this->convertAttr($attributes);
 		
-		if($end) {
+		$endtag = ($end) ? '</'.$name.'>' : '';
 		
-			return '<'.$name.$attributes.'>'.$value.'</'.$name.'>'.PHP_EOL;	
-			
-		} else {
-		
-			return '<'.$name.$attributes.'>'.$value.PHP_EOL;
-			
-		}
-		
+		return '<'.$name.$attributes.'>'.$value.$endtag.PHP_EOL;		
 		
 	}
 	
