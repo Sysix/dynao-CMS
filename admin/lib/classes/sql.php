@@ -165,25 +165,25 @@ class sql {
 	
 	public function save() {
 		
-		$entrys = '';
-		$keys = '';
-		foreach($this->values as $key=>$val) {
-			$keys .= ' `'.$key.'`,';
-			$entrys .= ' "'.$val.'",';				
-		}		
+		$keys = '`'.implode('`,`', array_keys($this->values)).'`';
+		$entrys = '"'.implode('","', $this->values).'"';
 		
-		$this->query('INSERT INTO `'.$this->table.'` ('.substr($keys, 0, -1).') VALUES ('.substr($entrys, 0, -1).')');
+		$this->query('INSERT INTO `'.$this->table.'` ('.$keys.') VALUES ('.$entrys.')');
 		
 	}
 	
 	public function update() {
 		
 		$entrys = '';
-		foreach($this->values as $key=>$val) {		
-			$entrys .= ' `'.$key.'` = "'.$val.'",';			
+		$start = true;
+		
+		foreach($this->values as $key=>$val) {
+			$suf = ($start) ? ',' : '';		
+			$entrys .= ' `'.$key.'` = "'.$val.'"'.$suf;	
+			$start = false;		
 		}
 		
-		$this->query('UPDATE `'.$this->table.'` SET'.substr($entrys, 0, -1).' WHERE '.$this->where);
+		$this->query('UPDATE `'.$this->table.'` SET'.$entrys.' WHERE '.$this->where);
 		
 	}
 	

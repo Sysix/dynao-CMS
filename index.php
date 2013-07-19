@@ -30,6 +30,12 @@ if($action == 'save' || $action == 'save-edit') {
 	} else {
 		$sql->save();	
 	}
+	
+	$save_back = type::post('save-back', 'string', false);
+	
+	if($save_back !== false) {
+		$action = 'edit';
+	}
 		
 }
 
@@ -79,4 +85,5 @@ if($action == 'add' ||$action == 'edit') {
 	echo $table->show();
 	
 }
+
 ?>

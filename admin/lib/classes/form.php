@@ -25,19 +25,14 @@ class form {
 		$this->action = $action;
 		
 		$sql = new sql();
-		$this->sql = $sql->query('SELECT * FROM '.$table.' WHERE '.$where.' LIMIT 1');
+		$this->sql = $sql->query('SELECT * FROM '.$table.' WHERE '.$where.' LIMIT 1');		
 		
-		if(sql::$sql->field_count) {
+		$this->sql->result();
 			
-			$this->sql->result();
-			
-			if($this->sql->num() == 1) {
-				$this->setMode('edit');
-			}
-			
-		} else {
-			//throw new Exception();
+		if($this->sql->num() == 1) {
+			$this->setMode('edit');
 		}
+			
 		
 	}
 	
