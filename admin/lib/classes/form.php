@@ -14,6 +14,10 @@ class form {
 	var $return = array();
 	var $buttons = array();
 	
+	// Beim Senden schauen ob die Forumluar-Einträge schon übernommen worden sind Methode: setPostsVar
+	var $isGetPosts = false;
+	var $isSubmit;
+	
 	public function __construct($table, $where, $action, $method = 'post') {
 		
 		// Gültige Methode?		
@@ -28,11 +32,14 @@ class form {
 		$this->sql = $sql->query('SELECT * FROM '.$table.' WHERE '.$where.' LIMIT 1');		
 		
 		$this->sql->result();
-			
+		
 		if($this->sql->num() == 1) {
 			$this->setMode('edit');
+			$this->setWhere($where);
 		}
-			
+		
+		$this->setTable($table);
+
 		
 	}
 	
@@ -40,6 +47,13 @@ class form {
 	// Ausgabe der SQL Spalte
 	// Falls nicht drin, dann $default zurück
 	public function get($value, $default = false) {
+		
+		// Falls per Post übermittelt
+		if(isset($_POST[$value])) {
+			
+			return $_POST[$value];
+			
+		}
 		
 		if($this->sql->get($value))	{
 		
@@ -61,7 +75,7 @@ class form {
 			$this->toAction('save-edit');		
 		}
 		
-		$back = $this->addButtonField('save-back', lang::get('back'));
+		$back = $this->addButtonField('back', lang::get('back'));
 		$back->addAttribute('onlick', 'history.go(-1)');
 		
 	}
@@ -99,9 +113,7 @@ class form {
 	public function addHiddenField($name, $value, $attributes = array()) {
 		
 		$attributes['type'] = 'hidden';
-		$field = $this->addFreeField($name, $value, 'formInput', $attributes);
-		$this->buttons[] = $field;
-		return $field;
+		return $this->addField($name, $value, 'formInput', $attributes);
 				
 	}
 	
@@ -199,40 +211,169 @@ class form {
 		
 	}
 	
+	// Abfragen ob Formular abgeschickt
+	public function isSubmit() {
+		
+		// Wurde schon isSubmit ausgeführt? dann schnelles Return
+		if($this->isSubmit === true || $this->isSubmit === false) {
+			return $this->isSubmit;
+				
+		}
+		
+		
+		$save = false;
+		$save_edit = false;
+		
+		$save = type::post('save', 'string', false);
+
+		if($this->isEditMode()) {
+			$save_edit = type::post('save-back', 'string', false);	
+		}
+
+		if($save !== false || $save_edit !== false) {
+			
+			if(!$this->isGetPosts) {
+		
+				$this->setPostsVar();
+				$this->isGetPosts = true;
+				
+			}
+			
+			$this->isSubmit = true;
+			
+			return true;
+				
+				
+		}
+		
+		$this->isSubmit = false;
+		
+		return false;
+		
+		
+	}
+	
+	// Tabelle setzen
+	public function setTable($table) {
+	
+		$this->sql->setTable($table);
+			
+	}
+	
+	// Where setzten
+	public function setWhere($where) {
+	
+		$this->sql->setWhere($where);
+		
+	}
+	
+	public function setPostsVar() {
+	
+		foreach($this->return as $ausgabe) {
+			
+			if($ausgabe->getAttribute('type') == 'hidden') {
+				continue;	
+			}
+		
+			$name = $ausgabe->getName();
+			
+			if($name != '') {
+				
+				$val = type::post($name, 'string', '');
+				
+				// Ist ein Array-Element?
+				if(strpos($name, '[]') !== false) {
+					
+					$val = type::post($name, 'array', '');
+					$val = '|'.implode('|', $val).'|';
+					
+				}
+				
+				$this->addPost($name,  $val);
+			}
+			
+		}
+		
+	}
+	
+	public function addPost($name, $val) {
+		
+		$this->sql->addPost($name, $val);
+		
+	}
+	
+	public function delPost($name) {
+		
+		$this->sql->delPost($name);
+		
+	}
+	
+	private function saveForm() {
+	
+		if($this->isEditMode()) {
+			$this->sql->update();
+		} else {
+			$this->sql->save();
+		}
+		
+	}
+	
+	public function isSaveEdit() {
+	
+		return (bool)(type::post('save-back', 'string', false) !== false);
+		
+	}
+	
 	public function show() {
 		
-		$return = '<form action="'.$this->action.'" method="'.$this->method.'">'.PHP_EOL;
-		$return .= '<table>'.PHP_EOL;
+		$this->addHiddenField('action', $this->mode);
+		
+		if($this->isSubmit()) {
+			
+			$this->saveForm();
+			
+			if(!$this->isSaveEdit()) {
+				//
+				$GLOBALS['action'] = '';
+				return;
+			}
+			
+		}
+		
+		
+		$table = new table();
+		$table->addSection('tbody');
+		
+		$buttons_echo = '';
 		
 		foreach($this->return as $ausgabe) {
-		
-			$return .= '<tr>'.PHP_EOL;
 			
-			$return .= '<td>';
-			$return .= $ausgabe->fieldName;
-			$return .= '</td>'.PHP_EOL;
+			if($ausgabe->getAttribute('type') == 'hidden') {
+				
+				$buttons_echo .= $ausgabe->get();
+				
+			} else {
 			
-			$return .= '<td>';
-			$return .= $ausgabe->prefix . $ausgabe->get() . $ausgabe->suffix;
-			$return .= '</td>'.PHP_EOL;
+				$table->addRow()
+				->addCell($ausgabe->fieldName)
+				->addCell($ausgabe->prefix . $ausgabe->get() . $ausgabe->suffix);
+				
+			}
 			
-			$return .= '</tr>'.PHP_EOL;	
-			
-		}
+		}		
 		
+		$this->setButtons();		
 		
-		$this->setButtons();
-		
-		$return .='<tr>';
-		$return .='<td></td>';
-		$return .='<td>';
 		foreach($this->buttons as $buttons) {
-			$return .= $buttons->get();	
+			$buttons_echo .= $buttons->get();	
 		}
-		$return .='</td>';
-		$return .='</tr>';
 		
-		$return .= '</table>'.PHP_EOL;
+		$table->addRow()
+		->addCell()
+		->addCell($buttons_echo);
+		
+		$return = '<form action="'.$this->action.'" method="'.$this->method.'">'.PHP_EOL;
+		$return .= $table->show();		
 		$return .= '</form>';
 		
 		return $return;

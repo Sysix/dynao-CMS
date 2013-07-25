@@ -175,16 +175,14 @@ class sql {
 	public function update() {
 		
 		$entrys = '';
-		$start = true;
 		
 		foreach($this->values as $key=>$val) {
-			$suf = ($start) ? ',' : '';		
-			$entrys .= ' `'.$key.'` = "'.$val.'"'.$suf;	
-			$start = false;		
+			$entrys .= ' `'.$key.'` = "'.$val.'",';
 		}
 		
-		$this->query('UPDATE `'.$this->table.'` SET'.$entrys.' WHERE '.$this->where);
+		$entrys = substr($entrys , 0, -1);		
 		
+		$this->query('UPDATE `'.$this->table.'` SET'.$entrys.' WHERE '.$this->where);
 	}
 	
 	public function delete() {

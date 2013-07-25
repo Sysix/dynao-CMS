@@ -28,8 +28,19 @@ class formSelect extends formField {
 	public function setMultiple($multiple = true) {
 		
 		if ($multiple) {
+			
+			$this->name .= '[]';
+			 
 			$this->addAttribute('multiple', 'multiple');
+			
 		} else {
+			
+			if(substr($this->name, -2) == '[]') {
+			
+				$this->name = substr($this->name , 0, -2);
+				
+			}
+			
 			$this->delAttribute('multiple');
 		}
 		
@@ -75,10 +86,6 @@ class formSelect extends formField {
 		
 		$attributes = $this->attributes;
 		$attributes['name'] = $this->name;
-		
-		if($this->hasAttribute('multiple')) { 
-			$attributes['name'] .= '[]';
-		}
 		
 		$haveGroups = ($this->currentOpt !== 0);
 		

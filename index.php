@@ -14,35 +14,18 @@ sql::connect('localhost', 'dynao_user', 'dasisteinpasswort', 'dynao');
 $action = type::super('action', 'string');
 $id = type::super('id', 'int', 0);
 
-if(in_array($action, array('save', 'save-edit', 'delete'))) {
+if($action == 'delete') {
 	
-	$sql = new sql();	
-	$sql->setTable('news');
-	$types = array('title'=>'string', 'text'=>'string');
-					
-	$sql->getPosts($types);
-	$sql->addPost('date', time());
-	
-	
-	if($action == 'save-edit') {
-		$sql->setWhere('id='.$id);
-		$sql->update();
-	} elseif($acton == 'delete') {
+		$sql = new sql();
+		$sql->setTable('news');
 		$sql->setWhere('id='.$id);
 		$sql->delete();
-	} else {
-		$sql->save();	
-	}
-	
-	$save_back = type::post('save-back', 'string', false);
-	
-	if($save_back !== false) {
-		$action = 'edit';
-	}
+		
+		$action = '';
 		
 }
 
-if($action == 'add' ||$action == 'edit') {
+if($action == 'add' || $action == 'edit') {
 
 	$form = new form('news','id='.$id,'index.php');
 	
@@ -56,9 +39,17 @@ if($action == 'add' ||$action == 'edit') {
 		$form->addHiddenField('id', $id);
 	}
 	
+	if($form->isSubmit()) {
+		
+		$form->addPost('date', time());
+
+	}	
+	
 	echo $form->show();
 	
-} else {
+}
+	
+if($action == '') {
 
 	$table = new table();
 	
