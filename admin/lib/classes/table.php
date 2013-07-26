@@ -25,17 +25,14 @@ class table {
 	//rows zu der zuletzt aufgerufenden Section hinzufügen
 	public function addSection($section, $attributes = array() ) {
 		
-		switch ($section) {
-			case 'thead':
-				$this->current_section = 'thead';	
-				break;
-				
-			case 'tfoot':
-				$this->current_section = 'tfoot';
-				break;
-				
-			default: // tbody
-				$this->current_section = 'tbody';
+		if(in_array($section, array('thead', 'tfoot'))) {
+			
+			$this->current_section = $section;
+			
+		} else {
+			
+			$this->current_section = 'tbody';
+			
 		}
 		
 		$ref = $this->getCurrentSection();

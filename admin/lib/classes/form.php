@@ -69,11 +69,9 @@ class form {
 				
 		$this->addSubmitField('save', lang::get('save'));
 		$this->toAction('save');
-		
-		if($this->isEditMode()) {			
-			$this->addSubmitField('save-back', lang::get('apply'));	
-			$this->toAction('save-edit');		
-		}
+			
+		$this->addSubmitField('save-back', lang::get('apply'));	
+		$this->toAction('save-edit');		
 		
 		$back = $this->addButtonField('back', lang::get('back'));
 		$back->addAttribute('onlick', 'history.go(-1)');
