@@ -1,81 +1,73 @@
 <?php
 
-	class cache {
+class cache {
+	
+	const cacheDir = "admin/generated/cache/";
+	static protected $cache = true;
+	static protected $time = 100;
+	
+	// Cache true/false
+	static public function setCache($bool) {
+		self::$cache = (bool)$bool;
+	}
+	
+	//Namen setzen
+	static public function getFileName($id, $table) {
+		return md5($id.$table).'.cache';
+	}
+	
+	//File löschen
+	static public function deleteFile($file) {
 		
-		static protected $cache = false;
-		static protected $cacheDir = "admin/generated/cache/";
-		static protected $cacheTime = 30;
-		static protected $cacheFile = null; 
-		
-		// Cache true/false
-		static public function setCache($bool) { 
-			self::$cache = $bool;
-		}
-		
-		//Pfad setzen
-		static public function setCacheDir($path) {
-			self::$cacheDir = $path;
-		}
-		
-		//Zeit setzen
-		static public function setCacheTime($time) {
-			self::$cacheTime = intval($time);
-		}
-		
-		//Namen setzen
-		static public function setCacheFile($id, $tpl) {
-			self::$cacheFile = md5($id.$tpl).'.cache';
-		}
-		
-		//File löschen
-		static public function deleteCacheFile() {
-			
-			if(unlink(self::$cacheDir.self::$cacheFile)) {
-				return true;
-			}
-			
-			return false;
-		}
-		
-		// Prüfen ob bereits erstellt
-		static public function existCache() {
-			
-			if(file_exists(self::$cacheDir.self::$cacheFile) ) {
-				
-				if((time() - filemtime(self::$cacheDir.self::$cacheFile)) >= self::$cacheTime) {
-					self::$deleteCacheFile();
-					clearstatcache();
-					return false;
-				}
-				
-				clearstatcache();
-				return true;
-				
-			}
-			
-			return false;
-		}
-		
-		//File erstellen
-		static public function writeCache($data) {
-			
-			if(self::$cache === true && self::$existCache() === false) {
-				
-				if(!file_put_contents(self::$cacheDir.self::$cacheFile, serialize($data), LOCK_EX)) {
-					return false;
-				}
-				
-			}
-			
-		}
-		
-		//Auslesen
-		static public function readCache() {
-			$data = file_get_contents(self::$cacheDir.self::$cacheFile);
-			$cdata = unserialize($data);
-			return $cdata;
-		}
+		return unlink(self::cacheDir.$file);
 		
 	}
+	
+	// Prüfen ob bereits erstellt
+	static public function exist($file, $time = false) {
+		
+		if($time === false) {
+			$time = self::$time;	
+		}
+		
+		if(file_exists(self::cacheDir.$file)) {
+			
+			if((time() - filemtime(self::cacheDir.$file)) >= $time) {
+				self::deleteFile($file);
+				clearstatcache();
+				return false;
+			}
+			
+			clearstatcache();
+			return true;
+			
+		}
+		
+		return false;
+	}
+	
+	//File erstellen
+	static public function write($content, $file) {
+		
+		if(self::$cache === true) {
+			
+			if(!file_put_contents(self::cacheDir.$file, $content, LOCK_EX)) {
+				return false;
+			}
+			
+		}
+		
+		return true;
+		
+	}
+	
+	//Auslesen
+	static public function read($file) {
+		
+		return file_get_contents(self::cacheDir.$file);
+		
+	}
+	
+}
 
 ?>

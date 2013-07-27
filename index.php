@@ -60,23 +60,38 @@ if($action == '') {
 	
 	$table->addSection('tbody');
 	
-	$table->setSql('SELECT * FROM news ORDER BY date DESC');
-	while($table->isNext()) {
-		
-		$id = $table->get('id');
-		
-		$edit = '<a href="index.php?action=edit&amp;id='.$id.'">'.lang::get('edit').'</a>';
-		$delete = '<a href="index.php?action=delete&amp;id='.$id.'">'.lang::get('delete').'</a>';
-		
-		$table->addRow()
-		->addCell($table->get('title'))
-		->addCell(date('d.m.Y', $table->get('date')))	
-		->addCell($edit.' | '.$delete);
-		
-		$table->next();	
-	}
+	$cacheFileName = cache::getFileName(1, 'news');
 	
-	echo $table->show();
+	if(cache::exist($cacheFileName)) {
+		
+		echo cache::read($cacheFileName);
+		
+	} else {
+	
+	
+		$table->setSql('SELECT * FROM news ORDER BY date DESC');
+		while($table->isNext()) {
+			
+			$id = $table->get('id');
+			
+			$edit = '<a href="index.php?action=edit&amp;id='.$id.'">'.lang::get('edit').'</a>';
+			$delete = '<a href="index.php?action=delete&amp;id='.$id.'">'.lang::get('delete').'</a>';
+			
+			$table->addRow()
+			->addCell($table->get('title'))
+			->addCell(date('d.m.Y', $table->get('date')))	
+			->addCell($edit.' | '.$delete);
+			
+			$table->next();	
+		}
+		
+		$show = $table->show();
+		
+		cache::write($show, $cacheFileName);
+		
+		echo $show;
+	
+	}
 	
 }
 
