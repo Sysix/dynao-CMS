@@ -2,35 +2,35 @@
 
 	class cache {
 		
-		private $cache = true;
-		private $cacheDir = "admin/generated/cache/";
-		private $cacheTime = 30;
-		private $cacheFile = null; 
+		static protected $cache = false;
+		static protected $cacheDir = "admin/generated/cache/";
+		static protected $cacheTime = 30;
+		static protected $cacheFile = null; 
 		
 		// Cache true/false
-		public function setCache($bool) { 
-			$this->cache = $bool;
+		static public function setCache($bool) { 
+			self::$cache = $bool;
 		}
 		
 		//Pfad setzen
-		public function setCacheDir($path) {
-			$this->cacheDir = $path;
+		static public function setCacheDir($path) {
+			self::$cacheDir = $path;
 		}
 		
 		//Zeit setzen
-		public function setCacheTime($time) {
-			$this->cacheTime = intval($time);
+		static public function setCacheTime($time) {
+			self::$cacheTime = intval($time);
 		}
 		
 		//Namen setzen
-		public function setCacheFile($id, $tpl) {
-			$this->cacheFile = md5($id.$tpl).'.cache';
+		static public function setCacheFile($id, $tpl) {
+			self::$cacheFile = md5($id.$tpl).'.cache';
 		}
 		
 		//File löschen
-		public function deleteCacheFile() {
+		static public function deleteCacheFile() {
 			
-			if(unlink($this->cacheDir.$this->cacheFile)) {
+			if(unlink(self::$cacheDir.self::$cacheFile)) {
 				return true;
 			}
 			
@@ -38,12 +38,12 @@
 		}
 		
 		// Prüfen ob bereits erstellt
-		public function existCache() {
+		static public function existCache() {
 			
-			if(file_exists($this->cacheDir.$this->cacheFile) ) {
+			if(file_exists(self::$cacheDir.self::$cacheFile) ) {
 				
-				if((time() - filemtime($this->cacheDir.$this->cacheFile)) >= $this->cacheTime) {
-					$this->deleteCacheFile();
+				if((time() - filemtime(self::$cacheDir.self::$cacheFile)) >= self::$cacheTime) {
+					self::$deleteCacheFile();
 					clearstatcache();
 					return false;
 				}
@@ -57,11 +57,11 @@
 		}
 		
 		//File erstellen
-		public function writeCache($data) {
+		static public function writeCache($data) {
 			
-			if($this->cache === true && $this->existCache() === false) {
+			if(self::$cache === true && self::$existCache() === false) {
 				
-				if(!file_put_contents($this->cacheDir.$this->cacheFile, serialize($data), LOCK_EX)) {
+				if(!file_put_contents(self::$cacheDir.self::$cacheFile, serialize($data), LOCK_EX)) {
 					return false;
 				}
 				
@@ -70,8 +70,8 @@
 		}
 		
 		//Auslesen
-		public function readCache() {
-			$data = file_get_contents($this->cacheDir.$this->cacheFile);
+		static public function readCache() {
+			$data = file_get_contents(self::$cacheDir.self::$cacheFile);
 			$cdata = unserialize($data);
 			return $cdata;
 		}
