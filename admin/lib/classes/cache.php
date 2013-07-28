@@ -68,6 +68,25 @@ class cache {
 		
 	}
 	
+	//komplett löschen
+	static public function clear() {
+		
+		if($dir =  opendir(self::cacheDir)) {
+			
+			while (($file = readdir($dir)) !== false) {
+		
+				if($file != "." && $file != "..") {
+					unlink(self::cacheDir.$file);
+				}
+			
+			}
+			
+			closedir($dir);
+			
+		}
+
+	}
+	
 }
 
 ?>
