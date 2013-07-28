@@ -1,26 +1,97 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Backend - dynaoCMS</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Backend - dynaoCMS</title>
     
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
     
-    <!-- CSS Dateien einbinden-->
-    <link rel="stylesheet" type="text/css" href="css/fontello.css">
-    <link rel="stylesheet" type="text/css" href="css/animation.css">
-    <!--[if IE 7]><link rel="stylesheet" type="text/css" href="css/fontello-ie7.css"><![endif]-->
-    <link rel="stylesheet" type="text/css" href="css/reset.css" />
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
+	<!-- CSS Dateien einbinden-->
+    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/reset.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
 
 </head>
 
 <body>
 
+	<section id="navi">
+    	<ul>
+        	<li class="active">
+            	<a class="icon-desktop" href="">
+               		<span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+            	<a class="icon-list" href="">
+               		<span>Struktur</span>
+                </a>
+            </li>
+            <li>
+            	<a class="icon-edit" href="">
+               		<span>Inhalte</span>
+                </a>
+            </li>
+            <li>
+            	<a class="icon-user" href="">
+               		<span>Benutzer</span>
+                </a>
+            </li>
+            <li>
+            	<a class="icon-code-fork" href="">
+               		<span>Addons</span>
+                </a>
+            </li>
+            <li>
+            	<a class="icon-cogs" href="">
+               		<span>Einstellungen</span>
+                </a>
+            </li>
+        </ul>
+    </section><!--end #navi-->
+    
+    <section id="subnavi">
+    	<div id="user">
+        
+        	<img src="img/user/defaultm.png" alt="Profilbild" />
+            
+            <a class="icon-cog settings" href=""></a>
+            
+            <h3>Aaron Iker</h3>
+            Administrator
+        	
+            <a class="icon-envelope messages" href=""><span>2</span></a>
+            
+            <a href="" class="icon-lock logout"> Logout</a>
+        
+        </div><!--end #user-->
+        
+        <ul>
+        	<li><a href="" class="icon-apple">&nbsp; Protokolle</a></li>
+        	<li class="active"><a href="" class="icon-apple">&nbsp; Protokolle</a></li>
+        	<li><a href="" class="icon-apple">&nbsp; Protokolle</a></li>
+        	<li><a href="" class="icon-apple">&nbsp; Protokolle</a></li>
+        </ul>
+        
+    </section><!--end #subnavi-->
+    
+    <section id="content">
+    	<div class="container">
+        
+    	</div>
+    </section><!--end #content-->
+    
+    <section id="tools">
+    	<a id="trash" href=""></a>
+    </section><!--end #tools-->
+
 	<!-- Javascript Dateien einbinden-->
-    <script src="http:/ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="js/bootstrap.js"></script>
 	<script src="js/scripts.js"></script>
 <body>
 </body>

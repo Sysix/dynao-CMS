@@ -5,6 +5,7 @@ html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquot
 	font-size: 100%;
 	vertical-align: baseline;
 	background: transparent;
+	line-height:normal;
 }									
 
 article, aside, figure, footer, header, hgroup, nav, section, details, summary {display: block;}
