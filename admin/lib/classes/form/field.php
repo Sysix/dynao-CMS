@@ -93,13 +93,31 @@ class formField {
 		$return = '';
 		
 		foreach($attr as $key=>$val) {
-		
-			$return .= ' '.$key.'="'.$val.'"';	
+			
+			if(is_int($key)) {
+				
+				$return .= ' '.$val;
+				
+			} else {
+				
+				if(is_array($val)) {
+					$val = implode(' ', $val);	
+				}
+				
+				$return .= ' '.$key.'="'.$val.'"';	
+				
+			}			
 			
 		}
 		
 		return $return;
 		
+		
+	}
+	
+	public function addClass($class) {
+	
+		$this->attributes['class'][] = $class; 
 		
 	}
 	

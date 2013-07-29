@@ -18,7 +18,10 @@ class table {
 	function __construct($attributes = array()) {
 		// wenn addSection nicht ausgeführt rows zu thead adden
 		$this->addSection('thead');
-			
+		
+		// Bootstrap Table-Klasse
+		$attributes['class'][] = 'table';
+		
 		$this->tableAttr = $attributes;
 	}
 	
@@ -129,12 +132,27 @@ class table {
 		if(!count($attributes) || is_string($attributes))
 			return '';
 		
-		$str = '';
-		foreach($attributes as $key=>$val) {
-			$str .= ' '.$key.'="'.$val.'"';
+		$return = '';
+		
+		foreach($attr as $key=>$val) {
+			
+			if(is_int($key)) {
+				
+				$return .= ' '.$val;
+				
+			} else {
+				
+				if(is_array($val)) {
+					$val = implode(' ', $val);	
+				}
+				
+				$return .= ' '.$key.'="'.$val.'"';	
+				
+			}			
+			
 		}
 		
-		return $str;
+		return $return;
 		
 	}
 	

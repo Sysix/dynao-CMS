@@ -1,0 +1,41 @@
+
+@media (min-width: 978px) and (max-width: 1200px) {
+
+ 
+}
+
+@media (max-width: 979px) {
+	
+	#tools, #navi, #user img {
+		display:none;
+	}
+	
+	#content {
+		right:0;
+		margin-right:30px;
+		left:210px;
+	}
+	
+	#subnavi, #subnavi #user {
+		width:180px;
+	}
+	
+	#subnavi {
+		left:0;
+		margin-left:30px;
+	}
+}
+
+@media (max-width: 480px) {
+	
+	#subnavi {
+		display:none;
+	}
+	
+	#content {
+		left:0;
+		margin:10px;
+		padding:10px;
+		border-radius:3px;
+	}
+}
