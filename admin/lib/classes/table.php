@@ -16,7 +16,7 @@ class table {
 	
 	
 	function __construct($attributes = array()) {
-		// wenn addSection nicht ausgefÃ¼hrt rows zu thead adden
+		// wenn addSection nicht ausgeführt rows zu thead adden
 		$this->addSection('thead');
 		
 		// Bootstrap Table-Klasse
@@ -25,7 +25,7 @@ class table {
 		$this->tableAttr = $attributes;
 	}
 	
-	//rows zu der zuletzt aufgerufenden Section hinzufÃ¼gen
+	//rows zu der zuletzt aufgerufenden Section hinzufügen
 	public function addSection($section, $attributes = array() ) {
 		
 		if(in_array($section, array('thead', 'tfoot'))) {
@@ -98,7 +98,7 @@ class table {
 	}
 
 	
-	// FÃ¼gt ein HTML Tag hinzu
+	// Fügt ein HTML Tag hinzu
 	// Name z.B.: td, tr, caption, table,
 	// Value z.B: Inhalt
 	// Attribute
@@ -184,7 +184,7 @@ class table {
 	}
 	
 	public function addRow($attributes = array() ) {
-		// rows zur letzten Section hinzufÃ¼gen
+		// rows zur letzten Section hinzufügen
 		
 		$ref = $this->getCurrentSection();
 		
@@ -222,7 +222,7 @@ class table {
 		}
 		*/
 		
-		// zur letzten row der letzten section hinzufÃ¼gen
+		// zur letzten row der letzten section hinzufügen
 		$count = count( $ref['rows'] );
 		$ref['rows'][$count-1]['cells'][] = $cell;
 		

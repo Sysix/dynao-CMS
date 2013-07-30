@@ -25,7 +25,6 @@ h1 { line-height:85px; padding-left:20px; font-weight:300; font-size:24px; color
 	position:absolute;
 	top:0;
 	left:0;
-	bottom:0;
 	width:100px;
 	margin:30px 0 30px 30px;
 	min-height:650px;
@@ -86,7 +85,6 @@ h1 { line-height:85px; padding-left:20px; font-weight:300; font-size:24px; color
 	position:absolute;
 	left:130px;
 	top:0;
-	bottom:0;
 	background:#252525;
 	border-radius:4px 0 0 4px;
 	margin:30px 0;
@@ -223,7 +221,6 @@ h1 { line-height:85px; padding-left:20px; font-weight:300; font-size:24px; color
 	left:370px;
 	right:110px;
 	top:0;
-	bottom:0;
 	background:url(../img/bg/noise.png) repeat;
 	border-radius:0 4px 4px 0;
 	margin:30px 0;

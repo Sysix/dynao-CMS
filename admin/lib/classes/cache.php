@@ -16,14 +16,14 @@ class cache {
 		return md5($id.$table).'.cache';
 	}
 	
-	//File lÃ¶schen
+	//File löschen
 	static public function deleteFile($file) {
 		
 		return unlink(self::cacheDir.$file);
 		
 	}
 	
-	// PrÃ¼fen ob bereits erstellt
+	// Prüfen ob bereits erstellt
 	static public function exist($file, $time = false) {
 		
 		if($time === false) {
@@ -68,7 +68,7 @@ class cache {
 		
 	}
 	
-	//komplett lÃ¶schen
+	//komplett löschen
 	static public function clear() {
 		
 		if($dir =  opendir(self::cacheDir)) {

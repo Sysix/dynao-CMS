@@ -1,6 +1,6 @@
 <?php
 
-// Klasse zu Erstellung fÃ¼r Formulare
+// Klasse zu Erstellung für Formulare
 class form {
 	
 	
@@ -14,13 +14,13 @@ class form {
 	var $return = array();
 	var $buttons = array();
 	
-	// Beim Senden schauen ob die Forumluar-EintrÃ¤ge schon Ã¼bernommen worden sind Methode: setPostsVar
+	// Beim Senden schauen ob die Forumluar-Einträge schon übernommen worden sind Methode: setPostsVar
 	var $isGetPosts = false;
 	var $isSubmit;
 	
 	public function __construct($table, $where, $action, $method = 'post') {
 		
-		// GÃ¼ltige Methode?		
+		// Gültige Methode?		
 		if(!in_array($method, array('post', 'get'))) {
 			// new Exception();
 		}
@@ -45,10 +45,10 @@ class form {
 	
 	
 	// Ausgabe der SQL Spalte
-	// Falls nicht drin, dann $default zurÃ¼ck
+	// Falls nicht drin, dann $default zurück
 	public function get($value, $default = false) {
 		
-		// Falls per Post Ã¼bermittelt
+		// Falls per Post übermittelt
 		if(isset($_POST[$value])) {
 			
 			return $_POST[$value];
@@ -84,7 +84,7 @@ class form {
 		
 	}
 	
-	// Ein Element hinzufÃ¼gen
+	// Ein Element hinzufügen
 	private function addField($name, $value, $class, $attributes = array()) {
 		
 		$field = new $class($name, $value, $attributes);
@@ -212,7 +212,7 @@ class form {
 	// Abfragen ob Formular abgeschickt
 	public function isSubmit() {
 		
-		// Wurde schon isSubmit ausgefÃ¼hrt? dann schnelles Return
+		// Wurde schon isSubmit ausgeführt? dann schnelles Return
 		if($this->isSubmit === true || $this->isSubmit === false) {
 			return $this->isSubmit;
 				

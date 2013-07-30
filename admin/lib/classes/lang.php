@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 class lang {
 	
@@ -42,7 +42,7 @@ class lang {
 		
 		$file = file_get_contents(self::path.self::$lang.'/'.$file.'.json');
 		
-		// Alle Kommentare löschen (mit Raute beginnen
+		// Alle Kommentare l�schen (mit Raute beginnen
 		$file = preg_replace("/#[\s|\S](\w+)/", "", $file);	
 		$array = json_decode($file, true);
 				
