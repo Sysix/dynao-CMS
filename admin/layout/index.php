@@ -11,6 +11,8 @@ lang::setLang('de_de');
 mb_internal_encoding('UTF-8');
 
 sql::connect('localhost', 'dynao_user', 'dasisteinpasswort', 'dynao');
+
+cache::setCache(false);
 ?>
 <!DOCTYPE html>
 <html lang="de">

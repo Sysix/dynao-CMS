@@ -63,13 +63,13 @@ if($action == '') {
 			
 			$id = $table->get('id');
 			
-			$edit = '<a href="index.php?action=edit&amp;id='.$id.'">'.lang::get('edit').'</a>';
-			$delete = '<a href="index.php?action=delete&amp;id='.$id.'">'.lang::get('delete').'</a>';
+			$edit = '<a href="'.url::backend('structure', array('action'=>'edit', 'id'=>$id)).'" class="btn btn-small  btn-default">'.lang::get('edit').'</a>';
+			$delete = '<a href="'.url::backend('structure', array('action'=>'delete', 'id'=>$id)).'" class="btn btn-small btn-danger">'.lang::get('delete').'</a>';
 			
 			$table->addRow()
 			->addCell($table->get('title'))
 			->addCell(date('d.m.Y', $table->get('date')))	
-			->addCell($edit.' | '.$delete);
+			->addCell($edit.$delete);
 			
 			$table->next();	
 		}
