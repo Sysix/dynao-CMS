@@ -2,7 +2,7 @@
 
 class cache {
 	
-	const cacheDir = "admin/generated/cache/";
+	const cacheDir = "../generated/cache/";
 	static protected $cache = true;
 	static protected $time = 100;
 	

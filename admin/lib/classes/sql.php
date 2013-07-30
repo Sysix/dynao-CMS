@@ -32,6 +32,11 @@ class sql {
 		
 		self::$sql = new MySQLi(self::$DB_host, self::$DB_user, self::$DB_password, self::$DB_datenbank);
 		
+		$sql = new sql();
+		$sql->query('SET SQL_MODE=""');
+        $sql->query('SET NAMES utf8');
+        $sql->query('SET CHARACTER SET utf8');
+		
 		if(self::$sql->connect_error) {
 				// new Exception();
 		}

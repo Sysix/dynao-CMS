@@ -2,7 +2,7 @@
 
 class lang {
 	
-	const path = 'admin/lib/lang/';
+	const path = '../lib/lang/';
 	
 	static $lang;
 	static $langs = array();

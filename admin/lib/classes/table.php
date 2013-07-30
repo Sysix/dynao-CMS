@@ -134,7 +134,7 @@ class table {
 		
 		$return = '';
 		
-		foreach($attr as $key=>$val) {
+		foreach($attributes as $key=>$val) {
 			
 			if(is_int($key)) {
 				

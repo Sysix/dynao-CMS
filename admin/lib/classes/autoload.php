@@ -2,7 +2,7 @@
 
 class autoload {
 	
-	const mainDir = 'admin/lib/classes';
+	const mainDir = '../lib/classes';
 	
 	static $classes = array();
 	static $registered = false;
