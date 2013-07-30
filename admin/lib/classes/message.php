@@ -7,7 +7,7 @@ class message {
         $text = '<div class="alert alert-warning fade in">';
         
         if($close == true) {
-        	$text .= '<button type="button" class="close" data-dismiss="alert">'.utf8_decode('×').'</button>';
+        	$text .= '<button type="button" class="close" data-dismiss="alert">&times;</button>';
         }
         
         $text .= $message;
@@ -21,7 +21,7 @@ class message {
         $text = '<div class="alert alert-info fade in">';
         
         if($close == true) {
-        	$text .= '<button type="button" class="close" data-dismiss="alert">'.utf8_decode('×').'</button>';
+        	$text .= '<button type="button" class="close" data-dismiss="alert">&times;</button>';
         }
         
         $text .= $message;
@@ -35,7 +35,7 @@ class message {
         $text = '<div class="alert alert-danger fade in">';
         
         if($close == true) {
-        	$text .= '<button type="button" class="close" data-dismiss="alert">'.utf8_decode('×').'</button>';
+        	$text .= '<button type="button" class="close" data-dismiss="alert">&times;</button>';
         }
         
         $text .= $message;
@@ -49,7 +49,7 @@ class message {
         $text = '<div class="alert alert-success fade in">';
         
         if($close == true) {
-        	$text .= '<button type="button" class="close" data-dismiss="alert">'.utf8_decode('×').'</button>';
+        	$text .= '<button type="button" class="close" data-dismiss="alert">&times;</button>';
         }
         
         $text .= $message;
