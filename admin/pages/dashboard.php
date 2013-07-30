@@ -1,8 +1,4 @@
-﻿<div class="alert alert-info fade">
-        	<button type="button" class="close" data-dismiss="alert">&times;</button>
-        	<strong>Warning!</strong> Please check your Version of dynao CMS
-        </div>
-    
+﻿<?php echo message::info('<strong>Warning!</strong> Please check your Version of dynao CMS', true); ?>
         <div class="row-fluid">
         
         	<div class="span12">
