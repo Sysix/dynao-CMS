@@ -16,7 +16,7 @@ class pagination {
 		$this->proSite = $proSite;
 		$this->maxEntrys = $maxEntrys;	
 		
-		$this->start = $this->currentSite * $this->proSite / $this->proSite;
+		$this->start = $this->currentSite * $this->proSite - $this->proSite;
 		
 		$this->maxSites = ceil($this->maxEntrys / $this->proSite);
 		
@@ -33,8 +33,8 @@ class pagination {
 	}
 	
 	function getSqlLimit() {
-	
-		return 'LIMIT '.$this->start.', '.$this->proSite;
+		
+		return 'LIMIT '.$this->start .', '.$this->proSite;
 		
 	}
 	
@@ -55,7 +55,7 @@ class pagination {
 			$last_page = $this->currentSite;
 		}
 		
-		$first_get_string = http_build_query($_GET + array("site"=>$first_page));
+		$first_get_string = http_build_query(array("site"=>$first_page) + $_GET);
 		$return .= '<li><a href="index.php?'.$first_get_string.'">«</a></li>';
 		
 		for($i = 1; $i<=$this->maxSites; $i++) {
@@ -69,14 +69,14 @@ class pagination {
 				$class = ' class="disabled"';
 				
 			// $_GET['site'] neu setzen			
-			$get_string = http_build_query($_GET + array("site"=>$i));
+			$get_string = http_build_query(array("site"=>$i) + $_GET);
 				
 			$return .= '<li'.$class.'><a href="index.php?'.$get_string.'">'.$i.'</a></li>';
 						
 		}
 		
 		
-		$last_get_string = http_build_query($_GET + array("site"=>$last_page));
+		$last_get_string = http_build_query(array("site"=>$last_page) + $_GET);
 		$return .= '<li><a href="index.php?'.$last_get_string.'">»</a></li>';
 		
 		$return .= '<ul>';
