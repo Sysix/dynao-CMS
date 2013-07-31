@@ -2,7 +2,6 @@
 
 class autoload {
 	
-	const mainDir = '../lib/classes';
 	
 	static $classes = array();
 	static $registered = false;
@@ -42,9 +41,9 @@ class autoload {
 			$classPath .= '/'.strtolower($dir);
 		}
 		
-		self::$classes[] = self::mainDir.$classPath.'.php';
+		self::$classes[] = dir::classes($classPath.'.php');
 		
-		include_once(self::mainDir.$classPath.'.php');
+		include_once(dir::classes($classPath.'.php'));
 		
 		return class_exists($class);
 		

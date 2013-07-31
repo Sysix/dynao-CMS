@@ -1,19 +1,3 @@
-<?php
-error_reporting(E_ALL | E_STRICT);
-ini_set('display_errors', 1);
-
-include_once('../lib/classes/autoload.php');
-autoload::register();
-
-lang::setDefault();
-lang::setLang('de_de');
-
-mb_internal_encoding('UTF-8');
-
-sql::connect('localhost', 'dynao_user', 'dasisteinpasswort', 'dynao');
-
-cache::setCache(false);
-?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -26,10 +10,10 @@ cache::setCache(false);
 	
 	<!-- CSS Dateien einbinden-->
 	<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-	<link href="css/bootstrap.css" rel="stylesheet" media="screen">
-	<link href="css/bootstrap-responsive.css" rel="stylesheet" media="screen">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="stylesheet" type="text/css" href="css/mobile.css">
+	<link href="layout/css/bootstrap.css" rel="stylesheet" media="screen">
+	<link href="layout/css/bootstrap-responsive.css" rel="stylesheet" media="screen">
+	<link rel="stylesheet" type="text/css" href="layout/css/style.css">
+	<link rel="stylesheet" type="text/css" href="layout/css/mobile.css">
 
 </head>
 
@@ -72,7 +56,7 @@ cache::setCache(false);
 	<section id="subnavi">
 		<div id="user">
 		
-			<img src="img/user/defaultm.png" alt="Profilbild" />
+			<img src="layout/img/user/defaultm.png" alt="Profilbild" />
 			
 			<div class="dropdown">
 				<a class="icon-cog settings dropdown-toggle" data-toggle="dropdown" href=""></a>
@@ -106,13 +90,7 @@ cache::setCache(false);
 	
 	<section id="content">
 <?php 		
-$page = (isset($_GET['page'])) ? $_GET['page'] : 'dashboard';		
-$file = '../pages/'.$page.'.php';
-	
-if(file_exists($file)) {			
-include($file);
-}
-
+echo $CONTENT;
 ?>		
 	</section><!--end #content-->
 	
@@ -131,7 +109,7 @@ include($file);
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-	<script src="js/bootstrap.js"></script>
-	<script src="js/scripts.js"></script>
+	<script src="layout/js/bootstrap.js"></script>
+	<script src="layout/js/scripts.js"></script>
 </body>
 </html>

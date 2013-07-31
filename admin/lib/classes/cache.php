@@ -2,7 +2,6 @@
 
 class cache {
 	
-	const cacheDir = "../generated/cache/";
 	static protected $cache = true;
 	static protected $time = 100;
 	
@@ -19,7 +18,7 @@ class cache {
 	//File löschen
 	static public function deleteFile($file) {
 		
-		return unlink(self::cacheDir.$file);
+		return unlink(dir::cache($file));
 		
 	}
 	
@@ -30,9 +29,9 @@ class cache {
 			$time = self::$time;	
 		}
 		
-		if(file_exists(self::cacheDir.$file)) {
+		if(file_exists(dir::cache($file))) {
 			
-			if((time() - filemtime(self::cacheDir.$file)) >= $time) {
+			if((time() - filemtime(dir::cache($file))) >= $time) {
 				self::deleteFile($file);
 				clearstatcache();
 				return false;
@@ -51,7 +50,7 @@ class cache {
 		
 		if(self::$cache === true) {
 			
-			if(!file_put_contents(self::cacheDir.$file, $content, LOCK_EX)) {
+			if(!file_put_contents(dir::cache($file), $content, LOCK_EX)) {
 				return false;
 			}
 			
@@ -64,19 +63,21 @@ class cache {
 	//Auslesen
 	static public function read($file) {
 		
-		return file_get_contents(self::cacheDir.$file);
+		return file_get_contents(dir::cache($file));
 		
 	}
 	
 	//komplett löschen
 	static public function clear() {
 		
-		if($dir =  opendir(self::cacheDir)) {
+		if($dir =  opendir(dir::cache())) {
 			
 			while (($file = readdir($dir)) !== false) {
 		
 				if($file != "." && $file != "..") {
-					unlink(self::cacheDir.$file);
+					
+					self::deleteFile($file);
+					
 				}
 			
 			}

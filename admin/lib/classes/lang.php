@@ -2,8 +2,6 @@
 
 class lang {
 	
-	const path = '../lib/lang/';
-	
 	static $lang;
 	static $langs = array();
 	static $default = array();
@@ -13,7 +11,7 @@ class lang {
 	
 	static public function setLang($lang = 'en_gb') {
 		
-		if(is_dir(self::path.$lang)) {
+		if(is_dir(dir::lang($lang))) {
 			
 			self::$lang = $lang;	
 			self::loadLang('main');
@@ -40,7 +38,7 @@ class lang {
 	
 	static public function loadLang($file) {
 		
-		$file = file_get_contents(self::path.self::$lang.'/'.$file.'.json');
+		$file = file_get_contents(dir::lang(self::$lang, $file.'.json'));
 		
 		// Alle Kommentare löschen (mit Raute beginnen
 		$file = preg_replace("/#[\s|\S](\w+)/", "", $file);	
@@ -54,7 +52,7 @@ class lang {
 		
 		if(!self::$isDefaultSet) {
 			
-			$file = file_get_contents(self::path.self::$defaultLang.'/main.json');
+			$file = file_get_contents(dir::lang(self::$defaultLang, 'main.json'));
 			$array = json_decode($file);
 			
 			self::$default = $array;
