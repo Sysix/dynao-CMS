@@ -11,7 +11,7 @@ class table {
 	protected $collsLayout = array();
 	protected $caption = array();
 	
-	protected $sql;
+	var $sql;
 	var $isSql = false;
 	
 	
