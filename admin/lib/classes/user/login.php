@@ -2,8 +2,8 @@
 
 class userLogin {
 
-	private $email;
-	private $password;
+	protected $email;
+	protected $password;
 	
 	public function __construct() {
 	
@@ -24,14 +24,14 @@ class userLogin {
 	}
 	
 	//wenn Session stimmt, status auf true
-	private function loginSession() {
+	protected function loginSession() {
 	
 		$this->logged_in = true;
 	
 	}
 	
 	//Einloggen
-	private function loginPost() {
+	protected function loginPost() {
 	
 		if (!empty($_POST["email"]) && !empty($_POST["password"])) {
 		
@@ -53,15 +53,7 @@ class userLogin {
 	//password mit hast vergleichen
 	public static function checkPassword($password, $hash) {
 	
-		if(self::hash($password) == $hash) {
-			
-			return true;
-			
-		} else {
-			
-			return false;
-			
-		}
+		return self::hash($password) == $hash;
 	
 	}
 	
