@@ -67,14 +67,15 @@ class form {
 	
 	public function setButtons() {
 				
-		$this->addSubmitField('save', lang::get('save'));
-		$this->toAction('save');
+		$submit = $this->addSubmitField('save', lang::get('save'));
+		$submit->addClass('btn btn-default');
 			
-		$this->addSubmitField('save-back', lang::get('apply'));	
-		$this->toAction('save-edit');		
+		$submit = $this->addSubmitField('save-back', lang::get('apply'));
+		$submit->addClass('btn btn-default');		
 		
 		$back = $this->addButtonField('back', lang::get('back'));
 		$back->addAttribute('onlick', 'history.go(-1)');
+		$back->addClass('btn btn-warning');
 		
 	}
 	
@@ -338,9 +339,8 @@ class form {
 			
 		}
 		
+		$return = '<form action="'.$this->action.'" method="'.$this->method.'" class="form-horizontal">'.PHP_EOL;
 		
-		$table = new table();
-		$table->addSection('tbody');
 		
 		$buttons_echo = '';
 		
@@ -351,10 +351,12 @@ class form {
 				$buttons_echo .= $ausgabe->get();
 				
 			} else {
-			
-				$table->addRow()
-				->addCell($ausgabe->fieldName)
-				->addCell($ausgabe->prefix . $ausgabe->get() . $ausgabe->suffix);
+				$ausgabe->addClass('form-control');
+				
+				$return .= '<div class="form-group">';
+				$return .= '<label class="col-lg-2 control-label">'.$ausgabe->fieldName.'</label>';
+				$return .= '<div class="col-lg-10">'.$ausgabe->prefix . $ausgabe->get() . $ausgabe->suffix.'</div>';
+				$return .= '</div>';
 				
 			}
 			
@@ -366,12 +368,11 @@ class form {
 			$buttons_echo .= $buttons->get();	
 		}
 		
-		$table->addRow()
-		->addCell()
-		->addCell($buttons_echo);
-		
-		$return = '<form action="'.$this->action.'" method="'.$this->method.'">'.PHP_EOL;
-		$return .= $table->show();		
+		$return .= '<div class="form-group">';
+		$return .= '<div class="col-lg-2"></div>';
+		$return .= '<div class="col-lg-10">'.$buttons_echo.'</div>';
+		$return .= '</div>';
+			
 		$return .= '</form>';
 		
 		return $return;
