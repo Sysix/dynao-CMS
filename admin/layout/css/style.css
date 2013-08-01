@@ -21,6 +21,44 @@ a:hover { text-decoration:none!important; }
 
 h1 { line-height:85px; padding-left:20px; font-weight:300; font-size:24px; color:#fff; }
 
+#wrap { 
+	background:url(../img/bg/noise_side.png) repeat-y top left;
+	left:130px;
+	right:110px;
+	position:absolute;
+	top:0;
+	margin:30px 0;
+	border-radius:4px;
+}
+
+#center { width:1px; height:50%; margin-bottom:-190px; float:left; }
+
+#login {
+	margin:0 auto;
+	width:320px;
+	border-radius:3px;
+	-webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+	box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+	background:#fff;
+	clear:left;
+	position:relative;
+}
+
+#remember {
+	font-size:11px;
+}
+
+#login a {
+	position:absolute;
+	bottom:-30px;
+	color:#fff;
+}
+
+#login .input-group {
+	padding:10px 0;
+}
+
 #navi {
 	position:absolute;
 	top:0;
@@ -82,12 +120,9 @@ h1 { line-height:85px; padding-left:20px; font-weight:300; font-size:24px; color
 
 #subnavi {
 	width:240px;
-	position:absolute;
-	left:130px;
-	top:0;
-	background:#252525;
 	border-radius:4px 0 0 4px;
-	margin:30px 0;
+	float:left;
+	position:relative;
 }
 
 #subnavi #user {
@@ -218,14 +253,10 @@ h1 { line-height:85px; padding-left:20px; font-weight:300; font-size:24px; color
 }
 
 #content {
-	left:370px;
-	right:110px;
-	top:0;
-	background:url(../img/bg/noise.png) repeat;
 	border-radius:0 4px 4px 0;
-	margin:30px 0;
-	position:absolute;
 	padding:30px;
+	margin-left:240px;
+	position:relative;
 }
 
 #tools {

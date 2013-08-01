@@ -4,12 +4,12 @@ class userLogin {
 
 	protected $email;
 	protected $password;
-	protected $isLogin;
+	protected $isLogin = false;
 	protected $userID;
 	
 	public function __construct() {
 	
-		if(!is_null(type::get('logout', 'string'))) {
+		if(!is_null(type::post('logout', 'string'))) {
 	
 			$this->logout();
 			   
@@ -17,7 +17,7 @@ class userLogin {
 	
 			$this->loginSession();
 	
-		} elseif (!is_null(type::get('login', 'string'))) {
+		} elseif (!is_null(type::post('login', 'string'))) {
 	
 			$this->loginPost();
 	
@@ -64,9 +64,9 @@ class userLogin {
 		$password = type::post('password', 'string');
 		
 		// Formular ganz abgesendet?
-		if(is_null($email) || is_null($password)) {
+		if(is_null($email) || is_null($password) || $email == '' || $password == '') {
 			
-			echo message::info('Formular nicht vollständig gesendet!');
+			echo message::info('Formular nicht vollständig gesendet!', true);
 			$this->logout();
 			return;
 			
@@ -78,7 +78,7 @@ class userLogin {
 		// Username mit E-Mail vorhanden?
 		if(!$sql->num()) {
 		
-			echo message::danger('Kein Benutzer mit der E-Mail-Adresse "'.$email.'" gefunden');
+			echo message::danger('Kein Benutzer mit der E-Mail-Adresse "'.$email.'" gefunden', true);
 			$this->logout();
 			return;
 			
@@ -89,7 +89,7 @@ class userLogin {
 		// Password nicht gleich?
 		if(!self::checkPassword($password, $sql->get('password'))) {
 			
-			echo message::danger('Das angebene Passwort ist falsch');
+			echo message::danger('Das angebene Passwort ist falsch', true);
 			$this->logout();
 			return;
 			
