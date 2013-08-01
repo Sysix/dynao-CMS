@@ -9,7 +9,7 @@ class userLogin {
 	
 	public function __construct() {
 	
-		if(!is_null(type::post('logout', 'string'))) {
+		if(!is_null(type::get('logout', 'string'))) {
 	
 			$this->logout();
 			   
@@ -41,10 +41,10 @@ class userLogin {
 			return false;
 		
 		// Session[0] = ID; session[1} PW in sha1	
-		$session = explode('||', $session);
+		$session = explode('||', $session);	
 		
 		$sql = new sql();
-		$sql->result('SELECT id FROM user WHERE `id` = '.$session[0].' AND `password` = "'.self::hash($session[1]).'"');	
+		$sql->result('SELECT id FROM user WHERE `id` = '.$session[0].' AND `password` = "'.$session[1].'"');	
 			
 		if(!$sql->num()) {
 			
@@ -73,7 +73,7 @@ class userLogin {
 		}
 		
 		$sql = new sql();
-		$sql->query('SELECT password, id FROM user WHERE `email` = '.$email);
+		$sql->query('SELECT password, id FROM user WHERE `email` = "'.$email.'"');
 		
 		// Username mit E-Mail vorhanden?
 		if(!$sql->num()) {
@@ -118,7 +118,7 @@ class userLogin {
 	//session löschen und status auf false
 	public function logout() {   
 	
-		session_destroy();
+		unset($_SESSION['login']);
 		$this->isLogin = false;
 		
 	}

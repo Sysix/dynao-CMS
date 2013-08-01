@@ -75,7 +75,7 @@
                 
                 <a class="icon-envelope messages" href=""><span>2</span></a>
                 
-                <a href="" class="icon-lock logout"> <span>Logout</span></a>
+                <a href="index.php?logout=1" class="icon-lock logout"> <span>Logout</span></a>
             
             </div><!--end #user-->
             
