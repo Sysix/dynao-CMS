@@ -9,20 +9,18 @@ class pagination {
 	var $currentSite; // Aktuelle Seite
 	var $maxSites; #Maximale Seitem
 	
-	function __construct($proSite, $maxEntrys) {
+	var $getVar;
 	
-		$this->currentSite = type::get('site', 'int', 1);
-	
+	public function __construct($proSite, $maxEntrys) {
+			
 		$this->proSite = $proSite;
-		$this->maxEntrys = $maxEntrys;	
+		$this->maxEntrys = $maxEntrys;
 		
-		$this->start = $this->currentSite * $this->proSite - $this->proSite;
-		
-		$this->maxSites = ceil($this->maxEntrys / $this->proSite);
+		$this->setGetVar('site');
 		
 	}
 	
-	function setDisable($disable) {
+	public function setDisable($disable) {
 		
 		if(strpos($disable, ',') !== false) {
 			explode(',', $disable);			
@@ -32,13 +30,25 @@ class pagination {
 		
 	}
 	
-	function getSqlLimit() {
+	public function getSqlLimit() {
 		
 		return 'LIMIT '.$this->start .', '.$this->proSite;
 		
 	}
 	
-	function get($class = false) {
+	public function setGetVar($var) {
+		
+		$this->getVar = $var;
+		
+		$this->currentSite = type::get($this->getVar, 'int', 1);
+		
+		$this->start = $this->currentSite * $this->proSite - $this->proSite;
+		
+		$this->maxSites = ceil($this->maxEntrys / $this->proSite);
+		
+	}
+	
+	public function get($class = false) {
 		
 		$class = ($class) ? ' pagination-'.$class : '';
 		
@@ -55,7 +65,7 @@ class pagination {
 			$last_page = $this->currentSite;
 		}
 		
-		$first_get_string = http_build_query(array("site"=>$first_page) + $_GET);
+		$first_get_string = http_build_query(array($this->getVar=>$first_page) + $_GET);
 		$return .= '<li><a href="index.php?'.$first_get_string.'">«</a></li>';
 		
 		for($i = 1; $i<=$this->maxSites; $i++) {
@@ -69,14 +79,14 @@ class pagination {
 				$class = ' class="disabled"';
 				
 			// $_GET['site'] neu setzen			
-			$get_string = http_build_query(array("site"=>$i) + $_GET);
+			$get_string = http_build_query(array($this->getVar=>$i) + $_GET);
 				
 			$return .= '<li'.$class.'><a href="index.php?'.$get_string.'">'.$i.'</a></li>';
 						
 		}
 		
 		
-		$last_get_string = http_build_query(array("site"=>$last_page) + $_GET);
+		$last_get_string = http_build_query(array($this->getVar=>$last_page) + $_GET);
 		$return .= '<li><a href="index.php?'.$last_get_string.'">»</a></li>';
 		
 		$return .= '<ul>';
