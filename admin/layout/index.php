@@ -54,7 +54,7 @@
 	</section><!--end #navi-->
 	
     <div id="wrap">
-        <section id="subnavi">
+        <div id="subnavi">
             <div id="user">
             
                 <img src="layout/img/user/defaultm.png" alt="Profilbild" />
@@ -87,15 +87,15 @@
                 <li><a href="" class="icon-terminal"><span>Logs</span></a></li>
             </ul>
             
-        </section><!--end #subnavi-->
+        </div><!--end #subnavi-->
         
-        <section id="content">
+        <div id="content">
             <?php 		
                 echo $CONTENT;
             ?>		
-        </section><!--end #content-->
+        </div><!--end #content-->
         
-        <div class="clearfix"></div>
+        <div style="clear:both;"></div>
     </div><!--end #wrap-->
 	
 	<section id="tools">

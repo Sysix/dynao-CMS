@@ -121,8 +121,7 @@ h1 { line-height:85px; padding-left:20px; font-weight:300; font-size:24px; color
 #subnavi {
 	width:240px;
 	border-radius:4px 0 0 4px;
-	float:left;
-	position:relative;
+	position:absolute;
 }
 
 #subnavi #user {
@@ -255,8 +254,8 @@ h1 { line-height:85px; padding-left:20px; font-weight:300; font-size:24px; color
 #content {
 	border-radius:0 4px 4px 0;
 	padding:30px;
-	margin-left:240px;
-	position:relative;
+	padding-left:270px;
+	min-height:650px;
 }
 
 #tools {

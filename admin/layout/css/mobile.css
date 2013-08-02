@@ -18,7 +18,7 @@
 	}
 	
 	#content {
-		margin-left:210px;
+		padding-left:240px;
 	}
 	
 	#subnavi, #subnavi #user {
@@ -28,7 +28,7 @@
 
 @media (max-width: 480px) {
 	
-	#subnavi {
+	#subnavi, #center {
 		display:none;
 	}
 	
@@ -47,4 +47,10 @@
 		padding:10px;
 		border-radius:4px;
 	}
+	
+	#login {
+		width:100%;
+		margin-top:20px;
+	}
+	
 }
