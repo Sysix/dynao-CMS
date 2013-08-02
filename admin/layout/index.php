@@ -95,7 +95,7 @@
             ?>		
         </div><!--end #content-->
         
-        <div style="clear:both;"></div>
+        <div class="clearfix"></div>
     </div><!--end #wrap-->
 	
 	<section id="tools">
