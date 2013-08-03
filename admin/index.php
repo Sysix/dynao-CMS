@@ -25,7 +25,6 @@ ob_start();
 
 $login = new userLogin();
 
-
 if($login->isLogged()) {
 	include(dir::page($page.'.php'));
 }

@@ -100,7 +100,7 @@ class userLogin {
 		
 		self::loginSession();
 		self::$userID = $sql->get('id');
-		user::getuser($session[0]);
+		user::getuser(self::$userID);
 		
 		$_SESSION['login'] = $sql->get('id').'||'.self::hash($password);
 	
