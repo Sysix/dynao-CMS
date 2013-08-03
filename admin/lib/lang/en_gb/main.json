@@ -7,12 +7,17 @@
 	"no" :				"no",
 	"name" :			"name",
 	
-	# Aktionen
+	#Aktionen
 	"update" :			"update",
 	"add" :				"add",
 	"edit" :			"edit",
 	"delete" :			"delete",
 	"save" :			"save",
 	"back" :			"back",
-	"apply" :			"apply"
+	"apply" :			"apply",
+	
+	#Login	
+	"login_form_notfull" : "Form was not completely sent!",
+	"login_no_user" : "No user with the e-mail address \"%s\" found",
+	"login_pwd_false" : "It is surrounded password is incorrect"
 }

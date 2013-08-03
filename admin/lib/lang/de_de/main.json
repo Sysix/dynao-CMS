@@ -7,12 +7,17 @@
 	"no" :				"nein",
 	"name" :			"Name",
 	
-	# Aktionen
+	#Aktionen
 	"update" :			"aktualisieren",
 	"add" :				"hinzufügen",
 	"edit" :			"editieren",
 	"delete" :			"löschen",
 	"save" :			"speichern",
 	"back" :			"zurück",
-	"apply" :			"übernehmen"
+	"apply" :			"übernehmen",
+	
+	#Login	
+	"login_form_notfull" : "Formular wurde nicht vollständig gesendet!",
+	"login_no_user" : "Kein Benutzer mit der E-Mail-Adresse \"%s\" gefunden",
+	"login_pwd_false" : "Das angebene Passwort ist falsch"
 }

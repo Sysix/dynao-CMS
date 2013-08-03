@@ -69,7 +69,7 @@ class userLogin {
 		// Formular ganz abgesendet?
 		if(is_null($email) || is_null($password) || $email == '' || $password == '') {
 			
-			echo message::info('Formular nicht vollständig gesendet!', true);
+			echo message::info(lang::get('login_form_notfull'), true);
 			self::logout();
 			return;
 			
@@ -81,7 +81,7 @@ class userLogin {
 		// Username mit E-Mail vorhanden?
 		if(!$sql->num()) {
 		
-			echo message::danger('Kein Benutzer mit der E-Mail-Adresse "'.$email.'" gefunden', true);
+			echo message::danger(sprintf(lang::get('login_no_user'), $email), true);
 			self::logout();
 			return;
 			
@@ -92,7 +92,7 @@ class userLogin {
 		// Password nicht gleich?
 		if(!self::checkPassword($password, $sql->get('password'))) {
 			
-			echo message::danger('Das angebene Passwort ist falsch', true);
+			echo message::danger(lang::get('login_pwd_false'), true);
 			self::logout();
 			return;
 			
