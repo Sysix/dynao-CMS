@@ -2,38 +2,36 @@
 
 class userLogin {
 
-	protected $email;
-	protected $password;
-	protected $isLogin = false;
-	protected $userID;
+	static protected $isLogin = false;
+	static protected $userID;
 	
 	public function __construct() {
 	
 		if(!is_null(type::get('logout', 'string'))) {
 	
-			$this->logout();
+			self::logout();
 			   
-		} elseif($this->checkLogin()) {
+		} elseif(self::checkLogin()) {
 	
-			$this->loginSession();
+			self::loginSession();
 	
 		} elseif (!is_null(type::post('login', 'string'))) {
 	
-			$this->loginPost();
+			self::loginPost();
 	
 		}
 	
 	}
 	
 	//wenn Session stimmt, status auf true
-	protected function loginSession() {
+	protected static function loginSession() {
 	
-		$this->isLogin = true;
+		self::$isLogin = true;
 	
 	}
 	
 	// Überprüfen ob Session richtig gesetzt 
-	protected function checkLogin() {
+	protected static function checkLogin() {
 	
 		$session = type::session('login', 'string', false);
 		
@@ -48,17 +46,22 @@ class userLogin {
 			
 		if(!$sql->num()) {
 			
-			$this->logout();
+			self::logout();
 			return false;
 		
 		}
+		
+		self::loginSession();
+		self::$userID = $session[0];
+		
+		user::getuser($session[0]);
 		
 		return true;		
 		
 	}
 	
 	//Einloggen
-	protected function loginPost() {
+	protected static function loginPost() {
 		
 		$email = type::post('email', 'string');
 		$password = type::post('password', 'string');
@@ -67,7 +70,7 @@ class userLogin {
 		if(is_null($email) || is_null($password) || $email == '' || $password == '') {
 			
 			echo message::info('Formular nicht vollständig gesendet!', true);
-			$this->logout();
+			self::logout();
 			return;
 			
 		}
@@ -79,7 +82,7 @@ class userLogin {
 		if(!$sql->num()) {
 		
 			echo message::danger('Kein Benutzer mit der E-Mail-Adresse "'.$email.'" gefunden', true);
-			$this->logout();
+			self::logout();
 			return;
 			
 		}
@@ -90,13 +93,15 @@ class userLogin {
 		if(!self::checkPassword($password, $sql->get('password'))) {
 			
 			echo message::danger('Das angebene Passwort ist falsch', true);
-			$this->logout();
+			self::logout();
 			return;
 			
 		}
 		
-		$this->loginSession();
-		$this->userID = $sql->get('id');
+		self::loginSession();
+		self::$userID = $sql->get('id');
+		user::getuser($session[0]);
+		
 		$_SESSION['login'] = $sql->get('id').'||'.self::hash($password);
 	
 	}
@@ -116,19 +121,26 @@ class userLogin {
 	}
 	
 	//session löschen und status auf false
-	public function logout() {   
+	public static function logout() {   
 	
 		unset($_SESSION['login']);
-		$this->isLogin = false;
+		self::$isLogin = false;
 		
 	}
 	
 	//status wiedergeben
-	public function isLogged() {
+	public static function isLogged() {
 		
-		return $this->isLogin;
+		return self::$isLogin;
 		
 	}
+	
+	public static function getUser() {
+		
+		return self::$userID;
+		
+	}
+	
 
 }
 
