@@ -36,7 +36,7 @@
 				</a>
 			</li>
 			<li>
-				<a class="icon-user" href="">
+				<a class="icon-user" href="index.php?page=user">
 			   		<span>User</span>
 				</a>
 			</li>
