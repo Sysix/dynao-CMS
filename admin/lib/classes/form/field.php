@@ -137,7 +137,7 @@ class formField {
 	
 	public function setID($id) {
 	
-		$this->addAttribte('id', $id);
+		$this->addAttribute('id', $id);
 		
 	}
 	
