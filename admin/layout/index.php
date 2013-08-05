@@ -16,17 +16,9 @@ $navi = array(
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Backend - dynaoCMS</title>
-	
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
-	
-	<!-- CSS Dateien einbinden-->
-	<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-	<link href="layout/css/bootstrap.css" rel="stylesheet">
-	<link href="layout/css/bootstrap-responsive.css" rel="stylesheet">
-	<link href="layout/css/style.css" rel="stylesheet">
-	<link href="layout/css/mobile.css" rel="stylesheet">
-
+	<?php
+	echo layout::getCSS();
+	?>
 </head>
 
 <body>
@@ -101,10 +93,6 @@ $navi = array(
 		
 	</section><!--end #tools-->
 
-	<!-- Javascript Dateien einbinden-->
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-	<script src="layout/js/bootstrap.js"></script>
-	<script src="layout/js/scripts.js"></script>
+<?php echo layout::getJS(); ?>
 </body>
 </html>

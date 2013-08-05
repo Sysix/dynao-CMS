@@ -17,6 +17,18 @@ if($action == 'delete') {
 
 if($action == 'add' || $action == 'edit') {
 	
+	layout::addJsCode("
+	var page_admin_button = $('#pageadmin-button');
+	var page_admin_content = $('#pageadmin-content');
+	
+	page_admin_button.change(function() {
+			if(page_admin_button.is(':checked')) {
+				page_admin_content.stop().slideUp(300);
+			} else {
+				page_admin_content.stop().slideDown(300);
+			}
+	});");
+	
 	$form = new form('user','id='.$id,'index.php');
 	
 	$field = $form->addTextField('email', $form->get('email'));
