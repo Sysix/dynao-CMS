@@ -9,7 +9,7 @@ html {
 body {
 	font-family:'Open Sans';
 	font-size:13px;
-	background:url(../img/bg/wood.jpg) no-repeat fixed;
+	background:url(../img/bg/wood.jpg) no-repeat fixed #552413;
 	-webkit-background-size:cover;
 	-moz-background-size:cover;
 	-o-background-size:cover;
@@ -26,7 +26,6 @@ h1 { line-height:85px; font-weight:300; font-size:24px; color:#fff; margin:0; pa
 	left:130px;
 	right:110px;
 	position:absolute;
-	top:0;
 	margin:30px 0;
 	border-radius:4px;
 }
@@ -61,7 +60,6 @@ h1 { line-height:85px; font-weight:300; font-size:24px; color:#fff; margin:0; pa
 
 #navi {
 	position:absolute;
-	top:0;
 	left:0;
 	width:100px;
 	margin:30px 0 30px 30px;
@@ -120,7 +118,6 @@ h1 { line-height:85px; font-weight:300; font-size:24px; color:#fff; margin:0; pa
 
 #subnavi {
 	width:240px;
-	border-radius:4px 0 0 4px;
 	position:absolute;
 }
 
@@ -254,7 +251,6 @@ h1 { line-height:85px; font-weight:300; font-size:24px; color:#fff; margin:0; pa
 }
 
 #content {
-	border-radius:0 4px 4px 0;
 	padding:30px;
 	padding-left:270px;
 	min-height:650px;

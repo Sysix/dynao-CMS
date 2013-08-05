@@ -22,7 +22,7 @@ $navi = array(
 </head>
 
 <body>
-	<section id="navi">
+	<div id="navi">
 		<ul>
 			<?php
 			foreach($navi as $href=>$options) {
@@ -35,7 +35,7 @@ $navi = array(
 			
 			?>
 		</ul>
-	</section><!--end #navi-->
+	</div><!--end #navi-->
 	
     <div id="wrap">
         <div id="subnavi">
@@ -43,17 +43,8 @@ $navi = array(
             
                 <img src="layout/img/user/defaultm.png" alt="Profilbild" />
                 
-                <div class="dropdown">
-                    <a class="icon-cog settings dropdown-toggle" data-toggle="dropdown" href=""></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                        <li><a tabindex="-1" href="#">Action</a></li>
-                        <li><a tabindex="-1" href="#">Another action</a></li>
-                        <li><a tabindex="-1" href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li><a tabindex="-1" href="#">Separated link</a></li>
-                    </ul>
-                </div>
-                
+                <a class="icon-cog settings" href=""></a>
+                    
                 <h3>Aaron Iker</h3>
                 Administrator
                 
@@ -82,7 +73,7 @@ $navi = array(
         <div class="clearfix"></div>
     </div><!--end #wrap-->
 	
-	<section id="tools">
+	<div id="tools">
 	
 		<a id="trash" href=""></a>
 		
@@ -91,7 +82,7 @@ $navi = array(
 			Elemente hier rein ziehen, um sie in den Papierkorb zu verschieben, draufklicken um den Inhalt anzeigen zu lassen.
 		</div>
 		
-	</section><!--end #tools-->
+	</div><!--end #tools-->
 
 <?php echo layout::getJS(); ?>
 </body>
