@@ -39,6 +39,8 @@ class form {
 		}
 		
 		$this->setTable($table);
+		
+		$this->loadBackend();
 
 		
 	}
@@ -79,6 +81,16 @@ class form {
 		$back->addClass('btn');
 		$back->addClass('btn-warning');
 		$back->addClass('form-back');
+		
+	}
+	
+	public function loadBackend() {
+	
+		$page = type::super('page', 'string');
+		$subpage = type::super('subpage', 'string');
+		
+		$this->addHiddenField('page', $page);
+		$this->addHiddenField('subpage', $subpage);
 		
 	}
 	
@@ -276,7 +288,6 @@ class form {
 			if($ausgabe->getAttribute('type') == 'hidden') {
 				continue;	
 			}
-		
 			$name = $ausgabe->getName();
 			
 			if($name != '') {
@@ -284,10 +295,21 @@ class form {
 				$val = type::post($name, 'string', '');
 				
 				// Ist ein Array-Element?
-				if(strpos($name, '[]') !== false) {
+				if(substr($name, -2) == '[]') {						
+							
+					$name = substr($name , 0, -2);						
 					
-					$val = type::post($name, 'array', '');
-					$val = '|'.implode('|', $val).'|';
+					$val = type::post($name, 'array');
+					
+					if(!empty($val)) {
+						
+						$val = '|'.implode('|', $val).'|';
+						
+					} else {
+						
+						$val = '';	
+						
+					}
 					
 				}
 				

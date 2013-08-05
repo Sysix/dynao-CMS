@@ -46,7 +46,6 @@ class userLogin {
 			
 		if(!$sql->num()) {
 			
-			self::logout();
 			return false;
 		
 		}
@@ -70,7 +69,6 @@ class userLogin {
 		if(is_null($email) || is_null($password) || $email == '' || $password == '') {
 			
 			echo message::info(lang::get('login_form_notfull'), true);
-			self::logout();
 			return;
 			
 		}
@@ -82,7 +80,6 @@ class userLogin {
 		if(!$sql->num()) {
 		
 			echo message::danger(sprintf(lang::get('login_no_user'), $email), true);
-			self::logout();
 			return;
 			
 		}
@@ -93,7 +90,6 @@ class userLogin {
 		if(!self::checkPassword($password, $sql->get('password'))) {
 			
 			echo message::danger(lang::get('login_pwd_false'), true);
-			self::logout();
 			return;
 			
 		}
@@ -125,6 +121,7 @@ class userLogin {
 	
 		unset($_SESSION['login']);
 		self::$isLogin = false;
+		echo message::info('Erfolgreich ausgeloggt', true);
 		
 	}
 	

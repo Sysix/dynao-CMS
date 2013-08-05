@@ -6,13 +6,14 @@ class dir {
 	
 	public function __construct() {
 		
-		self::$base = '../';
+		self::$base = $_SERVER['DOCUMENT_ROOT'].str_replace('/admin/index.php', '', $_SERVER['PHP_SELF']);
+		
 			
 	}
 	
 	public static function base($file = '') {
 		
-		return $_SERVER['DOCUMENT_ROOT'].'/'.$file;
+		return self::$base.'/'.$file;
 		
 	}
 	

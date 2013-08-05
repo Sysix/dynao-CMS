@@ -5,6 +5,7 @@ ini_set('display_errors', 1);
 session_start();
 
 include_once('lib/classes/dir.php');
+new dir();
 
 include_once('lib/classes/autoload.php');
 autoload::register();

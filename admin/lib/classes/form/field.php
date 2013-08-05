@@ -123,7 +123,7 @@ class formField {
 	
 	public function autocomplete($auto) {
 		
-		if(!is_bool($read)) {
+		if(!is_bool($auto)) {
 			//new Exception();				
 		}
 		
