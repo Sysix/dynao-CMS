@@ -1,3 +1,15 @@
+<?php
+
+$navi = array(
+	'dashboard' => array('Dashboard', 'desktop'),
+	'structure' => array('Strucutre', 'list'),
+	'content' => array('Content', 'edit'),
+	'user' => array('User', 'user'),
+	'addons' => array('Addons', 'code-fork'),
+	'settings' => array('Settings', 'cogs')
+	);
+
+?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -20,36 +32,16 @@
 <body>
 	<section id="navi">
 		<ul>
-			<li class="active">
-				<a class="icon-desktop" href="index.php?page=dashboard">
-			   		<span>Dashboard</span>
-				</a>
-			</li>
-			<li>
-				<a class="icon-list" href="index.php?page=structure">
-			   		<span>Structure</span>
-				</a>
-			</li>
-			<li>
-				<a class="icon-edit" href="">
-			   		<span>Content</span>
-				</a>
-			</li>
-			<li>
-				<a class="icon-user" href="index.php?page=user">
-			   		<span>User</span>
-				</a>
-			</li>
-			<li>
-				<a class="icon-code-fork" href="">
-			   		<span>Addons</span>
-				</a>
-			</li>
-			<li>
-				<a class="icon-cogs" href="">
-			   		<span>Settings</span>
-				</a>
-			</li>
+			<?php
+			foreach($navi as $href=>$options) {
+			
+				$class = ($href == $page) ? ' class="active"' : '';
+				
+				echo '<li'.$class.'><a class="icon-'.$options[1].'" href="'.url::backend($href).'"><span>'.$options[0].'</span></a></li>';
+				
+			}
+			
+			?>
 		</ul>
 	</section><!--end #navi-->
 	
