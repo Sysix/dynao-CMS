@@ -1,5 +1,7 @@
 $(document).ready(function () {
 	
-	$(".alert").addClass('in');
+	$('.form-back').click(function() {
+		 window.history.go(-1);
+	});
 	
 });

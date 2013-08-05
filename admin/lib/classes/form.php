@@ -68,14 +68,17 @@ class form {
 	public function setButtons() {
 				
 		$submit = $this->addSubmitField('save', lang::get('save'));
-		$submit->addClass('btn btn-default');
+		$submit->addClass('btn');
+		$submit->addClass('btn-default');
 			
 		$submit = $this->addSubmitField('save-back', lang::get('apply'));
-		$submit->addClass('btn btn-default');		
+		$submit->addClass('btn');
+		$submit->addClass('btn-default');	
 		
 		$back = $this->addButtonField('back', lang::get('back'));
-		$back->addAttribute('onlick', 'history.go(-1)');
-		$back->addClass('btn btn-warning');
+		$back->addClass('btn');
+		$back->addClass('btn-warning');
+		$back->addClass('form-back');
 		
 	}
 	

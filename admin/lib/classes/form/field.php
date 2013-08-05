@@ -121,6 +121,26 @@ class formField {
 		
 	}
 	
+	public function autocomplete($auto) {
+		
+		if(!is_bool($read)) {
+			//new Exception();				
+		}
+		
+		if($read) {
+			$this->addAttribute('autocomplete', 'autocomplete');	
+		} else {
+			$this->delAttribute('autocomplete');	
+		}
+		
+	}
+	
+	public function setID($id) {
+	
+		$this->addAttribte('id', $id);
+		
+	}
+	
 	public function getName() {
 	
 		return $this->name;
