@@ -90,28 +90,7 @@ class formField {
 			
 		}
 		
-		$return = '';
-		
-		foreach($attr as $key=>$val) {
-			
-			if(is_int($key)) {
-				
-				$return .= ' '.$val;
-				
-			} else {
-				
-				if(is_array($val)) {
-					$val = implode(' ', $val);	
-				}
-				
-				$return .= ' '.$key.'="'.$val.'"';	
-				
-			}			
-			
-		}
-		
-		return $return;
-		
+		return html_convertAttribute($attr);		
 		
 	}
 	

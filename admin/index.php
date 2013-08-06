@@ -7,8 +7,11 @@ session_start();
 include_once('lib/classes/dir.php');
 new dir();
 
-include_once('lib/classes/autoload.php');
+include_once(dir::classes('autoload.php'));
 autoload::register();
+
+include_once(dir::functions('html_stuff.php'));
+include_once(dir::functions('url_stuff.php'));
 
 lang::setDefault();
 lang::setLang('de_de');

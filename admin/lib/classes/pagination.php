@@ -65,8 +65,7 @@ class pagination {
 			$last_page = $this->currentSite;
 		}
 		
-		$first_get_string = http_build_query(array($this->getVar=>$first_page) + $_GET);
-		$return .= '<li><a href="index.php?'.$first_get_string.'">«</a></li>';
+		$return .= '<li><a href="index.php?'.url_addParam($this->getVar, $first_page).'">«</a></li>';
 		
 		for($i = 1; $i<=$this->maxSites; $i++) {
 			
@@ -78,16 +77,11 @@ class pagination {
 			if(in_array($i, $this->disable)) // Disable hat vorrang
 				$class = ' class="disabled"';
 				
-			// $_GET['site'] neu setzen			
-			$get_string = http_build_query(array($this->getVar=>$i) + $_GET);
-				
-			$return .= '<li'.$class.'><a href="index.php?'.$get_string.'">'.$i.'</a></li>';
+			$return .= '<li'.$class.'><a href="index.php?'.url_addParam($this->getVar, $i).'">'.$i.'</a></li>';
 						
 		}
 		
-		
-		$last_get_string = http_build_query(array($this->getVar=>$last_page) + $_GET);
-		$return .= '<li><a href="index.php?'.$last_get_string.'">»</a></li>';
+		$return .= '<li><a href="index.php?'.url_addParam($this->getVar, $last_page).'">»</a></li>';
 		
 		$return .= '<ul>';
 		

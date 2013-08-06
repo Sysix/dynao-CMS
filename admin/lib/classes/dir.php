@@ -35,6 +35,12 @@ class dir {
 		
 	}
 	
+	public static function functions($file = '') {
+	
+		return self::backend('lib/functions/'.$file);
+		
+	}
+	
 	public static function page($file = '') {
 	
 		return self::backend('pages/'.$file);

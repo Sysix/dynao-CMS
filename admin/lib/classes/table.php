@@ -132,27 +132,8 @@ class table {
 		if(!count($attributes) || is_string($attributes))
 			return '';
 		
-		$return = '';
 		
-		foreach($attributes as $key=>$val) {
-			
-			if(is_int($key)) {
-				
-				$return .= ' '.$val;
-				
-			} else {
-				
-				if(is_array($val)) {
-					$val = implode(' ', $val);	
-				}
-				
-				$return .= ' '.$key.'="'.$val.'"';	
-				
-			}			
-			
-		}
-		
-		return $return;
+		return html_convertAttribute($attributes);
 		
 	}
 	
