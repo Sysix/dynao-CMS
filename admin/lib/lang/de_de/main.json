@@ -19,5 +19,7 @@
 	#Login	
 	"login_form_notfull" : "Formular wurde nicht vollständig gesendet!",
 	"login_no_user" : "Kein Benutzer mit der E-Mail-Adresse \"%s\" gefunden",
-	"login_pwd_false" : "Das angebene Passwort ist falsch"
+	"login_pwd_false" : "Das angebene Passwort ist falsch",
+	"login_remember" :			"Login merken",
+	"login_pwd_forget" :			"Passwort vergessen ?"
 }
