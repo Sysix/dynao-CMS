@@ -1,0 +1,93 @@
+#tools {
+	display:none;
+}
+
+#wrap {
+	right:0;
+	margin:30px;
+  	background-position:-30px 0;
+	left:0;
+	top:0;
+	border-radius:4px;
+}
+
+#content {
+	padding-left:240px;
+}
+
+#subnavi {
+	width:210px;
+}
+
+#navi {
+	display:none;
+}
+
+#subnavi ul.subnav li.disable {
+	display:block;
+	height:40px;
+	line-height:40px;
+	color:#5c5c5c;
+	border-top:1px solid #3c3c3c;
+	margin-right:20px;
+}
+
+
+
+@media (max-width: 620px) {
+	
+	body {
+		padding:0;
+	}
+	
+	#navi {
+		position:absolute;
+		left:0;
+		top:0;
+		display:block;
+		border-bottom:5px solid #252525;
+		right:0;
+		width:auto;
+		margin:10px 10px 0 10px;
+		min-height:50px;
+		height:50px;
+	}
+	
+	#navi ul {
+		padding:0;
+		margin:0;
+	}
+	
+	#navi ul li a {
+		border-radius:4px 4px 0 0;
+		width:65px;
+		height:50px;
+		padding:0;
+		line-height:50px;
+		font-size:14px;
+	}
+	
+	#navi ul li {
+		float:left;
+	}
+	
+	#subnavi {
+		display:none;
+	}
+	
+	#content {
+		left:0;
+		padding:15px;
+		border-radius:0 0 4px 4px;
+		min-height:inherit;
+	}
+	
+	#wrap {
+		left:0;
+		background:url(../../admin/layout/img/bg/noise.png) repeat;
+		margin:0;
+		padding:0;
+		top:50px;
+	}
+	
+}
