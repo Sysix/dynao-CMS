@@ -40,8 +40,8 @@ class lang {
 		
 		$file = file_get_contents(dir::lang(self::$lang, $file.'.json'));
 		
-		// Alle Kommentare löschen (mit Raute beginnen
-		$file = preg_replace("/#[\s|\S](\w+)/", "", $file);	
+		// Alle Kommentare lï¿½schen (mit Raute beginnen
+		$file = preg_replace("/#\s*([a-zA-Z ]*)/", "", $file);	
 		$array = json_decode($file, true);
 				
 		self::$langs = array_merge((array)$array,self::$langs);
