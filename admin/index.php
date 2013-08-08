@@ -9,6 +9,7 @@ new dir();
 
 include_once(dir::classes('autoload.php'));
 autoload::register();
+autoload::addDir('utils');
 
 include_once(dir::functions('html_stuff.php'));
 include_once(dir::functions('url_stuff.php'));

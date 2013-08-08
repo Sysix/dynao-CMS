@@ -55,6 +55,26 @@ class autoload {
 		
 	}
 	
+	static public function addDir($dir) {
+		
+		if(!is_dir($dir)) {
+			//throw new Exception;	
+		}
+		
+		$files = scandir(dir::classes($dir));
+		
+		foreach($files as $file) {			
+			
+			if(in_array($file, array('.', '..')))
+				continue;
+				
+			self::$classes[] = dir::classes($dir.DIRECTORY_SEPARATOR.$file);
+			include_once(dir::classes($dir.DIRECTORY_SEPARATOR.$file));
+			
+		}
+		
+	}
+	
 }
 
 ?>

@@ -26,6 +26,9 @@ class user {
 		
 		self::$entrys = $sql->result;
 		
+		$perms = self::$entrys['perms'];
+		self::$entrys['perms'] = explode('|', $perms);
+		
 	}
 	
 	public function get($name) {
@@ -40,9 +43,18 @@ class user {
 		
 	}
 	
-	public function hasPerm($perm) {
+	public function isAdmin() {
 	
+		return isset(self::$entrys['perms']['admin[page]']);
+		
+	}
+	
+	public function hasPerm($perm) {
+		
+		if($this->isAdmin())
+			return true;
 			
+		return isset(self::$entrys['perms'][$perm]);			
 		
 	}
 	
