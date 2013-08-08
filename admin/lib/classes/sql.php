@@ -49,6 +49,18 @@ class sql {
 	public function query($query) {
 		
 		$this->query = self::$sql->query($query);
+			
+		try {
+			
+			if(!$this->query) {
+				throw new Exception('Query konnte nicht ausgeführt werden<pre>'.$query.'</pre>Error: '.self::$sql->error);
+			}
+			
+		} catch(Exception $e) {
+			
+			echo message::danger($e->getMessage());
+			
+		}
 		
 		return $this;
 		
@@ -58,17 +70,38 @@ class sql {
 	// Standart = Nur Spaltenname
 	public function result($query = false, $type = MYSQL_ASSOC) {
 		
-		if($query) {
-			$this->query($query);
-		}
 		
-		if(!in_array($type, array(MYSQLI_NUM, MYSQLI_ASSOC, MYSQLI_BOTH))) { #[MYSQLI_NUM, MYSQLI_ASSOC, MYSQLI_BOTH]
-				// new Exception();
-		}
-
-		$this->result = $this->query->fetch_array($type);
+		try {
+			
+			if($query) {
+				$this->query($query);
+			}
+			
+			if(!in_array($type, array(MYSQLI_NUM, MYSQLI_ASSOC, MYSQLI_BOTH))) { #[MYSQLI_NUM, MYSQLI_ASSOC, MYSQLI_BOTH]
+				
+				throw new Exception(__CLASS__.'::result erwartet als $type MYSQLI_NUM, MYSQLI_ASSOC oder MYSQLI_BOTH');
+				
+			}
+			
+			if(!$this->query) {
+				
+				throw new Exception('Resultat vom Query konnte nicht erzeugt werdem');
+				
+			} else {		
+			
+				$this->result = $this->query->fetch_array($type);
+			}
+				
+			return $this;
+			
+			
+			
+		} catch(Exception $e) {
+			
+			echo message::danger($e->getMessage());
+			
+		}		
 		
-		return $this;
 		
 	}
 	
@@ -76,7 +109,7 @@ class sql {
 	public function num($query = false) {
 	
 		if(!$query) {
-			return $this->query->num_rows;
+			return ($this->query) ? $this->query->num_rows : 0;
 			
 		}
 			
