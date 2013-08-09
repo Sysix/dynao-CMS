@@ -41,6 +41,16 @@ layout::addJS('layout/js/bootstrap.js');
 layout::addJS('layout/js/scripts.js');
 
 
+function add_structure_footer($table) {
+	
+	$table->addRow(array('class'=>'success'))
+	->addCell('Das ist ein Testfooter', array('colspan'=>3));
+	
+}
+
+extension::add('structure_table', 'add_structure_footer');
+
+
 ob_start();
 
 $login = new userLogin();

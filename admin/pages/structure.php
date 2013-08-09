@@ -74,6 +74,8 @@ if($action == '') {
 			$table->next();	
 		}
 		
+		extension::get('structure_table', $table);
+		
 		$show = $table->show();
 		
 		cache::write($show, $cacheFileName);
