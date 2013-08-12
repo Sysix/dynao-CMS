@@ -1,6 +1,6 @@
 <?php
 
-// Klasse für die Verbindung zur SQL Datenbank
+// Klasse fÃ¼r die Verbindung zur SQL Datenbank
 // Verwendung von MYSQLI
 class sql {
 
@@ -17,7 +17,7 @@ class sql {
 	// SQL Functionen
 	static $sql;
 	
-	// Zur Speicherung der Einträge
+	// Zur Speicherung der EintrÃ¤ge
 	var $values = array();
 	var $table;
 	var $where;
@@ -41,11 +41,11 @@ class sql {
 				// new Exception();
 		}
 		
-		// Zukünftige Abfrage falls was falsch geloffen ist		
+		// ZukÃ¼nftige Abfrage falls was falsch geloffen ist		
 	
 	}
 	
-	// Query durchführen
+	// Query durchfÃ¼hren
 	public function query($query) {
 		
 		$this->query = self::$sql->query($query);
@@ -53,7 +53,7 @@ class sql {
 		try {
 			
 			if(!$this->query) {
-				throw new Exception('Query konnte nicht ausgeführt werden<pre>'.$query.'</pre>Error: '.self::$sql->error);
+				throw new Exception('Query konnte nicht ausgefÃ¼hrt werden<pre>'.$query.'</pre>Error: '.self::$sql->error);
 			}
 			
 		} catch(Exception $e) {
@@ -66,7 +66,7 @@ class sql {
 		
 	}
 	
-	// Ruckgabe der Einträge als Array
+	// Ruckgabe der EintrÃ¤ge als Array
 	// Standart = Nur Spaltenname
 	public function result($query = false, $type = MYSQL_ASSOC) {
 		
@@ -105,7 +105,7 @@ class sql {
 		
 	}
 	
-	// Abfrage Anzahl der Einträge
+	// Abfrage Anzahl der EintrÃ¤ge
 	public function num($query = false) {
 	
 		if(!$query) {
@@ -134,14 +134,14 @@ class sql {
 		
 	}
 	
-	// Ausgabe der Einträge, für die Whileschleife
+	// Ausgabe der EintrÃ¤ge, fÃ¼r die Whileschleife
 	public function next() {		
 		
 		$this->counter++;
 		
 		if($this->isNext()) {
 			
-			// Nächsten Datensatz laden
+			// NÃ¤chsten Datensatz laden
 			$this->result();
 			
 		}
@@ -156,7 +156,7 @@ class sql {
 	}
 	
 	//
-	// Methoden zur Speicherung der Einträge
+	// Methoden zur Speicherung der EintrÃ¤ge
 	// 
 	
 	public function getPosts($post) {

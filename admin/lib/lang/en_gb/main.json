@@ -1,25 +1,25 @@
 {
 	#Einstellungen
-	"lang" :			"English",
-	"dateformat" :		"%d.$m.$Y",
+	"lang" :				"English",
+	"dateformat" :			"%d.$m.$Y",
 	
-	"yes" :				"yes",
-	"no" :				"no",
-	"name" :			"name",
+	"yes" :					"yes",
+	"no" :					"no",
+	"name" :				"name",
 	
 	#Aktionen
-	"update" :			"update",
-	"add" :				"add",
-	"edit" :			"edit",
-	"delete" :			"delete",
-	"save" :			"save",
-	"back" :			"back",
-	"apply" :			"apply",
+	"update" :				"update",
+	"add" :					"add",
+	"edit" :				"edit",
+	"delete" :				"delete",
+	"save" :				"save",
+	"back" :				"back",
+	"apply" :				"apply",
 	
 	#Login	
-	"login_form_notfull" : "Form was not completely sent!",
-	"login_no_user" : "No user with the e-mail address \"%s\" found",
-	"login_pwd_false" : "It is surrounded password is incorrect",
-	"login_remember" :			"Remember me",
-	"login_pwd_forget" :			"Forget your password ?"
+	"login_form_notfull" :	"Form was not completely sent!",
+	"login_no_user" :		"No user with the e-mail address \"%s\" found",
+	"login_pwd_false" :		"It is surrounded password is incorrect",
+	"login_remember" :		"Remember me",
+	"login_pwd_forget" :	"Forget your password ?"
 }

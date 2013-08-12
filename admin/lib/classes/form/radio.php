@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 class formRadio extends formField {
 		

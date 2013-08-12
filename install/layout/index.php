@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 $navi = array(
 	'step1' => array('Step 1', ''),

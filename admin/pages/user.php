@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 $action = type::super('action', 'string');
 $id = type::super('id', 'int', 0);

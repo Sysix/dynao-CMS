@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // Klasen für URL Minipulationen
 // Die Datei kann noch anders heißen und die Funktionen auch!

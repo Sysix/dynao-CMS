@@ -90,7 +90,7 @@ class autoload {
 		}
 	}
 	
-	// Hinzufügen von Klassen
+	// HinzufÃ¼gen von Klassen
 	static protected function addClass($path) {
 		
 		self::$classes[] = dir::classes($path);
