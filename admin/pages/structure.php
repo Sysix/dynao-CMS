@@ -2,6 +2,7 @@
 
 $action = type::super('action', 'string');
 $id = type::super('id', 'int', 0);
+$parent_id = type::super('parent_id', 'int', 0);
 
 if($action == 'delete') {
 	
@@ -35,7 +36,7 @@ if(in_array($action, array('save-add', 'save-edit'))) {
 	$sql = new sql();
 	$sql->setTable('structure');
 	$sql->setWhere('id='.$id);
-	$sql->getPosts(array('name'=>'string','sort'=>'int'));
+	$sql->getPosts(array('name'=>'string','sort'=>'int', 'parent_id'=>'int'));
 	
 	if($action == 'save-edit') {
 		$sql->update();	
@@ -63,7 +64,9 @@ if(cache::exist($cacheFileName) && !in_array($action, array('edit', 'add'))) {
 	
 } else {
 	
-	$table->setSql('SELECT * FROM structure ORDER BY sort ASC');
+	echo '<a href="'.url::backend('structure', array('action'=>'add', 'parent_id'=>$parent_id)).'" class="btn btn-small btn-primary pull-right">'.lang::get('add').'</a>';
+	
+	$table->setSql('SELECT * FROM structure WHERE parent_id = '.$parent_id.' ORDER BY sort ASC');
 	
 	if(in_array($action, array('edit', 'add'))) {
 		
@@ -74,6 +77,10 @@ if(cache::exist($cacheFileName) && !in_array($action, array('edit', 'add'))) {
 		echo $inputHidden->get();
 		
 		$inputHidden = new formInput('page', 'structure');
+		$inputHidden->addAttribute('type', 'hidden');
+		echo $inputHidden->get();
+		
+		$inputHidden = new formInput('parent_id', $parent_id);
 		$inputHidden->addAttribute('type', 'hidden');
 		echo $inputHidden->get();
 		
@@ -135,7 +142,7 @@ if(cache::exist($cacheFileName) && !in_array($action, array('edit', 'add'))) {
 			$online = '<a href="'.url::backend('structure', array('action'=>'online', 'id'=>$table->get('id'))).'" class="btn btn-small structure-'.$online.'">'.$online.'</a>';
 		
 			$table->addRow()
-			->addCell($table->get('name'))
+			->addCell('<a href="'.url::backend('structure', array('parent_id'=>$table->get('id'))).'">'.$table->get('name').'</a>')
 			->addCell($table->get('sort'))	
 			->addCell($edit.' '.$delete.' '.$online);
 			
