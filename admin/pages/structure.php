@@ -82,7 +82,7 @@ if(cache::exist($cacheFileName) && !in_array($action, array('edit', 'add'))) {
 	$table->setSql('SELECT * FROM structure ORDER BY sort ASC');
 	while($table->isNext()) {
 		
-		if($action == 'edit') {
+		if($action == 'edit' && $table->get('id') == $id) {
 			
 			$table->addRow()
 			->addCell('<input type="text" name="name" value="'.$table->get('name').'" />')
