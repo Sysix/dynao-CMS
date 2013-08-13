@@ -299,3 +299,13 @@ h1 { line-height:85px; font-weight:300; font-size:24px; color:#fff; margin:0; pa
 	padding:20px;
 	margin-bottom:20px;
 }
+
+.structure-offline {
+	background:#f8355e;
+	color:#fff;
+}
+
+.structure-online {
+	background:#68ef72;
+	color:#fff;
+}
