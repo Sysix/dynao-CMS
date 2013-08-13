@@ -71,9 +71,15 @@ while($while_id) {
 $breadcrumb[] = '<li><a href="'.url::backend('structure').'">Struktur</a></li>';
 
 echo '<ul class="pull-left breadcrumb">'.implode('', array_reverse($breadcrumb)).'</ul>';
-
-
 echo '<a href="'.url::backend('structure', array('action'=>'add', 'parent_id'=>$parent_id)).'" class="btn btn-small btn-primary pull-right">'.lang::get('add').'</a>';
+echo '<div class="clearfix"></div>';
+
+echo '<ul class="nav nav-tabs">
+  <li class="active"><a href="#">Unterseiten</a></li>
+  <li><a href="#">Inhalt</a></li>
+  <li><a href="#">Meta Daten</a></li>
+</ul>
+';
 
 $table = new table();
 
@@ -163,11 +169,11 @@ if(cache::exist($cacheFileName) && !in_array($action, array('edit', 'add'))) {
 			
 		} else {
 			
-			$edit = '<a href="'.url::backend('structure', array('action'=>'edit', 'id'=>$table->get('id'))).'" class="btn btn-small  btn-default">'.lang::get('edit').'</a>';
-			$delete = '<a href="'.url::backend('structure', array('action'=>'delete', 'id'=>$table->get('id'))).'" class="btn btn-small btn-danger">'.lang::get('delete').'</a>';
+			$edit = '<a href="'.url::backend('structure', array('action'=>'edit', 'id'=>$table->get('id'),'parent_id'=>$parent_id)).'" class="btn btn-small  btn-default">'.lang::get('edit').'</a>';	
+			$delete = '<a href="'.url::backend('structure', array('action'=>'delete', 'id'=>$table->get('id'),'parent_id'=>$parent_id)).'" class="btn btn-small btn-danger">'.lang::get('delete').'</a>';
 			
 			$online = ($table->get('online')) ? 'online' : 'offline';
-			$online = '<a href="'.url::backend('structure', array('action'=>'online', 'id'=>$table->get('id'))).'" class="btn btn-small structure-'.$online.'">'.$online.'</a>';
+			$online = '<a href="'.url::backend('structure', array('action'=>'online', 'id'=>$table->get('id'),'parent_id'=>$parent_id)).'" class="btn btn-small structure-'.$online.'">'.$online.'</a>';
 		
 			$table->addRow()
 			->addCell('<a href="'.url::backend('structure', array('parent_id'=>$table->get('id'))).'">'.$table->get('name').'</a>')
