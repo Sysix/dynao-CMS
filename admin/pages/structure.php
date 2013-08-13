@@ -63,31 +63,68 @@ if(cache::exist($cacheFileName) && !in_array($action, array('edit', 'add'))) {
 	
 } else {
 	
+	$table->setSql('SELECT * FROM structure ORDER BY sort ASC');
+	
 	if(in_array($action, array('edit', 'add'))) {
+		
 		echo '<form method="post" action="index.php">';
-		echo '<input type="hidden" name="action" value="save-'.$action.'">';
-		echo '<input type="hidden" name="page" value="structure">';
+		
+		$inputHidden = new formInput('action', 'save-'.$action);
+		$inputHidden->addAttribute('type', 'hidden');
+		echo $inputHidden->get();
+		
+		$inputHidden = new formInput('page', 'structure');
+		$inputHidden->addAttribute('type', 'hidden');
+		echo $inputHidden->get();
+		
+		$buttonSubmit = new formButton('save', 'Artikel speichern');
+		$buttonSubmit->addAttribute('type', 'submit');
+		$buttonSubmit->addClass('btn');
+		$buttonSubmit->addClass('btn-small');
+		$buttonSubmit->addClass('btn-default');
+		
 	}
 	
 	if($action == 'add') {
+		
+		$inputName = new formInput('name', '');
+		$inputName->addAttribute('type', 'text');
+		$inputName->addClass('form-control');
+		$inputName->addClass('input-small');
+		
+		$inputSort = new formInput('sort', '');
+		$inputSort->addAttribute('type', 'text');
+		$inputSort->addClass('form-control');
+		$inputSort->addClass('input-small');
 	
 		$table->addRow()
-		->addCell('<input type="text" name="name" value="" />')
-		->addCell('<input type="text" name="sort" value="" />')
-		->addCell('<button type="submit">Artikel speichern</button>');	
+		->addCell($inputName->get())
+		->addCell($inputSort->get())
+		->addCell($buttonSubmit->get());	
 		
 	}
 
-
-	$table->setSql('SELECT * FROM structure ORDER BY sort ASC');
 	while($table->isNext()) {
 		
 		if($action == 'edit' && $table->get('id') == $id) {
 			
+			$inputName = new formInput('name', $table->get('name'));
+			$inputName->addAttribute('type', 'text');
+			$inputName->addClass('form-control');
+			$inputName->addClass('input-small');
+			
+			$inputSort = new formInput('sort', $table->get('sort'));
+			$inputSort->addAttribute('type', 'text');
+			$inputSort->addClass('form-control');
+			$inputSort->addClass('input-small');
+			
+			$inputHidden = new formInput('id', $table->get('id'));
+			$inputHidden->addAttribute('type', 'hidden');
+			
 			$table->addRow()
-			->addCell('<input type="text" name="name" value="'.$table->get('name').'" />')
-			->addCell('<input type="text" name="sort" value="'.$table->get('sort').'" />')
-			->addCell('<input type="hidden" name="id" value="'.$table->get('id').'" /><button type="submit">Artikel speichern</button>');
+			->addCell($inputName->get())
+			->addCell($inputSort->get())
+			->addCell($inputHidden->get().$buttonSubmit->get());
 			
 		} else {
 			
