@@ -141,7 +141,7 @@ if(cache::exist($cacheFileName) && !in_array($action, array('edit', 'add'))) {
 			$table->addRow()
 			->addCell('<a href="'.url::backend('structure', array('parent_id'=>$table->get('id'))).'">'.$table->get('name').'</a>')
 			->addCell($table->get('sort'))	
-			->addCell($edit.$delete.$online, array('class'=>'btn-group'));
+			->addCell('<span class="btn-group">'.$edit.$delete.$online.'</span>');
 			
 		}
 		

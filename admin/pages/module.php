@@ -37,15 +37,27 @@ if($action == 'add' || $action == 'edit') {
 
 if($action == '') {
 	
+	layout::addJsCode('
+	var fixHelper = function(e, ui) {
+        ui.children().each(function() {
+			$(this).width($(this).width());
+		});
+		return ui;
+	}
+$( "#sortable tbody" ).sortable({
+	handle: ".icon-sort", 
+	helper: fixHelper,
+}).disableSelection();');
 	
 	echo '<a href="'.url::backend('module', array('action'=>'add')).'" class="btn btn-small btn-primary pull-right">'.lang::get('add').'</a>';
 	echo '<div class="clearfix"></div>';
 
-	$table = new table();
+	$table = new table(array('id'=>'sortable'));
 	
-	$table->addCollsLayout('*,170');
+	$table->addCollsLayout('20,*,170');
 	
 	$table->addRow()
+	->addCell()
 	->addCell('Name')
 	->addCell('Aktion');
 	
@@ -60,8 +72,9 @@ if($action == '') {
 		$delete = '<a href="'.url::backend('module', array('action'=>'delete', 'id'=>$id)).'" class="btn btn-small btn-danger">'.lang::get('delete').'</a>';
 		
 		$table->addRow()
+		->addCell('<i class="icon-sort"></i>')
 		->addCell($table->get('name'))
-		->addCell($edit.$delete, array('class'=>'btn-group'));
+		->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
 		
 		$table->next();	
 	}

@@ -82,6 +82,8 @@ if($action == '') {
 
 	$table = new table();
 	
+	$table->addCollsLayout('*,170');
+	
 	$table->addRow()
 	->addCell('E-Mail')
 	->addCell('Aktion');
@@ -98,7 +100,7 @@ if($action == '') {
 		
 		$table->addRow()
 		->addCell($table->get('email'))
-		->addCell($edit.$delete);
+		->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
 		
 		$table->next();	
 		

@@ -1,8 +1,5 @@
 <?php
-layout::addJsCode(' $(function() {
-$( "#sortable" ).sortable();
-$( "#sortable" ).disableSelection();
-});');
+layout::addJsCode('$( "#sortable" ).sortable().disableSelection();');
 ?>
 <ul id="sortable">
 
