@@ -41,32 +41,6 @@ if(in_array($action, array('save-add', 'save-edit'))) {
 	}
 }
 
-$while_id = $parent_id;
-
-$breadcrumb = array();
-
-while($while_id) {
-		
-	$sql = new sql();
-	$sql->query('SELECT name, parent_id FROM structure WHERE id='.$while_id)->result();
-	
-	if($parent_id != $while_id) {
-		
-		$breadcrumb[] = '<li><a href="'.url::backend('structure', array('parent_id'=>$while_id)).'">'.$sql->get('name').'</a></li>';
-		
-	} else {
-		
-		$breadcrumb[] = '<li class="active">'.$sql->get('name').'</li>';
-		
-	}
-	
-	$while_id = $sql->get('parent_id');
-	
-}
-
-$breadcrumb[] = '<li><a href="'.url::backend('structure').'">Struktur</a></li>';
-
-echo '<ul class="pull-left breadcrumb">'.implode('', array_reverse($breadcrumb)).'</ul>';
 echo '<a href="'.url::backend('structure', array('action'=>'add', 'parent_id'=>$parent_id)).'" class="btn btn-small btn-primary pull-right">'.lang::get('add').'</a>';
 echo '<div class="clearfix"></div>';
 
