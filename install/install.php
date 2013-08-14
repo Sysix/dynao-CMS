@@ -15,8 +15,7 @@ autoload::addDir('utils');
 include_once(dir::functions('html_stuff.php'));
 include_once(dir::functions('url_stuff.php'));
 
-//sql::connect('localhost', 'dynao_user', 'dasisteinpasswort', 'dynao');
-sql::connect('localhost', 'dynaocms', 'V7UDiGS21sE1Nfng', 'dynaocms'); 
+sql::connect('localhost', 'dynao_user', 'dasisteinpasswort', 'dynao');
 
 $sql = new sql();
 $sql = $sql->query('CREATE TABLE IF NOT EXISTS `module` (
@@ -70,5 +69,28 @@ $sql->query('INSERT INTO `user`
 (1, 	"sysix@sysix-coding.de", 	"a94a8fe5ccb19ba61c4c0873d391e987982fbbd3", 	""),
 (2, 	"info@dynao.de", 			"a94a8fe5ccb19ba61c4c0873d391e987982fbbd3", 	"");');
 
-message::success('Update erfolgreich');
+$sql->query('CREATE TABLE IF NOT EXISTS `structure_block` (
+  `id`			int(16)		unsigned	NOT NULL		auto_increment,
+  `structure_id`int(16) 	unsigned	NOT NULL,
+  `sort`		int(16)		unsigned	NOT NULL,
+  `modul_id`		int(16)		unsigned	NOT NULL,
+  `value1` 		text 					NOT NULL,
+  `value2` 		text					NOT NULL,
+  `value3` 		text 					NOT NULL,
+  `value4` 		text					NOT NULL,
+  `value5` 		text					NOT NULL,
+  `value6` 		text 					NOT NULL,
+  `value7`		text 				NOT NULL,
+  `value8` 		text 				NOT NULL,
+  `value9` 		text 				NOT NULL,
+  `value10` 	text 				NOT NULL,
+  `value11` 	text 				NOT NULL,
+  `value12` 	text 				NOT NULL,
+  `value13` 	text 				NOT NULL,
+  `value14` 	text 				NOT NULL,
+  `value15` 	text 				NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
+
+echo message::success('Update erfolgreich');
 ?>
