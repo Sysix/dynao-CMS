@@ -2,7 +2,7 @@
 
 $navi = array(
 	'dashboard' => array('Dashboard', 'desktop'),
-	'structure' => array('Strucutre', 'list'),
+	'structure' => array('Structure', 'list'),
 	'content' => array('Content', 'edit'),
 	'user' => array('User', 'user'),
 	'addons' => array('Addons', 'code-fork'),
@@ -56,11 +56,7 @@ $navi = array(
             
             <h1>Dashboard</h1>
             
-            <ul class="subnav">
-                <li class="active"><a href="" class="icon-home"><span>Overview</span></a></li>
-                <li><a href="" class="icon-bar-chart"><span>Reports</span></a></li>
-                <li><a href="" class="icon-terminal"><span>Logs</span></a></li>
-            </ul>
+            ´<?php echo backend::getSubnavi(); ?>
             
         </div><!--end #subnavi-->
         

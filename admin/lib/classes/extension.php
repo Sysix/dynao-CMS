@@ -47,32 +47,22 @@ class extension {
 	// Alle Extension ausführen
 	public static function get($name, $object = false) {
 	
-		try {
 			
-			if(!isset(self::$extensions[$name])) {
+		if(!isset(self::$extensions[$name])) {
+			
+			return $object;
 				
-				throw new Exception(__CLASS__.'::get kann nicht auf die Erweiterung '.$name.' zugreifen');
-				return false;
-					
-			}
+		}
 		
-			$extension = self::$extensions[$name];
-			
-			foreach($extension as $function) {
-				
-				$function($object);
-				
-			}
-			
-			return true;
-			
-			
-		} catch(Exception $e) {
+		$extension = self::$extensions[$name];
 		
-			echo message::danger($e->getMessage());
+		foreach($extension as $function) {
+			
+			$object = $function($object);
 			
 		}
 		
+		return $object;
 	}
 	
 }
