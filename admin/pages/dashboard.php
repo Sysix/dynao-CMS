@@ -1,5 +1,5 @@
 <?php echo message::info('<strong>Warning!</strong> Please check your Version of dynao CMS', true); ?>
-		<div class="row-fluid">
+		<div class="row">
 		
 			<div class="span12">
 				<div class="panel">
@@ -20,9 +20,9 @@
 			
 		</div>
 		
-		<div class="row-fluid">
+		<div class="row">
 		
-			<div class="span4">
+			<div class="col-lg-4">
 				<div class="box">
 				
 					<div class="btn-group">
@@ -90,7 +90,7 @@
 				</div>
 			</div>
 			
-			<div class="span4">
+			<div class="col-lg-4">
 				<div class="box">
 				
 					<ul class="pagination">
@@ -142,7 +142,7 @@
 				</div>
 			</div>
 			
-			<div class="span4">
+			<div class="col-lg-4">
 				<div class="box">
 				
 					<div class="alert">
@@ -179,6 +179,6 @@
 			
 			<div class="clearfix"></div>
 			
-		</div><!--end .row-fluid-->
+		</div><!--end .row-->
 		
 		<div class="clearfix"></div>

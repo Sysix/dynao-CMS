@@ -19,6 +19,61 @@ body {
 a, a:visited { text-decoration:none!important; }
 a:hover { text-decoration:none!important; }
 
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight:normal;
+	font-family:'Open Sans';
+}
+
+.btn {
+	font-weight:normal;
+}
+
+
+.btn-default {
+  color: #ffffff;
+  background-color: #474949;
+  border-color: #474949;
+}
+
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active {
+  background-color: #3a3c3c;
+  border-color: #2e2f2f;
+  color:#fff;
+}
+
+.btn-default.disabled,
+.btn-default[disabled],
+fieldset[disabled] .btn-default,
+.btn-default.disabled:hover,
+.btn-default[disabled]:hover,
+fieldset[disabled] .btn-default:hover,
+.btn-default.disabled:focus,
+.btn-default[disabled]:focus,
+fieldset[disabled] .btn-default:focus,
+.btn-default.disabled:active,
+.btn-default[disabled]:active,
+fieldset[disabled] .btn-default:active,
+.btn-default.disabled.active,
+.btn-default[disabled].active,
+fieldset[disabled] .btn-default.active {
+  background-color: #474949;
+  border-color: #474949;
+}
+
+
+.btn-small {
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+
+.btn-default .caret
+
 h1 { line-height:85px; font-weight:300; font-size:24px; color:#fff; margin:0; padding:0 0 0 20px; }
 
 #wrap { 
