@@ -23,13 +23,15 @@ sql::connect('localhost', 'dynao_user', 'dasisteinpasswort', 'dynao');
 
 cache::setCache(false);
 
+ajax::convertPOST();
+
 $page = type::super('page', 'string', 'dashboard');
 $subpage = type::super('subpage', 'string');
 
 layout::addCSS('http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700|Open+Sans+Condensed:300,700');
-
 layout::addCSS('http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css');
 layout::addCSS('http://netdna.bootstrapcdn.com/bootstrap/3.0.0-wip/css/bootstrap.min.css');
+
 layout::addCSS('layout/css/style.css');
 layout::addCSS('layout/css/mobile.css');
 
@@ -37,17 +39,6 @@ layout::addJS('http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
 layout::addJS('http://code.jquery.com/ui/1.10.3/jquery-ui.js');
 layout::addJS('http://netdna.bootstrapcdn.com/bootstrap/3.0.0-wip/js/bootstrap.min.js');
 layout::addJS('layout/js/scripts.js');
-
-
-function add_structure_footer($table) {
-	
-	$table->addRow(array('class'=>'success'))
-	->addCell('Das ist ein Testfooter', array('colspan'=>3));
-	
-}
-
-extension::add('structure_table', 'add_structure_footer');
-
 
 ob_start();
 
@@ -60,6 +51,12 @@ if($login->isLogged()) {
 $CONTENT = ob_get_contents();
 
 ob_end_clean();
+
+
+if(ajax::is()) {
+	echo ajax::getReturn();
+	die;
+}
 
 if($login->isLogged()) {
 include(dir::backend('layout/index.php'));

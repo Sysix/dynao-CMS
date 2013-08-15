@@ -3,6 +3,23 @@
 $action = type::super('action', 'string');
 $id = type::super('id', 'int', 0);
 
+
+if(ajax::is()) {
+	
+	$sort = type::post('array', 'array');
+	
+	$sql = new sql();
+	$sql->setTable('module');
+	foreach($sort as $s=>$id) {
+		$sql->setWhere('id='.$id);
+		$sql->addPost('sort', $s+1);
+		$sql->update();	
+	}
+	
+	ajax::addReturn(message::success('Sortierung erfolgreich übernommen', true));
+	
+}
+
 if($action == 'delete') {
 	
 	$sql = new sql();
@@ -37,22 +54,10 @@ if($action == 'add' || $action == 'edit') {
 
 if($action == '') {
 	
-	layout::addJsCode('
-	var fixHelper = function(e, ui) {
-        ui.children().each(function() {
-			$(this).width($(this).width());
-		});
-		return ui;
-	}
-$( "#sortable tbody" ).sortable({
-	handle: ".icon-sort", 
-	helper: fixHelper,
-}).disableSelection();');
-	
 	echo '<a href="'.url::backend('module', array('action'=>'add')).'" class="btn btn-small btn-primary pull-right">'.lang::get('add').'</a>';
 	echo '<div class="clearfix"></div>';
 
-	$table = new table(array('id'=>'sortable'));
+	$table = new table(array('class'=>array('js-sort')));
 	
 	$table->addCollsLayout('20,*,170');
 	
@@ -71,7 +76,7 @@ $( "#sortable tbody" ).sortable({
 		$edit = '<a href="'.url::backend('module', array('action'=>'edit', 'id'=>$id)).'" class="btn btn-small btn-default">'.lang::get('edit').'</a>';
 		$delete = '<a href="'.url::backend('module', array('action'=>'delete', 'id'=>$id)).'" class="btn btn-small btn-danger">'.lang::get('delete').'</a>';
 		
-		$table->addRow()
+		$table->addRow(array('data-id'=>$id))
 		->addCell('<i class="icon-sort"></i>')
 		->addCell($table->get('name'))
 		->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
