@@ -50,7 +50,7 @@
 	}
 	
 	#content {
-		padding-left:240px;
+		padding-left:220px;
 	}
 	
 	#subnavi, #subnavi #user {
@@ -67,8 +67,8 @@
 	#content {
 		left:0;
 		background:url(../img/bg/noise.png) repeat;
-		margin:10px;
-		padding:5px;
+		margin:10px 0;
+		padding:5px 0;
 	}
 	
 	#navi {

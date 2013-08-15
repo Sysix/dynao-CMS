@@ -21,7 +21,6 @@ a:hover { text-decoration:none!important; }
 
 
 h1, h2, h3, h4, h5, h6 {
-	font-weight:normal;
 	font-family:'Open Sans';
 }
 
@@ -72,9 +71,26 @@ fieldset[disabled] .btn-default.active {
   border-radius: 3px;
 }
 
-.btn-default .caret
+.options a {
+	font-size:12px;
+}
 
-h1 { line-height:85px; font-weight:300; font-size:24px; color:#fff; margin:0; padding:0 0 0 20px; }
+.panel-heading h3 {
+	line-height:30px;
+}
+
+.panel .content {
+	padding:15px;
+}
+
+h1 { 
+	line-height:85px;
+	font-weight:300;
+	font-size:24px;
+	color:#fff;
+	margin:0;
+	padding:0 0 0 20px; 
+}
 
 #wrap { 
 	background:url(../img/bg/noise_side.png) repeat-y top left;
@@ -306,8 +322,8 @@ h1 { line-height:85px; font-weight:300; font-size:24px; color:#fff; margin:0; pa
 }
 
 #content {
-	padding:30px;
-	padding-left:270px;
+	padding:30px 10px;
+	padding-left:250px;
 	min-height:650px;
 }
 
@@ -373,4 +389,22 @@ h1 { line-height:85px; font-weight:300; font-size:24px; color:#fff; margin:0; pa
 
 .structure-addmodul-box {
 	margin-bottom:20px;
+}
+
+ul.news {
+	padding:0;
+	margin:0;
+	list-style:none;
+}
+
+ul.news li {
+	border-bottom:1px solid #dfdfdf;
+}
+
+ul.news li:last-child {
+	border-bottom:none;
+}
+
+ul.news li .btn {
+	margin-top:7px;
 }

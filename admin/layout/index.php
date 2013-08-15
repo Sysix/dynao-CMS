@@ -3,7 +3,7 @@
 $navi = array(
 	'dashboard' => array('Dashboard', 'desktop'),
 	'structure' => array('Structure', 'list'),
-	'content' => array('Content', 'edit'),
+	'media' => array('Media', 'picture'),
 	'user' => array('User', 'user'),
 	'addons' => array('Addons', 'code-fork'),
 	'settings' => array('Settings', 'cogs')
@@ -56,7 +56,7 @@ $navi = array(
             
             <h1>Dashboard</h1>
             
-            ´<?php echo backend::getSubnavi(); ?>
+            <?php echo backend::getSubnavi(); ?>
             
         </div><!--end #subnavi-->
         
@@ -73,13 +73,54 @@ $navi = array(
 	
 		<a id="trash" href=""></a>
 		
-		<div id="trash-text">
-			<h4>Papierkorb</h4>
-			Elemente hier rein ziehen, um sie in den Papierkorb zu verschieben, draufklicken um den Inhalt anzeigen zu lassen.
-		</div>
-		
 	</div><!--end #tools-->
 
 <?php echo layout::getJS(); ?>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+
+	google.load("visualization", "1", {packages:["corechart"]});
+	google.setOnLoadCallback(drawChart);
+	
+	function drawChart() {
+	var data = google.visualization.arrayToDataTable([
+	  ['Months', 'All', 'SEO', 'Direct link'],
+	  ['Jan',  950, 350, 00],
+	  ['Feb',  800, 400, 400],
+	  ['Mar',  640, 330, 310],
+	  ['Apr',  750, 370, 380],
+	  ['Mai',  700, 300, 400],
+	  ['Jun',  650, 270, 380],
+	  ['Jul',  700, 290, 410],
+	  ['Aug',  300, 170, 130],
+	  ['Sep',  0, 0, 0],
+	  ['Oct',  0, 0, 0],
+	  ['Nov',  0, 0, 0],
+	  ['Dec',  0, 0, 0],
+	]);
+	
+	function resize() {		
+		
+		var v_width = $('#visitchart').width();
+		console.log(v_width);
+		
+		var options = {
+		title: '',
+		chartArea: {
+			top: 30,
+			width: v_width-100
+		},	
+		legend: 'bottom',
+		};
+		
+		var chart = new google.visualization.LineChart(document.getElementById('visitchart'));
+		chart.draw(data, options);
+	
+	}
+	
+	window.onload = resize();
+   	window.onresize = resize;
+  }
+</script>
 </body>
 </html>
