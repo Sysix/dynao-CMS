@@ -21,7 +21,6 @@ a:hover { text-decoration:none!important; }
 
 
 h1, h2, h3, h4, h5, h6 {
-	font-weight:normal;
 	font-family:'Open Sans';
 }
 
@@ -72,9 +71,14 @@ fieldset[disabled] .btn-default.active {
   border-radius: 3px;
 }
 
-.btn-default .caret
-
-h1 { line-height:85px; font-weight:300; font-size:24px; color:#fff; margin:0; padding:0 0 0 20px; }
+h1 { 
+	line-height:85px;
+	font-weight:300;
+	font-size:24px;
+	color:#fff;
+	margin:0;
+	padding:0 0 0 20px; 
+}
 
 #wrap { 
 	background:url(../img/bg/noise_side.png) repeat-y top left;
