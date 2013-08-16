@@ -73,7 +73,7 @@ $sql->query('CREATE TABLE IF NOT EXISTS `structure_block` (
   `id`			int(16)		unsigned	NOT NULL		auto_increment,
   `structure_id`int(16) 	unsigned	NOT NULL,
   `sort`		int(16)		unsigned	NOT NULL,
-  `modul_id`		int(16)		unsigned	NOT NULL,
+  `modul`		int(16)		unsigned	NOT NULL,
   `value1` 		text 					NOT NULL,
   `value2` 		text					NOT NULL,
   `value3` 		text 					NOT NULL,

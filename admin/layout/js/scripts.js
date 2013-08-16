@@ -31,4 +31,20 @@ $(document).ready(function () {
 		}
 	}).disableSelection();
 	
+	$('.structure-addmodul-box select').change(function() {		
+		
+		var form = $(this).closest('form');
+		var li = form.closest('li');
+		
+		var pos = $('<input>').attr({
+			type: 'hidden',
+			name: 'pos',
+			value: li.index()+1
+		});
+		
+		pos.appendTo(form);				
+		form.submit();
+		
+	});
+	
 });

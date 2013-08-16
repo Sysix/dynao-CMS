@@ -102,7 +102,6 @@ $navi = array(
 	function resize() {		
 		
 		var v_width = $('#visitchart').width();
-		console.log(v_width);
 		
 		var options = {
 		title: '',

@@ -1,7 +1,6 @@
 <?php
 layout::addJsCode('$("#structure-content").sortable({handle: ".panel-heading"})');
 
-
 $module_options = '';
 foreach(module::getModuleList() as $module) {
 
@@ -13,33 +12,43 @@ foreach(module::getModuleList() as $module) {
 <ul id="structure-content">
 <?php
 
-if($action == 'add') {
-	?>
-	
-	<form action="index.php" method="post">
-	
-		<?php
+if($action == 'add' || $action == 'edit') {
 		
-		$sql = new sql();
-		$sql->result('SELECT * FROM module WHERE id='.type::get('modul', 'int'));
-		echo $sql->get('input');
-		?>
+	$form = new form('module', 'id='.type::super('modul', 'int'), 'index.php');
+	$form->setSave(false);
+	$form->addRawField($form->get('input'));
+	$form->addHiddenField('parent_id', $parent_id);
+	$form->addHiddenField('modul', $form->get('id'));
+	$form->addHiddenField('sort', type::super('pos', 'int'));
 	
-		<input type="hidden" name="page" value="<?php echo $page; ?>" />
-		<input type="hidden" name="subpage" value="<?php echo $subpage; ?>" />
-		<input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" />
-		<input type="hidden" name="modul_id" value="<?php echo type::get('modul', 'int'); ?>" />
-		<input type="hidden" name="sort" value="<?php echo type::get('pos', 'int'); ?>" />
-		
-		<button type="submit" class="btn btn-small btn-default">Speichern</button>
-		
-	</form>
+	if($form->isSubmit()) {			
+			$module = new module();
+			$module->saveBlock($form->get('id'));
+			
+	}
+?>
+	<li>
+		<div class="panel">
+			<div class="panel-heading">
+				<h3 class="panel-title pull-left"><?php echo $form->get('name'); ?></h3>
+				<div class="clearfix"></div>
+			</div>
+			<div class="panel-body">				
+			<?php echo $form->show(); ?>
+			</div>
+		</div>
+	</li>
 	<?php
 	
 }
 
 $sql = new sql();
-$sql->result('SELECT * FROM structure_block WHERE structure_id = '.$parent_id);
+$sql->result('SELECT s.*, m.*
+FROM structure_block as s
+LEFT JOIN 
+	module as m
+		ON m.id = s.modul
+WHERE structure_id = '.$parent_id);
 while($sql->isNext()) {
 	?>
 	<li>
@@ -48,9 +57,8 @@ while($sql->isNext()) {
 			<input type="hidden" name="page" value="structure" />
 			<input type="hidden" name="subpage" value="content" />
 			<input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" />
-			<input type="hidden" name="action" value="add" />
-			<input type="hidden" name="pos" value="<?php $sql->get('sort'); ?>" />			
-			<select name="modul" class="form-control" onchange="this.form.submit()">
+			<input type="hidden" name="action" value="add" />		
+			<select name="modul" class="form-control">
 				<option>Modul hinzufügen</option>
 				<?php echo $module_options;	?>
 			</select>
@@ -58,7 +66,7 @@ while($sql->isNext()) {
 		</div>
 		<div class="panel">
 		  <div class="panel-heading">
-			<h3 class="panel-title pull-left">Modul #3</h3>
+			<h3 class="panel-title pull-left"><?php echo $sql->get('name'); ?></h3>
 			<div class="pull-right btn-group">
 				<a class="btn btn-small structure-online">ON</a>
 				<a class="btn btn-default btn-small icon-cog"></a>
@@ -68,7 +76,7 @@ while($sql->isNext()) {
 			<div class="clearfix"></div>
 		  </div>
 		  <div class="panel-body">
-			Content
+			<?php echo $sql->get('output'); ?>
 		  </div>
 		</div>
 	</li>
@@ -83,7 +91,7 @@ while($sql->isNext()) {
 			<input type="hidden" name="subpage" value="content" />
 			<input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" />
 			<input type="hidden" name="action" value="add" />
-			<input type="hidden" name="pos" value="1" />			
+			<input type="hidden" name="pos" value="<?php echo $sql->num()+1; ?>" />			
 			<select name="modul" class="form-control" onchange="this.form.submit()">
 				<option>Modul hinzufügen</option>
 				<?php echo $module_options;	?>

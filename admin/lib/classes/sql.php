@@ -166,7 +166,7 @@ class sql {
 		}
 		
 		foreach($post as $val=>$cast) {
-			$this->values[$val] = type::post($val, $cast, ''); 	
+			$this->values[$val] = $this->escape(type::post($val, $cast, '')); 	
 		}
 		
 		return $this;
@@ -175,13 +175,31 @@ class sql {
 	
 	public function addPost($name, $val) {
 		
-		$this->values[$name] = $val;
+		$this->values[$name] = $this->escape($val);
 		
 	}
 	
 	public function delPost($name) {
 	
 		unset($this->values[$name]);
+		
+	}
+	
+	public function getPost($name, $default = null) {
+	
+		if(isset($this->values[$name])) {
+		
+			return $this->values[$name];	
+			
+		}
+		
+		return $default;
+		
+	}
+	
+	public function escape($name) {
+	
+		return self::$sql->escape_string($name);
 		
 	}
 	

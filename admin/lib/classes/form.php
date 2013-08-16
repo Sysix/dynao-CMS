@@ -18,6 +18,9 @@ class form {
 	var $isGetPosts = false;
 	var $isSubmit;
 	
+	// Formular wirklich speichern
+	var $toSave = true;
+	
 	public function __construct($table, $where, $action, $method = 'post') {
 		
 		// Gültige Methode?		
@@ -332,7 +335,20 @@ class form {
 		
 	}
 	
+	public function setSave($bool) {
+	
+		if(!is_bool($bool)) {
+			//throw new Exception;	
+		}
+		
+		$this->toSave = $bool;
+		
+	}
+	
 	private function saveForm() {
+	
+		if(!$this->toSave)
+			return;
 	
 		if($this->isEditMode()) {
 			$this->sql->update();
