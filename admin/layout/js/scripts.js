@@ -38,7 +38,7 @@ $(document).ready(function () {
 		
 		var pos = $('<input>').attr({
 			type: 'hidden',
-			name: 'pos',
+			name: 'sort',
 			value: li.index()+1
 		});
 		
