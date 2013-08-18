@@ -93,6 +93,8 @@ class module {
 		$return .= '	</div>';
 		$return .= '</div>';
 		
+		return $return;
+		
 	}
 	
 	public function setSelectBlock($parent_id, $options, $sort = false) {

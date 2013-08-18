@@ -42,7 +42,9 @@ $(document).ready(function () {
 			value: li.index()+1
 		});
 		
-		pos.appendTo(form);				
+		if(!form.find('input[name=sort]').length)
+			pos.appendTo(form);	
+		
 		form.submit();
 		
 	});

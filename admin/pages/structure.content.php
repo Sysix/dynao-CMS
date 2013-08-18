@@ -38,7 +38,7 @@ while($sql->isNext()) {
 		
 		$form_id = ($action == 'add') ? type::super('modul', 'int') : $sql->get('modul');
 		
-		$form = $module->setFormBlock($parent_id, $form_id);
+		$form = $module->setFormBlock($form_id, $parent_id);
 	
 	}
 ?>
@@ -86,13 +86,11 @@ while($sql->isNext()) {
 ?>	
 </ul>
 <?php
-if((!$sql->num() || $sql->num()+1 == type::super('sort', 'int')) && $action == 'add') {
+if((!$sql->num() || ($sql->num()+1 == type::super('sort', 'int'))) && $action == 'add') {
 	
 	$form_id = type::super('modul', 'int');
 	
-	$module = new module();
-	$form = $module->setFormBlock($parent_id, $form_id);
-	
+	$form = $module->setFormBlock($form_id, $parent_id);
 	echo $module->setFormBlockout($form);
 	
 } else {
