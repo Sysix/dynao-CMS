@@ -18,6 +18,8 @@ if($action == 'delete') {
 	echo message::success('Erfolgreich gelöscht');
 	
 }
+
+$module = new module();
 ?>
 <div class="clearfix"></div>
 <ul id="structure-content">
@@ -36,65 +38,26 @@ while($sql->isNext()) {
 		
 		$form_id = ($action == 'add') ? type::super('modul', 'int') : $sql->get('modul');
 		
-		$form = new form('module', 'id='.$form_id, 'index.php');
-		$form->setSave(false);
-		$form->setMode($action);
-		$form->addRawField($form->get('input'));
-		$form->addHiddenField('parent_id', $parent_id);
-		$form->addHiddenField('modul', $form->get('id'));
-		$form->addHiddenField('sort', type::super('sort', 'int'));
-		
-		if($form->isSubmit()) {			
-				$module = new module();
-				$module->saveBlock($form->get('id'));
-				
-		}
+		$form = $module->setFormBlock($parent_id, $form_id);
 	
 	}
 ?>
 		<li>
 <?php
 	if($action == 'add' && type::super('sort', 'int') == $sql->get('sort')) {
-		?>
-		<div class="panel">
-			<div class="panel-heading">
-				<h3 class="panel-title pull-left"><?php echo $form->get('name'); ?></h3>
-				<div class="clearfix"></div>
-			</div>
-			<div class="panel-body">				
-			<?php echo $form->show(); ?>
-			</div>
-		</div>
-		<?php
+		
+		echo $module->setFormBlockout($form);
+
 	} else {
-		?>
-		<div class="structure-addmodul-box">
-			<form action="index.php" method="get">
-			<input type="hidden" name="page" value="structure" />
-			<input type="hidden" name="subpage" value="content" />
-			<input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" />
-			<input type="hidden" name="action" value="add" />		
-			<select name="modul" class="form-control">
-				<option>Modul hinzufügen</option>
-				<?php echo $module_options;	?>
-			</select>
-			</form>
-		</div>            
-		<?php
+		
+		echo $module->setSelectBlock($parent_id, $module_options);
+		
 	}
 		
 	if($action == 'edit' && $id == $sql->get('id')) {
-		?>
-		<div class="panel">
-			<div class="panel-heading">
-				<h3 class="panel-title pull-left"><?php echo $form->get('name'); ?></h3>
-				<div class="clearfix"></div>
-			</div>
-			<div class="panel-body">				
-			<?php echo $form->show(); ?>
-			</div>
-		</div>
-		<?php
+
+		echo $module->setFormBlockout($form);
+
 	} else {
 		?>
 		<div class="panel">
@@ -126,46 +89,15 @@ while($sql->isNext()) {
 if((!$sql->num() || $sql->num()+1 == type::super('sort', 'int')) && $action == 'add') {
 	
 	$form_id = type::super('modul', 'int');
-		
-	$form = new form('module', 'id='.$form_id, 'index.php');
-	$form->setSave(false);
-	$form->setMode('add');
-	$form->addRawField($form->get('input'));
-	$form->addHiddenField('parent_id', $parent_id);
-	$form->addHiddenField('modul', $form->get('id'));
-	$form->addHiddenField('sort', type::super('pos', 'int'));
 	
-	if($form->isSubmit()) {
-			$module = new module();
-			$module->saveBlock($form->get('id'));			
-	}
+	$module = new module();
+	$form = $module->setFormBlock($parent_id, $form_id);
 	
-	?>
-    <div class="panel">
-			<div class="panel-heading">
-				<h3 class="panel-title pull-left"><?php echo $form->get('name'); ?></h3>
-				<div class="clearfix"></div>
-			</div>
-			<div class="panel-body">				
-			<?php echo $form->show(); ?>
-			</div>
-		</div>
-    <?php
+	echo $module->setFormBlockout($form);
+	
 } else {
-?>
-<div class="structure-addmodul-box">
-<form action="index.php" method="get">
-			<input type="hidden" name="page" value="structure" />
-			<input type="hidden" name="subpage" value="content" />
-			<input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" />
-			<input type="hidden" name="action" value="add" />
-			<input type="hidden" name="sort" value="<?php echo $sql->num()+1; ?>" />			
-			<select name="modul" class="form-control" onchange="this.form.submit()">
-				<option>Modul hinzufügen</option>
-				<?php echo $module_options;	?>
-			</select>
-			</form>
-</div>
-<?php 
+	
+	echo $module->setSelectBlock($parent_id, $module_options, $sql->num()+1);
+	
 }
 ?>
