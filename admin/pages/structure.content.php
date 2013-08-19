@@ -1,6 +1,4 @@
 <?php
-if($action == '')
-	layout::addJsCode('$("#structure-content").sortable({handle: ".panel-heading"})');
 
 $module_options = '';
 foreach(module::getModuleList() as $module) {
@@ -8,6 +6,23 @@ foreach(module::getModuleList() as $module) {
 	$module_options .= '<option value="'.$module['id'].'">'.$module['name'].'</option>';
 	
 }
+
+if(ajax::is()) {
+	
+	$sort = type::post('array', 'array');
+	$sql = new sql();
+	$sql->setTable('structure_block');
+	foreach($sort as $s=>$id) {
+		$sql->setWhere('id='.$id);
+		$sql->addPost('sort', $s+1);
+		$sql->update();
+	}
+	
+	ajax::addReturn(message::success('Sortierung erfolgreich übernommen', true));
+	
+	
+}
+
 
 if($action == 'delete') {
 
@@ -31,7 +46,8 @@ FROM structure_block as s
 LEFT JOIN 
 	module as m
 		ON m.id = s.modul
-WHERE structure_id = '.$parent_id);
+WHERE structure_id = '.$parent_id.'
+ORDER BY `sort`');
 while($sql->isNext()) {
 
 	if(($action == 'add' && type::super('sort', 'int') == $sql->get('sort')) || ($action == 'edit' && $id == $sql->get('id'))) {
@@ -42,7 +58,7 @@ while($sql->isNext()) {
 	
 	}
 ?>
-		<li>
+		<li data-id="<?php echo $sql->get('id'); ?>">
 <?php
 	if($action == 'add' && type::super('sort', 'int') == $sql->get('sort')) {
 		

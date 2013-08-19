@@ -1,8 +1,4 @@
-$(document).ready(function () {
-	
-	$('.form-back').click(function() {
-		 window.history.go(-1);
-	});
+(function($) {
 	
 	var fixHelper = function(e, ui) {
         ui.children().each(function() {
@@ -11,25 +7,60 @@ $(document).ready(function () {
 		return ui;
 	}
 	
-	$('.js-sort tbody').sortable({
-		handle: ".icon-sort", 
-		helper: fixHelper,
-		update : function() {
+	$.fn.DynSorting = function(options) {
+		
+		var settings = $.extend({
+			helper: true,
+			children: 'tr',	
+			handle: '.icon-sort',
+			disable: true,
+			prependTo : '#content'	
+		}, options);
+		
+		if(settings.helper == false)
+			settings.helper = 'original';
 			
-			var trs = $(this).children('tr');
-			var results = Array();
+		if(settings.helper === true)
+			settings.helper = fixHelper;
 			
-			for (var i=0;i<trs.length;i++){
-				results[i] = $(trs[i]).data('id');
+		$(this).sortable({
+			handle: settings.handle,
+			helper: settings.helper,
+			update : function() {
+				
+				var child = $(this).children(settings.children);
+				var results = Array();
+				
+				for (var i=0;i<child.length;i++){
+					results[i] = $(child[i]).data('id');
+				}
+				
+				var getString = document.location.search.substr(1,document.location.search.length);
+				
+				$.post('index.php', { ajaxGet : getString, array: results }, function(data) {
+					$(settings.prependTo).prepend(data);
+				});				
 			}
 			
-			var getString = document.location.search.substr(1,document.location.search.length);
+		});
+		
+		if(settings.disable)
+			$(this).disableSelection();
 			
-			$.post('index.php', { ajaxGet : getString, array: results }, function(data) {
-				$('#content').prepend(data);
-			});
-		}
-	}).disableSelection();
+		return $(this);
+		
+	}
+	
+} (jQuery));
+
+$(document).ready(function () {
+	
+	$('.form-back').click(function() {
+		 window.history.go(-1);
+	});
+	
+	$('.js-sort tbody').DynSorting();
+	$('#structure-content').DynSorting({children: 'li', handle: '.panel-heading'});
 	
 	$('.structure-addmodul-box select').change(function() {		
 		
