@@ -13,7 +13,6 @@
 			helper: true,
 			children: 'tr',	
 			handle: '.icon-sort',
-			disable: true,
 			prependTo : '#content'	
 		}, options);
 		
@@ -23,7 +22,7 @@
 		if(settings.helper === true)
 			settings.helper = fixHelper;
 			
-		$(this).sortable({
+		return $(this).sortable({
 			handle: settings.handle,
 			helper: settings.helper,
 			update : function() {
@@ -43,11 +42,6 @@
 			}
 			
 		});
-		
-		if(settings.disable)
-			$(this).disableSelection();
-			
-		return $(this);
 		
 	}
 	
