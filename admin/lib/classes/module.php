@@ -4,9 +4,11 @@ class module {
 	
 	const values = 15;
 	const dyn_rex = 'DYN_(\w*)\[(\d)\]';
+	const out_rex = 'OUT_(\w*)\[(\d)\]';
 	static $types = array('VALUE', 'LINK', 'MEDIA', 'PHP'); #typen
 	
 	var $values = array();
+	var $out = array();
 
 	public static function getModuleList() {
 	
@@ -33,6 +35,38 @@ class module {
 		
 	}
 	
+	public function convertOut($content) {
+		
+		preg_match_all('/'.self::out_rex.'/', $content, $out);
+		$this->out = $out;
+		
+	}
+	
+	public function OutputFilter($content, $sql = false) {
+		
+		if(!is_object($sql)) // SQL Muss Objekt sein
+			return $content;
+	
+		$this->convertOut($content);
+		
+		foreach($this->out[1] as  $key=>$type) {
+			
+			if($key > self::values || !in_array($type, self::$types))
+				continue;
+				
+				
+			$value = strtolower($type).$this->out[2][$key];
+				
+			$content = str_replace(
+			$this->out[0][$key], # OUT_VALUE[1]
+			$sql->get($value), # value1
+			$content);
+					
+		}
+		
+		return $content;
+		
+	}	
 	
 	public function saveBlock($id) {
 		
@@ -59,7 +93,7 @@ class module {
 			$sql->update();	
 		} else {
 			$sql->save();	
-		}		
+		}
 		
 	}
 	
@@ -101,15 +135,30 @@ class module {
 	
 	public function setFormBlock($id, $form_id, $parent_id) {
 		
+		if($id) {
+			$action = 'edit';
+			$sql_id = $id;	
+		} else {
+			$action = 'add';
+			$sql_id = 0;
+		}
+		
+		$sql = new sql();
+		$sql->query('SELECT * FROM structure_block WHERE id = '.$sql_id)->result();
+		
 		$form = new form('module', 'id='.$form_id, 'index.php');
 		$form->setSave(false);
-		$form->setMode('add');
-		$form->addRawField($form->get('input'));
+		$form->setMode($action);
+		$input = $this->OutputFilter($form->get('input'), $sql);
+		
+		$form->addRawField($input);
 		$form->addHiddenField('parent_id', $parent_id);
 		$form->addHiddenField('modul', $form->get('id'));
 		$form->addHiddenField('sort', type::super('sort', 'int'));
+		$form->addHiddenField('id', $sql_id);
 		
 		if($form->isSubmit()) {
+				
 				$this->saveSortUp(type::super('sort', 'int'));
 				$this->saveBlock($id);			
 		}

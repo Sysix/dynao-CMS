@@ -13,8 +13,8 @@ if(ajax::is()) {
 	$sort = type::post('array', 'array');
 	$sql = new sql();
 	$sql->setTable('structure_block');
-	foreach($sort as $s=>$id) {
-		$sql->setWhere('id='.$id);
+	foreach($sort as $s=>$s_id) {
+		$sql->setWhere('id='.$s_id);
 		$sql->addPost('sort', $s+1);
 		$sql->update();
 	}
@@ -50,15 +50,20 @@ while($sql->isNext()) {
 	if(($action == 'add' && type::super('sort', 'int') == $sql->get('sort')) || ($action == 'edit' && $id == $sql->get('id'))) {
 		
 		$form_id = ($action == 'add') ? type::super('modul', 'int') : $sql->get('modul');
-		$id = ($action == 'add') ? false : $sql->get('id');
+		$m_id = ($action == 'add') ? false : $sql->get('id');
 		
-		$form = $module->setFormBlock($id, $form_id, $parent_id);
+		$form = $module->setFormBlock($m_id, $form_id, $parent_id);
 	
 	}
 ?>
 		<li data-id="<?php echo $sql->get('id'); ?>">
 <?php
-	if($action == 'add' && type::super('sort', 'int') == $sql->get('sort')) {
+	// Wenn Aktion == add
+	// UND Wenn Sortierung von SQL gleich der $_GET['sort']
+	// UND
+	// Wenn Formular noch nicht abgeschickt worden
+	// ODER Abgeschickt worden ist und ein Übernehmen geklickt worden ist
+	if($action == 'add' && type::super('sort', 'int') == $sql->get('sort') && (!$form->isSubmit() || ($form->isSubmit() && type::post('save-back', 'string', false) !== false))) {
 		
 		echo $module->setFormBlockout($form);
 
@@ -67,8 +72,14 @@ while($sql->isNext()) {
 		echo $module->setSelectBlock($parent_id, $module_options);
 		
 	}
-		
-	if($action == 'edit' && $id == $sql->get('id')) {
+	
+	// Wenn Aktion == edit
+	// UND Wenn ID von SQL gleich der $_GET['id']
+	// UND
+	// Wenn Formular noch nicht abgeschickt worden
+	// ODER Abgeschickt worden ist und ein Übernehmen geklickt worden ist
+	
+	if($action == 'edit' && $id == $sql->get('id') && (!$form->isSubmit() || ($form->isSubmit() && type::post('save-back', 'string', false) !== false))) {
 
 		echo $module->setFormBlockout($form);
 
@@ -86,7 +97,7 @@ while($sql->isNext()) {
 			<div class="clearfix"></div>
 		  </div>
 		  <div class="panel-body">
-			<?php echo $sql->get('output'); ?>
+			<?php echo $module->OutputFilter($sql->get('output'), $sql); ?>
 		  </div>
 		</div>
 		<?php
