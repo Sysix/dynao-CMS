@@ -1,3 +1,4 @@
+<div class="clearfix"></div>
 <?php
 
 $module_options = '';
@@ -22,21 +23,17 @@ if(ajax::is()) {
 	
 	
 }
-
+$module = new module();
 
 if($action == 'delete') {
 
-	$sql = new sql();
-	$sql->setTable('structure_block');
-	$sql->setWhere('id='.$id);
-	$sql->delete();
+	$module->delete($id);
 	echo message::success('Erfolgreich gelöscht');
 	
 }
 
-$module = new module();
+
 ?>
-<div class="clearfix"></div>
 <ul id="structure-content">
 <?php
 
@@ -53,8 +50,9 @@ while($sql->isNext()) {
 	if(($action == 'add' && type::super('sort', 'int') == $sql->get('sort')) || ($action == 'edit' && $id == $sql->get('id'))) {
 		
 		$form_id = ($action == 'add') ? type::super('modul', 'int') : $sql->get('modul');
+		$id = ($action == 'add') ? false : $sql->get('id');
 		
-		$form = $module->setFormBlock($form_id, $parent_id);
+		$form = $module->setFormBlock($id, $form_id, $parent_id);
 	
 	}
 ?>
@@ -106,7 +104,7 @@ if((!$sql->num() || ($sql->num()+1 == type::super('sort', 'int'))) && $action ==
 	
 	$form_id = type::super('modul', 'int');
 	
-	$form = $module->setFormBlock($form_id, $parent_id);
+	$form = $module->setFormBlock(false, $form_id, $parent_id);
 	echo $module->setFormBlockout($form);
 	
 } else {

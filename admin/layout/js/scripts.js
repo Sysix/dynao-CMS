@@ -11,9 +11,9 @@
 		
 		var settings = $.extend({
 			helper: true,
-			children: 'tr',	
+			children: 'tr',
 			handle: '.icon-sort',
-			prependTo : '#content'	
+			prependTo : '#content'
 		}, options);
 		
 		if(settings.helper == false)
@@ -38,7 +38,7 @@
 				
 				$.post('index.php', { ajaxGet : getString, array: results }, function(data) {
 					$(settings.prependTo).prepend(data);
-				});				
+				});
 			}
 			
 		});
@@ -56,7 +56,7 @@ $(document).ready(function () {
 	$('.js-sort tbody').DynSorting();
 	$('#structure-content').DynSorting({children: 'li', handle: '.panel-heading'});
 	
-	$('.structure-addmodul-box select').change(function() {		
+	$('.structure-addmodul-box select').change(function() {
 		
 		var form = $(this).closest('form');
 		var li = form.closest('li');
@@ -68,7 +68,7 @@ $(document).ready(function () {
 		});
 		
 		if(!form.find('input[name=sort]').length)
-			pos.appendTo(form);	
+			pos.appendTo(form);
 		
 		form.submit();
 		

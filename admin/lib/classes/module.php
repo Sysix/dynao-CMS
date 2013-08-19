@@ -54,16 +54,52 @@ class module {
 						
 		}
 		
-		if($sql->num('SELECT 1 FROM structure_block WHERE id='.$id)) {
+		if($id) {
 			$sql->setWhere('id='.$id);
 			$sql->update();	
 		} else {
 			$sql->save();	
+		}		
+		
+	}
+	
+	public function delete($id) {
+	
+		$sql2 = new sql();		
+		$sql2->query('SELECT `sort` FROM structure_block WHERE id='.$id)->result();
+		
+		$sql = new sql();
+		$sql->setTable('structure_block');
+		$sql->setWhere('id='.$id);
+		$sql->delete();
+		
+		$this->saveSortUp($sql2->get('sort'), false);
+		
+	}
+	
+	protected function saveSortUp($sort, $plus = true) {
+	
+		$sql = new sql();
+		$sql2 = new sql();
+		$sql2->setTable('structure_block');
+		$sql->query('SELECT `id`, `sort` FROM structure_block WHERE `sort` >= '.$sort)->result();
+		while($sql->isNext()) {
+			
+			if($plus) {
+				$sql2->addPost('sort', $sql->get('sort')+1);
+			} else {
+				$sql2->addPost('sort', $sql->get('sort')-1);
+			}
+			
+			$sql2->setWhere('id='.$sql->get('id'));
+			$sql2->update();
+			
+			$sql->next();
 		}
 		
 	}
 	
-	public function setFormBlock($form_id, $parent_id) {
+	public function setFormBlock($id, $form_id, $parent_id) {
 		
 		$form = new form('module', 'id='.$form_id, 'index.php');
 		$form->setSave(false);
@@ -74,7 +110,8 @@ class module {
 		$form->addHiddenField('sort', type::super('sort', 'int'));
 		
 		if($form->isSubmit()) {
-				$this->saveBlock($form->get('id'));			
+				$this->saveSortUp(type::super('sort', 'int'));
+				$this->saveBlock($id);			
 		}
 		
 		return $form;

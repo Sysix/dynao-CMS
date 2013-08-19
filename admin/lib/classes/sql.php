@@ -107,10 +107,9 @@ class sql {
 	
 	// Abfrage Anzahl der Einträge
 	public function num($query = false) {
-	
+		
 		if(!$query) {
-			return ($this->query) ? $this->query->num_rows : 0;
-			
+			return ($this->query && is_object($this->query)) ? $this->query->num_rows : 0;			
 		}
 			
 		$sql = new sql();
