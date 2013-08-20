@@ -110,23 +110,23 @@ class module {
 	public function delete($id) {
 	
 		$sql2 = new sql();		
-		$sql2->query('SELECT `sort` FROM structure_block WHERE id='.$id)->result();
+		$sql2->query('SELECT `parent_id`, `sort` FROM structure_block WHERE id='.$id)->result();
 		
 		$sql = new sql();
 		$sql->setTable('structure_block');
 		$sql->setWhere('id='.$id);
 		$sql->delete();
 		
-		$this->saveSortUp($sql2->get('sort'), false);
+		$this->saveSortUp($sql2->get('parent_id'), $sql2->get('sort'), false);
 		
 	}
 	
-	protected function saveSortUp($sort, $plus = true) {
+	protected function saveSortUp($id, $sort, $plus = true) {
 	
 		$sql = new sql();
 		$sql2 = new sql();
 		$sql2->setTable('structure_block');
-		$sql->query('SELECT `id`, `sort` FROM structure_block WHERE `sort` >= '.$sort)->result();
+		$sql->query('SELECT `id`, `sort` FROM structure_block WHERE `parent_id` = '.$id.' `sort` >= '.$sort)->result();
 		while($sql->isNext()) {
 			
 			if($plus) {
@@ -179,7 +179,7 @@ class module {
 		if($form->isSubmit()) {
 				
 				if(!$id)
-					$this->saveSortUp($sort);
+					$this->saveSortUp($parent_id, $sort);
 					
 				$this->saveBlock($id);			
 		}
