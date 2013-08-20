@@ -42,7 +42,7 @@ class module {
 		
 	}
 	
-	public function OutputFilter($content, $sql = false) {
+	public function OutputFilter($content, $sql) {
 		
 		if(!is_object($sql)) // SQL Muss Objekt sein
 			return $content;
@@ -54,12 +54,21 @@ class module {
 			if($key > self::values || !in_array($type, self::$types))
 				continue;
 				
+			$value = strtolower($type).$this->out[2][$key];# value1
+			
+			// Wenn Formular Eintrag existiert und ID der SQL ID ist
+			if(isset($_POST['DYN_'.$type][$this->out[2][$key]]) && $sql->get('id') == type::post('id', 'int', 0)) {
 				
-			$value = strtolower($type).$this->out[2][$key];
+				$value = $_POST['DYN_'.$type][$this->out[2][$key]]; # $_POST['DYN_VALUE'][2]
 				
+			} else {
+				
+				$value = $sql->get($value);
+				
+			}
 			$content = str_replace(
 			$this->out[0][$key], # OUT_VALUE[1]
-			$sql->get($value), # value1
+			$value,
 			$content);
 					
 		}

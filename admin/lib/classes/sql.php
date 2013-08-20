@@ -121,15 +121,19 @@ class sql {
 	// Ausgabe der Spalte 
 	public function get($row) {
 		
+		if(isset($this->values[$row])) {
+		
+			return $this->values[$row];
+			
+		}
+		
 		if(isset($this->result[$row])) {
 			
 			return 	$this->result[$row];
 			
-		} else {
-			// new Exception('Feld "'.$row.'" exestiert nicht');
 		}
 		
-		return false;
+		return null;
 		
 	}
 	
