@@ -14,10 +14,10 @@ class backend {
 		
 		$return = '';
 		
-		$first_active = (!type::get('subpage', 'bool'));
+		$first_active = (!type::super('subpage', 'bool'));
 		
 		foreach(self::$subnavi as $subnavi) {
-			if((type::get('subpage', 'string', '') && strpos($subnavi['link'], 'subpage='.type::get('subpage', 'string', '')) !== false) || $first_active) {
+			if((type::super('subpage', 'string', '') && strpos($subnavi['link'], 'subpage='.type::super('subpage', 'string', '')) !== false) || $first_active) {
 				$class = ' class="active"';
 				$first_active = false;
 			} else {
