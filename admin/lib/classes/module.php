@@ -126,7 +126,7 @@ class module {
 		$sql = new sql();
 		$sql2 = new sql();
 		$sql2->setTable('structure_block');
-		$sql->query('SELECT `id`, `sort` FROM structure_block WHERE `parent_id` = '.$id.' `sort` >= '.$sort)->result();
+		$sql->query('SELECT `id`, `sort` FROM structure_block WHERE `parent_id` = '.$id.' AND `sort` >= '.$sort)->result();
 		while($sql->isNext()) {
 			
 			if($plus) {
