@@ -163,12 +163,17 @@ class module {
 		$form->addRawField($input);
 		$form->addHiddenField('parent_id', $parent_id);
 		$form->addHiddenField('modul', $form->get('id'));
-		$form->addHiddenField('sort', type::super('sort', 'int'));
+		
+		$sort = ($id) ? $sql->get('sort') : type::super('sort', 'int');
+		
+		$form->addHiddenField('sort', $sort);
 		$form->addHiddenField('id', $sql_id);
 		
 		if($form->isSubmit()) {
 				
-				$this->saveSortUp(type::super('sort', 'int'));
+				if(!$id)
+					$this->saveSortUp($sort);
+					
 				$this->saveBlock($id);			
 		}
 		
