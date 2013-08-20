@@ -27,7 +27,7 @@ class formRadio extends formField {
 		
 		$return = '';
 		foreach($this->output as $val) {
-			$return .= $val;	
+			$return .= '<label class="radio-inline">'.$val.'</label>';	
 		}
 		
 		return $return;

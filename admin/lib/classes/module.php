@@ -165,10 +165,14 @@ class module {
 		$form->addHiddenField('parent_id', $parent_id);
 		$form->addHiddenField('modul', $form->get('id'));
 		
-		$online = ($id) ? $sql->get('online') : 1;		
-		$sort = ($id) ? $sql->get('sort') : type::super('sort', 'int');		
+		$online = ($id) ? $sql->get('online') : 1;
+		$sort = ($id) ? $sql->get('sort') : type::super('sort', 'int');
 		
-		$form->addHiddenField('online', $online);
+		$field = $form->addRadioField('online', $online);
+		$field->fieldName('Block Status');
+		$field->add(1, 'Online');
+		$field->add(0, 'Offline');
+		
 		$form->addHiddenField('sort', $sort);
 		$form->addHiddenField('id', $sql_id);
 		
