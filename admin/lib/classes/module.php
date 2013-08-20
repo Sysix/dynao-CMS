@@ -85,7 +85,8 @@ class module {
 		$sql->getPosts(array(
 			'structure_id'=>'int',
 			'sort'=>'int',
-			'modul'=>'int'
+			'modul'=>'int',
+			'online'=>'int'
 		));
 		
 		foreach(self::$types as $types) {
@@ -164,8 +165,10 @@ class module {
 		$form->addHiddenField('parent_id', $parent_id);
 		$form->addHiddenField('modul', $form->get('id'));
 		
-		$sort = ($id) ? $sql->get('sort') : type::super('sort', 'int');
+		$online = ($id) ? $sql->get('online') : 1;		
+		$sort = ($id) ? $sql->get('sort') : type::super('sort', 'int');		
 		
+		$form->addHiddenField('online', $online);
 		$form->addHiddenField('sort', $sort);
 		$form->addHiddenField('id', $sql_id);
 		

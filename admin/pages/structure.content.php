@@ -8,6 +8,22 @@ foreach(module::getModuleList() as $module) {
 	
 }
 
+if($action == 'online') {
+
+	$sql = new sql();
+	$sql->query('SELECT online FROM structure_block WHERE id='.$id)->result();
+	
+	$online = ($sql->get('online')) ? 0 : 1;
+	
+	$sql->setTable('structure_block');
+	$sql->setWhere('id='.$id);
+	$sql->addPost('online', $online);
+	$sql->update();
+	
+	echo message::success('Status erfoglreich geändert');
+	
+}
+
 if(ajax::is()) {
 	
 	$sort = type::post('array', 'array');
@@ -84,12 +100,21 @@ while($sql->isNext()) {
 		echo $module->setFormBlockout($form);
 
 	} else {
+		
+		if($sql->get('online')) {
+			$statusText = 'ON';
+			$status = 'online';
+		} else {
+			$statusText = 'OFF';
+			$status = 'offline';
+		}
+		
 		?>
 		<div class="panel panel-default">
 		  <div class="panel-heading">
 			<h3 class="panel-title pull-left"><?php echo $sql->get('name'); ?></h3>
 			<div class="pull-right btn-group">
-				<a class="btn btn-sm structure-online">ON</a>
+				<a href="<?php echo url::backend('structure', array('subpage'=>'content', 'action'=>'online', 'id'=>$sql->get('id'))); ?>" class="btn btn-sm structure-<?php echo $status; ?>"><?php echo $statusText; ?></a>
 				<a class="btn btn-default btn-sm icon-cog"></a>
 				<a href="<?php echo url::backend('structure', array('subpage'=>'content', 'action'=>'edit', 'id'=>$sql->get('id'))); ?>" class="btn btn-default  btn-sm icon-edit-sign"></a>
 				<a href="<?php echo url::backend('structure', array('subpage'=>'content', 'action'=>'delete', 'id'=>$sql->get('id'))); ?>" class="btn btn-danger btn-sm icon-trash"></a>
