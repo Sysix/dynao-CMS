@@ -15,9 +15,9 @@
 					<div class="panel-heading">
 						<h3 class="panel-title pull-left">Visitor statistics</h3>
 						<div class="btn-group pull-right">
-							<button type="button" class="btn btn-small btn-default">&laquo;</button>
-							<button type="button" class="btn btn-small btn-default">2013</button>
-							<button type="button" class="btn btn-small btn-default">&raquo;</button>
+							<button type="button" class="btn btn-sm btn-default">&laquo;</button>
+							<button type="button" class="btn btn-sm btn-default">2013</button>
+							<button type="button" class="btn btn-sm btn-default">&raquo;</button>
 						</div>
 						<div class="clearfix"></div>
 					</div>
@@ -35,7 +35,7 @@
 					<div class="panel-heading">
 						<h3 class="panel-title pull-left">Newest User</h3>
                         <div class="btn-group pull-right">
-							<button type="button" class="btn btn-small btn-default">View all</button>
+							<button type="button" class="btn btn-sm btn-default">View all</button>
 						</div>
 						<div class="clearfix"></div>
 					</div>
@@ -126,7 +126,7 @@
 					<div class="panel-heading">
 						<h3 class="panel-title pull-left">dynao CMS News</h3>
                         <div class="btn-group pull-right">
-							<button type="button" class="btn btn-small btn-default">Visit website</button>
+							<button type="button" class="btn btn-sm btn-default">Visit website</button>
 						</div>
 						<div class="clearfix"></div>
 					</div>

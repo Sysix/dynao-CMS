@@ -183,7 +183,7 @@ class module {
 	
 	public function setFormBlockout($form) {
 		
-		$return = '<div class="panel">';
+		$return = '<div class="panel panel-default">';
 		$return .= '	<div class="panel-heading">';
 		$return .= '		<h3 class="panel-title pull-left">'.$form->get('name').'</h3>';
 		$return .= '		<div class="clearfix"></div>';

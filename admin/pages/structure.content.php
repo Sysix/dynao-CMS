@@ -85,14 +85,14 @@ while($sql->isNext()) {
 
 	} else {
 		?>
-		<div class="panel">
+		<div class="panel panel-default">
 		  <div class="panel-heading">
 			<h3 class="panel-title pull-left"><?php echo $sql->get('name'); ?></h3>
 			<div class="pull-right btn-group">
-				<a class="btn btn-small structure-online">ON</a>
-				<a class="btn btn-default btn-small icon-cog"></a>
-				<a href="<?php echo url::backend('structure', array('subpage'=>'content', 'action'=>'edit', 'id'=>$sql->get('id'))); ?>" class="btn btn-default  btn-small icon-edit-sign"></a>
-				<a href="<?php echo url::backend('structure', array('subpage'=>'content', 'action'=>'delete', 'id'=>$sql->get('id'))); ?>" class="btn btn-danger btn-small icon-trash"></a>
+				<a class="btn btn-sm structure-online">ON</a>
+				<a class="btn btn-default btn-sm icon-cog"></a>
+				<a href="<?php echo url::backend('structure', array('subpage'=>'content', 'action'=>'edit', 'id'=>$sql->get('id'))); ?>" class="btn btn-default  btn-sm icon-edit-sign"></a>
+				<a href="<?php echo url::backend('structure', array('subpage'=>'content', 'action'=>'delete', 'id'=>$sql->get('id'))); ?>" class="btn btn-danger btn-sm icon-trash"></a>
 			</div>
 			<div class="clearfix"></div>
 		  </div>

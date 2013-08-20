@@ -95,8 +95,8 @@ if($action == '') {
 			
 		$id = $table->get('id');
 			
-		$edit = '<a href="'.url::backend('user', array('action'=>'edit', 'id'=>$id)).'" class="btn btn-small  btn-default">'.lang::get('edit').'</a>';
-		$delete = '<a href="'.url::backend('user', array('action'=>'delete', 'id'=>$id)).'" class="btn btn-small btn-danger">'.lang::get('delete').'</a>';
+		$edit = '<a href="'.url::backend('user', array('action'=>'edit', 'id'=>$id)).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
+		$delete = '<a href="'.url::backend('user', array('action'=>'delete', 'id'=>$id)).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 		
 		$table->addRow()
 		->addCell($table->get('email'))

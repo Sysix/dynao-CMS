@@ -41,7 +41,7 @@ if(in_array($action, array('save-add', 'save-edit'))) {
 	}
 }
 
-echo '<a href="'.url::backend('structure', array('action'=>'add', 'parent_id'=>$parent_id)).'" class="btn btn-small btn-primary pull-right">'.lang::get('add').'</a>';
+echo '<a href="'.url::backend('structure', array('action'=>'add', 'parent_id'=>$parent_id)).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
 echo '<div class="clearfix"></div>';
 
 $table = new table();
@@ -84,7 +84,7 @@ if(cache::exist($cacheFileName) && !in_array($action, array('edit', 'add'))) {
 		$buttonSubmit = new formButton('save', 'Artikel speichern');
 		$buttonSubmit->addAttribute('type', 'submit');
 		$buttonSubmit->addClass('btn');
-		$buttonSubmit->addClass('btn-small');
+		$buttonSubmit->addClass('btn-sm');
 		$buttonSubmit->addClass('btn-default');
 		
 	}
@@ -94,12 +94,12 @@ if(cache::exist($cacheFileName) && !in_array($action, array('edit', 'add'))) {
 		$inputName = new formInput('name', '');
 		$inputName->addAttribute('type', 'text');
 		$inputName->addClass('form-control');
-		$inputName->addClass('input-small');
+		$inputName->addClass('input-sm');
 		
 		$inputSort = new formInput('sort', '');
 		$inputSort->addAttribute('type', 'text');
 		$inputSort->addClass('form-control');
-		$inputSort->addClass('input-small');
+		$inputSort->addClass('input-sm');
 	
 		$table->addRow()
 		->addCell($inputName->get())
@@ -115,12 +115,12 @@ if(cache::exist($cacheFileName) && !in_array($action, array('edit', 'add'))) {
 			$inputName = new formInput('name', $table->get('name'));
 			$inputName->addAttribute('type', 'text');
 			$inputName->addClass('form-control');
-			$inputName->addClass('input-small');
+			$inputName->addClass('input-sm');
 			
 			$inputSort = new formInput('sort', $table->get('sort'));
 			$inputSort->addAttribute('type', 'text');
 			$inputSort->addClass('form-control');
-			$inputSort->addClass('input-small');
+			$inputSort->addClass('input-sm');
 			
 			$inputHidden = new formInput('id', $table->get('id'));
 			$inputHidden->addAttribute('type', 'hidden');
@@ -132,11 +132,11 @@ if(cache::exist($cacheFileName) && !in_array($action, array('edit', 'add'))) {
 			
 		} else {
 			
-			$edit = '<a href="'.url::backend('structure', array('action'=>'edit', 'id'=>$table->get('id'),'parent_id'=>$parent_id)).'" class="btn btn-small  btn-default">'.lang::get('edit').'</a>';	
-			$delete = '<a href="'.url::backend('structure', array('action'=>'delete', 'id'=>$table->get('id'),'parent_id'=>$parent_id)).'" class="btn btn-small btn-danger">'.lang::get('delete').'</a>';
+			$edit = '<a href="'.url::backend('structure', array('action'=>'edit', 'id'=>$table->get('id'),'parent_id'=>$parent_id)).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';	
+			$delete = '<a href="'.url::backend('structure', array('action'=>'delete', 'id'=>$table->get('id'),'parent_id'=>$parent_id)).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 			
 			$online = ($table->get('online')) ? 'online' : 'offline';
-			$online = '<a href="'.url::backend('structure', array('action'=>'online', 'id'=>$table->get('id'),'parent_id'=>$parent_id)).'" class="btn btn-small structure-'.$online.'">'.$online.'</a>';
+			$online = '<a href="'.url::backend('structure', array('action'=>'online', 'id'=>$table->get('id'),'parent_id'=>$parent_id)).'" class="btn btn-sm structure-'.$online.'">'.$online.'</a>';
 		
 			$table->addRow()
 			->addCell('<a href="'.url::backend('structure', array('parent_id'=>$table->get('id'))).'">'.$table->get('name').'</a>')
