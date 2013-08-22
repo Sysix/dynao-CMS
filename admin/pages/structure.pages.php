@@ -57,7 +57,7 @@ if(in_array($action, array('save-add', 'save-edit'))) {
 	if($action == 'save-edit') {
 		$sql->update();	
 	} else {
-		sql::sortTable('structure', type::post('sort', 'int'), true, '`parent_id` = '.type::post('parent_id'));
+		sql::sortTable('structure', type::post('sort', 'int'), true, '`parent_id` = '.type::post('parent_id', 'int'));
 		$sql->save();	
 	}
 }
@@ -67,7 +67,9 @@ echo '<div class="clearfix"></div>';
 
 $table = new table(array('class'=>array('js-sort')));
 
-$table->addCollsLayout('25,*,250');
+$colFirstWidth = ($action == 'edit' || $action == 'add') ? 50 : 25; 
+
+$table->addCollsLayout($colFirstWidth.',*,250');
 	
 $table->addRow()
 ->addCell()
