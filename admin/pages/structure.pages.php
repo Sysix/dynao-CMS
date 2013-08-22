@@ -77,111 +77,98 @@ $table->addRow()
 ->addCell('Aktion');
 
 $table->addSection('tbody');
+	
+$table->setSql('SELECT * FROM structure WHERE parent_id = '.$parent_id.' ORDER BY sort ASC');
+	
+if(in_array($action, array('edit', 'add'))) {
+		
+	echo '<form method="post" action="index.php">';
+		
+	$inputHidden = new formInput('action', 'save-'.$action);
+	$inputHidden->addAttribute('type', 'hidden');
+	echo $inputHidden->get();
+	
+	$inputHidden = new formInput('page', 'structure');
+	$inputHidden->addAttribute('type', 'hidden');
+	echo $inputHidden->get();
+	
+	$inputHidden = new formInput('parent_id', $parent_id);
+	$inputHidden->addAttribute('type', 'hidden');
+	echo $inputHidden->get();
+	
+	$buttonSubmit = new formButton('save', 'Artikel speichern');
+	$buttonSubmit->addAttribute('type', 'submit');
+	$buttonSubmit->addClass('btn');
+	$buttonSubmit->addClass('btn-sm');
+	$buttonSubmit->addClass('btn-default');
+	
+}
 
-$cacheFileName = cache::getFileName(1, 'structure');
+if($action == 'add') {
+	
+	$inputName = new formInput('name', '');
+	$inputName->addAttribute('type', 'text');
+	$inputName->addClass('form-control');
+	$inputName->addClass('input-sm');
+	
+	$sql = new sql();
+	$inputSort = new formInput('sort', $sql->num('SELECT 1 FROM structure WHERE `parent_id`= '.type::super('parent_id', 'int'))+1);
+	$inputSort->addAttribute('type', 'text');
+	$inputSort->addClass('form-control');
+	$inputSort->addClass('input-sm');
 
-if(cache::exist($cacheFileName) && !in_array($action, array('edit', 'add'))) {
+	$table->addRow()
+	->addCell($inputSort->get())
+	->addCell($inputName->get())
+	->addCell($buttonSubmit->get());	
 	
-	echo cache::read($cacheFileName);
+}
+
+while($table->isNext()) {
 	
-} else {
-	
-	$table->setSql('SELECT * FROM structure WHERE parent_id = '.$parent_id.' ORDER BY sort ASC');
-	
-	if(in_array($action, array('edit', 'add'))) {
-		
-		echo '<form method="post" action="index.php">';
-		
-		$inputHidden = new formInput('action', 'save-'.$action);
-		$inputHidden->addAttribute('type', 'hidden');
-		echo $inputHidden->get();
-		
-		$inputHidden = new formInput('page', 'structure');
-		$inputHidden->addAttribute('type', 'hidden');
-		echo $inputHidden->get();
-		
-		$inputHidden = new formInput('parent_id', $parent_id);
-		$inputHidden->addAttribute('type', 'hidden');
-		echo $inputHidden->get();
-		
-		$buttonSubmit = new formButton('save', 'Artikel speichern');
-		$buttonSubmit->addAttribute('type', 'submit');
-		$buttonSubmit->addClass('btn');
-		$buttonSubmit->addClass('btn-sm');
-		$buttonSubmit->addClass('btn-default');
-		
-	}
-	
-	if($action == 'add') {
-		
-		$inputName = new formInput('name', '');
+	if($action == 'edit' && $table->get('id') == $id) {
+			
+		$inputName = new formInput('name', $table->get('name'));
 		$inputName->addAttribute('type', 'text');
 		$inputName->addClass('form-control');
 		$inputName->addClass('input-sm');
 		
-		$sql = new sql();
-		$inputSort = new formInput('sort', $sql->num('SELECT 1 FROM structure WHERE `parent_id`= '.type::super('parent_id', 'int'))+1);
+		$inputSort = new formInput('sort', $table->get('sort'));
 		$inputSort->addAttribute('type', 'text');
 		$inputSort->addClass('form-control');
 		$inputSort->addClass('input-sm');
-	
+		
+		$inputHidden = new formInput('id', $table->get('id'));
+		$inputHidden->addAttribute('type', 'hidden');
+		
 		$table->addRow()
 		->addCell($inputSort->get())
 		->addCell($inputName->get())
-		->addCell($buttonSubmit->get());	
+		->addCell($inputHidden->get().$buttonSubmit->get());
+		
+	} else {
+		
+		$edit = '<a href="'.url::backend('structure', array('action'=>'edit', 'id'=>$table->get('id'),'parent_id'=>$parent_id)).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';	
+		$delete = '<a href="'.url::backend('structure', array('action'=>'delete', 'id'=>$table->get('id'),'parent_id'=>$parent_id)).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+		
+		$online = ($table->get('online')) ? 'online' : 'offline';
+		$online = '<a href="'.url::backend('structure', array('action'=>'online', 'id'=>$table->get('id'),'parent_id'=>$parent_id)).'" class="btn btn-sm structure-'.$online.'">'.$online.'</a>';
+	
+		$table->addRow(array('data-id'=>$table->get('id')))
+		->addCell('<i class="icon-sort"></i>')
+		->addCell('<a href="'.url::backend('structure', array('parent_id'=>$table->get('id'))).'">'.$table->get('name').'</a>')
+		->addCell('<span class="btn-group">'.$edit.$delete.$online.'</span>');
 		
 	}
+	
+	$table->next();	
+}
 
-	while($table->isNext()) {
-		
-		if($action == 'edit' && $table->get('id') == $id) {
-			
-			$inputName = new formInput('name', $table->get('name'));
-			$inputName->addAttribute('type', 'text');
-			$inputName->addClass('form-control');
-			$inputName->addClass('input-sm');
-			
-			$inputSort = new formInput('sort', $table->get('sort'));
-			$inputSort->addAttribute('type', 'text');
-			$inputSort->addClass('form-control');
-			$inputSort->addClass('input-sm');
-			
-			$inputHidden = new formInput('id', $table->get('id'));
-			$inputHidden->addAttribute('type', 'hidden');
-			
-			$table->addRow()
-			->addCell($inputSort->get())
-			->addCell($inputName->get())
-			->addCell($inputHidden->get().$buttonSubmit->get());
-			
-		} else {
-			
-			$edit = '<a href="'.url::backend('structure', array('action'=>'edit', 'id'=>$table->get('id'),'parent_id'=>$parent_id)).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';	
-			$delete = '<a href="'.url::backend('structure', array('action'=>'delete', 'id'=>$table->get('id'),'parent_id'=>$parent_id)).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
-			
-			$online = ($table->get('online')) ? 'online' : 'offline';
-			$online = '<a href="'.url::backend('structure', array('action'=>'online', 'id'=>$table->get('id'),'parent_id'=>$parent_id)).'" class="btn btn-sm structure-'.$online.'">'.$online.'</a>';
-		
-			$table->addRow(array('data-id'=>$table->get('id')))
-			->addCell('<i class="icon-sort"></i>')
-			->addCell('<a href="'.url::backend('structure', array('parent_id'=>$table->get('id'))).'">'.$table->get('name').'</a>')
-			->addCell('<span class="btn-group">'.$edit.$delete.$online.'</span>');
-			
-		}
-		
-		$table->next();	
-	}
-	
-	$show = $table->show();
-	
-	cache::write($show, $cacheFileName);
-	
-	echo $show;
-	
-	if(in_array($action, array('edit', 'add'))) {
-		echo '</form>';
-	}
+echo $table->show();
 
+
+if(in_array($action, array('edit', 'add'))) {
+	echo '</form>';
 }
 
 ?>
