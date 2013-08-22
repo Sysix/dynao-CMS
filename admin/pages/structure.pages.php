@@ -1,11 +1,31 @@
 <?php
 
+if(ajax::is()) {
+	
+	$sort = type::post('array', 'array');
+	
+	$sql = new sql();
+	$sql->setTable('structure');
+	foreach($sort as $s=>$id) {
+		$sql->setWhere('id='.$id);
+		$sql->addPost('sort', $s+1);
+		$sql->update();	
+	}
+	
+	ajax::addReturn(message::success('Sortierung erfolgreich übernommen', true));
+	
+}
+
 if($action == 'delete') {
 	
 		$sql = new sql();
 		$sql->setTable('structure');
 		$sql->setWhere('id='.$id);
 		$sql->delete();
+		
+		$sql = new sql();		
+		$sql->query('SELECT `sort`, `parent_id` FROM structure WHERE id='.$id)->result();
+		sql::sortTable('structure', $sql->get('sort'), false, '`parent_id` = '.$sql->get('parent_id'));
 		
 		echo message::success('Artikel erfolgreich gelöscht');
 		
@@ -37,6 +57,7 @@ if(in_array($action, array('save-add', 'save-edit'))) {
 	if($action == 'save-edit') {
 		$sql->update();	
 	} else {
+		sql::sortTable('structure', type::post('sort', 'int'), true, '`parent_id` = '.type::post('parent_id'));
 		$sql->save();	
 	}
 }
@@ -44,13 +65,13 @@ if(in_array($action, array('save-add', 'save-edit'))) {
 echo '<a href="'.url::backend('structure', array('action'=>'add', 'parent_id'=>$parent_id)).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
 echo '<div class="clearfix"></div>';
 
-$table = new table();
+$table = new table(array('class'=>array('js-sort')));
 
-$table->addCollsLayout('*, 50, 250');
+$table->addCollsLayout('25,*,250');
 	
 $table->addRow()
+->addCell()
 ->addCell('Artikel')
-->addCell('Pos')
 ->addCell('Aktion');
 
 $table->addSection('tbody');
@@ -96,14 +117,15 @@ if(cache::exist($cacheFileName) && !in_array($action, array('edit', 'add'))) {
 		$inputName->addClass('form-control');
 		$inputName->addClass('input-sm');
 		
-		$inputSort = new formInput('sort', '');
+		$sql = new sql();
+		$inputSort = new formInput('sort', $sql->num('SELECT 1 FROM structure WHERE `parent_id`= '.type::super('parent_id', 'int'))+1);
 		$inputSort->addAttribute('type', 'text');
 		$inputSort->addClass('form-control');
 		$inputSort->addClass('input-sm');
 	
 		$table->addRow()
-		->addCell($inputName->get())
 		->addCell($inputSort->get())
+		->addCell($inputName->get())
 		->addCell($buttonSubmit->get());	
 		
 	}
@@ -126,8 +148,8 @@ if(cache::exist($cacheFileName) && !in_array($action, array('edit', 'add'))) {
 			$inputHidden->addAttribute('type', 'hidden');
 			
 			$table->addRow()
-			->addCell($inputName->get())
 			->addCell($inputSort->get())
+			->addCell($inputName->get())
 			->addCell($inputHidden->get().$buttonSubmit->get());
 			
 		} else {
@@ -138,9 +160,9 @@ if(cache::exist($cacheFileName) && !in_array($action, array('edit', 'add'))) {
 			$online = ($table->get('online')) ? 'online' : 'offline';
 			$online = '<a href="'.url::backend('structure', array('action'=>'online', 'id'=>$table->get('id'),'parent_id'=>$parent_id)).'" class="btn btn-sm structure-'.$online.'">'.$online.'</a>';
 		
-			$table->addRow()
+			$table->addRow(array('data-id'=>$table->get('id')))
+			->addCell('<i class="icon-sort"></i>')
 			->addCell('<a href="'.url::backend('structure', array('parent_id'=>$table->get('id'))).'">'.$table->get('name').'</a>')
-			->addCell($table->get('sort'))	
 			->addCell('<span class="btn-group">'.$edit.$delete.$online.'</span>');
 			
 		}
