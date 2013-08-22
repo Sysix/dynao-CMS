@@ -121,25 +121,9 @@ class module {
 		
 	}
 	
-	protected function saveSortUp($id, $sort, $plus = true) {
+	protected function saveSortUp($id, $sort, $up = true) {		
 	
-		$sql = new sql();
-		$sql2 = new sql();
-		$sql2->setTable('structure_block');
-		$sql->query('SELECT `id`, `sort` FROM structure_block WHERE `parent_id` = '.$id.' AND `sort` >= '.$sort)->result();
-		while($sql->isNext()) {
-			
-			if($plus) {
-				$sql2->addPost('sort', $sql->get('sort')+1);
-			} else {
-				$sql2->addPost('sort', $sql->get('sort')-1);
-			}
-			
-			$sql2->setWhere('id='.$sql->get('id'));
-			$sql2->update();
-			
-			$sql->next();
-		}
+		sql::sortTable('structure_block', $sort, $up, '`parent_id` = '.$id);
 		
 	}
 	

@@ -248,6 +248,35 @@ class sql {
 	
 		$this->query('DELETE FROM `'.$this->table.'` WHERE '.$this->where);
 	}
+	
+	static public function sortTable($table, $sort, $up = true, $where = '', $select = array('id', 'sort')) {
+		
+		if($where)
+			$where = ' AND '.$where;
+		
+		$update = new sql();
+		$update->setTable($table);
+		
+		$sql = new sql();		
+		$sql->query('SELECT `'.$select[0].'`, `'.$select[1].'` FROM '.$table.' WHERE '.$select[1].' => '.$sort.$where)->result();
+		
+		while($sql->isNext()) {
+			
+			if($up) {
+				$update->addPost($select[1], $sql->get($select[1])+1);	
+			} else {
+				$update->addPost($select[1], $sql->get($select[1])-1);
+			}
+			
+			$update->setWhere($select[0].'='.$sql->get($select[0]));
+			$update->update();
+			
+			$sq->next();
+			
+		}
+		
+		
+	}
 
 }
 
