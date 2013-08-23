@@ -15,7 +15,7 @@ $navi = array(
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Backend - dynaoCMS</title>
+	<title>Backend - <?php echo dyn::get('hp_name'); ?></title>
 	<?php
 	echo layout::getCSS();
 	?>
