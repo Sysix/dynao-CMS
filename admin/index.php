@@ -11,17 +11,20 @@ include_once(dir::classes('autoload.php'));
 autoload::register();
 autoload::addDir('utils');
 
+new dyn();
+
 include_once(dir::functions('html_stuff.php'));
 include_once(dir::functions('url_stuff.php'));
 
 lang::setDefault();
-lang::setLang('de_de');
+lang::setLang(dyn::get('lang'));
 
 mb_internal_encoding('UTF-8');
 
-sql::connect('localhost', 'dynao_user', 'dasisteinpasswort', 'dynao');
+$DB = dyn::get('DB');
+sql::connect($DB['host'], $DB['user'], $DB['password'], $DB['database']);
 
-cache::setCache(false);
+cache::setCache(dyn::get('cache'));
 
 ajax::convertPOST();
 

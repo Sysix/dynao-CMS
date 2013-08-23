@@ -1,0 +1,19 @@
+{
+	"author": "Dynamo",
+	"hp_name": "Dynamo CMS",
+	"version": "0.1 Beta",
+	"setup": false,
+	"debug": false,
+	"cache": false,
+	"DB": {
+		"host": "localhost",
+		"user": "dynao_user",
+		"password": "dasisteinpasswort",
+		"database": "dynao"
+	},
+	"timezone": "Europe\/Berlin",
+	"not_found_page": 1,
+	"table_prefix": "dyn_",
+	"logincookie": 86400,
+	"lang": "de_de"
+}	
