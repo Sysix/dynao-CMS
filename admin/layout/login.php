@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div id="center"></div>
-    <div id="login" class="panel">
+    <div id="login" class="panel panel-default">
         <form action="index.php" method="post">
         	<?php echo $CONTENT; ?>
             <div class="input-group">

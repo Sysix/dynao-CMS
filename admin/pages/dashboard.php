@@ -3,15 +3,11 @@
 	backend::addSubnavi('Statistics',	url::backend('structure'),	'bar-chart');
 	backend::addSubnavi('Logs',	url::backend('structure'),	'calendar');
 ?>		
-        <div class="row">
+
+<?php echo message::info('<strong>Warning!</strong> Please check your Version of dynao CMS', true); ?>
+		<div class="row">		
 			<div class="col-lg-12">
-				<?php echo message::info('<strong>Warning!</strong> Please check your Version of dynao CMS', true); ?>
-			</div>
-        </div>
-		<div class="row">
-		
-			<div class="col-lg-12">
-				<div class="panel">
+				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title pull-left">Visitor statistics</h3>
 						<div class="btn-group pull-right">
@@ -31,7 +27,7 @@
         
         <div class="row">
         	<div class="col-lg-6">
-            	<div class="panel">
+            	<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title pull-left">Newest User</h3>
                         <div class="btn-group pull-right">
@@ -122,7 +118,7 @@
             </div>
             
             <div class="col-lg-6">
-            	<div class="panel">
+            	<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title pull-left">dynao CMS News</h3>
                         <div class="btn-group pull-right">
