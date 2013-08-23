@@ -7,7 +7,7 @@ class dyn {
 
 	public function __construct() {
 		
-		self::$params = json_decode(file_get_contents(dir::backend('config.json')), true);
+		self::$params = json_decode(file_get_contents(dir::backend('lib'.DIRECTORY_SEPARATOR.'config.json')), true);
 		
 		$this->setDebug(self::get('debug'));
 		
