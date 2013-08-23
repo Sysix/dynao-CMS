@@ -35,7 +35,7 @@
 						</div>
 						<div class="clearfix"></div>
 					</div>
-                    <div class="content">
+                    <div class="panel-body">
                     	<table class="table table-striped table-hover">
                             <thead>
                                 <tr>
@@ -50,7 +50,7 @@
                                     <td>5</td>
                                     <td>Test</td>
                                     <td>08-11-2013</td>
-                                    <td class="options">
+                                    <td>
                                     	<span class="btn-group">
                                             <a title="Move up" href="" class="icon-caret-up btn btn-xs btn-default"></a> 
                                             <a title="Move down" href="" class="icon-caret-down btn btn-xs btn-default"></a> 
@@ -63,7 +63,7 @@
                                     <td>4</td>
                                     <td>Döner</td>
                                     <td>08-04-2013</td>
-                                    <td class="options">
+                                    <td>
                                     	<span class="btn-group">
                                             <a title="Move up" href="" class="icon-caret-up btn btn-xs btn-default"></a> 
                                             <a title="Move down" href="" class="icon-caret-down btn btn-xs btn-default"></a> 
@@ -76,7 +76,7 @@
                                     <td>3</td>
                                     <td>Fresh Dumbledore</td>
                                     <td>08-04-2013</td>
-                                    <td class="options">
+                                    <td>
                                     	<span class="btn-group">
                                             <a title="Move up" href="" class="icon-caret-up btn btn-xs btn-default"></a> 
                                             <a title="Move down" href="" class="icon-caret-down btn btn-xs btn-default"></a> 
@@ -89,7 +89,7 @@
                                     <td>2</td>
                                     <td>Aaron</td>
                                     <td>08-02-2013</td>
-                                    <td class="options">
+                                    <td>
                                     	<span class="btn-group">
                                             <a title="Move up" href="" class="icon-caret-up btn btn-xs btn-default"></a> 
                                             <a title="Move down" href="" class="icon-caret-down btn btn-xs btn-default"></a> 
@@ -102,7 +102,7 @@
                                     <td>1</td>
                                     <td>Alexander</td>
                                     <td>08-01-2013</td>
-                                    <td class="options">
+                                    <td>
                                     	<span class="btn-group">
                                             <a title="Move up" href="" class="icon-caret-up btn btn-xs btn-default"></a> 
                                             <a title="Move down" href="" class="icon-caret-down btn btn-xs btn-default"></a> 
@@ -126,7 +126,7 @@
 						</div>
 						<div class="clearfix"></div>
 					</div>
-                    <div class="content">
+                    <div class="panel-body">
                     	<ul class="news">
                         	<li>
                             	<h4 class="pull-left">dynao CMS v1.0 released</h4>
