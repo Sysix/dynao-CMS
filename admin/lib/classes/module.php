@@ -16,7 +16,7 @@ class module {
 	
 		$sql = new sql();
 		
-		$sql->result('SELECT id, name FROM module ORDER BY `sort`');
+		$sql->result('SELECT id, name FROM '.sql::table('module').' ORDER BY `sort`');
 		while($sql->isNext()) {
 		
 			$return[] = array('id'=>$sql->get('id'), 'name' => $sql->get('name'));
@@ -110,7 +110,7 @@ class module {
 	public function delete($id) {
 	
 		$sql2 = new sql();		
-		$sql2->query('SELECT `parent_id`, `sort` FROM structure_block WHERE id='.$id)->result();
+		$sql2->query('SELECT `parent_id`, `sort` FROM '.sql::table('structure_block').' WHERE id='.$id)->result();
 		
 		$sql = new sql();
 		$sql->setTable('structure_block');
@@ -138,7 +138,7 @@ class module {
 		}
 		
 		$sql = new sql();
-		$sql->query('SELECT * FROM structure_block WHERE id = '.$sql_id)->result();
+		$sql->query('SELECT * FROM '.sql::table('structure_block').' WHERE id = '.$sql_id)->result();
 		
 		$form = new form('module', 'id='.$form_id, 'index.php');
 		$form->setSave(false);

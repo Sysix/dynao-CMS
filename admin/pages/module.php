@@ -68,7 +68,7 @@ if($action == '') {
 	
 	$table->addSection('tbody');
 
-	$table->setSql('SELECT * FROM module ORDER BY sort ');
+	$table->setSql('SELECT * FROM '.sql::table('module').' ORDER BY sort ');
 	while($table->isNext()) {
 	
 		$id = $table->get('id');

@@ -4,7 +4,7 @@ class message {
 	
 	static protected function getMessage($message, $close, $class) {
 		
-		$return = '<div class="alert alert-'.$class.' fade in">';
+		$return = '<div class="alert alert-'.$class.'">';
 		
 		if($close) {
 			$return .= '<button type="button" class="close" data-dismiss="alert">&times;</button>';	

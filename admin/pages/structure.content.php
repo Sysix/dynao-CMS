@@ -11,7 +11,7 @@ foreach(module::getModuleList() as $module) {
 if($action == 'online') {
 
 	$sql = new sql();
-	$sql->query('SELECT online FROM structure_block WHERE id='.$id)->result();
+	$sql->query('SELECT online FROM '.sql::table('structure_block').' WHERE id='.$id)->result();
 	
 	$online = ($sql->get('online')) ? 0 : 1;
 	
@@ -55,9 +55,9 @@ if($action == 'delete') {
 
 $sql = new sql();
 $sql->result('SELECT s.*, m.name, m.output, m.input
-FROM structure_block as s
+FROM '.sql::table('structure_block').' as s
 LEFT JOIN 
-	module as m
+	'.sql::table('module').' as m
 		ON m.id = s.modul
 WHERE structure_id = '.$parent_id.'
 ORDER BY `sort`');

@@ -45,6 +45,12 @@ class sql {
 	
 	}
 	
+	static public function table($table) {
+	
+		return dyn::get('table_prefix').$table;
+		
+	}
+	
 	// Query durchführen
 	public function query($query) {
 		
@@ -216,7 +222,7 @@ class sql {
 	
 	public function setTable($table) {
 		
-		$this->table = $table;
+		$this->table = self::table($table);
 		
 		return $this;
 		
@@ -258,7 +264,7 @@ class sql {
 		$update->setTable($table);
 		
 		$sql = new sql();		
-		$sql->query('SELECT `'.$select[0].'`, `'.$select[1].'` FROM '.$table.' WHERE '.$select[1].' => '.$sort.$where)->result();
+		$sql->query('SELECT `'.$select[0].'`, `'.$select[1].'` FROM '.self::table($table).' WHERE '.$select[1].' => '.$sort.$where)->result();
 		
 		while($sql->isNext()) {
 			

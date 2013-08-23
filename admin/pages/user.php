@@ -90,7 +90,7 @@ if($action == '') {
 	
 	$table->addSection('tbody');	
 	
-	$table->setSql('SELECT * FROM user');
+	$table->setSql('SELECT * FROM '.sql::table('user'));
 	while($table->isNext()) {
 			
 		$id = $table->get('id');

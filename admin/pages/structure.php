@@ -17,7 +17,7 @@ $while_id = $parent_id;
 while($while_id) {
 		
 	$sql = new sql();
-	$sql->query('SELECT name, parent_id FROM structure WHERE id='.$while_id)->result();
+	$sql->query('SELECT name, parent_id FROM '.sql::table('structure').' WHERE id='.$while_id)->result();
 	
 	if($parent_id != $while_id) {
 		

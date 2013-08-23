@@ -24,7 +24,7 @@ if($action == 'delete') {
 		$sql->delete();
 		
 		$sql = new sql();		
-		$sql->query('SELECT `sort`, `parent_id` FROM structure WHERE id='.$id)->result();
+		$sql->query('SELECT `sort`, `parent_id` FROM '.sql::table('structure').' WHERE id='.$id)->result();
 		sql::sortTable('structure', $sql->get('sort'), false, '`parent_id` = '.$sql->get('parent_id'));
 		
 		echo message::success('Artikel erfolgreich gelöscht');
@@ -34,7 +34,7 @@ if($action == 'delete') {
 if($action == 'online') {
 
 	$sql = new sql();
-	$sql->query('SELECT online FROM structure WHERE id='.$id)->result();
+	$sql->query('SELECT online FROM '.sql::table('structure').' WHERE id='.$id)->result();
 	
 	$online = ($sql->get('online')) ? 0 : 1;
 	
@@ -78,7 +78,7 @@ $table->addRow()
 
 $table->addSection('tbody');
 	
-$table->setSql('SELECT * FROM structure WHERE parent_id = '.$parent_id.' ORDER BY sort ASC');
+$table->setSql('SELECT * FROM '.sql::table('structure').' WHERE parent_id = '.$parent_id.' ORDER BY sort ASC');
 	
 if(in_array($action, array('edit', 'add'))) {
 		
@@ -112,7 +112,7 @@ if($action == 'add') {
 	$inputName->addClass('input-sm');
 	
 	$sql = new sql();
-	$inputSort = new formInput('sort', $sql->num('SELECT 1 FROM structure WHERE `parent_id`= '.type::super('parent_id', 'int'))+1);
+	$inputSort = new formInput('sort', $sql->num('SELECT 1 FROM '.sql::table('structure').' WHERE `parent_id`= '.type::super('parent_id', 'int'))+1);
 	$inputSort->addAttribute('type', 'text');
 	$inputSort->addClass('form-control');
 	$inputSort->addClass('input-sm');

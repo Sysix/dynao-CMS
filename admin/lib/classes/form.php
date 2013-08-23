@@ -32,7 +32,7 @@ class form {
 		$this->action = $action;
 		
 		$sql = new sql();
-		$this->sql = $sql->query('SELECT * FROM '.$table.' WHERE '.$where.' LIMIT 1');		
+		$this->sql = $sql->query('SELECT * FROM '.sql::table($table).' WHERE '.$where.' LIMIT 1');		
 		
 		$this->sql->result();
 		

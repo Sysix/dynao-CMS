@@ -22,7 +22,7 @@ class user {
 	protected static function getEntrys($id) {
 	
 		$sql = new sql();
-		$sql->query('SELECT * FROM user WHERE id='.$id)->result();
+		$sql->query('SELECT * FROM '.sql::table('user').' WHERE id='.$id)->result();
 		
 		self::$entrys = $sql->result;
 		
