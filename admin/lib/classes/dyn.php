@@ -4,6 +4,8 @@ class dyn {
 	
 	static $params = array();
 	static $isChange = false;
+	
+	static $newEntrys = array();
 
 	public function __construct() {
 		
@@ -31,10 +33,14 @@ class dyn {
 			
 	}
 	
-	public static function add($name, $value) {
+	public static function add($name, $value, $toSave = false) {
 	
 		self::$params[$name] = $value;
-		self::$isChange = true;
+		
+		if($toSave) {
+			self::$isChange = true;
+			self::$newEntrys[$name] = $value;
+		}
 		
 	}
 	
@@ -43,7 +49,9 @@ class dyn {
 		if(!self::$isChange)
 			return true;
 			
-		return file_put_contents(dir::backend('config.json'), json_encode(self::$params, JSON_PRETTY_PRINT));
+		$newEntrys = array_merge(self::$params, self::$newEntrys);
+			
+		return file_put_contents(dir::backend('config.json'), json_encode($newEntrys, JSON_PRETTY_PRINT));
 		
 	}
 	
