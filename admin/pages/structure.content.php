@@ -12,7 +12,8 @@ foreach(module::getModuleList() as $module) {
 
 // Bugfix, das neu erstelle Blöcke nicht einzgezeigt werden
 if(type::post('action', 'string') == 'add' || type::post('action', 'string') == 'edit') {
-	module::saveBlock();	
+	module::saveBlock();
+	echo message::success('Inhalt erfoglreich übernommen');
 }
 
 if($action == 'online') {
@@ -75,7 +76,7 @@ while($sql->isNext()) {
 	if(($action == 'add' && type::super('sort', 'int') == $i) || ($action == 'edit' && $id == $sql->get('id'))) {
 		
 		$form_id = ($action == 'add') ? type::super('modul', 'int') : $sql->get('modul');
-		$m_id = ($action == 'add') ? false : $sql->get('id');
+		$m_id = ($action == 'add') ? 0 : $sql->get('id');
 		
 		$form = $module->setFormBlock($m_id, $form_id, $structure_id);
 	
