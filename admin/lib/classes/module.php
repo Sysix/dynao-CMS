@@ -77,7 +77,9 @@ class module {
 		
 	}	
 	
-	public function saveBlock($id) {
+	public static function saveBlock() {
+		
+		$id = type::post('id', 'int');
 		
 		$sql = new sql();
 		$sql->setTable('structure_block');
@@ -98,6 +100,8 @@ class module {
 						
 		}
 		
+		self::saveSortUp($sql->getPost('structure_id'), $sql->getPost('sort'));
+		
 		if($id) {
 			$sql->setWhere('id='.$id);
 			$sql->update();
@@ -105,9 +109,11 @@ class module {
 			$sql->save();
 		}
 		
+		
+		
 	}
 	
-	public function delete($id) {
+	public static function delete($id) {
 	
 		$sql = new sql();		
 		$sql->query('SELECT `structure_id`, `sort` FROM '.sql::table('structure_block').' WHERE id='.$id)->result();
@@ -117,19 +123,19 @@ class module {
 		$delete->setWhere('id='.$id);
 		$delete->delete();
 		
-		$this->saveSortUp($sql->get('structure_id'), $sql->get('sort'), false);
+		self::saveSortUp($sql->get('structure_id'), $sql->get('sort'), false);
 		
 		return $sql->get('structure_id');
 		
 	}
 	
-	protected function saveSortUp($id, $sort, $up = true) {		
+	protected static function saveSortUp($id, $sort, $up = true) {		
 	
 		sql::sortTable('structure_block', $sort, $up, '`structure_id` = '.$id);
 		
 	}
 	
-	public function setFormBlock($id, $form_id, $parent_id) {
+	public function setFormBlock($id, $form_id, $structure_id) {
 		
 		if($id) {
 			$action = 'edit';
@@ -148,7 +154,7 @@ class module {
 		$input = $this->OutputFilter($form->get('input'), $sql);
 		
 		$form->addRawField($input);
-		$form->addHiddenField('parent_id', $parent_id);
+		$form->addHiddenField('structure_id', $structure_id);
 		$form->addHiddenField('modul', $form->get('id'));
 		
 		$online = ($id) ? $sql->get('online') : 1;
@@ -161,15 +167,7 @@ class module {
 		
 		$form->addHiddenField('sort', $sort);
 		$form->addHiddenField('id', $sql_id);
-		
-		if($form->isSubmit()) {
-				
-				if(!$id)
-					$this->saveSortUp($parent_id, $sort);
-					
-				$this->saveBlock($id);			
-		}
-		
+
 		return $form;
 		
 	}
@@ -190,13 +188,13 @@ class module {
 		
 	}
 	
-	public function setSelectBlock($parent_id, $options, $sort = false) {
+	public function setSelectBlock($structure_id, $options, $sort = false) {
 		
 		$return  = '<div class="structure-addmodul-box">';
 		$return .= '	<form action="index.php" method="get">';
 		$return .= '		<input type="hidden" name="page" value="structure" />';
 		$return .= '		<input type="hidden" name="subpage" value="content" />';
-		$return .= '		<input type="hidden" name="parent_id" value="'.$parent_id.'" />';
+		$return .= '		<input type="hidden" name="structure_id" value="'.$structure_id.'" />';
 		$return .= '		<input type="hidden" name="action" value="add" />';	
 		
 		if($sort)

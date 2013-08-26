@@ -1,11 +1,18 @@
 <div class="clearfix"></div>
 <?php
 
+$structure_id = type::super('structure_id', 'int', $parent_id);
+
 $module_options = '';
 foreach(module::getModuleList() as $module) {
 
 	$module_options .= '<option value="'.$module['id'].'">'.$module['name'].'</option>';
 	
+}
+
+// Bugfix, das neu erstelle Blöcke nicht einzgezeigt werden
+if(type::post('action', 'string') == 'add' || type::post('action', 'string') == 'edit') {
+	module::saveBlock();	
 }
 
 if($action == 'online') {
@@ -39,11 +46,10 @@ if(ajax::is()) {
 	
 	
 }
-$module = new module();
 
 if($action == 'delete') {
 
-	$parent_id = $module->delete($id);
+	$structure_id = module::delete($id);
 	echo message::success('Erfolgreich gelöscht');
 	
 }
@@ -59,17 +65,19 @@ FROM '.sql::table('structure_block').' as s
 LEFT JOIN 
 	'.sql::table('module').' as m
 		ON m.id = s.modul
-WHERE structure_id = '.$parent_id.'
+WHERE structure_id = '.$structure_id.'
 ORDER BY `sort`');
 $i = 1;
 while($sql->isNext()) {
+	
+	$module = new module();
 
 	if(($action == 'add' && type::super('sort', 'int') == $i) || ($action == 'edit' && $id == $sql->get('id'))) {
 		
 		$form_id = ($action == 'add') ? type::super('modul', 'int') : $sql->get('modul');
 		$m_id = ($action == 'add') ? false : $sql->get('id');
 		
-		$form = $module->setFormBlock($m_id, $form_id, $parent_id);
+		$form = $module->setFormBlock($m_id, $form_id, $structure_id);
 	
 	}
 ?>
@@ -86,7 +94,7 @@ while($sql->isNext()) {
 
 	} else {
 		
-		echo $module->setSelectBlock($parent_id, $module_options);
+		echo $module->setSelectBlock($structure_id, $module_options);
 		
 	}
 	
@@ -138,16 +146,17 @@ while($sql->isNext()) {
 ?>	
 </ul>
 <?php
+$module = new module();
 if((!$sql->num() || ($i == type::super('sort', 'int'))) && $action == 'add') {
 	
 	$form_id = type::super('modul', 'int');
 	
-	$form = $module->setFormBlock(false, $form_id, $parent_id);
+	$form = $module->setFormBlock(false, $form_id, $structure_id);
 	echo $module->setFormBlockout($form);
 	
 } else {
 	
-	echo $module->setSelectBlock($parent_id, $module_options, $sql->num()+1);
+	echo $module->setSelectBlock($structure_id, $module_options, $sql->num()+1);
 	
 }
 ?>
