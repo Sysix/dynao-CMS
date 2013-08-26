@@ -61,9 +61,10 @@ LEFT JOIN
 		ON m.id = s.modul
 WHERE structure_id = '.$parent_id.'
 ORDER BY `sort`');
+$i = 1;
 while($sql->isNext()) {
 
-	if(($action == 'add' && type::super('sort', 'int') == $sql->get('sort')) || ($action == 'edit' && $id == $sql->get('id'))) {
+	if(($action == 'add' && type::super('sort', 'int') == $i) || ($action == 'edit' && $id == $sql->get('id'))) {
 		
 		$form_id = ($action == 'add') ? type::super('modul', 'int') : $sql->get('modul');
 		$m_id = ($action == 'add') ? false : $sql->get('id');
@@ -79,7 +80,7 @@ while($sql->isNext()) {
 	// UND
 	// Wenn Formular noch nicht abgeschickt worden
 	// ODER Abgeschickt worden ist und ein Übernehmen geklickt worden ist
-	if($action == 'add' && type::super('sort', 'int') == $sql->get('sort') && (!$form->isSubmit() || ($form->isSubmit() && type::post('save-back', 'string', false) !== false))) {
+	if($action == 'add' && type::super('sort', 'int') == $i && (!$form->isSubmit() || ($form->isSubmit() && type::post('save-back', 'string', false) !== false))) {
 		
 		echo $module->setFormBlockout($form);
 
@@ -130,13 +131,14 @@ while($sql->isNext()) {
 	?>
     </li>
     <?php
-	$sql->next();	
+	$sql->next();
+	$i++;
 	
 }
 ?>	
 </ul>
 <?php
-if((!$sql->num() || ($sql->num()+1 == type::super('sort', 'int'))) && $action == 'add') {
+if((!$sql->num() || ($i == type::super('sort', 'int'))) && $action == 'add') {
 	
 	$form_id = type::super('modul', 'int');
 	
