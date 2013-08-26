@@ -46,7 +46,10 @@ class form {
 		$this->setTable($table);
 		
 		$this->loadBackend();
-		$this->addFormAttributes('class', 'form-horizontal');
+		
+		$this->addFormAttribute('class', 'form-horizontal');
+		$this->addFormAttribute('action', $this->action);
+		$this->addFormAttribute('method', $this->method);
 
 		
 	}
@@ -367,7 +370,7 @@ class form {
 		
 	}
 	
-	public function addFormAttributes($name, $value) {
+	public function addFormAttribute($name, $value) {
 		
 		$this->formAttributes[$name] = $value;	
 		
@@ -389,7 +392,7 @@ class form {
 			
 		}
 		
-		$return = '<form action="'.$this->action.'" method="'.$this->method.'" '.html_convertAttribute($this->formAttributes).'>'.PHP_EOL;
+		$return = '<form'.html_convertAttribute($this->formAttributes).'>'.PHP_EOL;
 		
 		
 		$buttons_echo = '';
