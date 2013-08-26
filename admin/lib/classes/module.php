@@ -2,9 +2,12 @@
 
 class module {
 	
-	const values = 15;
-	const dyn_rex = 'DYN_(\w*)\[(\d)\]';
-	const out_rex = 'OUT_(\w*)\[(\d)\]';
+	static $value = 15;
+	static $link = 10;
+	static $media = 10;
+	static $php = 2;
+	const dyn_rex = 'DYN_(\w*)\[(\d+)\]';
+	const out_rex = 'OUT_(\w*)\[(\d+)\]';
 	static $types = array('VALUE', 'LINK', 'MEDIA', 'PHP'); #typen
 	
 	var $values = array();
@@ -51,7 +54,9 @@ class module {
 		
 		foreach($this->out[1] as  $key=>$type) {
 			
-			if($key > self::values || !in_array($type, self::$types))
+			$maxValuesofType = strtolower($type);
+			
+			if($this->out[2][$key] > self::$$maxValuesofType || !in_array($type, self::$types))
 				continue;
 				
 			$value = strtolower($type).$this->out[2][$key];# value1
@@ -85,7 +90,7 @@ class module {
 			
 			$array = type::post('DYN_'.$types, 'array', array());
 			foreach($array as $key=>$value) {
-				$sql->addPost(strtolower($types).$key, $array[$key]);			
+				$sql->addPost(strtolower($types).$key, $value);			
 			}
 						
 		}
