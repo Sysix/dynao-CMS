@@ -264,7 +264,7 @@ class sql {
 		$update->setTable($table);
 		
 		$sql = new sql();		
-		$sql->query('SELECT `'.$select[0].'`, `'.$select[1].'` FROM '.self::table($table).' WHERE '.$select[1].' => '.$sort.$where)->result();
+		$sql->query('SELECT `'.$select[0].'`, `'.$select[1].'` FROM '.self::table($table).' WHERE `'.$select[1].'` >= '.$sort.$where)->result();
 		
 		while($sql->isNext()) {
 			
@@ -277,7 +277,7 @@ class sql {
 			$update->setWhere($select[0].'='.$sql->get($select[0]));
 			$update->update();
 			
-			$sq->next();
+			$sql->next();
 			
 		}
 		

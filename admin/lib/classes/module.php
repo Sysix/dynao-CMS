@@ -92,38 +92,40 @@ class module {
 		foreach(self::$types as $types) {
 			
 			$array = type::post('DYN_'.$types, 'array', array());
-			foreach($array as $key=>$value) {				
-				$sql->addPost(strtolower($types).$key, $array[$key]);				
+			foreach($array as $key=>$value) {
+				$sql->addPost(strtolower($types).$key, $array[$key]);			
 			}
 						
 		}
 		
 		if($id) {
 			$sql->setWhere('id='.$id);
-			$sql->update();	
+			$sql->update();
 		} else {
-			$sql->save();	
+			$sql->save();
 		}
 		
 	}
 	
 	public function delete($id) {
 	
-		$sql2 = new sql();		
-		$sql2->query('SELECT `parent_id`, `sort` FROM '.sql::table('structure_block').' WHERE id='.$id)->result();
+		$sql = new sql();		
+		$sql->query('SELECT `structure_id`, `sort` FROM '.sql::table('structure_block').' WHERE id='.$id)->result();
 		
-		$sql = new sql();
-		$sql->setTable('structure_block');
-		$sql->setWhere('id='.$id);
-		$sql->delete();
+		$delete = new sql();
+		$delete->setTable('structure_block');
+		$delete->setWhere('id='.$id);
+		$delete->delete();
 		
-		$this->saveSortUp($sql2->get('parent_id'), $sql2->get('sort'), false);
+		$this->saveSortUp($sql->get('structure_id'), $sql->get('sort'), false);
+		
+		return $sql->get('structure_id');
 		
 	}
 	
 	protected function saveSortUp($id, $sort, $up = true) {		
 	
-		sql::sortTable('structure_block', $sort, $up, '`parent_id` = '.$id);
+		sql::sortTable('structure_block', $sort, $up, '`structure_id` = '.$id);
 		
 	}
 	

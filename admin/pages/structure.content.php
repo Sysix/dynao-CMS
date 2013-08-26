@@ -43,7 +43,7 @@ $module = new module();
 
 if($action == 'delete') {
 
-	$module->delete($id);
+	$parent_id = $module->delete($id);
 	echo message::success('Erfolgreich gelöscht');
 	
 }
