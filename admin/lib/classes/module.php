@@ -109,8 +109,6 @@ class module {
 			$sql->save();
 		}
 		
-		
-		
 	}
 	
 	public static function delete($id) {
@@ -137,16 +135,10 @@ class module {
 	
 	public function setFormBlock($id, $form_id, $structure_id) {
 		
-		if($id) {
-			$action = 'edit';
-			$sql_id = $id;	
-		} else {
-			$action = 'add';
-			$sql_id = 0;
-		}
+		$action = ($id) ? 'edit' : 'add';
 		
 		$sql = new sql();
-		$sql->query('SELECT * FROM '.sql::table('structure_block').' WHERE id = '.$sql_id)->result();
+		$sql->query('SELECT * FROM '.sql::table('structure_block').' WHERE id = '.$id)->result();
 		
 		$form = new form('module', 'id='.$form_id, 'index.php');
 		$form->setSave(false);
@@ -166,7 +158,7 @@ class module {
 		$field->add(0, 'Offline');
 		
 		$form->addHiddenField('sort', $sort);
-		$form->addHiddenField('id', $sql_id);
+		$form->addHiddenField('id', $id);
 
 		return $form;
 		

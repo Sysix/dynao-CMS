@@ -151,7 +151,7 @@ if((!$sql->num() || ($i == type::super('sort', 'int'))) && $action == 'add') {
 	
 	$form_id = type::super('modul', 'int');
 	
-	$form = $module->setFormBlock(false, $form_id, $structure_id);
+	$form = $module->setFormBlock(0, $form_id, $structure_id);
 	echo $module->setFormBlockout($form);
 	
 } else {
