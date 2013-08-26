@@ -138,6 +138,7 @@ class module {
 		$form = new form('module', 'id='.$form_id, 'index.php');
 		$form->setSave(false);
 		$form->setMode($action);
+		$form->addFormAttributes('class', '');
 		$input = $this->OutputFilter($form->get('input'), $sql);
 		
 		$form->addRawField($input);

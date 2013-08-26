@@ -14,6 +14,8 @@ class form {
 	var $return = array();
 	var $buttons = array();
 	
+	var $formAttributes = array();
+	
 	// Beim Senden schauen ob die Forumluar-Einträge schon übernommen worden sind Methode: setPostsVar
 	var $isGetPosts = false;
 	var $isSubmit;
@@ -44,6 +46,7 @@ class form {
 		$this->setTable($table);
 		
 		$this->loadBackend();
+		$this->addFormAttributes('class', 'form-horizontal');
 
 		
 	}
@@ -364,6 +367,12 @@ class form {
 		
 	}
 	
+	public function addFormAttributes($name, $value) {
+		
+		$this->formAttributes[$name] = $value;	
+		
+	}
+	
 	public function show() {
 		
 		$this->addHiddenField('action', $this->mode);
@@ -380,7 +389,7 @@ class form {
 			
 		}
 		
-		$return = '<form action="'.$this->action.'" method="'.$this->method.'" class="form-horizontal">'.PHP_EOL;
+		$return = '<form action="'.$this->action.'" method="'.$this->method.'" '.html_convertAttribute($this->formAttributes).'>'.PHP_EOL;
 		
 		
 		$buttons_echo = '';
@@ -395,8 +404,8 @@ class form {
 				$ausgabe->addClass('form-control');
 				
 				$return .= '<div class="form-group">';
-				$return .= '<label class="col-lg-2 control-label">'.$ausgabe->fieldName.'</label>';
-				$return .= '<div class="col-lg-10">'.$ausgabe->prefix . $ausgabe->get() . $ausgabe->suffix.'</div>';
+				$return .= '<label>'.$ausgabe->fieldName.'</label>';
+				$return .= '<div class="form-wrap-input">'.$ausgabe->prefix . $ausgabe->get() . $ausgabe->suffix.'</div>';
 				$return .= '</div>';
 				
 			}
@@ -410,8 +419,8 @@ class form {
 		}
 		
 		$return .= '<div class="form-group">';
-		$return .= '<div class="col-lg-2"></div>';
-		$return .= '<div class="col-lg-10">'.$buttons_echo.'</div>';
+		$return .= '<label></label>';
+		$return .= '<div class="form-wrap-input btn-group">'.$buttons_echo.'</div>';
 		$return .= '</div>';
 			
 		$return .= '</form>';

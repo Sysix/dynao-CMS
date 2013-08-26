@@ -392,3 +392,27 @@ ul.news li:last-child {
 ul.news li .btn {
 	margin-top:7px;
 }
+
+.form-2cols .form-group {
+	float:left;
+	width:50%;
+	padding:0px 5px;
+}
+
+.form-horizontal label, .form-horizontal .form-wrap-input {
+	float:left;
+	position:relative;
+	min-height:1px;
+	padding-left:15px;
+	padding-right:15px;
+}
+
+.form-horizontal label {
+	width:16.6667%;
+	padding-top:7px;
+	margin:0px;
+}
+
+.form-horizontal .form-wrap-input {
+	width:83.3333%;
+}
