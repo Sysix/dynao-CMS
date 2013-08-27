@@ -2,6 +2,49 @@
 	backend::addSubnavi('Overview',	url::backend('structure'),	'eye-open');
 	backend::addSubnavi('Statistics',	url::backend('structure'),	'bar-chart');
 	backend::addSubnavi('Logs',	url::backend('structure'),	'calendar');
+	
+	layout::addJs('https://www.google.com/jsapi');
+	layout::addJSCode("google.load('visualization', '1', {packages:['corechart']});
+	google.setOnLoadCallback(drawChart);
+	
+	function drawChart() {
+	var data = google.visualization.arrayToDataTable([
+	  ['Months', 'All', 'SEO', 'Direct link'],
+	  ['Jan',  950, 350, 00],
+	  ['Feb',  800, 400, 400],
+	  ['Mar',  640, 330, 310],
+	  ['Apr',  750, 370, 380],
+	  ['Mai',  700, 300, 400],
+	  ['Jun',  650, 270, 380],
+	  ['Jul',  700, 290, 410],
+	  ['Aug',  300, 170, 130],
+	  ['Sep',  0, 0, 0],
+	  ['Oct',  0, 0, 0],
+	  ['Nov',  0, 0, 0],
+	  ['Dec',  0, 0, 0],
+	]);
+	
+	function resize() {		
+		
+		var v_width = $('#visitchart').width();
+		
+		var options = {
+		title: '',
+		chartArea: {
+			top: 30,
+			width: v_width-100
+		},	
+		legend: 'bottom',
+		};
+		
+		var chart = new google.visualization.LineChart(document.getElementById('visitchart'));
+		chart.draw(data, options);
+	
+	}
+	
+	window.onload = resize();
+   	window.onresize = resize;
+  }", false);
 ?>		
 
 <?php echo message::info('<strong>Warning!</strong> Please check your Version of dynao CMS', true); ?>
