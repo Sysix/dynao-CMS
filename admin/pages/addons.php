@@ -6,7 +6,7 @@ backend::addSubnavi('Übersicht',	url::backend('addons'), 	'archive');
 
 if($action == 'online') {
 
-	$addonClass= new addon($addon);	
+	$addonClass= new addon($addon, false);	
 	$online = ($addonClass->isOnline()) ? 0 : 1;
 	
 	$sql = new sql();
@@ -25,7 +25,7 @@ if($action == 'online') {
 
 if($action == 'active') {
 	
-	$addonClass = new addon($addon);	
+	$addonClass = new addon($addon, false);	
 	$active = ($addonClass->isActive()) ? 0 : 1;
 	
 	if(!$addonClass->isOnline()) {
