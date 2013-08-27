@@ -63,6 +63,12 @@ class dir {
 		return self::backend('lib'.DIRECTORY_SEPARATOR.'lang'.DIRECTORY_SEPARATOR.$lang.DIRECTORY_SEPARATOR.$file);
 
 	}
+	
+	public static function addon($addon, $file = '') {
+
+		return self::backend('addons'.DIRECTORY_SEPARATOR.$addon.DIRECTORY_SEPARATOR.$file);
+
+	}
 
 }
 
