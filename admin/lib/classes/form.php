@@ -220,13 +220,6 @@ class form {
 		
 	}
 	
-	// Post parameter Action setzten
-	public function toAction($action) {
-		
-		$this->addHiddenField('action', $action);
-		
-	}
-	
 	// Ist Edit Mode?
 	public function isEditMode() {
 	
@@ -290,7 +283,7 @@ class form {
 		
 	}
 	
-	public function setPostsVar() {
+	protected function setPostsVar() {
 	
 		foreach($this->return as $ausgabe) {
 			
