@@ -3,11 +3,11 @@
 $action = type::super('action', 'string');
 $id = type::super('id', 'int', 0);
 $parent_id = type::super('parent_id', 'int', 0);
+$structure_id = type::super('structure_id', 'int', $parent_id);
 $subpage = type::super('subpage', 'string', 'pages');
 
-backend::addSubnavi('Unterseiten',	url::backend('structure', array('parent_id'=>$parent_id, 'subpage'=>'pages')), 		'home');
-backend::addSubnavi('Inhalt',		url::backend('structure', array('parent_id'=>$parent_id, 'subpage'=>'content')),		'edit');
-backend::addSubnavi('Meta Daten',	url::backend('structure', array('parent_id'=>$parent_id, 'subpage'=>'meta')));
+backend::addSubnavi('Unterseiten',	url::backend('structure', array('parent_id'=>$parent_id, 'subpage'=>'pages')), 				'home');
+backend::addSubnavi('Inhalt',		url::backend('structure', array('structure_id'=>$structure_id, 'subpage'=>'content')),		'edit');
 
 
 $breadcrumb = array();
@@ -38,7 +38,7 @@ $breadcrumb[] = '<li><a href="'.url::backend('structure').'">Struktur</a></li>';
 echo '<ul class="pull-left breadcrumb">'.implode('', array_reverse($breadcrumb)).'</ul>';
 
 
-$allowPages = array('pages', 'content', 'meta');
+$allowPages = array('pages', 'content');
 $allowPages = extension::get('page_subpages', $allowPages);
 
 if(in_array($subpage, $allowPages)) {

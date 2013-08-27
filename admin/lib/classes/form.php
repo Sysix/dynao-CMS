@@ -113,7 +113,7 @@ class form {
 	private function addField($name, $value, $class, $attributes = array()) {
 		
 		$field = new $class($name, $value, $attributes);
-		$this->return[] = $field;
+		$this->return[$name] = $field;
 		
 		return $field;
 		
@@ -373,6 +373,12 @@ class form {
 	public function addFormAttribute($name, $value) {
 		
 		$this->formAttributes[$name] = $value;	
+		
+	}
+	
+	public function deleteElement($name) {
+	
+		unset($this->return[$name]);
 		
 	}
 	

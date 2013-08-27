@@ -1,8 +1,6 @@
 <div class="clearfix"></div>
 <?php
 
-$structure_id = type::super('structure_id', 'int', $parent_id);
-
 $module_options = '';
 foreach(module::getModuleList() as $module) {
 
