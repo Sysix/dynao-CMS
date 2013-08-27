@@ -115,5 +115,13 @@ $sql->query('CREATE TABLE IF NOT EXISTS `structure_block` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 
+$sql->query('CREATE TABLE IF NOT EXISTS `addons` (
+  `id` 			int(11) 	unsigned	NOT NULL	auto_increment,
+  `name` 		varchar(255)			NOT NULL,
+  `online`		int(1)					NOT NULL,
+  `active`		int(1)					NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
+
 echo message::success('Update erfolgreich');
 ?>

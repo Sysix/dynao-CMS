@@ -41,6 +41,8 @@ layout::addJS('http://code.jquery.com/ui/1.10.3/jquery-ui.js');
 layout::addJS('http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js');
 layout::addJS('layout/js/scripts.js');
 
+addonConfig::includeAllConfig();
+
 ob_start();
 
 $login = new userLogin();

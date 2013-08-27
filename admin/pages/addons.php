@@ -23,12 +23,15 @@ foreach($addons as $dir) {
 		continue;
 	
 	$curAddon = new addon($dir);
-		
+	
+	$online = $curAddon->isOnline() ? 'installiert' : 'nicht installiert';
+	$active = $curAddon->isActive() ? 'aktiviert' : 'nicht aktiviert';
+	
 	$table->addRow()
 	->addCell('<a href="" class="icon-question"></a>')
 	->addCell($curAddon->get('name').' <small>'.$curAddon->get('version').'</small>')
-	->addCell('Installiert')
-	->addCell('Aktiviert')
+	->addCell($online)
+	->addCell($active)
 	->addCell('Entfernen');
 		
 }

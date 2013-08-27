@@ -1,2 +1,4 @@
+<Files ~ ".*\.json|.*\.php$">
 order deny,allow
 deny from all
+</Files>
