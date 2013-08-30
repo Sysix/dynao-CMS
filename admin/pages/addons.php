@@ -47,13 +47,12 @@ if($action == 'active') {
 }
 
 $table = new table();
+$table->addCollsLayout('20,*,300');
 
 $table->addRow()
 ->addCell('')
 ->addCell('Name')
-->addCell('Installiert')
-->addCell('Aktiviert')
-->addCell('Entfernen');
+->addCell('Aktionen');
 
 $table->addSection('tbody');
 
@@ -81,12 +80,12 @@ foreach($addons as $dir) {
 		$active = '<a href="'.$active_url.'" class="btn btn-sm structure-offline">nicht aktiviert</a>';
 	}
 	
+	$delete = '<a href="#" class="btn btn-sm btn-danger">Entfernen</a>';
+	
 	$table->addRow()
 	->addCell('<a href="" class="icon-question"></a>')
 	->addCell($curAddon->get('name').' <small>'.$curAddon->get('version').'</small>')
-	->addCell($online)
-	->addCell($active)
-	->addCell('<a href="#" class="btn btn-sm btn-danger">Entfernen</a>');
+	->addCell('<span class="btn-group">'.$online.$active.$delete.'</span>');
 		
 }
 

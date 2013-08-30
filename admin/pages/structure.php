@@ -8,6 +8,7 @@ $subpage = type::super('subpage', 'string', 'pages');
 
 backend::addSubnavi('Unterseiten',	url::backend('structure', array('parent_id'=>$parent_id, 'subpage'=>'pages')), 				'home');
 backend::addSubnavi('Inhalt',		url::backend('structure', array('structure_id'=>$structure_id, 'subpage'=>'content')),		'edit');
+backend::addSubnavi('Module',		url::backend('structure', array('subpage'=>'module')),										'list-alt');
 
 
 $breadcrumb = array();
@@ -38,7 +39,7 @@ $breadcrumb[] = '<li><a href="'.url::backend('structure').'">Struktur</a></li>';
 echo '<ul class="pull-left breadcrumb">'.implode('', array_reverse($breadcrumb)).'</ul>';
 
 
-$allowPages = array('pages', 'content');
+$allowPages = array('pages', 'content', 'module');
 $allowPages = extension::get('page_subpages', $allowPages);
 
 if(in_array($subpage, $allowPages)) {

@@ -1,8 +1,5 @@
+<div class="clearfix"></div>
 <?php
-
-$action = type::super('action', 'string');
-$id = type::super('id', 'int', 0);
-
 
 if(ajax::is()) {
 	
@@ -54,7 +51,7 @@ if($action == 'add' || $action == 'edit') {
 
 if($action == '') {
 	
-	echo '<a href="'.url::backend('module', array('action'=>'add')).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
+	echo '<a href="'.url::backend('structure', array('subpage'=>'module', 'action'=>'add')).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
 	echo '<div class="clearfix"></div>';
 
 	$table = new table(array('class'=>array('js-sort')));
@@ -73,8 +70,8 @@ if($action == '') {
 	
 		$id = $table->get('id');
 		
-		$edit = '<a href="'.url::backend('module', array('action'=>'edit', 'id'=>$id)).'" class="btn btn-sm btn-default">'.lang::get('edit').'</a>';
-		$delete = '<a href="'.url::backend('module', array('action'=>'delete', 'id'=>$id)).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+		$edit = '<a href="'.url::backend('structure', array('subpage'=>'module', 'action'=>'edit', 'id'=>$id)).'" class="btn btn-sm btn-default">'.lang::get('edit').'</a>';
+		$delete = '<a href="'.url::backend('structure', array('subpage'=>'module','action'=>'delete', 'id'=>$id)).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 		
 		$table->addRow(array('data-id'=>$id))
 		->addCell('<i class="icon-sort"></i>')
