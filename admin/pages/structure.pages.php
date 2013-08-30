@@ -1,5 +1,8 @@
 <?php
 
+echo '<a href="'.url::backend('structure', array('action'=>'add', 'parent_id'=>$parent_id)).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
+echo '<div class="clearfix"></div>';
+
 if(ajax::is()) {
 	
 	$sort = type::post('array', 'array');
@@ -18,16 +21,39 @@ if(ajax::is()) {
 
 if($action == 'delete') {
 	
+	$orginal_id = $id;
+	
+	while($id) {
+	
 		$sql = new sql();
-		$sql->setTable('structure');
-		$sql->setWhere('id='.$id);
-		$sql->delete();
+		$sql->query('SELECT id FROM '.sql::table('structure').' WHERE `parent_id` = '.$id)->result();
+		if($sql->num()) {
+			
+			$id = $sql->get('id');
+			
+			$delete = new sql();
+			$delete->setTable('structure');
+			$delete->setWhere('id='.$id);
+			$delete->delete();			
+			
+		} else {
+			$id = false;	
+		}
 		
-		$sql = new sql();		
-		$sql->query('SELECT `sort`, `parent_id` FROM '.sql::table('structure').' WHERE id='.$id)->result();
-		sql::sortTable('structure', $sql->get('sort'), false, '`parent_id` = '.$sql->get('parent_id'));
-		
-		echo message::success('Artikel erfolgreich gelöscht');
+	}
+	
+	
+	$sql = new sql();		
+	$sql->query('SELECT `sort`, `parent_id` FROM '.sql::table('structure').' WHERE id='.$orginal_id)->result();
+	
+	$delete = new sql();
+	$delete->setTable('structure');
+	$delete->setWhere('id='.$orginal_id);
+	$delete->delete();
+	
+	sql::sortTable('structure', $sql->get('sort'), false, '`parent_id` = '.$sql->get('parent_id'));
+	
+	echo message::success('Artikel erfolgreich gelöscht');
 		
 }
 
@@ -61,9 +87,6 @@ if(in_array($action, array('save-add', 'save-edit'))) {
 		$sql->save();	
 	}
 }
-
-echo '<a href="'.url::backend('structure', array('action'=>'add', 'parent_id'=>$parent_id)).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
-echo '<div class="clearfix"></div>';
 
 $table = new table(array('class'=>array('js-sort')));
 
