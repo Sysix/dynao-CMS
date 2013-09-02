@@ -50,7 +50,7 @@
 	}
 	
 	#content {
-		padding-left:220px;
+		padding-left:240px;
 	}
 	
 	#subnavi, #subnavi #user {
@@ -60,15 +60,20 @@
 
 @media (max-width: 620px) {
 	
-	#subnavi {
+	#subnavi #user, #subnavi h1 {
 		display:none;
+	}
+	
+	#subnavi {
+		margin:-40px 0 0 0;
+		padding:0;
+		background:#202020;
 	}
 	
 	#content {
 		left:0;
 		background:url(../img/bg/noise.png) repeat;
-		margin:10px 0;
-		padding:5px 0;
+		padding:10px;
 	}
 	
 	#navi {
@@ -94,7 +99,7 @@
 		left:0;
 		background:url(../img/bg/noise.png) repeat;
 		margin:10px;
-		top:50px;
+		top:90px;
 		padding:0;
 	}
 	

@@ -24,7 +24,7 @@ class backend {
 				$class = '';	
 			}
 			
-			$return .= '<li'.$class.'><a class="icon-'.$subnavi['icon'].'" href="'.$subnavi['link'].'"> '.$subnavi['name'].'</a>';
+			$return .= '<li'.$class.'><a class="icon-'.$subnavi['icon'].'" href="'.$subnavi['link'].'"> <span>'.$subnavi['name'].'</span></a>';
 			
 		}
 		
