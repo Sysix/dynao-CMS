@@ -45,6 +45,26 @@ class module {
 		
 	}
 	
+	protected static function getEval($content) {
+		
+		ob_start();
+		ob_implicit_flush(0);
+		
+		// PHP-Startzeichen  im Code verwenden können
+		$content = eval(' ?>'.$content.' <?php ');
+		
+		// Falls irgendein Fehler gekommen ist
+		if(false === $content) {
+			echo message::danger('Der ModulCode hat einen PHP Fehler und kann deshalb nicht ausgeführt werden');
+		}
+		
+		$output = ob_get_contents();
+		ob_end_clean();
+		
+		return $output;
+		
+	}
+	
 	public function OutputFilter($content, $sql) {
 		
 		if(!is_object($sql)) // SQL Muss Objekt sein
@@ -68,9 +88,11 @@ class module {
 					
 		}
 		
+		$content = $this->getEval($content);
+		
 		return $content;
 		
-	}	
+	}
 	
 	public static function saveBlock() {
 		
