@@ -24,7 +24,7 @@ class module {
 		
 			$return[] = array('id'=>$sql->get('id'), 'name' => $sql->get('name'));
 		
-			$sql->next();			
+			$sql->next();
 		}
 		
 		return $return;
