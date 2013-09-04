@@ -39,6 +39,34 @@ class pageArea {
 		
 	}
 	
+	public function getSort() {
+		
+		if($this->isNew) {
+	
+			return type::super('sort', 'int');
+			
+		} else {
+		
+			return $this->get('sort');
+			
+		}
+		
+	}
+	
+	public function getStructureID() {
+	
+		if($this->isNew) {
+			
+			return type::super('structure_id', 'int');
+			
+		} else {
+			
+			return $this->get('structure_id');
+			
+		}
+		
+	}
+	
 	public function isOnline() {
 	
 		return $this->get('online') == 1;
@@ -47,15 +75,25 @@ class pageArea {
 	
 	public function isFirstBlock() {
 		
-		if($this->isNew) {
+		return $this->getSort() == 1;
+		
+	}
 	
-			return type::super('sort', 'int') == 1;
+	public function isLastBlock() {
+		
+		$sql = new sql;
+		$sql->query('SELECT sort FROM '.sql::table('structure_area').' WHERE structure_id = '.$this->getStructureID());
+		
+		if($this->isNew) {
+			
+			return $sql->num()+1 == $this->getSort(); // +1 weil Eintrag noch nicht gespeichert ist
 			
 		} else {
-		
-			return $this->get('sort') == 1;
+			
+			return $sql->num() == $this->getSort();
 			
 		}
+		
 		
 	}
 	
