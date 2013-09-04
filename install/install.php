@@ -69,7 +69,7 @@ $sql->query('INSERT INTO `user`
 (1, 	"sysix@sysix-coding.de", 	"a94a8fe5ccb19ba61c4c0873d391e987982fbbd3", 	""),
 (2, 	"info@dynao.de", 			"a94a8fe5ccb19ba61c4c0873d391e987982fbbd3", 	"");');
 
-$sql->query('CREATE TABLE IF NOT EXISTS `structure_block` (
+$sql->query('CREATE TABLE IF NOT EXISTS `structure_area` (
   `id`			int(16)		unsigned	NOT NULL		auto_increment,
   `structure_id`int(16) 	unsigned	NOT NULL,
   `sort`		int(16)		unsigned	NOT NULL,

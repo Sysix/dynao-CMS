@@ -1,23 +1,16 @@
 <div class="clearfix"></div>
 <?php
 
-$module_options = '';
-foreach(module::getModuleList() as $module) {
-
-	$module_options .= '<option value="'.$module['id'].'">'.$module['name'].'</option>';
-	
-}
-
 // Bugfix, das neu erstelle Blöcke nicht einzgezeigt werden
 if(type::post('action', 'string') == 'add' || type::post('action', 'string') == 'edit') {
-	module::saveBlock();
+	pageAreaAction::saveBlock();
 	echo message::success('Inhalt erfoglreich übernommen');
 }
 
 if($action == 'online') {
 
 	$sql = new sql();
-	$sql->query('SELECT online FROM '.sql::table('structure_block').' WHERE id='.$id)->result();
+	$sql->query('SELECT online FROM '.sql::table('structure_area').' WHERE id='.$id)->result();
 	
 	$online = ($sql->get('online')) ? 0 : 1;
 	
@@ -34,7 +27,7 @@ if(ajax::is()) {
 	
 	$sort = type::post('array', 'array');
 	$sql = new sql();
-	$sql->setTable('structure_block');
+	$sql->setTable('structure_area');
 	foreach($sort as $s=>$s_id) {
 		$sql->setWhere('id='.$s_id);
 		$sql->addPost('sort', $s+1);
@@ -48,7 +41,7 @@ if(ajax::is()) {
 
 if($action == 'delete') {
 
-	$structure_id = module::delete($id);
+	$structure_id = pageAreaAction::delete($id);
 	echo message::success('Erfolgreich gelöscht');
 	
 }
@@ -60,7 +53,7 @@ if($action == 'delete') {
 
 $sql = new sql();
 $sql->result('SELECT s.*, m.name, m.output, m.input
-FROM '.sql::table('structure_block').' as s
+FROM '.sql::table('structure_area').' as s
 LEFT JOIN 
 	'.sql::table('module').' as m
 		ON m.id = s.modul
@@ -69,14 +62,12 @@ ORDER BY `sort`');
 $i = 1;
 while($sql->isNext()) {
 	
-	$module = new module();
+	$sqlId = ($action == 'add') ? 0 : $sql->get('id');
+	$module = new pageArea($sqlId);
 
 	if(($action == 'add' && type::super('sort', 'int') == $i) || ($action == 'edit' && $id == $sql->get('id'))) {
 		
-		$form_id = ($action == 'add') ? type::super('modul', 'int') : $sql->get('modul');
-		$m_id = ($action == 'add') ? 0 : $sql->get('id');
-		
-		$form = $module->setFormBlock($m_id, $form_id, $structure_id);
+		$form = pageAreaHtml::formBlock($module);
 	
 	}
 ?>
@@ -89,11 +80,11 @@ while($sql->isNext()) {
 	// ODER Abgeschickt worden ist und ein Übernehmen geklickt worden ist
 	if($action == 'add' && type::super('sort', 'int') == $i && (!$form->isSubmit() || ($form->isSubmit() && type::post('save-back', 'string', false) !== false))) {
 		
-		echo $module->setFormBlockout($form);
+		echo pageAreaHtml::formOut($form);
 
 	} else {
 		
-		echo $module->setSelectBlock($structure_id, $module_options);
+		echo pageAreaHtml::selectBlock($module->getStructureId());
 		
 	}
 	
@@ -105,7 +96,7 @@ while($sql->isNext()) {
 	
 	if($action == 'edit' && $id == $sql->get('id') && (!$form->isSubmit() || ($form->isSubmit() && type::post('save-back', 'string', false) !== false))) {
 
-		echo $module->setFormBlockout($form);
+		echo pageAreaHtml::formOut($form);
 
 	} else {
 		
@@ -150,12 +141,12 @@ if((!$sql->num() || ($i == type::super('sort', 'int'))) && $action == 'add') {
 	
 	$form_id = type::super('modul', 'int');
 	
-	$form = $module->setFormBlock(0, $form_id, $structure_id);
-	echo $module->setFormBlockout($form);
+	$form = pageAreaHtml::formBlock(new pageArea(0));
+	echo pageAreaHtml::formOut($form);
 	
 } else {
 	
-	echo $module->setSelectBlock($structure_id, $module_options, $sql->num()+1);
+	echo pageAreaHtml::selectBlock($structure_id,  $sql->num()+1);
 	
 }
 ?>
