@@ -1,4 +1,3 @@
-<div class="clearfix"></div>
 <?php
 
 if(ajax::is()) {

@@ -136,7 +136,7 @@ class pageArea {
 		
 	}
 	
-	protected static function getEval($content) {
+	protected function getEval($content) {
 		
 		ob_start();
 		ob_implicit_flush(0);
@@ -153,7 +153,6 @@ class pageArea {
 		ob_end_clean();
 		
 		return $output;
-		
 	}
 	
 	public function OutputFilter($content, $sql) {
