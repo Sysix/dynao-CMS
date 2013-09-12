@@ -70,7 +70,7 @@
 		background:#202020;
 		position:relative;
 		z-index:1;
-		width:40%;
+		width:100%;
 	}
 	
 	#subnavi.round {
@@ -84,7 +84,6 @@
 		color:#fff;
 		padding-left:20px;
 		cursor:pointer;
-		width:40%;
 	}
 	
 	#subnavi ul.subnav  {
