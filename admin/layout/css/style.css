@@ -244,6 +244,10 @@ h1 {
 	font-family:'Open Sans';
 }
 
+#subnavi #mobil {
+	display:none;
+}
+
 #subnavi #user a.logout {
 	color:#5c5c5c;
 	position:absolute;
