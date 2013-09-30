@@ -53,6 +53,11 @@ $(document).ready(function () {
 		 window.history.go(-1);
 	});
 	
+	$("#mobil").click(function() {
+		$("#subnavi ul.subnav").toggleClass("display");	
+		$("#subnavi").toggleClass("round");	
+	});
+	
 	$('.js-sort tbody').DynSorting();
 	$('#structure-content').DynSorting({children: 'li', handle: '.panel-heading'});
 	

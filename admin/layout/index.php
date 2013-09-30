@@ -53,7 +53,7 @@ $navi = array(
             </div><!--end #user-->
             
             <h1>Dashboard</h1>
-            
+            <div id="mobil">Navigation</div>
             <?php echo backend::getSubnavi(); ?>
             
         </div><!--end #subnavi-->

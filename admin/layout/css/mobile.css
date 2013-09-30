@@ -68,6 +68,47 @@
 		margin:-40px 0 0 0;
 		padding:0;
 		background:#202020;
+		position:relative;
+		z-index:1;
+		width:100%;
+	}
+	
+	#subnavi.round {
+		border-radius:0 0 3px 3px;
+	}
+	
+	#subnavi #mobil {
+		display:block;
+		position:absolute;
+		line-height:40px;
+		color:#fff;
+		padding-left:20px;
+		cursor:pointer;
+	}
+	
+	#subnavi ul.subnav  {
+		padding:40px 20px 0px 20px;
+	}
+	
+	#subnavi ul.subnav li a {
+		display:none;
+		margin-right:0;
+	}
+	
+	#subnavi ul.subnav li.active a {
+		background:none;
+	}
+	
+	#subnavi ul.subnav li.active a:hover, #subnavi ul.subnav li a:hover {
+		color:#fff;
+	}
+	
+	#subnavi ul.subnav.display {
+		padding:45px 20px 5px 20px;
+	}
+	
+	#subnavi ul.subnav.display li a {
+		display:block;
 	}
 	
 	#content {
