@@ -11,6 +11,7 @@ if(!dyn::has('extensions')) {
 	$audioExtensions = array("mp3", "wma", "m4a");
 	
 	dyn::add('extensions', array($imageExtensions, $videoExtensions, $audioExtensions), true);
+	dyn::save();
 	
 }
 

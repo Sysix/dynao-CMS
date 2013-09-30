@@ -27,6 +27,12 @@ class dir {
 		return self::base('templates'.DIRECTORY_SEPARATOR.$file);
 
 	}
+	
+	public static function media($file = '') {
+
+		return self::base('media'.DIRECTORY_SEPARATOR.$file);
+
+	}
 
 	public static function classes($file = '') {
 
