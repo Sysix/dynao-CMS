@@ -15,5 +15,10 @@
 	"not_found_page": 1,
 	"table_prefix": "",
 	"logincookie": 86400,
-	"lang": "de_de"
+	"lang": "de_de",
+	"extensions": {
+		"image": ["gif", "jpeg", "jpg", "png", "bmp"],
+		"video": ["3gp", "avi", "flv", "m4v", "mov", "mp4", "mpg", "wmv", "mkv", "mpeg"],
+		"audio": ["mp3", "wma", "m4a"]
+	}
 }	
