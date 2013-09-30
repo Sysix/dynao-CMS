@@ -1,8 +1,6 @@
 <?php
 
-if(!class_exists('media')) {
-	require(dir::addon('mediamanager', 'lib/classes/media.php'));
-}
+require(dir::addon('mediamanager', 'lib/classes/media.php'));
 
 if(!dyn::has('extensions')) {
 	

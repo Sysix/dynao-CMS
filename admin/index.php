@@ -48,7 +48,24 @@ ob_start();
 $login = new userLogin();
 
 if($login->isLogged()) {
-	include(dir::page($page.'.php'));
+	if(file_exists(dir::page($page.'.php'))) {
+		
+		include(dir::page($page.'.php'));
+		
+	} else {
+		$sql = new sql();
+		$sql->query('SELECT name FROM '.sql::table('addons').' WHERE `online` = 1 AND `active` = 1')->result();
+		while($sql->isNext()) {
+			if(file_exists(dir::addon($sql->get('name'), 'page/'.$page.'.php'))) {
+				
+				include(dir::addon($sql->get('name'), 'page/'.$page.'.php'));
+				break;
+				
+			}
+			$sql->next();
+		}
+	}
+	
 }
 
 $CONTENT = ob_get_contents();
