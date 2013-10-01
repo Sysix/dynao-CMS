@@ -16,7 +16,7 @@ foreach($files as $file) {
 		
 	$table->addRow()
 	->addCell($file)
-	->addCell('...')
+	->addCell(filesize(dir::media($file)))
 	->addCell('...');
 	
 }
