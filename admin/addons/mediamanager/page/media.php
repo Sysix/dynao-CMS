@@ -4,6 +4,7 @@ $files = scandir(dir::media());
 
 $table = new table();
 $table->addRow()
+->addCell()
 ->addCell('Titel')
 ->addCell('Endung')
 ->addCell('Aktion');
@@ -14,9 +15,12 @@ foreach($files as $file) {
 	if(in_array($file, array('..', '.')))
 		continue;
 		
+	$media = media::getMediaByName($file);
+		
 	$table->addRow()
-	->addCell($file)
-	->addCell(filesize(dir::media($file)))
+	->addCell('<img src="'.$media->getPath().'" style="max-width:50px; max-height:50px" />')
+	->addCell($media->get('title'))
+	->addCell($media->getExtension())
 	->addCell('...');
 	
 }

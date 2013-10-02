@@ -10,7 +10,7 @@ class media {
 		$this->sql = new sql();
 		$this->sql->result('SELECT * FROM '.sql::table('media').' WHERE id='.$id);
 		
-		if($sql->num() != 1) {
+		if($this->sql->num() != 1) {
 			//throw new Exception('Kein eindeutige Datei gefunden');	
 		}
 		
@@ -30,7 +30,7 @@ class media {
 		
 		$class = __CLASS__;
 		
-		return $class($sql->get('id'));
+		return new $class($sql->get('id'));
 		
 	}
 	
@@ -47,7 +47,7 @@ class media {
 		$sql->result('SELECT id FROM '.sql::table('media').' WHERE filename LIKE "%.'.$extension.'"');
 		while($sql->isNext()) {
 			
-			$returnArray[] = $class($sql->get('id'));
+			$returnArray[] = new $class($sql->get('id'));
 			
 			$sql->next();
 		}
@@ -76,7 +76,7 @@ class media {
 	// param	string	$name
 	// param	mixed	$default
 	// return	string
-	public function get($name, $default) {
+	public function get($name, $default = null) {
 		
 		$value = $this->sql->get($name);
 		
@@ -89,10 +89,20 @@ class media {
 	public function getExtension() {
 		
 		// .jpg
-		$extension = strrchr($this->get('name'), '.');
+		$extension = strrchr($this->get('filename'), '.');
 		
 		// jpg
 		return substr($extension, 1);
+		
+	}
+	
+	// Den Pfad der Datei ausgeben
+	// return	string
+	public function getPath() {
+		
+		// Abfrage ob Backend oder Frontend
+		// Immoment für Backend angepasst
+		return '../media/'.$this->get('filename');
 		
 	}
 	
