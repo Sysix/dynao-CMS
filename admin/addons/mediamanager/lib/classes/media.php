@@ -103,7 +103,7 @@ class media {
 		// Abfrage ob Backend oder Frontend
 		// Immoment für Backend angepasst
 		return '../media/'.$this->get('filename');
-		
+
 	}
 	
 	

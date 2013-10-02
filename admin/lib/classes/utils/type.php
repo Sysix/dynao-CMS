@@ -27,6 +27,9 @@ class type {
 			case 'array':
 				return (empty($var)) ? array() : (array) $var;
 				
+			case '':
+				return $var;
+				
 			default:
 				//new Exception();	
 			
