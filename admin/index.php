@@ -48,22 +48,21 @@ ob_start();
 $login = new userLogin();
 
 if($login->isLogged()) {
+	
 	if(file_exists(dir::page($page.'.php'))) {
 		
 		include(dir::page($page.'.php'));
 		
 	} else {
-		$sql = new sql();
-		$sql->query('SELECT name FROM '.sql::table('addons').' WHERE `online` = 1 AND `active` = 1')->result();
-		while($sql->isNext()) {
-			if(file_exists(dir::addon($sql->get('name'), 'page/'.$page.'.php'))) {
-				
-				include(dir::addon($sql->get('name'), 'page/'.$page.'.php'));
+		
+		foreach(addonConfig::getAllConfig() as $name=>$config) {
+			
+			if(array_key_exists($page, $config['page']) && file_exists(dir::addon($name, $config['page'][$page]))) {
+				include(dir::addon($name, $config['page'][$page]));
 				break;
-				
 			}
-			$sql->next();
 		}
+		
 	}
 	
 }
@@ -79,7 +78,7 @@ if(ajax::is()) {
 }
 
 if($login->isLogged()) {
-include(dir::backend('layout/index.php'));
+	include(dir::backend('layout/index.php'));
 } else {
 	include(dir::backend('layout/login.php'));
 }

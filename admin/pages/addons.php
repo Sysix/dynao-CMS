@@ -4,17 +4,17 @@ $addon = type::super('addon', 'string');
 
 backend::addSubnavi('Übersicht',	url::backend('addons'), 	'archive');
 
-if($action == 'online') {
+if($action == 'install') {
 
 	$addonClass= new addon($addon, false);	
-	$online = ($addonClass->isOnline()) ? 0 : 1;
+	$install = ($addonClass->isInstall()) ? 0 : 1;
 	
 	$sql = new sql();
 	$sql->setTable('addons');
 	$sql->setWhere('`name` = "'.$addon.'"');
-	$sql->addPost('online', $online);
+	$sql->addPost('install', $install);
 	
-	if(!$online)
+	if(!$install)
 		$sql->addPost('active', 0);
 	
 	$sql->update();
@@ -28,7 +28,7 @@ if($action == 'active') {
 	$addonClass = new addon($addon, false);	
 	$active = ($addonClass->isActive()) ? 0 : 1;
 	
-	if(!$addonClass->isOnline()) {
+	if(!$addonClass->isInstall()) {
 		
 		echo message::danger('Bitte installieren Sie das Addon '.$addon.' zuerst');
 			
@@ -65,9 +65,9 @@ foreach($addons as $dir) {
 	
 	$curAddon = new addon($dir);
 	
-	$online_url = url::backend('addons', array('addon'=>$dir, 'action'=>'online'));
+	$online_url = url::backend('addons', array('addon'=>$dir, 'action'=>'install'));
 	
-	if($curAddon->isOnline()) {
+	if($curAddon->isInstall()) {
 		$online = '<a href="'.$online_url.'" class="btn btn-sm structure-online">installiert</a>';
 	} else {
 		$online = '<a href="'.$online_url.'" class="btn btn-sm structure-offline">nicht installiert</a>';

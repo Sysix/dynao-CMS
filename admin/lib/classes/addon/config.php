@@ -18,9 +18,9 @@ class addonConfig {
 		
 	}
 	
-	public function isOnline() {
+	public function isInstall() {
 		
-		return ($this->get('online', 0) == 1);
+		return ($this->get('install', 0) == 1);
 			
 	}
 	
@@ -45,18 +45,41 @@ class addonConfig {
 		
 	}
 	
-	public static function includeAllConfig() {
-	
-		$sql = new sql();
-		$sql->query('SELECT name FROM '.sql::table('addons').' WHERE `online` = 1 AND `active` = 1')->result();
+	public static function getAll($active = true) {
+		
+		$return = array();
+		$active = ($active) ? ' AND `active` = 1' : '';
+		
+		$sql = new sql();		
+		$sql->query('SELECT name FROM '.sql::table('addons').' WHERE `install` = 1'.$active)->result();
 		while($sql->isNext()) {
-
-			$configFile = dir::addon($sql->get('name'), 'config.php');
-			include_once($configFile);
-			
-			$sql->next();	
+			$return[] = $sql->get('name');
+			$sql->next();		
 		}
 		
+		return $return;
+		
+	}
+	
+	public static function includeAllConfig() {
+		
+		foreach(self::getAll() as $name) {
+			$configFile = dir::addon($name, 'config.php');
+			include_once($configFile);
+		}
+		
+	}
+	
+	public static function getAllConfig() {
+		
+		$return = array();
+		
+		foreach(self::getAll() as $name) {
+			$configFile = dir::addon($name, 'config.json');
+			$return[$name] = json_decode(file_get_contents($configFile), true);
+		}
+		
+		return $return;
 	}
 	
 }

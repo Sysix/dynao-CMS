@@ -24,9 +24,9 @@ class addon {
 		
 	}
 	
-	public function isOnline() {
+	public function isInstall() {
 	
-		return $this->addonConfig->isOnline();
+		return $this->addonConfig->isInstall();
 		
 	}
 	

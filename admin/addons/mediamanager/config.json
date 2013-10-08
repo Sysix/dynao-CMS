@@ -8,7 +8,7 @@
 		"perm": "admin[page]"
 	},
 	"page": {
-		"title": "Medienmanager"
+		"media": "page/media.php"
 	}
 	
 }
