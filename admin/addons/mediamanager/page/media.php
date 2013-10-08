@@ -1,11 +1,12 @@
 <?php
 
 $action = type::super('action', 'string', '');
-$id = type::super('id', 'int');
+$id = type::super('id', 'int', 0);
 
-if($action == 'news' || $action == 'edit') {
+if($action == 'add' || $action == 'edit') {
 	
 	$form = new form('media', 'id='.$id, 'index.php');
+	$form->addFormAttribute('enctype', 'multipart/form-data');
 	
 	$field = $form->addTextField('title', $form->get('title'));
 	$field->fieldName('Titel');
@@ -22,7 +23,25 @@ if($action == 'news' || $action == 'edit') {
 	
 	if($form->isSubmit()) {
 		
-		print_r(type::files('file', ''));
+		$file = type::files('file', '');
+		if(is_uploaded_file($file['tmp_name'])) {
+			
+			$fileName = mediaUtils::fixFileName($file['name']);
+			
+			if(move_uploaded_file($file['tmp_name'], dir::media($fileName))) {
+				
+				$form->addPost('filename', $fileName);
+				$form->addPost('size', filesize(dir::media($fileName)));
+				
+			} else {
+				
+				$form->setSave(false);
+				echo message::warning($file['name'].' konnte nicht gespeichert werden.');
+				
+			}
+			
+		}
+		
 		
 	}
 	
