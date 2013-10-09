@@ -1,0 +1,5 @@
+{
+	"media_error_move": "%s could not be saved.<br />The file could not be moved to the directory.",
+	"media_error_already_exist": "%s could not be saved.<br />The file already exists.",
+	"media_error_bad_extension": "%s could not be saved.<br />The file extension is not allowed."
+}

@@ -42,6 +42,7 @@ layout::addJS('http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.j
 layout::addJS('layout/js/scripts.js');
 
 addonConfig::includeAllConfig();
+addonConfig::includeAllLangFiles();
 
 ob_start();
 

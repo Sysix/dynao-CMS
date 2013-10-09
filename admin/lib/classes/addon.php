@@ -8,6 +8,8 @@ class addon {
 	
 	public function __construct($addon, $config = true) {
 		
+		$this->name = $addon;
+		
 		if($config) {
 			
 			$configfile = dir::addon($addon, 'config.json');

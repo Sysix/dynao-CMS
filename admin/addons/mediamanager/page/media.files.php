@@ -46,21 +46,21 @@ if($action == 'add' || $action == 'edit') {
 					} else {
 						
 						$form->setSave(false);
-						echo message::warning($file['name'].' konnte nicht gespeichert werden.<br />Die Datei konnte nicht ins Verzeichnis verschoben werden.');
+						echo message::warning(sprintf(lang::get('media_error_move'), $file['name']));
 						
 					}
 				
 				} else {
 					
 					$form->setSave(false);
-					echo message::warning($file['name'].' konnte nicht gespeichert werden.<br />Der Datei existiert bereits');
+					echo message::warning(sprintf(lang::get('media_error_already_exist'), $file['name']));
 					
 				}
 				
 			} else {
 				
 				$form->setSave(false);
-				echo message::warning($file['name'].' konnte nicht gespeichert werden.<br />Die Dateiendung ist nicht erlaubt');
+				echo message::warning(sprintf(lang::get('media_error_bad_extension'), $file['name']));
 				
 			}
 			

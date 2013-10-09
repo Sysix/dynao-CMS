@@ -1,0 +1,5 @@
+{
+	"media_error_move": "%s konnte nicht gespeichert werden.<br />Die Datei konnte nicht ins Verzeichnis verschoben werden.",
+	"media_error_already_exist": "%s konnte nicht gespeichert werden.<br />Der Datei existiert bereits.",
+	"media_error_bad_extension": "%s konnte nicht gespeichert werden.<br />Die Dateiendung ist nicht erlaubt."
+}

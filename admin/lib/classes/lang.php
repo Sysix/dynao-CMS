@@ -14,7 +14,7 @@ class lang {
 		if(is_dir(dir::lang($lang))) {
 			
 			self::$lang = $lang;	
-			self::loadLang('main');
+			self::loadLang(dir::lang(self::getLang(), 'main'));
 			
 		}
 		
@@ -36,11 +36,17 @@ class lang {
 		
 	}
 	
+	static public function getLang() {
+		
+		return self::$lang;
+			
+	}
+	
 	static public function loadLang($file) {
 		
-		$file = file_get_contents(dir::lang(self::$lang, $file.'.json'));
+		$file = file_get_contents($file.'.json');
 		
-		// Alle Kommentare l�schen (mit Raute beginnen
+		// Alle Kommentare löschen (mit Raute beginnen
 		$file = preg_replace("/#\s*([a-zA-Z ]*)/", "", $file);	
 		$array = json_decode($file, true);
 				
@@ -53,9 +59,10 @@ class lang {
 		if(!self::$isDefaultSet) {
 			
 			$file = file_get_contents(dir::lang(self::$defaultLang, 'main.json'));
-			$array = json_decode($file);
 			
-			self::$default = $array;
+			// Alle Kommentare löschen (mit Raute beginnen
+			$file = preg_replace("/#\s*([a-zA-Z ]*)/", "", $file);	
+			self::$default = json_decode($file, true);
 			
 			self::$isDefaultSet = true;
 		
