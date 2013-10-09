@@ -28,7 +28,7 @@ if($action == 'add' || $action == 'edit') {
 			$extension = substr(strrchr($fileName, '.'), 1); // z.B. jpg
 			
 			// Wenn die Datei eine "verbotene" Datei ist
-			if(in_array($extension, dyn::get('badExtensions'))) {
+			if(!in_array($extension, dyn::get('badExtensions'))) {
 			
 				if($form->isEditMode()) {
 					$media = new media($id);
