@@ -24,16 +24,43 @@ if($action == 'add' || $action == 'edit') {
 		if(is_uploaded_file($file['tmp_name'])) {
 			
 			$fileName = mediaUtils::fixFileName($file['name']);
+			$fileDir = dir::media($fileName);
+			$extension = substr(strrchr($fileName, '.'), 1); // z.B. jpg
 			
-			if(move_uploaded_file($file['tmp_name'], dir::media($fileName))) {
+			// Wenn die Datei eine "verbotene" Datei ist
+			if(in_array($extension, dyn::get('badExtensions'))) {
+			
+				if($form->isEditMode()) {
+					$media = new media($id);
+				}
 				
-				$form->addPost('filename', $fileName);
-				$form->addPost('size', filesize(dir::media($fileName)));
+				// Wenn Datei nicht Existiert
+				// Oder man möchte sie überspeichern
+				if(!file_exists($fileDir) || ($form->isEditMode() && $media->get('filename') == $fileName)) {
+				
+					if(move_uploaded_file($file['tmp_name'], $fileDir)) {
+						
+						$form->addPost('filename', $fileName);
+						$form->addPost('size', filesize($fileDir));
+						
+					} else {
+						
+						$form->setSave(false);
+						echo message::warning($file['name'].' konnte nicht gespeichert werden.<br />Die Datei konnte nicht ins Verzeichnis verschoben werden.');
+						
+					}
+				
+				} else {
+					
+					$form->setSave(false);
+					echo message::warning($file['name'].' konnte nicht gespeichert werden.<br />Der Datei existiert bereits');
+					
+				}
 				
 			} else {
 				
 				$form->setSave(false);
-				echo message::warning($file['name'].' konnte nicht gespeichert werden.');
+				echo message::warning($file['name'].' konnte nicht gespeichert werden.<br />Die Dateiendung ist nicht erlaubt');
 				
 			}
 			
