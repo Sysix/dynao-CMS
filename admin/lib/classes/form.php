@@ -23,6 +23,15 @@ class form {
 	// Formular wirklich speichern
 	var $toSave = true;
 	
+	/**
+	 * Das Formular erstellen
+	 *
+	 * @param	string	$table			Die SQL Tabelle
+	 * @param	string	$where			Die SQL Abfrage
+	 * @param	string	$action			Ziel URL um die Daten zu bearbeiten
+	 * @param	string	$method			Die Methode (post|get)
+	 *
+	 */
 	public function __construct($table, $where, $action, $method = 'post') {
 		
 		// Gültige Methode?		
@@ -54,9 +63,14 @@ class form {
 		
 	}
 	
-	
-	// Ausgabe der SQL Spalte
-	// Falls nicht drin, dann $default zurück
+	/**
+	 * Ausgabe der SQL Spalte, falls nichts gefunden nimmt er $default
+	 *
+	 * @param	string	$value			Die zu suchende Spalte
+	 * @param	mixed	$default		Falls nichts gefunden
+	 * @return	mixed
+	 *
+	 */
 	public function get($value, $default = false) {
 		
 		// Falls per Post übermittelt
@@ -76,6 +90,10 @@ class form {
 		
 	}
 	
+	/**
+	 * Die Speichern Buttons setzten
+	 *
+	 */
 	public function setButtons() {
 				
 		$submit = $this->addSubmitField('save', lang::get('save'));
@@ -93,6 +111,10 @@ class form {
 		
 	}
 	
+	/**
+	 * Standarteinstellungen fürs Backend
+	 *
+	 */
 	public function loadBackend() {
 	
 		$page = type::super('page', 'string');
@@ -103,13 +125,32 @@ class form {
 		
 	}
 	
+	/**
+	 * Ein neues freies Element erstellen, welches nicht ins Formular automatisch gespeichert wird
+	 *
+	 * @param	string	$name			Der Name
+	 * @param	string	$value			Der Value
+	 * @param	string	$class			Die entsprechende PHP Klasse
+	 * @param	array	$attributes		Die HTML Attribute
+	 * @return	class
+	 *
+	 */	
 	public function addFreeField($name, $value, $class, $attributes = array()) {
 	
 		return new $class($name, $value, $attributes);
 		
 	}
 	
-	// Ein Element hinzufügen
+	/**
+	 * Ein neues Element erstellen
+	 *
+	 * @param	string	$name			Der Name
+	 * @param	string	$value			Der Value
+	 * @param	string	$class			Die entsprechende PHP Klasse
+	 * @param	array	$attributes		Die HTML Attribute
+	 * @return	class
+	 *
+	 */
 	private function addField($name, $value, $class, $attributes = array()) {
 		
 		$field = new $class($name, $value, $attributes);
@@ -119,6 +160,15 @@ class form {
 		
 	}
 	
+	/**
+	 * Ein Textfeld erstellen
+	 *
+	 * @param	string	$name			Der Name
+	 * @param	string	$value			Der Value
+	 * @param	array	$attributes		Die HTML Attribute
+	 * @return	class
+	 *
+	 */
 	public function addTextField($name, $value, $attributes = array()) {
 		
 		$attributes['type'] = 'text';
@@ -126,6 +176,15 @@ class form {
 		
 	}
 	
+	/**
+	 * Ein Passwordfeld erstellen
+	 *
+	 * @param	string	$name			Der Name
+	 * @param	string	$value			Der Value
+	 * @param	array	$attributes		Die HTML Attribute
+	 * @return	class
+	 *
+	 */
 	public function addPasswordField($name, $value, $attributes = array()) {
 		
 		$attributes['type'] = 'password';
@@ -133,6 +192,15 @@ class form {
 		
 	}
 	
+	/**
+	 * Ein UnsichtbaresFeld erstellen
+	 *
+	 * @param	string	$name			Der Name
+	 * @param	string	$value			Der Value
+	 * @param	array	$attributes		Die HTML Attribute
+	 * @return	class
+	 *
+	 */
 	public function addHiddenField($name, $value, $attributes = array()) {
 		
 		$attributes['type'] = 'hidden';
@@ -140,6 +208,16 @@ class form {
 				
 	}
 	
+	/**
+	 * Ein Submitfeld erstellen
+	 *
+	 * @param	string	$name			Der Name
+	 * @param	string	$value			Der Value
+	 * @param	array	$attributes		Die HTML Attribute
+	 * @param	bool	$toButtons		Soll das Feld zu den Standardbuttons hinzugefügt werden
+	 * @return	class
+	 *
+	 */
 	public function addSubmitField($name, $value, $attributes = array(), $toButtons = true) {
 		
 		$attributes['type'] = 'submit';
@@ -151,6 +229,16 @@ class form {
 		
 	}
 	
+	/**
+	 * Ein Buttonfeld erstellen
+	 *
+	 * @param	string	$name			Der Name
+	 * @param	string	$value			Der Value
+	 * @param	array	$attributes		Die HTML Attribute
+	 * @param	bool	$toButtons		Soll das Feld zu den Standardbuttons hinzugefügt werden
+	 * @return	class
+	 *
+	 */
 	public function addButtonField($name, $value, $attributes = array(), $toButtons = true) {
 		
 		$attributes['type'] = 'button';
@@ -162,6 +250,16 @@ class form {
 		
 	}
 	
+	/**
+	 * Ein Resetfeld erstellen
+	 *
+	 * @param	string	$name			Der Name
+	 * @param	string	$value			Der Value
+	 * @param	array	$attributes		Die HTML Attribute
+	 * @param	bool	$toButtons		Soll das Feld zu den Standardbuttons hinzugefügt werden
+	 * @return	class
+	 *
+	 */
 	public function addResetField($name, $value, $attributes = array(), $toButtons = true) {
 		
 		$attributes['type'] = 'reset';
@@ -173,18 +271,45 @@ class form {
 		
 	}
 	
+	/**
+	 * Ein Textareafeld erstellen
+	 *
+	 * @param	string	$name			Der Name
+	 * @param	string	$value			Der Value
+	 * @param	array	$attributes		Die HTML Attribute
+	 * @return	class
+	 *
+	 */
 	public function addTextareaField($name, $value, $attributes = array()) {
 		
 		return $this->addField($name, $value, 'formTextarea', $attributes);
 		
 	}
 	
+	/**
+	 * Ein Radiofeld erstellen
+	 *
+	 * @param	string	$name			Der Name
+	 * @param	string	$value			Der Value
+	 * @param	array	$attributes		Die HTML Attribute
+	 * @return	class
+	 *
+	 */
 	public function addRadioField($name, $value, $attributes = array()) {
 		
 		return $this->addField($name, $value, 'formRadio', $attributes);
 		
 	}
 	
+	/**
+	 * Ein Checkboxfeld erstellen
+	 *
+	 * @param	string	$name			Der Name
+	 * @param	string	$value			Der Value
+	 * @param	array	$attributes		Die HTML Attribute
+	 * @return	class
+	 *
+	 */
 	public function addCheckboxField($name, $value, $attributes = array()) {
 		
 		$field = $this->addField($name.'[]', $value, 'formCheckbox', $attributes);
@@ -193,6 +318,15 @@ class form {
 		
 	}
 	
+	/**
+	 * Ein Selectfeld erstellen
+	 *
+	 * @param	string	$name			Der Name
+	 * @param	string	$value			Der Value
+	 * @param	array	$attributes		Die HTML Attribute
+	 * @return	class
+	 *
+	 */
 	public function addSelectField($name, $value, $attributes = array()) {
 		
 		$field = $this->addField($name, $value, 'formSelect', $attributes);
@@ -201,13 +335,25 @@ class form {
 		
 	}
 	
+	/**
+	 * Ein Freies Feld erstellen
+	 *
+	 * @param	string	$value			Der Inhalt
+	 * @return	class
+	 *
+	 */
 	public function addRawField($value) {
 		
 		return $this->addField('', $value, 'formRaw');
 		
 	}
 	
-	// Mode setzten
+	/**
+	 * Modus setzen
+	 *
+	 * @param	string	$mode			Der Modus
+	 *
+	 */
 	public function setMode($mode) {
 	
 		if(in_array($mode, array('add', 'edit'))) {
@@ -220,14 +366,24 @@ class form {
 		
 	}
 	
-	// Ist Edit Mode?
+	/**
+	 * Ist Editermodus?
+	 *
+	 * @return	bool
+	 *
+	 */
 	public function isEditMode() {
 	
 		return $this->mode == 'edit';
 		
 	}
 	
-	// Abfragen ob Formular abgeschickt
+	/**
+	 * Abfrage ob Formular gerade am speichern ist
+	 *
+	 * @return	bool
+	 *
+	 */
 	public function isSubmit() {
 		
 		// Wurde schon isSubmit ausgeführt? dann schnelles Return
@@ -269,20 +425,34 @@ class form {
 		
 	}
 	
-	// Tabelle setzen
+	/**
+	 * Tabelle setzen für SQL
+	 *
+	 * @param	string	$table			Die Tabelle
+	 *
+	 */
 	public function setTable($table) {
 	
 		$this->sql->setTable($table);
 			
 	}
 	
-	// Where setzten
+	/**
+	 * Where setzten für SQL
+	 *
+	 * @param	string	$where			Die Where Bedigung
+	 *
+	 */
 	public function setWhere($where) {
 	
 		$this->sql->setWhere($where);
 		
 	}
 	
+	/**
+	 * Geht die ganzen Felder durch, und speichert sie in der SQL für die spätere Speicherung
+	 *
+	 */
 	protected function setPostsVar() {
 	
 		foreach($this->return as $ausgabe) {
@@ -322,18 +492,37 @@ class form {
 		
 	}
 	
+	/**
+	 * Fügt eine SQL Spalte hinzu
+	 *
+	 * @param	string	$name			Die Spalte
+	 * @param	string	$val			Der Inhalt
+	 *
+	 */
 	public function addPost($name, $val) {
 		
 		$this->sql->addPost($name, $val);
 		
 	}
 	
+	/**
+	 * Löscht eine SQL Spalte
+	 *
+	 * @param	string	$name			Die Spalte
+	 *
+	 */
 	public function delPost($name) {
 		
 		$this->sql->delPost($name);
 		
 	}
 	
+	/**
+	 * Setzt einen Paramater, der später dazu führt, ob das Formular gespeichert wird oder nicht
+	 *
+	 * @param	bool	$bool			Ja/Nein
+	 *
+	 */
 	public function setSave($bool) {
 	
 		if(!is_bool($bool)) {
@@ -344,6 +533,10 @@ class form {
 		
 	}
 	
+	/**
+	 * Die SQL Speicherung
+	 *
+	 */
 	private function saveForm() {
 	
 		if(!$this->toSave)
@@ -357,24 +550,47 @@ class form {
 		
 	}
 	
+	/**
+	 * Überprüfen ob auf Übernehmen geklickt worde nist
+	 *
+	 * @return	bool
+	 *
+	 */
 	public function isSaveEdit() {
 	
 		return (bool)(type::post('save-back', 'string', false) !== false);
 		
 	}
 	
+	/**
+	 * Fügt ein Form-HTML Attribute hinzu
+	 *
+	 * @param	string	$name			Der Name
+	 * @param	string	$value			Der Inhalt
+	 *
+	 */
 	public function addFormAttribute($name, $value) {
 		
 		$this->formAttributes[$name] = $value;	
 		
 	}
 	
+	/**
+	 * Löscht ein Formular Feld
+	 *
+	 */
 	public function deleteElement($name) {
 	
 		unset($this->return[$name]);
 		
 	}
 	
+	/**
+	 * Fügt das Formular zusammen und speichert es, falls nötig
+	 *
+	 * @return	string
+	 *
+	 */
 	public function show() {
 		
 		$this->addHiddenField('action', $this->mode);

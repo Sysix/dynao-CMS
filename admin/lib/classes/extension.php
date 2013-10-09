@@ -5,7 +5,14 @@ class extension {
 	protected static $extensions = array();
 	
 	
-	// Hinzufügen eines Extension (Erweiterung)
+	/**
+	 * Fügt eine Erweiterung hinzu
+	 *
+	 * @param	string	$name			Der Name der Erweiterung
+	 * @param	string	$function		Die Funktion die auf die Erweiterung zugreift
+	 * @param	int		$position		Die Position wann die Funktion aufgerufen werden soll
+	 *
+	 */
 	public static function add($name, $function, $position = -1) {
 		
 		try {
@@ -33,22 +40,40 @@ class extension {
 		
 	}
 	
-	// Überprüfen ob Extension registriert
-	public static function has($name, $function) {
+	/**
+	 * Überprüft ob eine Erweiterung vorhanden ist
+	 *
+	 * @param	string	$name			Der Name der Erweiterung
+	 * @param	string	$function		Die Funktion die auf die Erweiterung zugreift
+	 * @return	bool
+	 *
+	 */
+	public static function has($name, $function = false) {
+		
+		if(!$function) {
+			return isset(self::$extensions[$name]);
+		}
 		
 		if(!function_exists($function)) {
 			return false;				
 		}
 		
-		return (isset(self::$extensions[$name][$function]));
+		return isset(self::$extensions[$name][$function]);
 		
 	}
 	
-	// Alle Extension ausführen
+	/**
+	 * Alle Erweiterung ausführen
+	 *
+	 * @param	string	$name			Der Name der Erweiterung
+	 * @param	mixed	$object			Das Objekt (kann eine Variable, Objekt, ...) sein
+	 * @return	mixed
+	 *
+	 */
 	public static function get($name, $object = false) {
 	
 			
-		if(!isset(self::$extensions[$name])) {
+		if(!self::has($name)) {
 			
 			return $object;
 				

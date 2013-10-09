@@ -8,6 +8,13 @@ class layout {
 				
 	static $jsCode = array('jquery'=>array(), 'all'=>array());
 	
+	/**
+	 * Eine Javascript Datei einbinden
+	 *
+	 * @param string	$js_file		Pfad der Datei
+	 * @param array		$attributes		HTML Attribute
+	 *
+	 */
 	public static function addJs($js_file, $attributes = array()) {
 		
 		
@@ -17,6 +24,14 @@ class layout {
 			
 	}
 	
+	/**
+	 * Eine CSS Datei einbinden
+	 *
+	 * @param string	$css_file		Pfad der Datei
+	 * @param string	$medi			HTML Attribut Media
+	 * @param array		$attributes		HTML Attribute
+	 *
+	 */
 	public static function addCss($css_file, $media = 'screen', $attributes = array()) {
 		
 		if(!isset($attributes['rel']))
@@ -29,6 +44,13 @@ class layout {
 		
 	}
 	
+	/**
+	 * JS Code einbinden
+	 *
+	 * @param string	$code			Der Code
+	 * @param bool		$jquery			Im Jquery document ready laden oder nicht
+	 *
+	 */
 	public static function addJsCode($code, $jquery = true) {
 	
 		$assoz = ($jquery) ? 'jquery' : 'all';
@@ -37,6 +59,12 @@ class layout {
 		
 	}
 	
+	/**
+	 * Alle CSS Daten ausgeben
+	 *
+	 * @return string
+	 *
+	 */
 	public static function getCSS() {
 		
 		$return = '';
@@ -51,6 +79,12 @@ class layout {
 		
 	}
 	
+	/**
+	 * Alle JS Daten ausgeben
+	 *
+	 * @return string
+	 *
+	 */
 	public static function getJS() {
 		
 		$return = '';
@@ -67,6 +101,12 @@ class layout {
 		
 	}
 	
+	/**
+	 * Alle JS Codes ausgeben
+	 *
+	 * @return	string
+	 *
+	 */
 	public static function getJSCode() {
 		
 		$return = '<script>';
@@ -92,7 +132,13 @@ class layout {
 		
 	}
 	
-	
+	/**
+	 * Attribute in HTML Attribute Konvetieren
+	 *
+	 * @param	array	$attr			Die Attribute
+	 * @return	string
+	 *
+	 */
 	protected static function convertAttr($attr) {
 		
 		return html_convertAttribute($attr);

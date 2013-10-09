@@ -9,6 +9,13 @@ class lang {
 	static private $isDefaultSet = false;
 	static $defaultLang = 'en_gb';
 	
+	/**
+	 * Die Sprache ersetzen, mit automaitschen laden der main Datei
+	 *
+	 * @param	string	$lang			Die Sprache
+	 * @return	string
+	 *
+	 */
 	static public function setLang($lang = 'en_gb') {
 		
 		if(is_dir(dir::lang($lang))) {
@@ -22,6 +29,13 @@ class lang {
 		
 	}
 	
+	/**
+	 * String in der ensprechende Sprache bekommen, falls nicht gefunden, wird die DefaultSprache genommmen
+	 *
+	 * @param	string	$name			Der Sprachstring
+	 * @return	string
+	 *
+	 */
 	static public function get($name) {
 		
 		if(isset(self::$langs[$name])) {
@@ -36,12 +50,25 @@ class lang {
 		
 	}
 	
+	/**
+	 * Gibt die aktuelle Sprache zurück
+	 *
+	 * @return	string
+	 *
+	 */
 	static public function getLang() {
 		
 		return self::$lang;
 			
 	}
 	
+	/**
+	 * Lädt die entsprechende Datei und fügt sie zur "Datenbank" hinzu
+	 *
+	 * @param	string	$file			Der Dateipfad ohne .json ende
+	 * @return	string
+	 *
+	 */
 	static public function loadLang($file) {
 		
 		$file = file_get_contents($file.'.json');
@@ -54,6 +81,10 @@ class lang {
 		
 	}
 	
+	/**
+	 * Standardsprache setzen
+	 *
+	 */
 	static public function setDefault() {
 		
 		if(!self::$isDefaultSet) {

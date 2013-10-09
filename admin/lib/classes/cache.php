@@ -5,24 +5,49 @@ class cache {
 	static protected $cache = true;
 	static protected $time = 100;
 	
-	// Cache true/false
+	/**
+	 * Setzt den Cache auf an/aus
+	 *
+	 * @param	bool	$bool			An/Aus
+	 *
+	 */
 	static public function setCache($bool) {
 		self::$cache = (bool)$bool;
 	}
 	
-	//Namen setzen
+	/**
+	 * Gibt einen Namen für die Datei raus
+	 *
+	 * @param	mixed	$id			eine ID
+	 * @param	mixed	$table		eine Tabelle
+	 * @return	string
+	 *
+	 */
 	static public function getFileName($id, $table) {
 		return md5($id.$table).'.cache';
 	}
 	
-	//File löschen
+	/**
+	 * Löscht eine Cache Datei
+	 *
+	 * @param	string	$file			Der Dateiname
+	 * @return	bool
+	 *
+	 */
 	static public function deleteFile($file) {
 		
 		return unlink(dir::cache($file));
 		
 	}
 	
-	// Prüfen ob bereits erstellt
+	/**
+	 * Überprüft ob die Cache Datei noch vorhanden ist
+	 *
+	 * @param	string	$file			Der Dateiname
+	 * @param	int		$time			Zeit zum Leben der Datei, wenn auf false wird die Standardzeit genommen
+	 * @return	bool
+	 *
+	 */
 	static public function exist($file, $time = false) {
 		
 		if($time === false) {
@@ -45,7 +70,14 @@ class cache {
 		return false;
 	}
 	
-	//File erstellen
+	/**
+	 * Die Datei erstellen
+	 *
+	 * @param	string	$content		Der Inhalt der Datei
+	 * @param	string	$file			Der Dateiname
+	 * @return	bool
+	 *
+	 */
 	static public function write($content, $file) {
 		
 		if(self::$cache === true) {
@@ -60,14 +92,23 @@ class cache {
 		
 	}
 	
-	//Auslesen
+	/**
+	 * Auslesen der Datei
+	 *
+	 * @param	string	$file			Der Dateiname
+	 * @return 	string
+	 *
+	 */
 	static public function read($file) {
 		
 		return file_get_contents(dir::cache($file));
 		
 	}
 	
-	//komplett löschen
+	/**
+	 * Die ganzen Cache Dateien löschen
+	 *
+	 */
 	static public function clear() {
 		
 		if($dir =  opendir(dir::cache())) {

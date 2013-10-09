@@ -9,6 +9,10 @@ class autoload {
 	static $isNewCache = false;
 	
 	
+	/**
+	 * Autoload registrieren
+	 *
+	 */
 	static public function register() {
 		
 		if(self::$registered) {
@@ -28,6 +32,10 @@ class autoload {
 		
 	}
 	
+	/**
+	 * Autoload de-registrieren
+	 *
+	 */
 	static public function unregister() {
 	
 		 spl_autoload_unregister(array(__CLASS__, 'autoloader'));
@@ -35,6 +43,13 @@ class autoload {
 		
 	}
 	
+	/**
+	 * Die eigentliche Funktion des Autoloader
+	 *
+	 * @param	string	$class			Der Klassennamen
+	 * @return	bool
+	 *
+	 */	
 	static public function autoloader($class) {
 		
 		if(class_exists($class)) {
@@ -63,6 +78,10 @@ class autoload {
 		
 	}
 	
+	/**
+	 * Die ganzen Klassen in einer Cache Datei speichern
+	 *
+	 */
 	static public function saveCache() {
 		
 		if(self::$isNewCache) {
@@ -76,6 +95,10 @@ class autoload {
 		
 	}
 	
+	/**
+	 * Den Cache laden
+	 *
+	 */
 	static protected function loadCache() {
 		
 		$cacheFile = cache::getFileName(0, 'autoloadcache');
@@ -90,7 +113,12 @@ class autoload {
 		}
 	}
 	
-	// Hinzufügen von Klassen
+	/**
+	 * Hinzufügen einer Klasse
+	 *
+	 * @param	string	$path			Der Pfad der Datei
+	 *
+	 */
 	static protected function addClass($path) {
 		
 		self::$classes[] = dir::classes($path);
@@ -99,6 +127,12 @@ class autoload {
 		
 	}
 	
+	/**
+	 * Einen ganzen Ordner durchscannen und alle Klassen includen
+	 *
+	 * @param	string	$dir			Der Ordner
+	 *
+	 */
 	static public function addDir($dir) {
 		
 		if(!is_dir($dir)) {
