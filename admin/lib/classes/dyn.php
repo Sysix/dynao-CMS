@@ -51,7 +51,7 @@ class dyn {
 			
 		$newEntrys = array_merge(self::$params, self::$newEntrys);
 			
-		return file_put_contents(dir::backend('config.json'), json_encode($newEntrys, JSON_PRETTY_PRINT));
+		return file_put_contents(dir::backend('lib'.DIRECTORY_SEPARATOR.'config.json'), json_encode($newEntrys, JSON_PRETTY_PRINT));
 		
 	}
 	

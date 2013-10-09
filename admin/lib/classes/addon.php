@@ -6,6 +6,9 @@ class addon {
 	var $name;
 	var $addonConfig;
 	
+	const INSTALL_FILE = 'install.php';
+	const UNINSTALL_FILE = 'uninstlal.php';
+	
 	public function __construct($addon, $config = true) {
 		
 		$this->name = $addon;
@@ -36,6 +39,24 @@ class addon {
 	
 		return $this->addonConfig->isActive();	
 		
+	}
+	
+	public function install() {
+		
+		$file = dir::addon($this->name, self::INSTALL_FILE);
+		if(file_exists($file)) {
+			include $file;	
+		}
+				
+	}
+	
+	public function uninstall() {
+		
+		$file = dir::addon($this->name, self::UNINSTALL_FILE);
+		if(file_exists($file)) {
+			include $file;	
+		}
+				
 	}
 	
 }

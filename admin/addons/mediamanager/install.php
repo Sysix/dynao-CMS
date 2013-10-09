@@ -6,7 +6,11 @@ if(!dyn::has('extensions')) {
 	$videoExtensions = array("3gp", "avi", "flv", "m4v", "mov", "mp4", "mpg", "wmv", "mkv", "mpeg");
 	$audioExtensions = array("mp3", "wma", "m4a");
 	
-	dyn::add('extensions', array($imageExtensions, $videoExtensions, $audioExtensions), true);
+	dyn::add('extensions', array(
+		'image'=>$imageExtensions, 
+		'video'=>$videoExtensions, 
+		'audio'=>$audioExtensions
+	), true);
 	dyn::add('badExtensions', array('php', 'htaccess', 'htpasswd'), true);
 	dyn::save();
 	
@@ -22,5 +26,7 @@ $sql->query('CREATE TABLE IF NOT EXISTS '.sql::table('media').' (
 `description`	text					NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
+
+
 
 ?>

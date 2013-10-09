@@ -73,8 +73,9 @@ class addonConfig {
 	public static function includeAllLangFiles() {
 		
 		foreach(self::getAll() as $name) {
-			$file = dir::addon($name, 'lang/', lang::getLang());
-			if(file_exists($file)) {
+			
+			$file = dir::addon($name, 'lang/'.lang::getLang());
+			if(file_exists($file.'.json')) {				
 				lang::loadLang($file);
 			}
 		}

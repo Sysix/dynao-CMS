@@ -19,6 +19,13 @@ if($action == 'install') {
 	
 	$sql->update();
 	
+	
+	if(!$addonClass->isInstall()) {
+		$addonClass->install();
+	} else {
+		$addonClass->uninstall();	
+	}
+	
 	echo message::success('Addon erfolgreich gespeichert');
 	
 }
