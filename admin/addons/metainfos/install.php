@@ -9,6 +9,8 @@ $sql->query('CREATE TABLE IF NOT EXISTS '.sql::table('metainfos').' (
 `default` 		varchar(255)			NOT NULL,
 `params`		text					NOT NULL,
 `attributes`	text					NOT NULL,
+`formtype`		varchar(255)			NOT NULL,
+`type`			varchar(255)			NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 
