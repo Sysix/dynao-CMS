@@ -9,6 +9,8 @@ $id = type::super('id', 'int', 0);
 $allowPages = array('articles', 'media');
 $allowPages = extension::get('page_subpages', $allowPages);
 
+require(dir::addon('metainfos', 'lib/classes/metainfos.php'));
+
 if(in_array($subpage, $allowPages)) {
 	
 	include_once(dir::addon('metainfos', 'page/meta.'.$subpage.'.php'));

@@ -20,7 +20,7 @@ class formCheckbox extends formField {
 		
 		$attributes['type'] = 'checkbox';
 		$attributes['value'] = $name;
-		$attributes['name'] = $this->name;	
+		$attributes['name'] = $this->name.'[]';	
 		
 		if(isset($this->value[$attributes['value']]))
 			$attributes['checked'] = 'checked';

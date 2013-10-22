@@ -312,7 +312,7 @@ class form {
 	 */
 	public function addCheckboxField($name, $value, $attributes = array()) {
 		
-		$field = $this->addField($name.'[]', $value, 'formCheckbox', $attributes);
+		$field = $this->addField($name, $value, 'formCheckbox', $attributes);
 		$field->setChecked($value);
 		return $field; 
 		
@@ -457,36 +457,21 @@ class form {
 	
 		foreach($this->return as $ausgabe) {
 			
-			if($ausgabe->getAttribute('type') == 'hidden') {
-				continue;	
-			}
 			$name = $ausgabe->getName();
 			
-			if($name != '') {
-				
-				$val = type::post($name, 'string', '');
-				
-				// Ist ein Array-Element?
-				if(substr($name, -2) == '[]') {						
-							
-					$name = substr($name , 0, -2);						
-					
-					$val = type::post($name, 'array');
-					
-					if(!empty($val)) {
-						
-						$val = '|'.implode('|', $val).'|';
-						
-					} else {
-						
-						$val = '';	
-						
-					}
-					
-				}
-				
-				$this->addPost($name,  $val);
+			if(in_array($name, array('page', 'subpage', 'action', ''))) {
+				continue;	
 			}
+				
+			$val = type::post($name, '', '');
+			
+			if(is_array($val)) {
+											
+				$val = '|'.implode('|', $val).'|';
+					
+			}
+				
+			$this->addPost($name,  $val);
 			
 		}
 		
