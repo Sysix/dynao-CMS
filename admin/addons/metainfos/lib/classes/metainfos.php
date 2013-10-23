@@ -2,104 +2,95 @@
 
 class metainfos {
 	
-	static $types = array('text', 'textarea', 'select', 'radio', 'checkbox', 'DYN_LINK', 'DYN_MEDIA', 'DYN_LINK_LIST', 'DYN_MEDIA_LIST');
+	static $multiTypes = array('select', 'radio', 'checkbox');
 	
-	static public function Backend($name, $pagename, $action, $id) {
+	public static function getMetaInfos($type) {
 		
-		if(ajax::is()) {
-			self::BackendAjax();	
-		}		
+		$return = array();
 		
-		if($action == 'add' || $action == 'edit') {
-			self::BackendFormular($name, $pagename, $action, $id);
-		}
-		
-		if($action == '') {
-			self::BackendShow($name, $pagename);	
-		}
-		
-		
-	}
-	
-	static protected function BackendAjax() {
-		
-		$sort = type::post('array', 'array');
-	
 		$sql = new sql();
-		$sql->setTable('metainfos');
-		foreach($sort as $s=>$id) {
-			$sql->setWhere('id='.$id);
-			$sql->addPost('sort', $s+1);
-			$sql->update();	
+		$sql->query('SELECT * FROM '.sql::table('metainfos').' WHERE `type` = "'.$type.'" ORDER BY `sort`')->result();
+		while($sql->isNext()) {
+		
+			$return[] = self::getElement($sql->getRow(), null);
+		
+			$sql->next();	
 		}
 		
-		ajax::addReturn(message::success('Sortierung erfolgreich übernommen', true));
+		return $return;
 		
 	}
 	
-	static protected function BackendFormular($name, $pagename, $action, $id) {
+	public static function getElement($attributes, $default) {
 		
-		$form = new form('metainfos', 'id='.$id, 'index.php');
-	
-		$field = $form->addTextField('label', $form->get('label'));
-		$field->fieldName('Beschreibung');
-		
-		$field = $form->addTextField('name', $form->get('name'));
-		$field->fieldName('Name');
-		
-		$field = $form->addSelectField('formtype', $form->get('formtype'));
-		$field->fieldName('Feldtyp');
-		foreach(self::$types as $type) {
-			$field->add($type, $type);	
+		if(is_null($defaul)) {
+			$default = $attributes['default'];	
 		}
 		
-		$field = $form->addTextField('default', $form->get('default'));
-		$field->fieldName('Standardwert');
-		$field->setSuffix('<small>Bei Mehrauswahl mit einen <b>|</b> trennen</small>');
+		$class = self::getElementClass($attributes, $default);
+		$class->fieldName($attributes['label']);
+		$class = self::convertAttributes($class, $attributes['attributes']);
 		
-		$field = $form->addTextareaField('params', $form->get('params'));
-		$field->fieldName('Parameter');
-		
-		$field = $form->addTextareaField('attributes', $form->get('attributes'));
-		$field->fieldName('HTML-Attribute');
-		$field->setSuffix('<small>Beispiel:<br /> style=color:red multiple=multiple class=my_css_class</small>');
-		
-		$form->addHiddenField('type', $name);
-		
-		if($action == 'edit') {
-			$form->addHiddenField('id', $id);
+		if(in_array($attributes['formtype'], self::$multiTypes)) {
+			$class = self::convertParams($class, $attributes['params']);
 		}
 		
-		echo $form->show();	
+		return $class;
 		
 	}
 	
-	static protected function BackendShow($name, $pagename) {
-	
-		echo '<a href="'.url::backend('meta', array('subpage'=>$pagename, 'action'=>'add')).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
-	
-		$table = new table(array('class'=>array('js-sort')));
-		$table->setSql('SELECT * FROM '.sql::table('metainfos').' WHERE `type` = "'.$name.'"');
+	protected static function getElementClass($attributes, $default) {
 		
-		$table->addRow()->addCell()->addCell('Name')->addCell('Aktion');
+		if($attributes['formtype'] == 'text') {
+			$class = new formInput($attributes['name'], $default);
+			$class->addAttribute('type', 'text');
+			return $class;
+		}
 		
-		$table->addSection('tbody');
-		while($table->isNext()) {
+		// formSelect, formCheckbox, formTextarea, ..
+		$class = 'form'.ucfirst($attributes['formtype']);
+		
+		return new $class($attributes['name'], $default);
+		
+	}
+	
+	protected static function convertAttributes($element, $attributes) {
+		
+		if(trim($attributes) == '')
+			return $element;
+		
+		$attr = explode(' ', $attributes);
+		foreach($attr as $attrString) {
 			
-			$edit = '<a href="'.url::backend('meta', array('subpage'=>$pagename, 'action'=>'edit', 'id'=>$table->get('id'))).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
-			$delete = '<a href="'.url::backend('meta', array('subpage'=>$pagename, 'action'=>'delete', 'id'=>$table->get('id'))).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
-			
-			$table->addRow(array('data-id'=>$table->get('id')))
-			->addCell('<i class="icon-sort"></i>')
-			->addCell($table->get('name'))
-			->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
-			
-			$table->next();	
+			preg_match("/([^=]*)=(\w*)/", $attrString, $attrArray);	
+			$element->addAttribute($attrArray[1], $attrArray[2]);
 			
 		}
 		
-		echo $table->show();
+		return $element;
 		
+	}
+	
+	protected static function convertParams($element, $params) {
+		
+		if(trim($params) == '')
+			return $element;
+			
+		$params = explode('|', $params);
+		foreach($params as $paramString) {
+			
+			preg_match('/([^:]*):(\w*)/', $paramString, $parmArray);
+			
+			if(empty($parmArray)) {
+				$element->add($paramString, $paramString);	
+			} else {
+				$element->add($parmArray[1], $parmArray[2]);
+			}
+			
+		}
+		
+		return $element;
+			
 	}
 	
 }

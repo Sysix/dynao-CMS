@@ -143,6 +143,12 @@ class sql {
 		
 	}
 	
+	public function getRow() {
+		
+		return $this->result;
+			
+	}
+	
 	// Ausgabe der Einträge, für die Whileschleife
 	public function next() {		
 		
