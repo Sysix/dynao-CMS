@@ -4,14 +4,14 @@ class metainfosPage {
 	
 	static $types = array('text', 'textarea', 'select', 'radio', 'checkbox', 'DYN_LINK', 'DYN_MEDIA', 'DYN_LINK_LIST', 'DYN_MEDIA_LIST');
 	
-	static public function Backend($name, $pagename, $action, $id) {
+	static public function Backend($name, $pagename, $tablename, $action, $id) {
 		
 		if(ajax::is()) {
 			self::BackendAjax();	
 		}		
 		
-		if($action == 'add' || $action == 'edit') {
-			self::BackendFormular($name, $pagename, $action, $id);
+		if($action == 'add' || $action == 'edit' || $action == 'delete') {
+			self::BackendFormular($name, $pagename, $tablename, $action, $id);
 		}
 		
 		if($action == '') {
@@ -37,9 +37,16 @@ class metainfosPage {
 		
 	}
 	
-	static protected function BackendFormular($name, $pagename, $action, $id) {
+	static protected function BackendFormular($name, $pagename, $tablename, $action, $id) {
+		
 		
 		$form = new form('metainfos', 'id='.$id, 'index.php');
+		
+		if($action == 'delete') {
+			self::delete($tablename, $id, $form->get('name'));
+			$GLOBALS['action'] = '';
+			return;
+		}
 	
 		$field = $form->addTextField('label', $form->get('label'));
 		$field->fieldName('Beschreibung');
@@ -72,6 +79,26 @@ class metainfosPage {
 		
 		if($action == 'edit') {
 			$form->addHiddenField('id', $id);
+		}
+		
+		if($form->isSubmit()) {
+		
+			$sql = new sql();
+			switch($form->get('formtype')) {
+				case 'textarea':
+					$type = 'text';
+					break;
+				default:
+					$type = 'VARCHAR(255)';
+					break;	
+			}
+			
+			if($action == 'add') {
+				$sql->query('ALTER TABLE '.$tablename.' ADD `'.$form->get('name').'` '.$type.' DEFAULT "'.$form->get('default').'" ');
+			} else {
+				$sql->query('ALTER TABLE '.$tablename.' CHANGE `'.$form->sql->getResult('name').'` `'.$form->get('name').'` '.$type.' DEFAULT "'.$form->get('default').'" ');
+			}
+			
 		}
 		
 		echo $form->show();
@@ -107,6 +134,17 @@ class metainfosPage {
 		}
 		
 		echo $table->show();
+		
+	}
+	
+	static protected function delete($tablename, $id, $name) {
+		
+		$sql = new sql();
+		$sql->setTable('metainfos');
+		$sql->setWhere('`id`='.$id);
+		$sql->delete();
+		
+		$sql->query('ALTER TABLE '.$tablename.' DROP `'.$name.'`');
 		
 	}
 	

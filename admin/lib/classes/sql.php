@@ -125,7 +125,7 @@ class sql {
 	}
 	
 	// Ausgabe der Spalte 
-	public function get($row) {
+	public function get($row, $default = null) {
 		
 		if(isset($this->values[$row])) {
 		
@@ -133,13 +133,19 @@ class sql {
 			
 		}
 		
+		return $this->getResult($row, $default);
+		
+	}
+	
+	public function getResult($row, $default = null) {
+		
 		if(isset($this->result[$row])) {
 			
 			return 	$this->result[$row];
 			
 		}
 		
-		return null;
+		return $default;
 		
 	}
 	

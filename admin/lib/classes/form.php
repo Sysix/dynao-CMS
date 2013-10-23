@@ -71,22 +71,13 @@ class form {
 	 * @return	mixed
 	 *
 	 */
-	public function get($value, $default = false) {
+	public function get($value, $default = null) {
 		
-		// Falls per Post übermittelt
-		if(isset($_POST[$value])) {
-			
-			return $_POST[$value];
-			
-		}
+		// Falls per Post übermittelt		
+		return type::post($value, '',
+			$this->sql->get($value, $default)
+		);
 		
-		if($this->sql->get($value))	{
-		
-			return $this->sql->get($value);
-			
-		}
-		
-		return $default;
 		
 	}
 	

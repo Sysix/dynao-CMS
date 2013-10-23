@@ -1,3 +1,3 @@
 <?php
-	metainfosPage::Backend('articles', 'articles', $action, $id);
+	metainfosPage::Backend('articles', 'articles', sql::table('structure'), $action, $id);
 ?>
