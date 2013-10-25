@@ -155,6 +155,19 @@ class sql {
 			
 	}
 	
+	public static function showColums($table, $prefix = '') {
+		
+		if($prefix) {
+			$prefix	= ' LIKE "'.$prefix.'%"';
+		}
+		
+		$class = __CLASS__;
+		$sql = new $class();
+		$sql->result('SHOW COLUMNS FROM '.sql::table($table).$prefix);
+		
+		return $sql;
+	}
+	 
 	// Ausgabe der Einträge, für die Whileschleife
 	public function next() {		
 		
