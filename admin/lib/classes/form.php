@@ -136,6 +136,22 @@ class form {
 	 * Ein neues Element erstellen
 	 *
 	 * @param	string	$name			Der Name
+	 * @param	object	$object			Das Element
+	 * @return	class
+	 *
+	 */
+	public function addElement($name, $object) {
+		
+		$this->return[$name] = $object;
+		
+		return $object;
+		
+	}
+	
+	/**
+	 * Ein neues Element erstellen
+	 *
+	 * @param	string	$name			Der Name
 	 * @param	string	$value			Der Value
 	 * @param	string	$class			Die entsprechende PHP Klasse
 	 * @param	array	$attributes		Die HTML Attribute
@@ -145,7 +161,7 @@ class form {
 	private function addField($name, $value, $class, $attributes = array()) {
 		
 		$field = new $class($name, $value, $attributes);
-		$this->return[$name] = $field;
+		$this->addElement($name, $field);
 		
 		return $field;
 		
@@ -382,15 +398,12 @@ class form {
 			return $this->isSubmit;
 				
 		}
-		
-		
-		$save = false;
-		$save_edit = false;
-		
-		$save = type::post('save', 'string', false);
+			
+		$save = type::post('save', '', false);
 
+		$save_edit = false;	
 		if($this->isEditMode()) {
-			$save_edit = type::post('save-back', 'string', false);	
+			$save_edit = type::post('save-back', '', false);	
 		}
 
 		if($save !== false || $save_edit !== false) {

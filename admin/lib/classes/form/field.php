@@ -40,6 +40,11 @@ class formField {
 	
 	public function addAttribute($name, $value) {
 		
+		if($name == 'class') {
+			$this->addClass($value);
+			return;	
+		}
+		
 		$this->attributes[$name] = $value; 
 		
 	}
