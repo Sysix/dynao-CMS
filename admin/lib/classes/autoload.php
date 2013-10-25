@@ -72,7 +72,9 @@ class autoload {
 			$x++;
 		}
 		
-		self::addClass($classPath.'.php');
+		if(file_exists(dir::classes($classPath.'.php'))) {
+			self::addClass(dir::classes($classPath.'.php'));
+		}
 		
 		return class_exists($class);
 		
@@ -119,11 +121,11 @@ class autoload {
 	 * @param	string	$path			Der Pfad der Datei
 	 *
 	 */
-	static protected function addClass($path) {
+	static public function addClass($path) {
 		
-		self::$classes[] = dir::classes($path);
+		self::$classes[] = $path;
 		
-		include_once(dir::classes($path));
+		include_once($path);
 		
 	}
 	
@@ -153,7 +155,7 @@ class autoload {
 			if(in_array($file, array('.', '..')))
 				continue;
 				
-			self::addClass($dir.DIRECTORY_SEPARATOR.$file);
+			self::addClass(dir::classes($dir.DIRECTORY_SEPARATOR.$file));
 			self::$isNewCache = true;
 			
 		}
