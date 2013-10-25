@@ -2,35 +2,9 @@
 
 class addonConfig {
 	
-	var $sql;
+	static $all = array();
 	
-	public function __construct($addon) {
-		
-		$this->isSaved($addon);
-		$this->sql = new sql();
-		$this->sql->query('SELECT * FROM '.sql::table('addons').' WHERE `name` = "'.$addon.'"')->result();
-		
-	}
-	
-	public function get($name, $default = 0) {
-	
-		return $this->sql->get($name, $default);
-		
-	}
-	
-	public function isInstall() {
-		
-		return ($this->get('install', 0) == 1);
-			
-	}
-	
-	public function isActive() {
-		
-		return ($this->get('active', 0) == 1);
-		
-	}
-	
-	public function isSaved($addon, $save = true) {
+	public static function isSaved($addon, $save = true) {
 	
 		$sql = new sql();
 		$num = $sql->num('SELECT 1 FROM '.sql::table('addons').' WHERE `name` = "'.$addon.'"');
@@ -45,19 +19,20 @@ class addonConfig {
 		
 	}
 	
-	public static function getAll($active = true) {
+	public static function getAll() {
 		
-		$return = array();
-		$active = ($active) ? ' AND `active` = 1' : '';
+		if(!count(self::$all)) {	
 		
-		$sql = new sql();		
-		$sql->query('SELECT name FROM '.sql::table('addons').' WHERE `install` = 1'.$active)->result();
-		while($sql->isNext()) {
-			$return[] = $sql->get('name');
-			$sql->next();		
+			$sql = new sql();		
+			$sql->query('SELECT name FROM '.sql::table('addons').' WHERE `install` = 1  AND `active` = 1')->result();
+			while($sql->isNext()) {
+				self::$all[] = $sql->get('name');
+				$sql->next();		
+			}
+			
 		}
-		
-		return $return;
+				
+		return self::$all;
 		
 	}
 	

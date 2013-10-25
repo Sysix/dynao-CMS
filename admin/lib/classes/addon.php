@@ -5,6 +5,7 @@ class addon {
 	var $config = array();
 	var $name;
 	var $addonConfig;
+	var $sql;
 	
 	const INSTALL_FILE = 'install.php';
 	const UNINSTALL_FILE = 'uninstlal.php';
@@ -14,12 +15,21 @@ class addon {
 		$this->name = $addon;
 		
 		if($config) {
-			
+						
 			$configfile = dir::addon($addon, 'config.json');
 			$this->config = json_decode(file_get_contents($configfile), true);
 		}
 		
-		$this->addonConfig = new addonConfig($addon);
+		addonConfig::isSaved($addon);
+		
+		$this->sql = new sql();
+		$this->sql->query('SELECT * FROM '.sql::table('addons').' WHERE `name` = "'.$addon.'"')->result();
+		
+	}
+	
+	public function getSql($name, $default = null) {
+	
+		return $this->sql->get($name, $default);
 		
 	}
 	
@@ -31,13 +41,13 @@ class addon {
 	
 	public function isInstall() {
 	
-		return $this->addonConfig->isInstall();
+		return $this->getSql('install', 0) == 1;
 		
 	}
 	
 	public function isActive() {
 	
-		return $this->addonConfig->isActive();	
+		return $this->getSql('active', 0) == 1;
 		
 	}
 	

@@ -69,7 +69,8 @@ class metainfosPage {
 		
 		$field = $form->addTextareaField('params', $form->get('params'));
 		$field->fieldName('Parameter');
-		$field->setSuffix('<div id="param_info" style="display:'.$style.'">Beispiele:<br />a) all|user|admin<br />b) 1:all|2:user|3:admin</div>');
+		$field->setPrefix('<div id="param_info" style="display:'.$style.'">');
+		$field->setSuffix('Beispiele:<br />a) all|user|admin<br />b) 1:all|2:user|3:admin</div>');
 		
 		$field = $form->addTextareaField('attributes', $form->get('attributes'));
 		$field->fieldName('HTML-Attribute');
