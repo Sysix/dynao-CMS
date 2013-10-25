@@ -74,7 +74,7 @@ class metainfosPage {
 		
 		$field = $form->addTextareaField('attributes', $form->get('attributes'));
 		$field->fieldName('HTML-Attribute');
-		$field->setSuffix('<small>Beispiel:<br /> style=color:red multiple=multiple class=my_css_class</small>');
+		$field->setSuffix('<small>Beispiel:<br /> style=color:red<br />multiple=multiple<br />class=my_css_class</small>');
 		
 		$form->addHiddenField('type', $name);
 		

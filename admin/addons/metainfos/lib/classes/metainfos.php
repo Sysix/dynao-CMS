@@ -21,9 +21,9 @@ class metainfos {
 		
 	}
 	
-	public static function getElement($attributes, $default) {
+	public static function getElement($attributes, $default = null) {
 		
-		if(is_null($defaul)) {
+		if(is_null($default)) {
 			$default = $attributes['default'];	
 		}
 		
@@ -58,11 +58,14 @@ class metainfos {
 		
 		if(trim($attributes) == '')
 			return $element;
+			
+		// Serverseitig
+		$attributes = str_replace("\n\r", "\n", $attributes);
 		
-		$attr = explode(' ', $attributes);
+		$attr = explode("\n", $attributes);
 		foreach($attr as $attrString) {
 			
-			preg_match("/([^=]*)=(\w*)/", $attrString, $attrArray);	
+			preg_match("/([^=]*)=(.*)/", $attrString, $attrArray);	
 			$element->addAttribute($attrArray[1], $attrArray[2]);
 			
 		}

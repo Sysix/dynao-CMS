@@ -11,6 +11,14 @@ if($action == 'add' || $action == 'edit') {
 	$field = $form->addTextareaField('description', $form->get('description'));
 	$field->fieldName('Beschreibung');
 	
+	$meta = new sql();
+	$meta->query('SELECT * FROM '.sql::table('metainfos').' WHERE `type` = "media" ORDER BY `sort`')->result();
+	while($meta->isNext()) {
+		$element = metainfos::getElement($meta->getRow(), $form->get($meta->get('default')));
+		$form->addElement($meta->get('name'), $element);
+		$meta->next();	
+	}
+	
 	$field = $form->addRawField('<input type="file" name="file" />');
 	$field->fieldName('Datei auswählen');
 	
