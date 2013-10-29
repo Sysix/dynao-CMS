@@ -14,7 +14,7 @@ if($action == 'add' || $action == 'edit') {
 	$meta = new sql();
 	$meta->query('SELECT * FROM '.sql::table('metainfos').' WHERE `type` = "media" ORDER BY `sort`')->result();
 	while($meta->isNext()) {
-		$element = metainfos::getElement($meta->getRow(), $form->get($meta->get('default')));
+		$element = metainfos::getElement($meta->getRow(), $form->get($meta->get('name')));
 		$form->addElement($meta->get('name'), $element);
 		$meta->next();	
 	}

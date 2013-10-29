@@ -155,12 +155,17 @@ class sql {
 			
 	}
 	
-	public static function showColums($table, $prefix = '') {
+	public static function showColums($table, $prefix = '', $like = true) {
 		
-		if($prefix) {
-			$prefix	= ' LIKE "'.$prefix.'%"';
+		$suffix = '';
+		if($like) {
+			$suffix = '%';	
 		}
 		
+		if($prefix) {
+			$prefix	= ' LIKE "'.$prefix.$suffix.'"';
+		}	
+			
 		$class = __CLASS__;
 		$sql = new $class();
 		$sql->result('SHOW COLUMNS FROM '.sql::table($table).$prefix);

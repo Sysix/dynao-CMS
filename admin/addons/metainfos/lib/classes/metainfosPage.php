@@ -39,6 +39,7 @@ class metainfosPage {
 	
 	static protected function BackendFormular($name, $pagename, $tablename, $action, $id) {
 		
+		$prefix = substr($tablename, 0, 3).'_';
 		
 		$form = new form('metainfos', 'id='.$id, 'index.php');
 		
@@ -47,11 +48,14 @@ class metainfosPage {
 			$GLOBALS['action'] = '';
 			return;
 		}
+		
+		$field = $form->addRawField($prefix);
+		$field->fieldName('prefix');
 	
 		$field = $form->addTextField('label', $form->get('label'));
 		$field->fieldName('Beschreibung');
 		
-		$field = $form->addTextField('name', $form->get('name'));
+		$field = $form->addTextField('name', substr($form->get('name'), 4));
 		$field->fieldName('Name');
 		
 		$field = $form->addSelectField('formtype', $form->get('formtype'));
@@ -94,10 +98,25 @@ class metainfosPage {
 					break;	
 			}
 			
-			if($action == 'add') {
-				$sql->query('ALTER TABLE '.$tablename.' ADD `'.$form->get('name').'` '.$type.' DEFAULT "'.$form->get('default').'" ');
+			$form->addPost('name', $prefix.$form->get('name'));
+			
+			$colum = sql::showColums($tablename, $prefix.$form->get('name'), false);
+			$colum->result();
+			// Wenn beim Hinzufügen schon vorhanden
+			// Oder bei Editieren vorhanden, jedoch der nicht das 
+			if($colum->num() && $action == 'add' || $action == 'edit' && $colum->num() && $form->sql->getResult('name') != $prefix.$form->get('name')) {
+				
+				echo message::danger('Der Spaltenname '.$prefix.$form->get('name').' ist schon vorhanden');
+				$form->setSave(false);
+
 			} else {
-				$sql->query('ALTER TABLE '.$tablename.' CHANGE `'.$form->sql->getResult('name').'` `'.$form->get('name').'` '.$type.' DEFAULT "'.$form->get('default').'" ');
+				
+				if($action == 'add') {
+					$sql->query('ALTER TABLE '.$tablename.' ADD `'.$prefix.$form->get('name').'` '.$type.' DEFAULT "'.$form->get('default').'" ');
+				} else {
+					$sql->query('ALTER TABLE '.$tablename.' CHANGE `'.$form->sql->getResult('name').'` `'.$prefix.$form->get('name').'` '.$type.' DEFAULT "'.$form->get('default').'" ');
+				} 
+				
 			}
 			
 		}

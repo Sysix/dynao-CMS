@@ -34,11 +34,6 @@ class form {
 	 */
 	public function __construct($table, $where, $action, $method = 'post') {
 		
-		// Gültige Methode?		
-		if(!in_array($method, array('post', 'get'))) {
-			// new Exception();
-		}
-		
 		$this->method = $method;
 		$this->action = $action;
 		
@@ -84,6 +79,7 @@ class form {
 	/**
 	 * Die Speichern Buttons setzten
 	 *
+	 * @return	this
 	 */
 	public function setButtons() {
 				
@@ -100,11 +96,14 @@ class form {
 		$back->addClass('btn-warning');
 		$back->addClass('form-back');
 		
+		return $this;
+		
 	}
 	
 	/**
 	 * Standarteinstellungen fürs Backend
 	 *
+	 * @return	this
 	 */
 	public function loadBackend() {
 	
@@ -113,6 +112,8 @@ class form {
 		
 		$this->addHiddenField('page', $page);
 		$this->addHiddenField('subpage', $subpage);
+		
+		return $this;
 		
 	}
 	
@@ -359,7 +360,7 @@ class form {
 	 * Modus setzen
 	 *
 	 * @param	string	$mode			Der Modus
-	 *
+	 * @return	this
 	 */
 	public function setMode($mode) {
 	
@@ -370,6 +371,8 @@ class form {
 		} else {			
 			// new Exception();				
 		}
+		
+		return $this;
 		
 	}
 	
@@ -433,11 +436,13 @@ class form {
 	 * Tabelle setzen für SQL
 	 *
 	 * @param	string	$table			Die Tabelle
-	 *
+	 * @return	this
 	 */
 	public function setTable($table) {
 	
 		$this->sql->setTable($table);
+		
+		return $this;
 			
 	}
 	
@@ -445,17 +450,20 @@ class form {
 	 * Where setzten für SQL
 	 *
 	 * @param	string	$where			Die Where Bedigung
-	 *
+	 * @return	this
 	 */
 	public function setWhere($where) {
 	
 		$this->sql->setWhere($where);
+		
+		return $this;
 		
 	}
 	
 	/**
 	 * Geht die ganzen Felder durch, und speichert sie in der SQL für die spätere Speicherung
 	 *
+	 * @return	this
 	 */
 	protected function setPostsVar() {
 	
@@ -479,6 +487,8 @@ class form {
 			
 		}
 		
+		return $this;
+		
 	}
 	
 	/**
@@ -486,11 +496,13 @@ class form {
 	 *
 	 * @param	string	$name			Die Spalte
 	 * @param	string	$val			Der Inhalt
-	 *
+	 * @return	this
 	 */
 	public function addPost($name, $val) {
 		
 		$this->sql->addPost($name, $val);
+		
+		return $this;
 		
 	}
 	
@@ -498,11 +510,13 @@ class form {
 	 * Löscht eine SQL Spalte
 	 *
 	 * @param	string	$name			Die Spalte
-	 *
+	 * @return	this
 	 */
 	public function delPost($name) {
 		
 		$this->sql->delPost($name);
+		
+		return $this;
 		
 	}
 	
@@ -510,21 +524,20 @@ class form {
 	 * Setzt einen Paramater, der später dazu führt, ob das Formular gespeichert wird oder nicht
 	 *
 	 * @param	bool	$bool			Ja/Nein
-	 *
+	 * @return	this
 	 */
 	public function setSave($bool) {
-	
-		if(!is_bool($bool)) {
-			//throw new Exception;	
-		}
 		
 		$this->toSave = $bool;
+		
+		return $this;
 		
 	}
 	
 	/**
 	 * Die SQL Speicherung
 	 *
+	 * @return	this
 	 */
 	private function saveForm() {
 	
@@ -537,6 +550,8 @@ class form {
 			$this->sql->save();
 		}
 		
+		return $this;
+		
 	}
 	
 	/**
@@ -547,7 +562,7 @@ class form {
 	 */
 	public function isSaveEdit() {
 	
-		return (bool)(type::post('save-back', 'string', false) !== false);
+		return type::post('save-back', '', false) !== false;
 		
 	}
 	
@@ -556,21 +571,26 @@ class form {
 	 *
 	 * @param	string	$name			Der Name
 	 * @param	string	$value			Der Inhalt
-	 *
+	 * @return	this
 	 */
 	public function addFormAttribute($name, $value) {
 		
 		$this->formAttributes[$name] = $value;	
+		
+		return $this;
 		
 	}
 	
 	/**
 	 * Löscht ein Formular Feld
 	 *
+	 * @return	this
 	 */
 	public function deleteElement($name) {
 	
 		unset($this->return[$name]);
+		
+		return $this;
 		
 	}
 	
