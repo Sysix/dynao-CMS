@@ -12,7 +12,9 @@ class cache {
 	 *
 	 */
 	static public function setCache($bool) {
+		
 		self::$cache = (bool)$bool;
+		
 	}
 	
 	/**
@@ -24,7 +26,9 @@ class cache {
 	 *
 	 */
 	static public function getFileName($id, $table) {
+		
 		return md5($id.$table).'.cache';
+		
 	}
 	
 	/**

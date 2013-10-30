@@ -13,13 +13,17 @@ class formRadio extends formField {
 		if($attributes['value'] ==  $this->value)
 			$attributes['checked'] = 'checked';
 			
-		$this->output[$attributes['value']] = '<input'.$this->convertAttr($attributes).'> '.$value; //Name als Key speicher, für Methode del();		
+		$this->output[$attributes['value']] = '<input'.$this->convertAttr($attributes).'> '.$value; //Name als Key speicher, für Methode del();	
+		
+		return $this;	
 			
 	}
 	
 	public function del($name) {
 		
-		unset($this->output[$name]);		
+		unset($this->output[$name]);	
+		
+		return $this;	
 			
 	}
 	

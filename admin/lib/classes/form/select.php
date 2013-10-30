@@ -17,11 +17,15 @@ class formSelect extends formField {
 		
 		$this->value = $selected;
 		
+		return $this;
+		
 	}
 	
 	public function setSize($size) {
 		
 		$this->addAttribute('size', $size);
+		
+		return $this;
 		
 	}
 	
@@ -36,6 +40,8 @@ class formSelect extends formField {
 			$this->delAttribute('multiple');
 		}
 		
+		return $this;
+		
 	}
 	
 	public function addGroup($name, $attributes = array()) {
@@ -44,6 +50,8 @@ class formSelect extends formField {
 	
 		$this->currentOpt++;
 		$this->output[$this->currentOpt] = array('attr'=>$attributes, 'option'=>array());
+		
+		return $this;
 		
 	}
 	
@@ -55,6 +63,8 @@ class formSelect extends formField {
 			$attributes['selected'] = 'selected';
 		
 		$this->output[$this->currentOpt]['option'][] = array('name'=>$value, 'attr'=>$attributes);
+		
+		return $this;
 		
 	}
 	

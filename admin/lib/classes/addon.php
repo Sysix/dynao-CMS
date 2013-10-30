@@ -8,7 +8,7 @@ class addon {
 	var $sql;
 	
 	const INSTALL_FILE = 'install.php';
-	const UNINSTALL_FILE = 'uninstlal.php';
+	const UNINSTALL_FILE = 'uninstall.php';
 	
 	public function __construct($addon, $config = true) {
 		
@@ -57,6 +57,8 @@ class addon {
 		if(file_exists($file)) {
 			include $file;	
 		}
+		
+		return $this;
 				
 	}
 	
@@ -66,6 +68,8 @@ class addon {
 		if(file_exists($file)) {
 			include $file;	
 		}
+		
+		return $this;
 				
 	}
 	

@@ -185,6 +185,8 @@ class sql {
 			
 		}
 		
+		return $this;
+		
 	}
 	
 	// Abfrage ob noch der Counter benutzt werden kann
@@ -196,8 +198,7 @@ class sql {
 	
 	//
 	// Methoden zur Speicherung der Einträge
-	// 
-	
+	//	
 	public function getPosts($post) {
 	
 		if(!is_array($post)) {
@@ -216,11 +217,15 @@ class sql {
 		
 		$this->values[$name] = $this->escape($val);
 		
+		return $this;
+		
 	}
 	
 	public function delPost($name) {
 	
 		unset($this->values[$name]);
+		
+		return $this;
 		
 	}
 	
@@ -258,12 +263,22 @@ class sql {
 		
 	}
 	
+	public function select($select = '*') {
+		
+		$this->query('SELECT '.$select.' FROM `'.$this->table.'` WHERE '.$this->where);
+		
+		return $this;
+		
+	}
+	
 	public function save() {
 		
 		$keys = '`'.implode('`,`', array_keys($this->values)).'`';
 		$entrys = '"'.implode('","', $this->values).'"';
 		
 		$this->query('INSERT INTO `'.$this->table.'` ('.$keys.') VALUES ('.$entrys.')');
+		
+		return $this;
 		
 	}
 	
@@ -278,11 +293,17 @@ class sql {
 		$entrys = substr($entrys , 0, -1);		
 		
 		$this->query('UPDATE `'.$this->table.'` SET'.$entrys.' WHERE '.$this->where);
+		
+		return $this;
+		
 	}
 	
 	public function delete() {
 	
 		$this->query('DELETE FROM `'.$this->table.'` WHERE '.$this->where);
+		
+		return $this;
+		
 	}
 	
 	static public function sortTable($table, $sort, $up = true, $where = '', $select = array('id', 'sort')) {
@@ -293,7 +314,7 @@ class sql {
 		$update = new sql();
 		$update->setTable($table);
 		
-		$sql = new sql();		
+		$sql = new sql();
 		$sql->query('SELECT `'.$select[0].'`, `'.$select[1].'` FROM '.self::table($table).' WHERE `'.$select[1].'` >= '.$sort.$where)->result();
 		
 		while($sql->isNext()) {
@@ -310,7 +331,6 @@ class sql {
 			$sql->next();
 			
 		}
-		
 		
 	}
 

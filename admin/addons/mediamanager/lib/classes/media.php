@@ -60,16 +60,11 @@ class media {
 	// param	object	$media
 	// return	bool
 	static public function isValid($media) {
-	
-		if(is_object($media)) {
 		
-			$class = get_class($media);
-			
-			return $class == get_class($this);
-			
-		}
+		if(!is_object($media))
+			return false;
 		
-		return false;
+		return is_a($media, get_class($this));
 		
 	}
 	

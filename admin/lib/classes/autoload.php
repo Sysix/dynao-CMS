@@ -38,7 +38,7 @@ class autoload {
 	 */
 	static public function unregister() {
 	
-		 spl_autoload_unregister(array(__CLASS__, 'autoloader'));
+		spl_autoload_unregister(array(__CLASS__, 'autoloader'));
 		self::$registered = false;
 		
 	}
@@ -113,6 +113,7 @@ class autoload {
 		foreach(self::$classes as $class) {
 			include_once($class);
 		}
+		
 	}
 	
 	/**

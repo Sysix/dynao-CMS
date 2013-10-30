@@ -28,6 +28,8 @@ class pagination {
 		
 		$this->disable = $disable;
 		
+		return $this;
+		
 	}
 	
 	public function getSqlLimit() {
@@ -45,6 +47,8 @@ class pagination {
 		$this->start = $this->currentSite * $this->proSite - $this->proSite;
 		
 		$this->maxSites = ceil($this->maxEntrys / $this->proSite);
+		
+		return $this;
 		
 	}
 	

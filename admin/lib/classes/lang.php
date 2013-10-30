@@ -13,7 +13,6 @@ class lang {
 	 * Die Sprache ersetzen, mit automaitschen laden der main Datei
 	 *
 	 * @param	string	$lang			Die Sprache
-	 * @return	string
 	 *
 	 */
 	static public function setLang($lang = 'en_gb') {
@@ -66,7 +65,6 @@ class lang {
 	 * Lädt die entsprechende Datei und fügt sie zur "Datenbank" hinzu
 	 *
 	 * @param	string	$file			Der Dateipfad ohne .json ende
-	 * @return	string
 	 *
 	 */
 	static public function loadLang($file) {

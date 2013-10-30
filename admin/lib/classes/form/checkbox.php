@@ -14,6 +14,8 @@ class formCheckbox extends formField {
 		
 		$this->value = $checked;
 		
+		return $this;
+		
 	} 
 	
 	public function add($name, $value, $attributes = array()) {
@@ -26,12 +28,16 @@ class formCheckbox extends formField {
 			$attributes['checked'] = 'checked';
 			
 		$this->output[$attributes['value']] = '<input'.$this->convertAttr($attributes).'> '.$value; //Name als Key speicher, für Methode del();		
+		
+		return $this;
 			
 	}
 	
 	public function del($name) {	
 		
-			unset($this->output[$name]);
+		unset($this->output[$name]);
+		
+		return $this;
 			
 	}
 	

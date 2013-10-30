@@ -55,9 +55,7 @@ class dyn {
 		
 	}
 	
-	// Allgemeine Einstellungen
-	
-	
+	// Allgemeine Einstellungen	
 	protected function setDebug($debug) {
 	
 		if($debug) {
@@ -71,6 +69,8 @@ class dyn {
 			ini_set('display_errors', 0);
 			
 		}
+		
+		return $this;
 		
 	}	
 	

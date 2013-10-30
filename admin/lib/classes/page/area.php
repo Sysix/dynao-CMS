@@ -127,12 +127,16 @@ class pageArea {
 		preg_match_all('/'.self::dyn_rex.'/', $content, $values);
 		$this->values = $values;
 		
+		return $this;
+		
 	}
 	
 	public function convertOut($content) {
 		
 		preg_match_all('/'.self::out_rex.'/', $content, $out);
 		$this->out = $out;
+		
+		return $this;
 		
 	}
 	

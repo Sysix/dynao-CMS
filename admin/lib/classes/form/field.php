@@ -1,6 +1,6 @@
 <?php
 
-class formField {
+abstract class formField {
 	
 	var $name;
 	var $value;
@@ -23,6 +23,8 @@ class formField {
 	public function setSuffix($suffix) {
 		
 		$this->suffix = $suffix;
+		
+		return $this;
 			
 	}
 	
@@ -30,11 +32,15 @@ class formField {
 	
 		$this->prefix = $prefix;	
 		
+		return $this;
+		
 	}
 	
 	public function fieldName($name) {
 		
 		$this->fieldName = $name;	
+		
+		return $this;
 		
 	}
 	
@@ -46,6 +52,8 @@ class formField {
 		}
 		
 		$this->attributes[$name] = $value; 
+		
+		return $this;
 		
 	}
 	
@@ -71,6 +79,8 @@ class formField {
 			
 		unset($this->attributes[$name]);
 		
+		return $this;
+		
 	}
 	
 	public function setReadonly($read) {
@@ -84,6 +94,8 @@ class formField {
 		} else {
 			$this->delAttribute('readonly');	
 		}
+		
+		return $this;
 		
 	}
 	
@@ -103,6 +115,8 @@ class formField {
 	
 		$this->attributes['class'][] = $class; 
 		
+		return $this;
+		
 	}
 	
 	public function autocomplete($auto) {
@@ -117,11 +131,15 @@ class formField {
 			$this->delAttribute('autocomplete');	
 		}
 		
+		return $this;
+		
 	}
 	
 	public function setID($id) {
 	
 		$this->addAttribute('id', $id);
+		
+		return $this;
 		
 	}
 	
@@ -131,8 +149,7 @@ class formField {
 		
 	}
 	
-	public function get() {}	
-	
+	abstract public function get();
 }
 
 ?>

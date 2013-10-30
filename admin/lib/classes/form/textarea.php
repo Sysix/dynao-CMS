@@ -10,6 +10,8 @@ class formTextarea extends formField {
 	
 		$this->addAttribute('cols', $cols);
 		
+		return $this;
+		
 	}
 	
 	public function addRows($rows) {
@@ -19,6 +21,8 @@ class formTextarea extends formField {
 		}
 	
 		$this->addAttribute('rows', $rows);
+		
+		return $this;
 		
 	}
 	

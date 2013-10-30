@@ -45,6 +45,8 @@ class table {
 		
 		$this->setCurrentSection($ref);
 		
+		return $this;
+		
 	}
 	
 	protected function getCurrentSection() {
@@ -67,6 +69,8 @@ class table {
 		} else {
 			$this->tbody = $section;	
 		}
+		
+		return $this;
 	
 	}
 	
@@ -84,6 +88,8 @@ class table {
 		}
 		
 		$this->collsLayout = $cols;
+		
+		return $this;
 		
 	}
 	
@@ -113,8 +119,12 @@ class table {
 		
 	}
 	
-	public function addCaption($value, $attributes = array() ) {		
+	public function addCaption($value, $attributes = array() ) {	
+		
 		$this->caption = array('value'=>$value, 'attr'=>$attributes);
+		
+		return $this;
+		
 	}
 	
 	protected function getCaption() {
@@ -144,6 +154,8 @@ class table {
 		
 		$this->isSql = true;
 		
+		return $this;
+		
 	}
 	
 	public function isNext() {
@@ -160,7 +172,9 @@ class table {
 	
 	public function next() {
 	
-		$this->sql->next();	
+		$this->sql->next();
+		
+		return $this;
 		
 	}
 	

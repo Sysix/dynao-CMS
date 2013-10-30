@@ -11,8 +11,8 @@ class layout {
 	/**
 	 * Eine Javascript Datei einbinden
 	 *
-	 * @param string	$js_file		Pfad der Datei
-	 * @param array		$attributes		HTML Attribute
+	 * @param	string	$js_file		Pfad der Datei
+	 * @param	array	$attributes		HTML Attribute
 	 *
 	 */
 	public static function addJs($js_file, $attributes = array()) {
