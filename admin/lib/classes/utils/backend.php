@@ -7,23 +7,23 @@ class backend {
 	
 	public static function addNavi($name, $link, $icon = 'circle', $pos = -1) {
 		
-		$list = array('name'=>$name, 'link'=>$link, 'icon'=>$icon);
 		if($pos < 0) {
-			self::$navi[] = $list;
-		} else {
-			array_splice(self::$navi, $pos, 0, array($list));
+			$pos = count(self::$navi);
 		}
+		
+		$list = array('name'=>$name, 'link'=>$link, 'icon'=>$icon);
+		array_splice(self::$navi, $pos, 0, array($list));
 		
 	}
 	
 	public static function addSubnavi($name, $link, $icon = 'circle', $pos = -1) {
 		
-		$list = array('name'=>$name, 'link'=>$link, 'icon'=>$icon);		
 		if($pos < 0) {
-			self::$subnavi[] = $list;
-		} else {
-			array_splice(self::$subnavi, $pos, 0, array($list));
+			$pos = count(self::$subnavi);
 		}
+		
+		$list = array('name'=>$name, 'link'=>$link, 'icon'=>$icon);		
+		array_splice(self::$subnavi, $pos, 0, array($list));
 		
 	}
 	

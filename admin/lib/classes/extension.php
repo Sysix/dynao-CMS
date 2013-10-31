@@ -27,6 +27,10 @@ class extension {
 			
 			self::$extensions[$name] = array();
 			
+			if($position < 0) {
+				$position = count(self::$extensions[$name]);
+			}
+			
 			// Funktion hinzufügen zum $name mit der Position $position
 			array_splice(self::$extensions[$name], $position, 0, $function);
 			return true;
