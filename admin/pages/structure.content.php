@@ -63,7 +63,7 @@ $i = 1;
 while($sql->isNext()) {
 	
 	$sqlId = ($action == 'add') ? 0 : $sql->get('id');
-	$module = new pageArea($sqlId);
+	$module = pageArea::getFromSql($sql);
 
 	if(($action == 'add' && type::super('sort', 'int') == $i) || ($action == 'edit' && $id == $sql->get('id'))) {
 		
@@ -114,9 +114,9 @@ while($sql->isNext()) {
 			<h3 class="panel-title pull-left"><?php echo $sql->get('name'); ?></h3>
 			<div class="pull-right btn-group">
 				<a href="<?php echo url::backend('structure', array('subpage'=>'content', 'action'=>'online', 'id'=>$sql->get('id'))); ?>" class="btn btn-sm structure-<?php echo $status; ?>"><?php echo $statusText; ?></a>
-				<a class="btn btn-default btn-sm icon-cog"></a>
-				<a href="<?php echo url::backend('structure', array('subpage'=>'content', 'action'=>'edit', 'id'=>$sql->get('id'))); ?>" class="btn btn-default  btn-sm icon-edit-sign"></a>
-				<a href="<?php echo url::backend('structure', array('subpage'=>'content', 'action'=>'delete', 'id'=>$sql->get('id'))); ?>" class="btn btn-danger btn-sm icon-trash"></a>
+				<a class="btn btn-default btn-sm fa fa-cog"></a>
+				<a href="<?php echo url::backend('structure', array('subpage'=>'content', 'action'=>'edit', 'id'=>$sql->get('id'))); ?>" class="btn btn-default btn-sm fa fa-edit"></a>
+				<a href="<?php echo url::backend('structure', array('subpage'=>'content', 'action'=>'delete', 'id'=>$sql->get('id'))); ?>" class="btn btn-danger btn-sm fa fa-trash-o"></a>
 			</div>
 			<div class="clearfix"></div>
 		  </div>

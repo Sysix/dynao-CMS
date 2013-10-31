@@ -18,13 +18,42 @@ class pageArea {
 	var $values = array();
 	var $out = array();
 	
-	public function __construct($id) {
+	public function __construct($id, $fromSql = false) {
+		
+		if($fromSql)
+			return;
 		
 		$this->sql = new sql();
 		$this->sql->query('SELECT * FROM '.sql::table('structure_area').' WHERE id = '.$id)->result();
 		
-		$this->isNew = ($this->sql->num() == 0);
+		$this->setNew($this->sql->num() == 0);
 		
+	}
+	
+	public static function getFromSql(sql $sql) {
+		
+		$classname = __CLASS__;
+		$object = new $classname(0, true);
+		$object->setNew(false)->setSql($sql);
+		
+		return $object;		
+		
+	}
+	
+	public function setNew($new) {
+	
+		$this->isNew = $new;
+		
+		return $this;
+		
+	}
+	
+	public function setSql(sql $sql) {
+		
+		$this->sql = $sql;
+		
+		return $this;
+				
 	}
 	
 	public function get($value) {

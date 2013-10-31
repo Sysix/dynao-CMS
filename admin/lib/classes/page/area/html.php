@@ -1,6 +1,8 @@
 <?php
 
 class pageAreaHtml {
+	
+	public static $modulList = array();
 
 	public static function selectBlock($structureID, $sort = false)  {
 		
@@ -27,19 +29,20 @@ class pageAreaHtml {
 	
 	public static function moduleList() {
 	
-		$return = array();
+		if(empty(self::$modulList)) {
 	
-		$sql = new sql();
-		
-		$sql->result('SELECT id, name FROM '.sql::table('module').' ORDER BY `sort`');
-		while($sql->isNext()) {
-		
-			$return[] = '<option value="'.$sql->get('id').'">'.$sql->get('name').'</option>';
-		
-			$sql->next();
+			$sql = new sql();				
+			$sql->result('SELECT id, name FROM '.sql::table('module').' ORDER BY `sort`');
+			while($sql->isNext()) {
+			
+				self::$modulList[] = '<option value="'.$sql->get('id').'">'.$sql->get('name').'</option>';
+			
+				$sql->next();
+			}
+			
 		}
 		
-		return implode(PHP_EOL, $return);
+		return implode(PHP_EOL, self::$modulList);
 		
 	}
 	
