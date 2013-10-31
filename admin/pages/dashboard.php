@@ -1,6 +1,6 @@
 <?php
-	backend::addSubnavi('Overview',	url::backend('structure'),	'eye-open');
-	backend::addSubnavi('Statistics',	url::backend('structure'),	'bar-chart');
+	backend::addSubnavi('Overview',	url::backend('structure'),	'eye');
+	backend::addSubnavi('Statistics',	url::backend('structure'),	'bar-chart-o');
 	backend::addSubnavi('Logs',	url::backend('structure'),	'calendar');
 	
 	layout::addJs('https://www.google.com/jsapi');
@@ -95,10 +95,10 @@
                                     <td>08-11-2013</td>
                                     <td>
                                     	<span class="btn-group">
-                                            <a title="Move up" href="" class="icon-caret-up btn btn-xs btn-default"></a> 
-                                            <a title="Move down" href="" class="icon-caret-down btn btn-xs btn-default"></a> 
-                                            <a title="Edit" href="" class="icon-pencil btn btn-xs btn-default"></a> 
-                                            <a title="Delete" href="" class="icon-trash btn btn-xs btn-danger"></a>
+                                            <a title="Move up" href="" class="fa fa-caret-up btn btn-xs btn-default"></a> 
+                                            <a title="Move down" href="" class="fa fa-caret-down btn btn-xs btn-default"></a> 
+                                            <a title="Edit" href="" class="fa fa-pencil btn btn-xs btn-default"></a> 
+                                            <a title="Delete" href="" class="fa fa-trash-o btn btn-xs btn-danger"></a>
                                         </span>
                                     </td>
                                 </tr>
@@ -108,10 +108,10 @@
                                     <td>08-04-2013</td>
                                     <td>
                                     	<span class="btn-group">
-                                            <a title="Move up" href="" class="icon-caret-up btn btn-xs btn-default"></a> 
-                                            <a title="Move down" href="" class="icon-caret-down btn btn-xs btn-default"></a> 
-                                            <a title="Edit" href="" class="icon-pencil btn btn-xs btn-default"></a> 
-                                            <a title="Delete" href="" class="icon-trash btn btn-xs btn-danger"></a>
+                                             <a title="Move up" href="" class="fa fa-caret-up btn btn-xs btn-default"></a> 
+                                            <a title="Move down" href="" class="fa fa-caret-down btn btn-xs btn-default"></a> 
+                                            <a title="Edit" href="" class="fa fa-pencil btn btn-xs btn-default"></a> 
+                                            <a title="Delete" href="" class="fa fa-trash-o btn btn-xs btn-danger"></a>
                                         </span>
                                     </td>
                                 </tr>
@@ -121,10 +121,10 @@
                                     <td>08-04-2013</td>
                                     <td>
                                     	<span class="btn-group">
-                                            <a title="Move up" href="" class="icon-caret-up btn btn-xs btn-default"></a> 
-                                            <a title="Move down" href="" class="icon-caret-down btn btn-xs btn-default"></a> 
-                                            <a title="Edit" href="" class="icon-pencil btn btn-xs btn-default"></a> 
-                                            <a title="Delete" href="" class="icon-trash btn btn-xs btn-danger"></a>
+                                             <a title="Move up" href="" class="fa fa-caret-up btn btn-xs btn-default"></a> 
+                                            <a title="Move down" href="" class="fa fa-caret-down btn btn-xs btn-default"></a> 
+                                            <a title="Edit" href="" class="fa fa-pencil btn btn-xs btn-default"></a> 
+                                            <a title="Delete" href="" class="fa fa-trash-o btn btn-xs btn-danger"></a>
                                         </span>
                                     </td>
                                 </tr>
@@ -134,10 +134,10 @@
                                     <td>08-02-2013</td>
                                     <td>
                                     	<span class="btn-group">
-                                            <a title="Move up" href="" class="icon-caret-up btn btn-xs btn-default"></a> 
-                                            <a title="Move down" href="" class="icon-caret-down btn btn-xs btn-default"></a> 
-                                            <a title="Edit" href="" class="icon-pencil btn btn-xs btn-default"></a> 
-                                            <a title="Delete" href="" class="icon-trash btn btn-xs btn-danger"></a>
+                                             <a title="Move up" href="" class="fa fa-caret-up btn btn-xs btn-default"></a> 
+                                            <a title="Move down" href="" class="fa fa-caret-down btn btn-xs btn-default"></a> 
+                                            <a title="Edit" href="" class="fa fa-pencil btn btn-xs btn-default"></a> 
+                                            <a title="Delete" href="" class="fa fa-trash-o btn btn-xs btn-danger"></a>
                                         </span>
                                     </td>
                                 </tr>
@@ -147,10 +147,10 @@
                                     <td>08-01-2013</td>
                                     <td>
                                     	<span class="btn-group">
-                                            <a title="Move up" href="" class="icon-caret-up btn btn-xs btn-default"></a> 
-                                            <a title="Move down" href="" class="icon-caret-down btn btn-xs btn-default"></a> 
-                                            <a title="Edit" href="" class="icon-pencil btn btn-xs btn-default"></a> 
-                                            <a title="Delete" href="" class="icon-trash btn btn-xs btn-danger"></a>
+                                            <a title="Move up" href="" class="fa fa-caret-up btn btn-xs btn-default"></a> 
+                                            <a title="Move down" href="" class="fa fa-caret-down btn btn-xs btn-default"></a> 
+                                            <a title="Edit" href="" class="fa fa-pencil btn btn-xs btn-default"></a> 
+                                            <a title="Delete" href="" class="fa fa-trash-o btn btn-xs btn-danger"></a>
                                         </span>
                                     </td>
                                 </tr>

@@ -1,6 +1,6 @@
 <?php
-	backend::addSubnavi('General',	url::backend(''),	'eye-open');
-	backend::addSubnavi('Media',	url::backend(''),	'picture');
+	backend::addSubnavi('General',	url::backend(''),	'eye');
+	backend::addSubnavi('Media',	url::backend(''),	'picture-o');
 	backend::addSubnavi('SEO',	url::backend(''),	'group');
 ?>
 

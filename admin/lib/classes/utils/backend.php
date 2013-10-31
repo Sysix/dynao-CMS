@@ -8,14 +8,22 @@ class backend {
 	public static function addNavi($name, $link, $icon = 'circle', $pos = -1) {
 		
 		$list = array('name'=>$name, 'link'=>$link, 'icon'=>$icon);
-		array_splice(self::$navi, $pos, 0, array($list));
+		if($pos < 0) {
+			self::$navi[] = $list;
+		} else {
+			array_splice(self::$navi, $pos, 0, array($list));
+		}
 		
 	}
 	
 	public static function addSubnavi($name, $link, $icon = 'circle', $pos = -1) {
 		
-		$list = array('name'=>$name, 'link'=>$link, 'icon'=>$icon);
-		array_splice(self::$subnavi, $pos, 0, array($list));
+		$list = array('name'=>$name, 'link'=>$link, 'icon'=>$icon);		
+		if($pos < 0) {
+			self::$subnavi[] = $list;
+		} else {
+			array_splice(self::$subnavi, $pos, 0, array($list));
+		}
 		
 	}
 	
@@ -35,7 +43,7 @@ class backend {
 				$class = '';	
 			}
 			
-			$return .= '<li'.$class.'><a class="icon-'.$navi['icon'].'" href="'.$navi['link'].'"> <span>'.$navi['name'].'</span></a>';
+			$return .= '<li'.$class.'><a class="fa fa-'.$navi['icon'].'" href="'.$navi['link'].'"> <span>'.$navi['name'].'</span></a>';
 			
 		}
 		
@@ -59,7 +67,7 @@ class backend {
 				$class = '';	
 			}
 			
-			$return .= '<li'.$class.'><a class="icon-'.$subnavi['icon'].'" href="'.$subnavi['link'].'"> <span>'.$subnavi['name'].'</span></a>';
+			$return .= '<li'.$class.'><a class="fa fa-'.$subnavi['icon'].'" href="'.$subnavi['link'].'"> <span>'.$subnavi['name'].'</span></a>';
 			
 		}
 		
