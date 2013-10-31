@@ -1,15 +1,3 @@
-<?php
-
-$navi = array(
-	'dashboard' => array('Dashboard', 'desktop'),
-	'structure' => array('Structure', 'list'),
-	'media' => array('Media', 'picture'),
-	'user' => array('User', 'user'),
-	'addons' => array('Addons', 'code-fork'),
-	'settings' => array('Settings', 'cogs')
-	);
-
-?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -21,18 +9,7 @@ $navi = array(
 
 <body>
 	<div id="navi">
-		<ul>
-			<?php
-			foreach($navi as $href=>$options) {
-			
-				$class = ($href == $page) ? ' class="active"' : '';
-				
-				echo '<li'.$class.'><a class="icon-'.$options[1].'" href="'.url::backend($href).'"><span>'.$options[0].'</span></a></li>';
-				
-			}
-			
-			?>
-		</ul>
+		<?php echo backend::getNavi(); ?>
 	</div><!--end #navi-->
 	
     <div id="wrap">
@@ -59,9 +36,7 @@ $navi = array(
         </div><!--end #subnavi-->
         
         <div id="content">
-            <?php 		
-                echo $CONTENT;
-            ?>		
+            <?php echo $CONTENT; ?>		
         </div><!--end #content-->
         
         <div class="clearfix"></div>

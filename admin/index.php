@@ -41,6 +41,12 @@ layout::addJS('http://code.jquery.com/ui/1.10.3/jquery-ui.js');
 layout::addJS('http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js');
 layout::addJS('layout/js/scripts.js');
 
+backend::addNavi('Dashboard', url::backend('dashboard'), 'desktop');
+backend::addNavi('Structure', url::backend('structure'), 'list');
+backend::addNavi('User', url::backend('user'), 'user');
+backend::addNavi('Addons', url::backend('addons'), 'code-fork');
+backend::addNavi('Settings', url::backend('settings'), 'cogs');
+
 addonConfig::includeAllConfig();
 addonConfig::includeAllLangFiles();
 

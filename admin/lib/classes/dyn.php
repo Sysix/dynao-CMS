@@ -11,7 +11,7 @@ class dyn {
 		
 		self::$params = json_decode(file_get_contents(dir::backend('lib'.DIRECTORY_SEPARATOR.'config.json')), true);
 		
-		$this->setDebug(self::get('debug'));
+		self::setDebug(self::get('debug'));
 		
 	}
 	
@@ -56,7 +56,7 @@ class dyn {
 	}
 	
 	// Allgemeine Einstellungen	
-	protected function setDebug($debug) {
+	static public function setDebug($debug) {
 	
 		if($debug) {
 			
@@ -69,8 +69,6 @@ class dyn {
 			ini_set('display_errors', 0);
 			
 		}
-		
-		return $this;
 		
 	}	
 	
