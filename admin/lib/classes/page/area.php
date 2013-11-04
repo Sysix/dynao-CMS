@@ -22,17 +22,16 @@ class pageArea {
 		
 		if(is_object($id) && is_a($id, 'sql')) {
 			
-			$this->setSql($sql);
-			$this->setNew(false);
+			$this->setSql($id);
 			
 		} else {
 		
 			$this->sql = new sql();
-			$this->sql->query('SELECT * FROM '.sql::table('structure_area').' WHERE id = '.$id)->result();
-		
-			$this->setNew($this->sql->num() == 0);
+			$this->sql->query('SELECT * FROM '.sql::table('structure_area').' WHERE id = '.$id)->result();		
 		
 		}
+		
+		$this->setNew($this->sql->num() == 0);
 	}
 	
 	public function setNew($new) {
@@ -56,7 +55,7 @@ class pageArea {
 		if($this->isNew)
 			return;
 			
-		return $this->sql->get($value);
+		return $this->sql->get(sql::table('structure_area').'.'.$value);
 		
 	}
 	

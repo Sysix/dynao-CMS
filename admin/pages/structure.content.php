@@ -67,6 +67,10 @@ while($sql->isNext()) {
 
 	if(($action == 'add' && type::super('sort', 'int') == $i) || ($action == 'edit' && $id == $sql->get('id'))) {
 		
+		if($action == 'add') {
+			$module->setNew(true);	
+		}
+		
 		$form = pageAreaHtml::formBlock($module);
 	
 	}
@@ -78,7 +82,7 @@ while($sql->isNext()) {
 	// UND
 	// Wenn Formular noch nicht abgeschickt worden
 	// ODER Abgeschickt worden ist und ein Übernehmen geklickt worden ist
-	if($action == 'add' && type::super('sort', 'int') == $i && (!$form->isSubmit() || ($form->isSubmit() && type::post('save-back', 'string', false) !== false))) {
+	if($action == 'add' && type::super('sort', 'int') == $i && (!$form->isSubmit() || ($form->isSubmit() && !is_null(type::post('save-back', ''))))) {
 		
 		echo pageAreaHtml::formOut($form);
 
@@ -93,7 +97,7 @@ while($sql->isNext()) {
 	// UND
 	// Wenn Formular noch nicht abgeschickt worden
 	// ODER Abgeschickt worden ist und ein Übernehmen geklickt worden ist	
-	if($action == 'edit' && $id == $sql->get('id') && (!$form->isSubmit() || ($form->isSubmit() && type::post('save-back', 'string', false) !== false))) {
+	if($action == 'edit' && $id == $sql->get('id') && (!$form->isSubmit() || ($form->isSubmit() && !is_null(type::post('save-back', ''))))) {
 
 		echo pageAreaHtml::formOut($form);
 
