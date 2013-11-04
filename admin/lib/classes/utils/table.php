@@ -178,6 +178,12 @@ class table {
 		
 	}
 	
+	public function getSql() {
+		
+		return $this->sql;
+			
+	}
+	
 	public function addRow($attributes = array() ) {
 		// rows zur letzten Section hinzufügen
 		

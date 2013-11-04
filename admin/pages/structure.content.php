@@ -63,7 +63,7 @@ $i = 1;
 while($sql->isNext()) {
 	
 	$sqlId = ($action == 'add') ? 0 : $sql->get('id');
-	$module = pageArea::getFromSql($sql);
+	$module = new pageArea($sql);
 
 	if(($action == 'add' && type::super('sort', 'int') == $i) || ($action == 'edit' && $id == $sql->get('id'))) {
 		
@@ -92,8 +92,7 @@ while($sql->isNext()) {
 	// UND Wenn ID von SQL gleich der $_GET['id']
 	// UND
 	// Wenn Formular noch nicht abgeschickt worden
-	// ODER Abgeschickt worden ist und ein Übernehmen geklickt worden ist
-	
+	// ODER Abgeschickt worden ist und ein Übernehmen geklickt worden ist	
 	if($action == 'edit' && $id == $sql->get('id') && (!$form->isSubmit() || ($form->isSubmit() && type::post('save-back', 'string', false) !== false))) {
 
 		echo pageAreaHtml::formOut($form);

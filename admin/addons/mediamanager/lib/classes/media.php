@@ -7,11 +7,15 @@ class media {
 
 	public function __construct($id) {
 		
-		$this->sql = new sql();
-		$this->sql->result('SELECT * FROM '.sql::table('media').' WHERE id='.$id);
+		if(is_object($id) && is_a($id, 'sql')) {
+			
+			$this->sql = $id;
+			
+		} else {
 		
-		if($this->sql->num() != 1) {
-			//throw new Exception('Kein eindeutige Datei gefunden');	
+			$this->sql = new sql();
+			$this->sql->result('SELECT * FROM '.sql::table('media').' WHERE id='.$id);
+			
 		}
 		
 	}
@@ -22,7 +26,7 @@ class media {
 	static public function getMediaByName($filename) {
 	
 		$sql = new sql();
-		$sql->result('SELECT id FROM '.sql::table('media').' WHERE filename="'.$filename.'"');
+		$sql->result('SELECT * FROM '.sql::table('media').' WHERE filename="'.$filename.'"');
 		
 		if($sql->num() != 1) {
 			//throw new Exception('Kein eindeutige Datei gefunden');	
@@ -30,7 +34,7 @@ class media {
 		
 		$class = __CLASS__;
 		
-		return new $class($sql->get('id'));
+		return new $class($sql);
 		
 	}
 	
@@ -44,10 +48,10 @@ class media {
 		$class = __CLASS__;
 	
 		$sql = new sql();
-		$sql->result('SELECT id FROM '.sql::table('media').' WHERE filename LIKE "%.'.$extension.'"');
+		$sql->result('SELECT * FROM '.sql::table('media').' WHERE filename LIKE "%.'.$extension.'"');
 		while($sql->isNext()) {
 			
-			$returnArray[] = new $class($sql->get('id'));
+			$returnArray[] = new $class($sql);
 			
 			$sql->next();
 		}

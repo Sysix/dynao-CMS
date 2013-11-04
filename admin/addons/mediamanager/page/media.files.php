@@ -84,7 +84,7 @@ if($action == 'add' || $action == 'edit') {
 if($action == '') {
 	
 	$table = new table();
-	$table->setSql('SELECT id FROM '.sql::table('media'));
+	$table->setSql('SELECT * FROM '.sql::table('media'));
 	$table->addRow()
 	->addCell()
 	->addCell('Titel')
@@ -93,7 +93,7 @@ if($action == '') {
 	$table->addSection('tbody');
 	while($table->isNext()) {
 			
-		$media = new media($table->get('id'));
+		$media = new media($table->getSql());
 		
 		$edit = '<a href="'.url::backend('media', array('action'=>'edit', 'id'=>$table->get('id'))).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
 		$delete = '<a href="'.url::backend('media', array('action'=>'delete', 'id'=>$table->get('id'))).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
