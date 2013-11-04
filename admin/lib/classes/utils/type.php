@@ -2,7 +2,7 @@
 
 class type {
 
-	static public function cast($var, $type) {	
+	static public function cast($var, $type = '') {	
 		
 		switch($type) {
 			
@@ -37,49 +37,49 @@ class type {
 		
 	}
 	
-	static public function get($var, $type, $default = null) {
+	static public function get($var, $type = '', $default = null) {
 				
 		return self::checkVar($_GET, $var, $type, $default);
 					
 	}
 	
-	static public function post($var, $type, $default = null) {
+	static public function post($var, $type = '', $default = null) {
 		
 		return self::checkVar($_POST, $var, $type, $default);
 		
 	}
 	
-	static public function files($var, $type, $default = null) {
+	static public function files($var, $type = '', $default = null) {
 		
 		return self::checkVar($_FILES, $var, $type, $default);
 		
 	}
 	
-	static public function super($var, $type, $default = null) {
+	static public function super($var, $type = '', $default = null) {
 	
 		return self::get($var, $type, self::post($var, $type, $default));
 		
 	}
 	
-	static public function cookie($var, $type, $default = null) {
+	static public function cookie($var, $type = '', $default = null) {
 		
 		return self::checkVar($_COOKIE, $var, $type, $default);
 		
 	}
 	
-	static public function server($var, $type, $default = null) {
+	static public function server($var, $type = '', $default = null) {
 		
 		return self::checkVar($_SERVER, $var, $type, $default);
 		
 	}
 	
-	static public function session($var, $type, $default = null) {
+	static public function session($var, $type = '', $default = null) {
 		
 		return self::checkVar($_SESSION, $var, $type, $default);
 		
 	}
 	
-	static private function checkVar($global, $var, $type, $default = null) {
+	static private function checkVar($global, $var, $type = '', $default = null) {
 		
 		if(array_key_exists($var, $global)) {
 			return self::cast($global[$var], $type);	
