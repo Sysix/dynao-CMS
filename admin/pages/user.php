@@ -43,7 +43,7 @@ if($action == 'add' || $action == 'edit') {
 		
 	$field = $form->addSelectField('perms', $form->get('perms'));
 	$field->setMultiple(true);
-	$field->setID('pageadmin-content');
+	$field->setId('pageadmin-content');
 	$field->setSize(8);
 	$field->addGroup('Content');
 	$field->add('content[edit]',	'Content bearbeiten / erstelle');

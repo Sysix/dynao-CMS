@@ -61,7 +61,7 @@ abstract class formField {
 		
 		if($name == 'class') {
 			$this->addClass($value);
-			return;	
+			return $this;	
 		}
 		
 		$this->attributes[$name] = $value; 
@@ -148,7 +148,7 @@ abstract class formField {
 		
 	}
 	
-	public function setID($id) {
+	public function setId($id) {
 	
 		$this->addAttribute('id', $id);
 		

@@ -24,6 +24,9 @@ class form {
 	// Formular wirklich speichern
 	var $toSave = true;
 	
+	var $successMessage;
+	var $errorMessage;
+	
 	/**
 	 * Das Formular erstellen
 	 *
@@ -57,6 +60,8 @@ class form {
 		$this->addFormAttribute('method', $this->method);
 		
 		$this->setButtons();
+		
+		$this->setSuccessMessage('Formular erfolgreich gespeichert');
 				
 	}
 	
@@ -407,7 +412,7 @@ class form {
 	 * @param	string	$name			Der Name des Paramter
 	 * @return	this
 	 */
-	public function delParam($name, $value) {
+	public function delParam($name) {
 	
 		unset($this->params[$name]);
 				
@@ -432,15 +437,9 @@ class form {
 	 * @param	string	$mode			Der Modus
 	 * @return	this
 	 */
-	public function setMode($mode) {
-	
-		if(in_array($mode, array('add', 'edit'))) {
+	public function setMode($mode) {	
 			
-			$this->mode = $mode;
-				
-		} else {			
-			// new Exception();				
-		}
+		$this->mode = $mode;
 		
 		return $this;
 		
@@ -454,7 +453,7 @@ class form {
 	 */
 	public function isEditMode() {
 	
-		return $this->mode == 'edit';
+		return $this->sql->num() == 1;
 		
 	}
 	
@@ -489,8 +488,7 @@ class form {
 			
 			$this->isSubmit = true;
 			
-			return true;
-				
+			return true;				
 				
 		}
 		
@@ -611,7 +609,7 @@ class form {
 	private function saveForm() {
 	
 		if(!$this->toSave)
-			return;
+			return $this;
 	
 		if($this->isEditMode()) {
 			$this->sql->update();
@@ -619,6 +617,16 @@ class form {
 			$this->sql->save();
 		}
 		
+		if(!is_null($this->errorMessage)) {
+			
+			echo message::danger($this->errorMessage);	
+			
+		} elseif(!is_null($this->successMessage)) {
+			
+			echo message::success($this->successMessage);
+				
+		}
+
 		return $this;
 		
 	}
@@ -668,6 +676,17 @@ class form {
 	 *
 	 */
 	public function redirect() {
+		
+		
+		if(!is_null($this->errorMessage)) {
+			
+			$this->addParam('error_msg', $this->errorMessage);
+			
+		} elseif(!is_null($this->successMessage)) {
+			
+			$this->addParam('success_msg', $this->successMessage);
+			
+		}		
 	
 		$params = url_addParam(
 			array_keys($this->getParams()), 
@@ -680,6 +699,35 @@ class form {
 		
 	}
 	
+	/**
+	 * Eine Erfolgnachricht speichern für spätere erfolgreiche Ausgabe
+	 *
+	 * @param	string	$message		Die Nachricht
+	 * @return	this
+	 *
+	 */
+	public function setSuccessMessage($message) {
+	
+		$this->successMessage = $message;
+		
+		return $this;
+		
+	}
+	
+	/**
+	 * Eine Fehlernachricht speichern für spätere fehlerhafte Ausgabe
+	 *
+	 * @param	string	$message		Die Nachricht
+	 * @return	this
+	 *
+	 */
+	public function setErrorMessage($message) {
+	
+		$this->errorMessage = $message;
+		
+		return $this;
+		
+	}
 	
 	
 	/**
@@ -702,7 +750,7 @@ class form {
 			
 			$this->saveForm();
 			
-			if(!$this->isSaveEdit()) {
+			if(!$this->isSaveEdit()) {				
 				$this->redirect();
 			}
 			
