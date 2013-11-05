@@ -55,7 +55,7 @@ class pageArea {
 		if($this->isNew)
 			return;
 			
-		return $this->sql->get(sql::table('structure_area').'.'.$value);
+		return $this->sql->get($value);
 		
 	}
 	

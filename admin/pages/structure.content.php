@@ -1,8 +1,10 @@
 <div class="clearfix"></div>
 <?php
 
+$sort = type::super('sort', 'int');
+
 // Bugfix, das neu erstelle Blöcke nicht einzgezeigt werden
-if(type::post('action', 'string') == 'add' || type::post('action', 'string') == 'edit') {
+if(!is_null(type::post('save-back')) || !is_null(type::post('save'))) {
 	pageAreaAction::saveBlock();
 	echo message::success('Inhalt erfoglreich übernommen');
 }
@@ -14,7 +16,7 @@ if($action == 'online') {
 	
 	$online = ($sql->get('online')) ? 0 : 1;
 	
-	$sql->setTable('structure_block');
+	$sql->setTable('structure_area');
 	$sql->setWhere('id='.$id);
 	$sql->addPost('online', $online);
 	$sql->update();
@@ -64,8 +66,7 @@ while($sql->isNext()) {
 	
 	$sqlId = ($action == 'add') ? 0 : $sql->get('id');
 	$module = new pageArea($sql);
-
-	if(($action == 'add' && type::super('sort', 'int') == $i) || ($action == 'edit' && $id == $sql->get('id'))) {
+	if(in_array($action, array('add', 'edit'))) {
 		
 		if($action == 'add') {
 			$module->setNew(true);	
@@ -79,10 +80,8 @@ while($sql->isNext()) {
 <?php
 	// Wenn Aktion == add
 	// UND Wenn Sortierung von SQL gleich der $_GET['sort']
-	// UND
-	// Wenn Formular noch nicht abgeschickt worden
-	// ODER Abgeschickt worden ist und ein Übernehmen geklickt worden ist
-	if($action == 'add' && type::super('sort', 'int') == $i && (!$form->isSubmit() || ($form->isSubmit() && !is_null(type::post('save-back'))))) {
+	// UND Wenn Formular noch nicht abgeschickt worden
+	if($action == 'add' && $sort == $i && !$form->isSubmit()) {
 		
 		echo pageAreaHtml::formOut($form);
 
@@ -96,8 +95,10 @@ while($sql->isNext()) {
 	// UND Wenn ID von SQL gleich der $_GET['id']
 	// UND
 	// Wenn Formular noch nicht abgeschickt worden
-	// ODER Abgeschickt worden ist und ein Übernehmen geklickt worden ist	
-	if($action == 'edit' && $id == $sql->get('id') && (!$form->isSubmit() || ($form->isSubmit() && !is_null(type::post('save-back'))))) {
+	// ODER Abgeschickt worden ist und ein Übernehmen geklickt worden ist
+	if($action == 'edit' && $id == $sql->get('id') && 
+	(!$form->isSubmit() || ($form->isSubmit() && !is_null(type::post('save-back'))))
+	) {
 
 		echo pageAreaHtml::formOut($form);
 
@@ -140,7 +141,7 @@ while($sql->isNext()) {
 </ul>
 <?php
 $module = new module();
-if((!$sql->num() || ($i == type::super('sort', 'int'))) && $action == 'add') {
+if((!$sql->num() || ($i == $sort)) && $action == 'add') {
 	
 	$form_id = type::super('modul', 'int');
 	

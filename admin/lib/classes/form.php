@@ -54,8 +54,9 @@ class form {
 		$this->addFormAttribute('class', 'form-horizontal');
 		$this->addFormAttribute('action', $this->action);
 		$this->addFormAttribute('method', $this->method);
-
 		
+		$this->setButtons();
+				
 	}
 	
 	/**
@@ -231,7 +232,7 @@ class form {
 		$attributes['type'] = 'submit';
 		$field = $this->addFreeField($name, $value, 'formButton', $attributes);
 		if($toButtons) {
-			$this->buttons[] = $field;
+			$this->addButton($field);
 		}
 		return $field;
 		
@@ -252,7 +253,7 @@ class form {
 		$attributes['type'] = 'button';
 		$field = $this->addFreeField($name, $value, 'formButton', $attributes);
 		if($toButtons) {
-			$this->buttons[] = $field;
+			$this->addButton($field);
 		}
 		return $field;
 		
@@ -273,7 +274,7 @@ class form {
 		$attributes['type'] = 'reset';
 		$field = $this->addFreeField($name, $value, 'formButton', $attributes);
 		if($toButtons) {
-			$this->buttons[] = $field;
+			$this->addButton($field);
 		}
 		return $field;
 		
@@ -357,6 +358,34 @@ class form {
 	}
 	
 	/**
+	 * Ein Button hinzufügen am Ende des Formulars
+	 *
+	 * @param	object	$field			Der Button als Klasse
+	 * @return	this
+	 */
+	public function addButton($field) {
+	
+		$this->buttons[$field->getName()] = $field;
+				
+		return $this;
+		
+	}
+	
+	/**
+	 * Einen Button löschen
+	 *
+	 * @param	string	$name			Der Name des Buttons
+	 * @return	this
+	 */
+	public function delButton($name) {
+	
+		unset($this->buttons[$name]);
+				
+		return $this;
+		
+	}
+	
+	/**
 	 * Modus setzen
 	 *
 	 * @param	string	$mode			Der Modus
@@ -397,19 +426,18 @@ class form {
 	public function isSubmit() {
 		
 		// Wurde schon isSubmit ausgeführt? dann schnelles Return
-		if($this->isSubmit === true || $this->isSubmit === false) {
-			return $this->isSubmit;
-				
+		if(!is_null($this->isSubmit)) {
+			return $this->isSubmit;				
 		}
 			
-		$save = type::post('save', '', false);
+		$save = type::post('save');
 
-		$save_edit = false;	
-		if($this->isEditMode()) {
-			$save_edit = type::post('save-back', '', false);	
+		$save_edit = null;	
+		if($this->isSaveEdit()) {
+			$save_edit = type::post('save-back');	
 		}
-
-		if($save !== false || $save_edit !== false) {
+		
+		if(!is_null($save) || !is_null($save_edit)) {
 			
 			if(!$this->isGetPosts) {
 		
@@ -475,7 +503,7 @@ class form {
 				continue;	
 			}
 				
-			$val = type::post($name, '', '');
+			$val = type::post($name);
 			
 			if(is_array($val)) {
 											
@@ -562,7 +590,7 @@ class form {
 	 */
 	public function isSaveEdit() {
 	
-		return type::post('save-back', '', false) !== false;
+		return !is_null(type::post('save-back'));
 		
 	}
 	
@@ -609,8 +637,7 @@ class form {
 			$this->saveForm();
 			
 			if(!$this->isSaveEdit()) {
-				//
-				$GLOBALS['action'] = '';
+				$GLOBALS['action'] = '';				
 				return;
 			}
 			
@@ -638,8 +665,6 @@ class form {
 			}
 			
 		}		
-		
-		$this->setButtons();		
 		
 		foreach($this->buttons as $buttons) {
 			$buttons_echo .= $buttons->get();	

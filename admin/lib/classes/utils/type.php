@@ -81,8 +81,8 @@ class type {
 	
 	static private function checkVar($global, $var, $type = '', $default = null) {
 		
-		if(array_key_exists($var, $global)) {
-			return self::cast($global[$var], $type);	
+		if(isset($global[$var]) || array_key_exists($var, $global)) {
+			return self::cast($global[$var], $type);
 		}
 		
 		return $default;
