@@ -10,6 +10,7 @@ abstract class formField {
 	var $suffix;
 	var $prefix;
 	var $fieldName;
+	var $toSave = true;
 	
 	public function __construct($name, $value, $attributes = array()) {
 		
@@ -33,6 +34,18 @@ abstract class formField {
 		$this->prefix = $prefix;	
 		
 		return $this;
+		
+	}
+	
+	public function setSave($save) {
+	
+		$this->toSave = $save;
+		
+	}
+	
+	public function toSave() {
+	
+		return $this->toSave;
 		
 	}
 	

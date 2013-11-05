@@ -540,7 +540,7 @@ class form {
 			
 			$name = $ausgabe->getName();
 			
-			if(in_array($name, array('page', 'subpage', 'action', ''))) {
+			if(!$ausgabe->toSave()) {
 				continue;	
 			}
 				
@@ -690,10 +690,12 @@ class form {
 	 */
 	public function show() {
 		
-		$this->addHiddenField('action', $this->mode);
+		$action = $this->addHiddenField('action', $this->mode);
+		$action->setSave(false);
 		
 		foreach($this->getParams() as $key=>$value) {
-			$this->addHiddenField($key, $value);
+			$param = $this->addHiddenField($key, $value);
+			$param->setSave(false);
 		}
 		
 		if($this->isSubmit()) {
