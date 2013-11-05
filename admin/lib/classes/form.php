@@ -13,6 +13,7 @@ class form {
 	
 	var $return = array();
 	var $buttons = array();
+	var $params = array();
 	
 	var $formAttributes = array();
 	
@@ -111,8 +112,8 @@ class form {
 		$page = type::super('page', 'string');
 		$subpage = type::super('subpage', 'string');
 		
-		$this->addHiddenField('page', $page);
-		$this->addHiddenField('subpage', $subpage);
+		$this->addParam('page', $page);
+		$this->addParam('subpage', $subpage);
 		
 		return $this;
 		
@@ -386,6 +387,46 @@ class form {
 	}
 	
 	/**
+	 * Ein Paramter hinzufügen
+	 *
+	 * @param	string	$name			Der Name des Paramter
+	 * @param	string	$value			Der Value
+	 * @return	this
+	 */
+	public function addParam($name, $value) {
+	
+		$this->params[$name] = $value;
+				
+		return $this;
+		
+	}
+	
+	/**
+	 * Ein Paramter löschen
+	 *
+	 * @param	string	$name			Der Name des Paramter
+	 * @return	this
+	 */
+	public function delParam($name, $value) {
+	
+		unset($this->params[$name]);
+				
+		return $this;
+		
+	}
+	
+	/**
+	 * Alle Parameter zurückgeben
+	 *
+	 * @return	array
+	 */
+	public function getParams() {
+	
+		return $this->params;
+		
+	}
+		
+	/**
 	 * Modus setzen
 	 *
 	 * @param	string	$mode			Der Modus
@@ -623,6 +664,25 @@ class form {
 	}
 	
 	/**
+	 * Weiterleitung falls auf "Speichern" geklickt worden ist
+	 *
+	 */
+	public function redirect() {
+	
+		$params = url_addParam(
+			array_keys($this->getParams()), 
+			array_values($this->getParams())
+			);
+			
+		$url = 'index.php?'.$params;
+		
+		header('Location: '.$url);
+		
+	}
+	
+	
+	
+	/**
 	 * Fügt das Formular zusammen und speichert es, falls nötig
 	 *
 	 * @return	string
@@ -632,13 +692,16 @@ class form {
 		
 		$this->addHiddenField('action', $this->mode);
 		
+		foreach($this->getParams() as $key=>$value) {
+			$this->addHiddenField($key, $value);
+		}
+		
 		if($this->isSubmit()) {
 			
 			$this->saveForm();
 			
 			if(!$this->isSaveEdit()) {
-				$GLOBALS['action'] = '';				
-				return;
+				$this->redirect();
 			}
 			
 		}
