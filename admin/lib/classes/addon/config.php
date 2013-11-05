@@ -3,6 +3,7 @@
 class addonConfig {
 	
 	static $all = array();
+	static $allConfig = array();
 	
 	public static function isSaved($addon, $save = true) {
 	
@@ -53,20 +54,29 @@ class addonConfig {
 			if(file_exists($file.'.json')) {				
 				lang::loadLang($file);
 			}
+			
+			$defaultFile = dir::addon($name, 'lang/'.lang::getDefaultLang());
+			if(file_exists($defaultFile.'.json')) {				
+				lang::loadLang($defaultFile, true);
+			}
+			
 		}
 		
 	}
 	
 	public static function getAllConfig() {
 		
-		$return = array();
+		if(!count(self::$allConfig)) {
 		
-		foreach(self::getAll() as $name) {
-			$configFile = dir::addon($name, 'config.json');
-			$return[$name] = json_decode(file_get_contents($configFile), true);
+			foreach(self::getAll() as $name) {
+				$configFile = dir::addon($name, 'config.json');
+				self::$allConfig[$name] = json_decode(file_get_contents($configFile), true);
+			}
+		
 		}
 		
-		return $return;
+		return self::$allConfig;
+		
 	}
 	
 }

@@ -62,22 +62,41 @@ class lang {
 	}
 	
 	/**
+	 * Gibt die aktuelle Default Sprache zurück
+	 *
+	 * @return	string
+	 *
+	 */
+	static public function getDefaultLang() {
+		
+		return self::$defaultLang;
+		
+	}
+	
+	/**
 	 * Lädt die entsprechende Datei und fügt sie zur "Datenbank" hinzu
 	 *
 	 * @param	string	$file			Der Dateipfad ohne .json ende
+	 * @param	bool	$defaultLang	Zur Normalen Sprache oder zur Defaultsprache
 	 *
 	 */
-	static public function loadLang($file) {
+	static public function loadLang($file, $defaultLang = false) {
 		
 		$file = file_get_contents($file.'.json');
 		
 		// Alle Kommentare löschen (mit Raute beginnen
 		$file = preg_replace("/#\s*([a-zA-Z ]*)/", "", $file);	
 		$array = json_decode($file, true);
-				
-		self::$langs = array_merge((array)$array,self::$langs);
+		
+		if(!$defaultLang) {
+			self::$langs = array_merge((array)$array, self::$langs);
+		} else {
+			self::$default = array_merge((array)$array,self:: $default);
+		}
 		
 	}
+	
+	
 	
 	/**
 	 * Standardsprache setzen
