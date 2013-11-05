@@ -8,8 +8,14 @@ if($action == 'add' || $action == 'edit') {
 	$field = $form->addTextField('title', $form->get('title'));
 	$field->fieldName('Titel');
 	
-	$field = $form->addTextareaField('description', $form->get('description'));
-	$field->fieldName('Beschreibung');
+	$field = $form->addSelectField('category', $form->get('category'));
+	$field->fieldName('Kategorie');
+	$cat = new sql();
+	$cat->query('SELECT * FROM '.sql::table('media_cat').' ORDER BY `sort`')->result();
+	while($cat->isNext()) {
+		$field->add($cat->get('id'), $cat->get('name').' ['.$cat->get('id').']');
+		$cat->next();
+	}
 	
 	$meta = new sql();
 	$meta->query('SELECT * FROM '.sql::table('metainfos').' WHERE `type` = "media" ORDER BY `sort`')->result();

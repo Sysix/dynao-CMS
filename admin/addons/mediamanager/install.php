@@ -23,7 +23,6 @@ $sql->query('CREATE TABLE IF NOT EXISTS '.sql::table('media').' (
 `filename`		varchar(255)			NOT NULL,
 `size` 			int(16)		unsigned 	NOT NULL,
 `title` 		varchar(255)			NOT NULL,
-`description`	text					NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 
@@ -31,7 +30,7 @@ $sql->query('CREATE TABLE IF NOT EXISTS '.sql::table('media_cat').' (
 `id` 			int(16)		unsigned 	NOT NULL 	auto_increment,
 `name`			varchar(255)			NOT NULL,
 `sort` 			int(16)		unsigned 	NOT NULL,
-`parent_id` 	int(16)		unsigned	NOT NULL,
+`pid` 			int(16)		unsigned	NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 

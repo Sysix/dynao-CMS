@@ -1,17 +1,17 @@
 <?php
 
-$parent_id = type::super('parent_id', 'int', 0);
+$pid = type::super('pid', 'int', 0);
 
 $while_id = $id;
 
 while($while_id) {
 		
 	$sql = new sql();
-	$sql->query('SELECT name, parent_id FROM '.sql::table('media_cat').' WHERE id='.$while_id)->result();
+	$sql->query('SELECT name, pid FROM '.sql::table('media_cat').' WHERE id='.$while_id)->result();
 	
 	if($id != $while_id) {
 		
-		$breadcrumb[] = '<li><a href="'.url::backend('media_cat', array('id'=>$while_id, 'subpage'=>'category')).'">'.$sql->get('name').'</a></li>';
+		$breadcrumb[] = '<li><a href="'.url::backend('media', array('id'=>$while_id, 'subpage'=>'category')).'">'.$sql->get('name').'</a></li>';
 		
 	} else {
 		
@@ -19,7 +19,7 @@ while($while_id) {
 		
 	}
 	
-	$while_id = $sql->get('parent_id');
+	$while_id = $sql->get('pid');
 	
 }
 
@@ -32,16 +32,40 @@ echo '<div class="clearfix"></div>';
 
 if($action == 'delete') {
 	
+	$orginal_id = $id;
+	
+	while($id) {
+	
+		$sql = new sql();
+		$sql->query('SELECT id FROM '.sql::table('media_cat').' WHERE `pid` = '.$id)->result();
+		if($sql->num()) {
+			
+			$id = $sql->get('id');
+			
+			$delete = new sql();
+			$delete->setTable('media_cat');
+			$delete->setWhere('id='.$id);
+			$delete->delete();			
+			
+		} else {
+			$id = false;	
+		}
+		
+	}
+	
+	
 	$sql = new sql();		
-	$sql->query('SELECT `sort`, `parent_id` FROM '.sql::table('media_cat').' WHERE id='.$parent_id)->result();
+	$sql->query('SELECT `sort`, `pid` FROM '.sql::table('media_cat').' WHERE id='.$orginal_id)->result();
 	
 	$delete = new sql();
 	$delete->setTable('media_cat');
-	$delete->setWhere('id='.$parent_id);
+	$delete->setWhere('id='.$orginal_id);
 	$delete->delete();
 	
-	sql::sortTable('media_cat', $sql->get('sort'), false, '`parent_id` = '.$sql->get('parent_id'));
+	sql::sortTable('media_cat', $sql->get('sort'), false, '`pid` = '.$sql->get('pid'));
 	
+	echo message::success('Artikel erfolgreich gelöscht');
+		
 }
 
 if(in_array($action, array('save-add', 'save-edit'))) {
@@ -49,14 +73,15 @@ if(in_array($action, array('save-add', 'save-edit'))) {
 	$sql = new sql();
 	$sql->setTable('media_cat');
 	$sql->setWhere('id='.$id);
-	$sql->getPosts(array('name'=>'string','sort'=>'int', 'parent_id'=>'int'));
+	$sql->getPosts(array('name'=>'string','sort'=>'int', 'pid'=>'int'));
 	
 	if($action == 'save-edit') {
 		$sql->update();	
 	} else {
-		sql::sortTable('media_cat', type::post('sort', 'int'), true, '`parent_id` = '.type::post('parent_id', 'int'));
-		$sql->save();	
+		$sql->save();
+		sql::sortTable('media_cat', type::post('sort', 'int'), true, '`pid` = '.type::post('pid', 'int'));	
 	}
+	
 	
 }
 
@@ -65,15 +90,16 @@ $table = new table(array('class'=>array('js-sort')));
 $colFirstWidth = ($action == 'edit' || $action == 'add') ? 50 : 25; 
 
 $table->addCollsLayout($colFirstWidth.',*,250');
+	
 $table->addRow()
 ->addCell()
-->addCell('Name')
+->addCell('Artikel')
 ->addCell('Aktion');
 
 $table->addSection('tbody');
-
-$table->setSql('SELECT * FROM '.sql::table('media_cat').' WHERE parent_id = '.$id.' ORDER BY sort ASC');
-
+	
+$table->setSql('SELECT * FROM '.sql::table('media_cat').' WHERE pid = '.$pid.' ORDER BY sort ASC');
+	
 if(in_array($action, array('edit', 'add'))) {
 		
 	echo '<form method="post" action="index.php">';
@@ -90,7 +116,7 @@ if(in_array($action, array('edit', 'add'))) {
 	$inputHidden->addAttribute('type', 'hidden');
 	echo $inputHidden->get();
 	
-	$inputHidden = new formInput('parent_id', $id);
+	$inputHidden = new formInput('pid', $pid);
 	$inputHidden->addAttribute('type', 'hidden');
 	echo $inputHidden->get();
 	
@@ -109,8 +135,7 @@ if($action == 'add') {
 	$inputName->addClass('form-control');
 	$inputName->addClass('input-sm');
 	
-	$sql = new sql();
-	$inputSort = new formInput('sort', $sql->num('SELECT 1 FROM '.sql::table('media_cat').' WHERE `parent_id`= '.type::super('id', 'int'))+1);
+	$inputSort = new formInput('sort', $table->getSql()->num()+1);
 	$inputSort->addAttribute('type', 'text');
 	$inputSort->addClass('form-control');
 	$inputSort->addClass('input-sm');
@@ -124,7 +149,7 @@ if($action == 'add') {
 
 while($table->isNext()) {
 	
-	if($action == 'edit' && $table->get('id') == $parent_id) {
+	if($action == 'edit' && $table->get('id') == $id) {
 			
 		$inputName = new formInput('name', $table->get('name'));
 		$inputName->addAttribute('type', 'text');
@@ -146,12 +171,12 @@ while($table->isNext()) {
 		
 	} else {
 		
-		$edit = '<a href="'.url::backend('media', array('subpage'=>'category', 'action'=>'edit', 'parent_id'=>$table->get('id'))).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';	
-		$delete = '<a href="'.url::backend('media', array('subpage'=>'category', 'action'=>'delete', 'parent_id'=>$table->get('id'))).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
-			
+		$edit = '<a href="'.url::backend('media', array('subpage'=>'category', 'action'=>'edit', 'id'=>$table->get('id'),'pid'=>$pid)).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';	
+		$delete = '<a href="'.url::backend('media', array('subpage'=>'category', 'action'=>'delete', 'id'=>$table->get('id'),'pid'=>$pid)).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+	
 		$table->addRow(array('data-id'=>$table->get('id')))
 		->addCell('<i class="icon-sort"></i>')
-		->addCell('<a href="'.url::backend('media', array('subpage'=>'category', 'id'=>$table->get('id'))).'">'.$table->get('name').'</a>')
+		->addCell('<a href="'.url::backend('media', array('subpage'=>'category', 'pid'=>$table->get('id'))).'">'.$table->get('name').'</a>')
 		->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
 		
 	}
