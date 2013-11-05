@@ -75,6 +75,54 @@ class backend {
 		
 	}
 	
+	public static function getSubnaviInclude($addon = false) {
+		
+		$allowPages = array();
+		
+		$page = preg_match("/page=(\w*)/", self::$subnavi[0]['link'], $output);
+		$page = $output[1];
+		
+		foreach(self::$subnavi as $subnavi) {
+			
+			preg_match("/subpage=(\w*)/", $subnavi['link'], $output);
+			if(isset($output[1])) {
+				$allowPages[] = $output[1];	
+			}
+			
+		}
+		
+		$allowPages = extension::get('page_subpages', $allowPages);
+		$subpage = type::super('subpage', 'string', $allowPages[0]);
+		
+		if(!$addon) {
+		
+			if(in_array($subpage, $allowPages)) {
+		
+				return dir::page($page.'.'.$subpage.'.php');
+				
+			} else {
+				
+				return dir::page($page.'.'.$allowPages[0].'.php');
+				
+			}
+			
+		} else {
+			
+			if(in_array($subpage, $allowPages)) {
+	
+				return dir::addon($addon, 'page/'.$page.'.'.$subpage.'.php');
+				
+			} else {
+				
+				return dir::addon($addon, 'page/'.$page.'.'.$allowPages[0].'.php');
+				
+			}
+			
+		}
+		
+		
+	}
+	
 }
 
 ?>

@@ -7,17 +7,6 @@ backend::addSubnavi('Dateien Synchronisieren',		url::backend('media', array('sub
 $action = type::super('action', 'string', '');
 $id = type::super('id', 'int', 0);
 
-$allowPages = array('files', 'category', 'sync');
-$allowPages = extension::get('page_subpages', $allowPages);
-
-if(in_array($subpage, $allowPages)) {
-	
-	include_once(dir::addon('mediamanager', 'page/media.'.$subpage.'.php'));
-	
-} else {
-	
-	include_once(dir::addon('mediamanager', 'page/media.'.$allowPages[0].'.php'));
-	
-}
+include_once(backend::getSubnaviInclude('mediamanager'));
 
 ?>

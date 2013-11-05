@@ -38,18 +38,6 @@ $breadcrumb[] = '<li><a href="'.url::backend('structure').'">Struktur</a></li>';
 
 echo '<ul class="pull-left breadcrumb">'.implode('', array_reverse($breadcrumb)).'</ul>';
 
-
-$allowPages = array('pages', 'content', 'module');
-$allowPages = extension::get('page_subpages', $allowPages);
-
-if(in_array($subpage, $allowPages)) {
-	
-	include_once(dir::page('structure.'.$subpage.'.php'));
-	
-} else {
-	
-	include_once(dir::page('structure.'.$allowPages[0].'.php'));
-	
-}
+include_once(backend::getSubnaviInclude());
 
 ?>
