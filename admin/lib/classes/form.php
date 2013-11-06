@@ -216,8 +216,11 @@ class form {
 	public function addHiddenField($name, $value, $attributes = array()) {
 		
 		$attributes['type'] = 'hidden';
-		return $this->addField($name, $value, 'formInput', $attributes);
-				
+		$field = $this->addFreeField($name, $value, 'formInput', $attributes);
+		$this->addButton($field);
+		
+		return $field;
+						
 	}
 	
 	/**
@@ -765,24 +768,16 @@ class form {
 		
 		$return[] = '<form'.html_convertAttribute($this->formAttributes).'>'.PHP_EOL;
 		
-		foreach($this->return as $ausgabe) {
-			
-			if($ausgabe->getAttribute('type') == 'hidden') {
+		foreach($this->return as $ausgabe) {			
 				
-				$buttons[] = $ausgabe->get();
-				
-			} else {
-				
-				if(!$ausgabe->hasAttribute('id')) {
-					$ausgabe->addAttribute('id', 'form_'.$x);
-				}
-				
-				$return[] = '<div class="form-group">';
-				$return[] = '<label for="'.$ausgabe->getAttribute('id').'">'.$ausgabe->fieldName.'</label>';
-				$return[] = '<div class="form-wrap-input">'.$ausgabe->prefix . $ausgabe->get() . $ausgabe->suffix.'</div>';
-				$return[] = '</div>';
-				
+			if(!$ausgabe->hasAttribute('id')) {
+				$ausgabe->addAttribute('id', 'form_'.$x);
 			}
+				
+			$return[] = '<div class="form-group">';
+			$return[] = '<label for="'.$ausgabe->getAttribute('id').'">'.$ausgabe->fieldName.'</label>';
+			$return[] = '<div class="form-wrap-input">'.$ausgabe->prefix . $ausgabe->get() . $ausgabe->suffix.'</div>';
+			$return[] = '</div>';
 			
 			$x++;
 			
