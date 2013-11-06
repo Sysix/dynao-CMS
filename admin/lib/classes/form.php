@@ -759,9 +759,11 @@ class form {
 			
 		}
 		
-		$return = array();	
-		$buttons = array();	
-		$return[] = '<form'.html_convertAttribute($this->formAttributes).'>'.PHP_EOL;		
+		$return = array();
+		$buttons = array();
+		$x = 1;
+		
+		$return[] = '<form'.html_convertAttribute($this->formAttributes).'>'.PHP_EOL;
 		
 		foreach($this->return as $ausgabe) {
 			
@@ -771,17 +773,23 @@ class form {
 				
 			} else {
 				
+				if(!$ausgabe->hasAttribute('id')) {
+					$ausgabe->addAttribute('id', 'form_'.$x);
+				}
+				
 				$return[] = '<div class="form-group">';
-				$return[] = '<label>'.$ausgabe->fieldName.'</label>';
+				$return[] = '<label for="'.$ausgabe->getAttribute('id').'">'.$ausgabe->fieldName.'</label>';
 				$return[] = '<div class="form-wrap-input">'.$ausgabe->prefix . $ausgabe->get() . $ausgabe->suffix.'</div>';
 				$return[] = '</div>';
 				
 			}
 			
+			$x++;
+			
 		}		
 		
 		foreach($this->buttons as $buttons) {
-			$buttons_echo[] = $buttons->get();	
+			$buttons_echo[] = $buttons->get();
 		}
 		
 		$return[] = '<div class="form-group">';
