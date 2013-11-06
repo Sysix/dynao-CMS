@@ -536,7 +536,10 @@ class form {
 	
 		foreach($this->return as $ausgabe) {
 			
-			if(!$ausgabe->isValid()) {
+			$name = $ausgabe->getName();				
+			$val = type::post($name);
+			
+			if(!$ausgabe->isValid($val)) {
 				
 				$this->setErrorMessage($ausgabe->getError());
 				$this->setSave(false);
@@ -545,10 +548,7 @@ class form {
 			
 			if(!$ausgabe->toSave()) {
 				continue;	
-			}
-			
-			$name = $ausgabe->getName();				
-			$val = type::post($name);
+			}			
 			
 			if(is_array($val)) {
 											
@@ -556,7 +556,7 @@ class form {
 					
 			}
 				
-			$this->addPost($name,  $val);
+			$this->addPost($name, $val);
 			
 		}
 		
@@ -622,16 +622,6 @@ class form {
 		} else {
 			$this->sql->save();
 		}
-		
-		if(!is_null($this->errorMessage)) {
-			
-			echo message::danger($this->errorMessage);	
-			
-		} elseif(!is_null($this->successMessage)) {
-			
-			echo message::success($this->successMessage);
-				
-		}
 
 		return $this;
 		
@@ -681,8 +671,7 @@ class form {
 	 * Weiterleitung falls auf "Speichern" geklickt worden ist
 	 *
 	 */
-	public function redirect() {
-		
+	public function redirect() {		
 		
 		if(!is_null($this->errorMessage)) {
 			
@@ -744,6 +733,7 @@ class form {
 	 */
 	public function show() {
 		
+		
 		$action = $this->addHiddenField('action', $this->mode);
 		$action->setSave(false);
 		
@@ -756,14 +746,23 @@ class form {
 			
 			$this->saveForm();
 			
-			if(!$this->isSaveEdit()) {				
+			if(!$this->isSaveEdit() && is_null($this->errorMessage)) {		
 				$this->redirect();
 			}
 			
-		}
+			if(!is_null($this->errorMessage)) {
+			
+				echo message::danger($this->errorMessage);	
+			
+			} elseif(!is_null($this->successMessage)) {
+				
+				echo message::success($this->successMessage);
+					
+			}
+			
+		}		
 		
-		$return = '<form'.html_convertAttribute($this->formAttributes).'>'.PHP_EOL;
-		
+		$return = '<form'.html_convertAttribute($this->formAttributes).'>'.PHP_EOL;		
 		
 		$buttons_echo = '';
 		

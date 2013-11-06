@@ -106,9 +106,9 @@ abstract class formField {
 		
 	}
 	
-	public function isValid() {
+	public function isValid($value) {
 	
-		return $this->validator->isValid();
+		return $this->validator->isValid($value);
 		
 	}
 	
