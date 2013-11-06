@@ -50,13 +50,13 @@ class addonConfig {
 		
 		foreach(self::getAll() as $name) {
 			
-			$file = dir::addon($name, 'lang/'.lang::getLang());
-			if(file_exists($file.'.json')) {				
+			$file = dir::addon($name, 'lang/'.lang::getLang().'.json');
+			if(file_exists($file)) {				
 				lang::loadLang($file);
 			}
 			
-			$defaultFile = dir::addon($name, 'lang/'.lang::getDefaultLang());
-			if(file_exists($defaultFile.'.json')) {				
+			$defaultFile = dir::addon($name, 'lang/'.lang::getDefaultLang().'.json');
+			if(file_exists($defaultFile)) {				
 				lang::loadLang($defaultFile, true);
 			}
 			
