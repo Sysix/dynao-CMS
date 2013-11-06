@@ -757,41 +757,40 @@ class form {
 					
 			}
 			
-		}		
+		}
 		
-		$return = '<form'.html_convertAttribute($this->formAttributes).'>'.PHP_EOL;		
-		
-		$buttons_echo = '';
+		$return = array();	
+		$buttons = array();	
+		$return[] = '<form'.html_convertAttribute($this->formAttributes).'>'.PHP_EOL;		
 		
 		foreach($this->return as $ausgabe) {
 			
 			if($ausgabe->getAttribute('type') == 'hidden') {
 				
-				$buttons_echo .= $ausgabe->get();
+				$buttons[] = $ausgabe->get();
 				
 			} else {
 				
-				$return .= '<div class="form-group">';
-				$return .= '<label>'.$ausgabe->fieldName.'</label>';
-				$return .= '<div class="form-wrap-input">'.$ausgabe->prefix . $ausgabe->get() . $ausgabe->suffix.'</div>';
-				$return .= '</div>';
+				$return[] = '<div class="form-group">';
+				$return[] = '<label>'.$ausgabe->fieldName.'</label>';
+				$return[] = '<div class="form-wrap-input">'.$ausgabe->prefix . $ausgabe->get() . $ausgabe->suffix.'</div>';
+				$return[] = '</div>';
 				
 			}
 			
 		}		
 		
 		foreach($this->buttons as $buttons) {
-			$buttons_echo .= $buttons->get();	
+			$buttons_echo[] = $buttons->get();	
 		}
 		
-		$return .= '<div class="form-group">';
-		$return .= '<label></label>';
-		$return .= '<div class="form-wrap-input btn-group">'.$buttons_echo.'</div>';
-		$return .= '</div>';
+		$return[] = '<div class="form-group">';
+		$return[] = '<div class="col-sm-offset-2 col-sm-10 btn-group">'.implode(PHP_EOL, $buttons_echo).'</div>';
+		$return[] = '</div>';
 			
-		$return .= '</form>';
+		$return[] = '</form>';
 		
-		return $return;
+		return implode(PHP_EOL, $return);
 		
 	}
 	
