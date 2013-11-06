@@ -35,7 +35,13 @@ if($action == 'add' || $action == 'edit') {
 	$field->fieldName('E-Mail Adresse');
 	$field->addValidator('email', 'Bitte geben Sie eine gültige E-Mail-Adresse an');
 	
-	$field = $form->addTextField('password', $form->get('password'));
+	if($form->get('password') != $form->sql->getResult('password')) {
+		$password = userLogin::hash($form->get('password'));
+	} else {
+		$password = $form->sql->getResult('password');
+	}
+	
+	$field = $form->addTextField('password', $password);
 	$field->fieldName('Passwort');
 	$field->setSuffix('<small>Sie sehen das verschlüsselte Passwort! Um ein neues Passwort zu vergeben, einfach eingeben!</small>');
 	
@@ -63,15 +69,13 @@ if($action == 'add' || $action == 'edit') {
 	
 	if($form->isSubmit()) {
 		
-		$post_password = type::post('password', 'string');
-		
-		if($post_password != $form->sql->get('password')) {
+		if($form->get('password') != $form->sql->getResult('password')) {
 			
-			$form->addPost('password', userLogin::hash($post_password));
+			$form->addPost('password', userLogin::hash($form->get('password')));
 			
 		}
-
-	}	
+		
+	}
 		
 	
 	echo $form->show();
