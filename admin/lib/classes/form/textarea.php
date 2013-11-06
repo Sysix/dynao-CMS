@@ -29,6 +29,7 @@ class formTextarea extends formField {
 	public function get() {
 		
 		$this->addAttribute('name', $this->name);
+		$this->addClass('form-control');
 		
 		if(!$this->hasAttribute('cols')) {
 			$this->addCols(70);	

@@ -86,6 +86,7 @@ class formSelect extends formField {
 	
 	public function get() {
 		
+		$this->addClass('form-control');
 		$attributes = $this->attributes;
 		$attributes['name'] = $this->name;
 		

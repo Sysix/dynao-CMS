@@ -6,6 +6,7 @@ class formInput extends formField {
 		
 		$this->addAttribute('name', $this->name);
 		$this->addAttribute('value', $this->value);
+		$this->addClass('form-control');
 		
 		return '<input'.$this->convertAttr().' />';
 		

@@ -91,15 +91,12 @@ class form {
 	public function setButtons() {
 				
 		$submit = $this->addSubmitField('save', lang::get('save'));
-		$submit->addClass('btn');
 		$submit->addClass('btn-default');
 			
 		$submit = $this->addSubmitField('save-back', lang::get('apply'));
-		$submit->addClass('btn');
 		$submit->addClass('btn-default');	
 		
 		$back = $this->addButtonField('back', lang::get('back'));
-		$back->addClass('btn');
 		$back->addClass('btn-warning');
 		$back->addClass('form-back');
 		
@@ -773,7 +770,6 @@ class form {
 				$buttons_echo .= $ausgabe->get();
 				
 			} else {
-				$ausgabe->addClass('form-control');
 				
 				$return .= '<div class="form-group">';
 				$return .= '<label>'.$ausgabe->fieldName.'</label>';

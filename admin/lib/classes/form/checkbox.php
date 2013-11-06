@@ -27,7 +27,7 @@ class formCheckbox extends formField {
 		if(isset($this->value[$attributes['value']]))
 			$attributes['checked'] = 'checked';
 			
-		$this->output[$attributes['value']] = '<input'.$this->convertAttr($attributes).'> '.$value; //Name als Key speicher, für Methode del();		
+		$this->output[$attributes['value']] = array('value'=>$value, 'attr'=>$attributes); //Name als Key speicher, für Methode del();		
 		
 		return $this;
 			
@@ -45,7 +45,7 @@ class formCheckbox extends formField {
 		
 		$return = '';
 		foreach($this->output as $val) {
-			$return .= $val;	
+			$return .= '<label class="checkbox-inline"><input'.$this->convertAttr($val['attr']).'> '.$val['value'].'</label>';
 		}
 		
 		return $return;

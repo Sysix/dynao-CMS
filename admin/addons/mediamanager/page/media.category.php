@@ -122,7 +122,6 @@ if(in_array($action, array('edit', 'add'))) {
 	
 	$buttonSubmit = new formButton('save', 'Artikel speichern');
 	$buttonSubmit->addAttribute('type', 'submit');
-	$buttonSubmit->addClass('btn');
 	$buttonSubmit->addClass('btn-sm');
 	$buttonSubmit->addClass('btn-default');
 	
@@ -132,12 +131,10 @@ if($action == 'add') {
 	
 	$inputName = new formInput('name', '');
 	$inputName->addAttribute('type', 'text');
-	$inputName->addClass('form-control');
 	$inputName->addClass('input-sm');
 	
 	$inputSort = new formInput('sort', $table->getSql()->num()+1);
 	$inputSort->addAttribute('type', 'text');
-	$inputSort->addClass('form-control');
 	$inputSort->addClass('input-sm');
 
 	$table->addRow()
@@ -153,12 +150,10 @@ while($table->isNext()) {
 			
 		$inputName = new formInput('name', $table->get('name'));
 		$inputName->addAttribute('type', 'text');
-		$inputName->addClass('form-control');
 		$inputName->addClass('input-sm');
 		
 		$inputSort = new formInput('sort', $table->get('sort'));
 		$inputSort->addAttribute('type', 'text');
-		$inputSort->addClass('form-control');
 		$inputSort->addClass('input-sm');
 		
 		$inputHidden = new formInput('id', $table->get('id'));
