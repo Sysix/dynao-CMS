@@ -33,6 +33,7 @@ if($action == 'add' || $action == 'edit') {
 	
 	$field = $form->addTextField('email', $form->get('email'));
 	$field->fieldName('E-Mail Adresse');
+	$field->addValidator('email', 'Bitte geben Sie eine gültige E-Mail-Adresse an');
 	
 	$field = $form->addTextField('password', $form->get('password'));
 	$field->fieldName('Passwort');

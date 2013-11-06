@@ -52,6 +52,15 @@ addonConfig::includeAllLangFiles();
 
 ob_start();
 
+$successMsg = type::get('success_msg', 'string');
+$errorMsg = type::get('error_msg', 'string');
+
+if(!is_null($errorMsg)) {
+	echo message::danger($errorMsg);	
+} elseif(!is_null($successMsg)) {
+	echo message::success($successMsg);	
+}
+
 $login = new userLogin();
 
 if($login->isLogged()) {

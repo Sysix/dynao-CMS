@@ -11,6 +11,7 @@ abstract class formField {
 	var $prefix;
 	var $fieldName;
 	var $toSave = true;
+	var $validator;
 	
 	public function __construct($name, $value, $attributes = array()) {
 		
@@ -18,6 +19,7 @@ abstract class formField {
 		$this->value = $value;
 		
 		$this->attributes = $attributes;
+		$this->validator = new validator();
 		
 	}
 	
@@ -93,6 +95,26 @@ abstract class formField {
 		unset($this->attributes[$name]);
 		
 		return $this;
+		
+	}
+	
+	public function addValidator($type, $message = null, $option = null) {
+	
+		$this->validator->add($type, $message, $option);
+		
+		return $this;
+		
+	}
+	
+	public function isValid() {
+	
+		return $this->validator->isValid();
+		
+	}
+	
+	public function getError() {
+	
+		return $this->validator->getError();
 		
 	}
 	
