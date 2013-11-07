@@ -3,6 +3,7 @@
 // Klasse zu Erstellung für Formulare
 class form {
 	use traitFactory;
+	use traitMeta;
 	
 	var $method;
 	var $action;

@@ -31,6 +31,13 @@ if($action == 'add' || $action == 'edit') {
 	
 	$form = form::factory('user','id='.$id,'index.php');
 	
+	form::addClassMethod('addCostumLink', function($form, $name, $value) {
+		return $form->addTextField($name, $value);
+	});
+	
+	$field = $form->addCostumLink($form, 'test', 'inhalt');
+	$field->fieldName('Extra Input');
+	
 	$field = $form->addTextField('email', $form->get('email'));
 	$field->fieldName('E-Mail Adresse');
 	$field->addValidator('email', 'Bitte geben Sie eine gültige E-Mail-Adresse an');
