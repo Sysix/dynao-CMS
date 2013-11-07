@@ -1,6 +1,7 @@
 {
 	"author": "Dynao",
 	"hp_name": "Dynao CMS",
+	"hp_url": "",
 	"version": "0.1 Beta",
 	"setup": false,
 	"debug": true,
