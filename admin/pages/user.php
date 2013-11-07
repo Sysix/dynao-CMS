@@ -29,13 +29,15 @@ if($action == 'add' || $action == 'edit') {
 			}
 	});");
 	
-	$form = form::factory('user','id='.$id,'index.php');
-	
-	form::addClassMethod('addCostumLink', function($form, $name, $value) {
-		return $form->addTextField($name, $value);
+	form::addClassMethod('addCostumLink', function($name, $value) {
+		$field = $this->addTextField($name, $value);
+		$field->addClass('input-sm');
+		return $field;
 	});
 	
-	$field = $form->addCostumLink($form, 'test', 'inhalt');
+	$form = form::factory('user','id='.$id,'index.php');
+	
+	$field = $form->addCostumLink('test', 'inhalt');
 	$field->fieldName('Extra Input');
 	
 	$field = $form->addTextField('email', $form->get('email'));
