@@ -66,7 +66,8 @@
 			$sql = new sql();
 			$sql->query('SELECT VERSION()')->result();
 			
-			$table = new table(array('class'=> array('table', 'table-spriped', 'table-hover')));
+			$table = table::factory(array('class'=> array('table', 'table-spriped', 'table-hover')));
+			
 			$table->addRow()
 			->addCell('Type')
 			->addCell('Value');

@@ -1,5 +1,7 @@
 <?php
+
 class table {
+	use traitFactory;
 	
 	protected $thead = array();
 	protected $tfoot = array();

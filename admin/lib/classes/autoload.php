@@ -52,10 +52,9 @@ class autoload {
 	 */	
 	static public function autoloader($class) {
 		
-		if(class_exists($class)) {
-			return true;	
+		if(class_exists($class) || trait_exists($class)) {
+			return true;
 		}
-		
 		
 		preg_match_all("/(?:^|[A-Z])[a-z]+/", $class, $treffer);
 		

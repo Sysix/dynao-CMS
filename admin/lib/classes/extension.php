@@ -17,8 +17,8 @@ class extension {
 		
 		try {
 		
-			// Funktion vorhanden?
-			if(!function_exists($function)) {
+			
+			if(!is_callable($function)) {
 			
 				throw new Exception(__CLASS__ .'::add erwartet als 2. Parameter eine vorhandene Funktion');
 				return false;
