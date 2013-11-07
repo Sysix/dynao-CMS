@@ -41,7 +41,7 @@ class userLogin {
 		// Session[0] = ID; session[1} PW in sha1	
 		$session = explode('||', $session);	
 		
-		$sql = new sql();
+		$sql = sql::factory();
 		$sql->result('SELECT id FROM user WHERE `id` = '.$session[0].' AND `password` = "'.$session[1].'"');	
 			
 		if(!$sql->num()) {
@@ -73,7 +73,7 @@ class userLogin {
 			
 		}
 		
-		$sql = new sql();
+		$sql = sql::factory();
 		$sql->query('SELECT password, id FROM user WHERE `email` = "'.$email.'"');
 		
 		// Username mit E-Mail vorhanden?

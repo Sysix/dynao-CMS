@@ -1,6 +1,6 @@
 <?php
 
-$sql = new sql();
+$sql = sql::factory();
 $sql->query('CREATE TABLE IF NOT EXISTS '.sql::table('metainfos').' (
 `id` 			int(16)		unsigned 	NOT NULL 	auto_increment,
 `label`			varchar(255)			NOT NULL,

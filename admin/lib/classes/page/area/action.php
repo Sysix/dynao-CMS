@@ -12,7 +12,7 @@ class pageAreaAction {
 		
 		$id = type::post('id', 'int');
 		
-		$sql = new sql();
+		$sql = sql::factory();
 		$sql->setTable('structure_area');
 		
 		$sql->getPosts(array(
@@ -44,10 +44,10 @@ class pageAreaAction {
 	
 	public static function delete($id) {
 	
-		$sql = new sql();		
+		$sql = sql::factory();		
 		$sql->query('SELECT `structure_id`, `sort` FROM '.sql::table('structure_area').' WHERE id='.$id)->result();
 		
-		$delete = new sql();
+		$delete = sql::factory();
 		$delete->setTable('structure_area');
 		$delete->setWhere('id='.$id);
 		$delete->delete();

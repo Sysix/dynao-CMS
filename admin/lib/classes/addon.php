@@ -22,7 +22,7 @@ class addon {
 		
 		addonConfig::isSaved($addon);
 		
-		$this->sql = new sql();
+		$this->sql = sql::factory();
 		$this->sql->query('SELECT * FROM '.sql::table('addons').' WHERE `name` = "'.$addon.'"')->result();
 		
 	}

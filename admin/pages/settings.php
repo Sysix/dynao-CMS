@@ -12,7 +12,7 @@
             <div class="panel-body">
             	<?php
 				
-				$form = new form('user', 'id=1', 'index.php');
+				$form = form::factory('user', 'id=1', 'index.php');
 				$form->setSave(false);
 				$form->delButton('save');
 				
@@ -63,7 +63,7 @@
             </div>
 			<?php
 			
-			$sql = new sql();
+			$sql = sql::factory();
 			$sql->query('SELECT VERSION()')->result();
 			
 			$table = table::factory(array('class'=> array('table', 'table-spriped', 'table-hover')));

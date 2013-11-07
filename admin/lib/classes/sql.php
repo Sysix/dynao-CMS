@@ -3,6 +3,7 @@
 // Klasse für die Verbindung zur SQL Datenbank
 // Verwendung von MYSQLI
 class sql {
+	use traitFactory;
 
 	static $DB_host;
 	static $DB_user;
@@ -32,7 +33,7 @@ class sql {
 		
 		self::$sql = new MySQLi(self::$DB_host, self::$DB_user, self::$DB_password, self::$DB_datenbank);
 		
-		$sql = new sql();
+		$sql = sql::factory();
 		$sql->query('SET SQL_MODE=""');
         $sql->query('SET NAMES utf8');
         $sql->query('SET CHARACTER SET utf8');
@@ -118,7 +119,7 @@ class sql {
 			return ($this->query && is_object($this->query)) ? $this->query->num_rows : 0;			
 		}
 			
-		$sql = new sql();
+		$sql = sql::factory();
 		$sql->result($query);
 		return $sql->num();
 	
@@ -311,7 +312,7 @@ class sql {
 		if($where)
 			$where = ' AND '.$where;
 		
-		$update = new sql();
+		$update = sql::factory();
 		$update->setTable($table);
 		
 		$sql = new sql();

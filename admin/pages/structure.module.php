@@ -4,7 +4,7 @@ if(ajax::is()) {
 	
 	$sort = type::post('array', 'array');
 	
-	$sql = new sql();
+	$sql = sql::factory();
 	$sql->setTable('module');
 	foreach($sort as $s=>$id) {
 		$sql->setWhere('id='.$id);
@@ -18,7 +18,7 @@ if(ajax::is()) {
 
 if($action == 'delete') {
 	
-	$sql = new sql();
+	$sql = sql::factory();
 	$sql->setTable('news');
 	$sql->setWhere('id='.$id);
 	$sql->delete();
@@ -29,7 +29,7 @@ if($action == 'delete') {
 
 if($action == 'add' || $action == 'edit') {
 
-	$form = new form('module', 'id='.$id, 'index.php');
+	$form = form::factory('module', 'id='.$id, 'index.php');
 	
 	$field = $form->addTextField('name', $form->get('name'));
 	$field->fieldName('Name');
@@ -53,7 +53,7 @@ if($action == '') {
 	echo '<a href="'.url::backend('structure', array('subpage'=>'module', 'action'=>'add')).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
 	echo '<div class="clearfix"></div>';
 
-	$table = new table(array('class'=>array('js-sort')));
+	$table = table::factory(array('class'=>array('js-sort')));
 	
 	$table->addCollsLayout('20,*,170');
 	

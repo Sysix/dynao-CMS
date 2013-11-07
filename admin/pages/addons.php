@@ -9,7 +9,7 @@ if($action == 'install') {
 	$addonClass= new addon($addon, false);	
 	$install = ($addonClass->isInstall()) ? 0 : 1;
 	
-	$sql = new sql();
+	$sql = sql::factory();
 	$sql->setTable('addons');
 	$sql->setWhere('`name` = "'.$addon.'"');
 	$sql->addPost('install', $install);
@@ -41,7 +41,7 @@ if($action == 'active') {
 			
 	} else {
 	
-		$sql = new sql();
+		$sql = sql::factory();
 		$sql->setTable('addons');
 		$sql->setWhere('`name` = "'.$addon.'"');
 		$sql->addPost('active', $active);
@@ -53,7 +53,7 @@ if($action == 'active') {
 	
 }
 
-$table = new table();
+$table = table::factory();
 $table->addCollsLayout('20,*,300');
 
 $table->addRow()

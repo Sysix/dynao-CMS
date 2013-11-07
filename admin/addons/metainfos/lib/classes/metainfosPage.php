@@ -25,7 +25,7 @@ class metainfosPage {
 		
 		$sort = type::post('array', 'array');
 	
-		$sql = new sql();
+		$sql = sql::factory();
 		$sql->setTable('metainfos');
 		foreach($sort as $s=>$id) {
 			$sql->setWhere('id='.$id);
@@ -41,7 +41,7 @@ class metainfosPage {
 		
 		$prefix = substr($tablename, 0, 3).'_';
 		
-		$form = new form('metainfos', 'id='.$id, 'index.php');
+		$form = form::factory('metainfos', 'id='.$id, 'index.php');
 		
 		if($action == 'delete') {
 			self::delete($tablename, $id, $form->get('name'));
@@ -88,7 +88,7 @@ class metainfosPage {
 		
 		if($form->isSubmit()) {
 		
-			$sql = new sql();
+			$sql = sql::factory();
 			switch($form->get('formtype')) {
 				case 'textarea':
 					$type = 'text';
@@ -131,7 +131,7 @@ class metainfosPage {
 	
 		echo '<a href="'.url::backend('meta', array('subpage'=>$pagename, 'action'=>'add')).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
 	
-		$table = new table(array('class'=>array('js-sort')));
+		$table = table::factory(array('class'=>array('js-sort')));
 		$table->setSql('SELECT * FROM '.sql::table('metainfos').' WHERE `type` = "'.$name.'"');
 		
 		$table->addRow()->addCell()->addCell('Name')->addCell('Aktion');
@@ -159,7 +159,7 @@ class metainfosPage {
 	
 	static protected function delete($tablename, $id, $name) {
 		
-		$sql = new sql();
+		$sql = sql::factory();
 		$sql->setTable('metainfos');
 		$sql->setWhere('`id`='.$id);
 		$sql->delete();

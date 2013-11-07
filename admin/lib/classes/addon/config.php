@@ -7,7 +7,7 @@ class addonConfig {
 	
 	public static function isSaved($addon, $save = true) {
 	
-		$sql = new sql();
+		$sql = sql::factory();
 		$num = $sql->num('SELECT 1 FROM '.sql::table('addons').' WHERE `name` = "'.$addon.'"');
 		if(!$num && $save) {
 			$save = new sql();
@@ -24,7 +24,7 @@ class addonConfig {
 		
 		if(!count(self::$all)) {	
 		
-			$sql = new sql();		
+			$sql = sql::factory();		
 			$sql->query('SELECT name FROM '.sql::table('addons').' WHERE `install` = 1  AND `active` = 1')->result();
 			while($sql->isNext()) {
 				self::$all[] = $sql->get('name');

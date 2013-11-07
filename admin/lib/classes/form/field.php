@@ -1,6 +1,7 @@
 <?php
 
 abstract class formField {
+	use traitFactory;
 	
 	var $name;
 	var $value;
@@ -19,7 +20,7 @@ abstract class formField {
 		$this->value = $value;
 		
 		$this->attributes = $attributes;
-		$this->validator = new validator();
+		$this->validator = validator::factory();
 		
 	}
 	

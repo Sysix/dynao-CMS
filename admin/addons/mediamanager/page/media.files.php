@@ -2,7 +2,7 @@
 
 if($action == 'add' || $action == 'edit') {
 	
-	$form = new form('media', 'id='.$id, 'index.php');
+	$form = form::factory('media', 'id='.$id, 'index.php');
 	$form->addFormAttribute('enctype', 'multipart/form-data');
 	
 	$field = $form->addTextField('title', $form->get('title'));
@@ -10,14 +10,15 @@ if($action == 'add' || $action == 'edit') {
 	
 	$field = $form->addSelectField('category', $form->get('category'));
 	$field->fieldName('Kategorie');
-	$cat = new sql();
+	
+	$cat = sql::factory();
 	$cat->query('SELECT * FROM '.sql::table('media_cat').' ORDER BY `sort`')->result();
 	while($cat->isNext()) {
 		$field->add($cat->get('id'), $cat->get('name').' ['.$cat->get('id').']');
 		$cat->next();
 	}
 	
-	$meta = new sql();
+	$meta = sql::factory();
 	$meta->query('SELECT * FROM '.sql::table('metainfos').' WHERE `type` = "media" ORDER BY `sort`')->result();
 	while($meta->isNext()) {
 		$element = metainfos::getElement($meta->getRow(), $form->get($meta->get('name')));
@@ -89,7 +90,7 @@ if($action == 'add' || $action == 'edit') {
 
 if($action == '') {
 	
-	$table = new table();
+	$table = table::factory();
 	$table->setSql('SELECT * FROM '.sql::table('media'));
 	$table->addRow()
 	->addCell()

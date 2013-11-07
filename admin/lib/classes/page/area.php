@@ -26,7 +26,7 @@ class pageArea {
 			
 		} else {
 		
-			$this->sql = new sql();
+			$this->sql = sql::factory();
 			$this->sql->query('SELECT * FROM '.sql::table('structure_area').' WHERE id = '.$id)->result();		
 		
 		}
@@ -127,7 +127,7 @@ class pageArea {
 	
 	public function isLastBlock() {
 		
-		$sql = new sql;
+		$sql = sql::factory();
 		$sql->query('SELECT sort FROM '.sql::table('structure_area').' WHERE structure_id = '.$this->getStructureId());
 		
 		if($this->isNew) {

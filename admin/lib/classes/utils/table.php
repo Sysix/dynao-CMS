@@ -151,7 +151,7 @@ class table {
 	
 	public function setSql($query) {
 	
-		$this->sql = new sql();
+		$this->sql = sql::factory();
 		$this->sql->query($query)->result();
 		
 		$this->isSql = true;

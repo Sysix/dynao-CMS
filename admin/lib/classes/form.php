@@ -2,7 +2,7 @@
 
 // Klasse zu Erstellung für Formulare
 class form {
-	
+	use traitFactory;
 	
 	var $method;
 	var $action;
@@ -41,7 +41,7 @@ class form {
 		$this->method = $method;
 		$this->action = $action;
 		
-		$this->sql = new sql();
+		$this->sql = sql::factory();
 		$this->sql->query('SELECT * FROM '.sql::table($table).' WHERE '.$where.' LIMIT 1');
 		$this->sql->result();
 		

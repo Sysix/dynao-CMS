@@ -31,7 +31,7 @@ class pageAreaHtml {
 	
 		if(empty(self::$modulList)) {
 	
-			$sql = new sql();				
+			$sql = sql::factory();				
 			$sql->result('SELECT id, name FROM '.sql::table('module').' ORDER BY `sort`');
 			while($sql->isNext()) {
 			
@@ -48,7 +48,7 @@ class pageAreaHtml {
 	
 	public static function formBlock($module) {
 		
-		$form = new form('module', 'id='.$module->getModulId(), 'index.php');
+		$form = form::factory('module', 'id='.$module->getModulId(), 'index.php');
 		$form->setSave(false);
 		$form->addFormAttribute('class', '');
 		

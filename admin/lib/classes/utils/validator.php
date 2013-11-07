@@ -1,6 +1,7 @@
 <?php
 
 class validator {
+	use traitFactory;
 	
 	protected $types = array();
 	protected $message;

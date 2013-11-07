@@ -11,7 +11,7 @@ if(!is_null(type::post('save-back')) || !is_null(type::post('save'))) {
 
 if($action == 'online') {
 
-	$sql = new sql();
+	$sql = sql::factory();
 	$sql->query('SELECT online FROM '.sql::table('structure_area').' WHERE id='.$id)->result();
 	
 	$online = ($sql->get('online')) ? 0 : 1;
@@ -28,7 +28,7 @@ if($action == 'online') {
 if(ajax::is()) {
 	
 	$sort = type::post('array', 'array');
-	$sql = new sql();
+	$sql = sql::factory();
 	$sql->setTable('structure_area');
 	foreach($sort as $s=>$s_id) {
 		$sql->setWhere('id='.$s_id);
@@ -53,7 +53,7 @@ if($action == 'delete') {
 <ul id="structure-content">
 <?php
 
-$sql = new sql();
+$sql = sql::factory();
 $sql->result('SELECT s.*, m.name, m.output, m.input
 FROM '.sql::table('structure_area').' as s
 LEFT JOIN 

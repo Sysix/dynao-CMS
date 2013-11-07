@@ -8,7 +8,7 @@ class metainfos {
 		
 		$return = array();
 		
-		$sql = new sql();
+		$sql = sql::factory();
 		$sql->query('SELECT * FROM '.sql::table('metainfos').' WHERE `type` = "'.$type.'" ORDER BY `sort`')->result();
 		while($sql->isNext()) {
 		
@@ -42,7 +42,7 @@ class metainfos {
 	protected static function getElementClass($attributes, $default) {
 		
 		if($attributes['formtype'] == 'text') {
-			$class = new formInput($attributes['name'], $default);
+			$class = formInput::factory($attributes['name'], $default);
 			$class->addAttribute('type', 'text');
 			return $class;
 		}

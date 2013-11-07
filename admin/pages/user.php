@@ -29,7 +29,7 @@ if($action == 'add' || $action == 'edit') {
 			}
 	});");
 	
-	$form = new form('user','id='.$id,'index.php');
+	$form = form::factory('user','id='.$id,'index.php');
 	
 	$field = $form->addTextField('email', $form->get('email'));
 	$field->fieldName('E-Mail Adresse');
@@ -85,7 +85,7 @@ if($action == 'add' || $action == 'edit') {
 
 if($action == '') {
 
-	$table = new table();
+	$table = table::factory();
 	
 	$table->addCollsLayout('*,170');
 	

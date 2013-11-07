@@ -1,6 +1,7 @@
 <?php
 
 class user {
+	use traitFactory;
 	
 	protected static $userID;
 	protected static $entrys;
@@ -15,13 +16,13 @@ class user {
 			
 		self::$userID = $id;
 			
-		return new user();
+		return user::factory();
 		
 	}
 	
 	protected static function getEntrys($id) {
 	
-		$sql = new sql();
+		$sql = sql::factory();
 		$sql->query('SELECT * FROM '.sql::table('user').' WHERE id='.$id)->result();
 		
 		self::$entrys = $sql->result;

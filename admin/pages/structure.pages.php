@@ -7,7 +7,7 @@ if(ajax::is()) {
 	
 	$sort = type::post('array', 'array');
 	
-	$sql = new sql();
+	$sql = sql::factory();
 	$sql->setTable('structure');
 	foreach($sort as $s=>$id) {
 		$sql->setWhere('id='.$id);
@@ -25,13 +25,13 @@ if($action == 'delete') {
 	
 	while($id) {
 	
-		$sql = new sql();
+		$sql = sql::factory();
 		$sql->query('SELECT id FROM '.sql::table('structure').' WHERE `parent_id` = '.$id)->result();
 		if($sql->num()) {
 			
 			$id = $sql->get('id');
 			
-			$delete = new sql();
+			$delete = sql::factory();
 			$delete->setTable('structure');
 			$delete->setWhere('id='.$id);
 			$delete->delete();			
@@ -43,10 +43,10 @@ if($action == 'delete') {
 	}
 	
 	
-	$sql = new sql();		
+	$sql = sql::factory();		
 	$sql->query('SELECT `sort`, `parent_id` FROM '.sql::table('structure').' WHERE id='.$orginal_id)->result();
 	
-	$delete = new sql();
+	$delete = sql::factory();
 	$delete->setTable('structure');
 	$delete->setWhere('id='.$orginal_id);
 	$delete->delete();
@@ -59,7 +59,7 @@ if($action == 'delete') {
 
 if($action == 'online') {
 
-	$sql = new sql();
+	$sql = sql::factory();
 	$sql->query('SELECT online FROM '.sql::table('structure').' WHERE id='.$id)->result();
 	
 	$online = ($sql->get('online')) ? 0 : 1;
@@ -75,7 +75,7 @@ if($action == 'online') {
 
 if(in_array($action, array('save-add', 'save-edit'))) {
 	
-	$sql = new sql();
+	$sql = sql::factory();
 	$sql->setTable('structure');
 	$sql->setWhere('id='.$id);
 	$sql->getPosts(array('name'=>'string','sort'=>'int', 'parent_id'=>'int'));
@@ -88,7 +88,7 @@ if(in_array($action, array('save-add', 'save-edit'))) {
 	}
 }
 
-$table = new table(array('class'=>array('js-sort')));
+$table = table::factory(array('class'=>array('js-sort')));
 
 $colFirstWidth = ($action == 'edit' || $action == 'add') ? 50 : 25; 
 
@@ -107,19 +107,19 @@ if(in_array($action, array('edit', 'add'))) {
 		
 	echo '<form method="post" action="index.php">';
 		
-	$inputHidden = new formInput('action', 'save-'.$action);
+	$inputHidden = formInput::factory('action', 'save-'.$action);
 	$inputHidden->addAttribute('type', 'hidden');
 	echo $inputHidden->get();
 	
-	$inputHidden = new formInput('page', 'structure');
+	$inputHidden = formInput::factory('page', 'structure');
 	$inputHidden->addAttribute('type', 'hidden');
 	echo $inputHidden->get();
 	
-	$inputHidden = new formInput('parent_id', $parent_id);
+	$inputHidden = formInput::factory('parent_id', $parent_id);
 	$inputHidden->addAttribute('type', 'hidden');
 	echo $inputHidden->get();
 	
-	$buttonSubmit = new formButton('save', 'Artikel speichern');
+	$buttonSubmit = formButton::factory('save', 'Artikel speichern');
 	$buttonSubmit->addAttribute('type', 'submit');
 	$buttonSubmit->addClass('btn-sm');
 	$buttonSubmit->addClass('btn-default');
@@ -128,12 +128,12 @@ if(in_array($action, array('edit', 'add'))) {
 
 if($action == 'add') {
 	
-	$inputName = new formInput('name', '');
+	$inputName = formInput::factory('name', '');
 	$inputName->addAttribute('type', 'text');
 	$inputName->addClass('input-sm');
 	
-	$sql = new sql();
-	$inputSort = new formInput('sort', $sql->num('SELECT 1 FROM '.sql::table('structure').' WHERE `parent_id`= '.type::super('parent_id', 'int'))+1);
+	$sql = sql::factory();
+	$inputSort = formInput::factory('sort', $sql->num('SELECT 1 FROM '.sql::table('structure').' WHERE `parent_id`= '.type::super('parent_id', 'int'))+1);
 	$inputSort->addAttribute('type', 'text');
 	$inputSort->addClass('input-sm');
 
@@ -148,15 +148,15 @@ while($table->isNext()) {
 	
 	if($action == 'edit' && $table->get('id') == $id) {
 			
-		$inputName = new formInput('name', $table->get('name'));
+		$inputName = formInput::factory('name', $table->get('name'));
 		$inputName->addAttribute('type', 'text');
 		$inputName->addClass('input-sm');
 		
-		$inputSort = new formInput('sort', $table->get('sort'));
+		$inputSort = formInput::factory('sort', $table->get('sort'));
 		$inputSort->addAttribute('type', 'text');
 		$inputSort->addClass('input-sm');
 		
-		$inputHidden = new formInput('id', $table->get('id'));
+		$inputHidden = formInput::factory('id', $table->get('id'));
 		$inputHidden->addAttribute('type', 'hidden');
 		
 		$table->addRow()
