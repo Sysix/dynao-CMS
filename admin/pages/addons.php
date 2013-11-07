@@ -2,7 +2,7 @@
 $action = type::super('action', 'string');
 $addon = type::super('addon', 'string');
 
-backend::addSubnavi('Übersicht',	url::backend('addons'), 	'archive');
+backend::addSubnavi('Übersicht',	url::backend('addons'), 	'archive', 0);
 
 if($action == 'install') {
 

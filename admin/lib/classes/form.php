@@ -41,9 +41,8 @@ class form {
 		$this->method = $method;
 		$this->action = $action;
 		
-		$sql = new sql();
-		$this->sql = $sql->query('SELECT * FROM '.sql::table($table).' WHERE '.$where.' LIMIT 1');		
-		
+		$this->sql = new sql();
+		$this->sql->query('SELECT * FROM '.sql::table($table).' WHERE '.$where.' LIMIT 1');
 		$this->sql->result();
 		
 		if($this->sql->num() == 1) {
