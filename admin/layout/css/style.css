@@ -364,9 +364,17 @@ h1 {
 	color:#fff;
 }
 
+option.page-offline {
+	border-left:3px solid #e74c3c;
+}
+
 .structure-online {
 	background:#2ecc71;
 	color:#fff;
+}
+
+option.page-online {
+	border-left:3px solid #2ecc71;
 }
 
 #structure-content {
