@@ -39,9 +39,6 @@ class form {
 	 */
 	public function __construct($table, $where, $action, $method = 'post') {
 		
-		// traitMeta
-		$this->setClassMethod();
-		
 		$this->method = $method;
 		$this->action = $action;
 		

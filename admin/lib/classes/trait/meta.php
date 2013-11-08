@@ -2,7 +2,7 @@
 
 trait traitMeta {
 	
-	protected static $classMethods_static = array();
+	protected static $classMethodsStatic = array();
 	protected $classMethods = array();
 	
 	public static function addClassMethod($name, $method) {
@@ -11,29 +11,29 @@ trait traitMeta {
 			throw new Exception(__CLASS__.'::'.__METHOD__.' erwartet als 2 Parameter eine aufrufbare Funktion');
 		}
 		
-		self::$classMethods_static[$name] = $method;
+		self::$classMethodsStatic[$name] = $method;
 		
 	}
 	
-	public function setClassMethod() {
+	public function setClassMethod($name) {
 	
-		if(!empty(self::$classMethods_static)) {
-		
-			foreach(self::$classMethods_static as $name=>$method) {
-				$this->classMethods[$name] = Closure::bind($method, $this, get_class());
-			}
-			
+		if(isset(self::$classMethodsStatic[$name])) {
+			$this->classMethods[$name] = Closure::bind(self::$classMethodsStatic[$name], $this, get_class());			
 		}
 		
 	}
 	
 	public function __call($name, array $args) {
 		
+		if(!isset($this->classMethods[$name])) {
+			$this->setClassMethod($name);
+		}
+		
 		if(isset($this->classMethods[$name])) {
 			return call_user_func_array($this->classMethods[$name], $args);
 		}
 		
-		throw new Exception(__CLASS__.' bensitzt die Methode '.$name.' nicht');
+		throw new Exception(__CLASS__.' besitzt die Methode '.$name.' nicht');
 		
 	}
 	
