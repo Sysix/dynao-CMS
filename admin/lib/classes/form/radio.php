@@ -2,7 +2,7 @@
 
 class formRadio extends formField {
 		
-	var $output = array();
+	var $output = [];
 	
 	public function add($name, $value, $attributes = []) {
 		

@@ -6,7 +6,7 @@ $id = type::super('id', 'int', 0);
 
 if($action == 'delete') {
 	
-		$sql = new sql();
+		$sql = sql::factory();
 		$sql->setTable('user');
 		$sql->setWhere('id='.$id);
 		$sql->delete();

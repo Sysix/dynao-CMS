@@ -25,7 +25,7 @@ class type {
 				return (object) $var;
 				
 			case 'array':
-				return (empty($var)) ? array() : (array) $var;
+				return (empty($var)) ? [] : (array) $var;
 				
 			case '':
 				return $var;

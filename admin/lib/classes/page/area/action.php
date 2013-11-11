@@ -16,12 +16,12 @@ class pageAreaAction {
 		$sql = sql::factory();
 		$sql->setTable('structure_area');
 		
-		$sql->getPosts(array(
+		$sql->getPosts([
 			'structure_id'=>'int',
 			'sort'=>'int',
 			'modul'=>'int',
 			'online'=>'int'
-		));
+		]);
 		
 		foreach(array_keys(self::$types) as $types) {
 			

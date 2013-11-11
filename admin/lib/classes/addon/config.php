@@ -10,7 +10,7 @@ class addonConfig {
 		$sql = sql::factory();
 		$num = $sql->num('SELECT 1 FROM '.sql::table('addons').' WHERE `name` = "'.$addon.'"');
 		if(!$num && $save) {
-			$save = new sql();
+			$save = sql::factory();
 			$save->setTable('addons');
 			$save->addPost('name', $addon);
 			$save->save();

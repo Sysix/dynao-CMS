@@ -42,7 +42,7 @@ if($action == 'delete') {
 			
 			$id = $sql->get('id');
 			
-			$delete = new sql();
+			$delete = sql::factory();
 			$delete->setTable('media_cat');
 			$delete->setWhere('id='.$id);
 			$delete->delete();			

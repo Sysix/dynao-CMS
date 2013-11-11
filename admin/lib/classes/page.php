@@ -47,7 +47,7 @@ class page {
 	
 	public static function getChildPages($parentId, $offlinePages = true) {
 		
-		$return = array();
+		$return = [];
 		$classname = __CLASS__;
 		
 		$extraWhere = '';

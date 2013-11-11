@@ -4,7 +4,7 @@ class formSelect extends formField {
 	
 	var $currentOpt = 0;
 	
-	var $output = array();
+	var $output = [];
 	
 	
 	public function setSelected($selected) {
