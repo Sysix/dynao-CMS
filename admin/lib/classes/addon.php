@@ -2,7 +2,7 @@
 
 class addon {
 	
-	var $config = array();
+	var $config = [];
 	var $name;
 	var $addonConfig;
 	var $sql;

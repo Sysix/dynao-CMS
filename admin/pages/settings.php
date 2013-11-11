@@ -44,7 +44,7 @@
 				$handle = opendir(dir::backend('lib'.DIRECTORY_SEPARATOR.'lang'.DIRECTORY_SEPARATOR));
 				while($file = readdir($handle)) {
 						
-						if(in_array($file, array('.', '..')))
+						if(in_array($file, ['.', '..']))
 							continue;
 						
 						$field->add($file, $file);
@@ -66,7 +66,7 @@
 			$sql = sql::factory();
 			$sql->query('SELECT VERSION()')->result();
 			
-			$table = table::factory(array('class'=> array('table', 'table-spriped', 'table-hover')));
+			$table = table::factory(['class'=> ['table', 'table-spriped', 'table-hover']]);
 			
 			$table->addRow()
 			->addCell('Type')

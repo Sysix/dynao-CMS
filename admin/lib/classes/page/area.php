@@ -9,14 +9,15 @@ class pageArea {
 	const dyn_rex = 'DYN_(\w*)\[(\d+)\]';
 	const out_rex = 'OUT_(\w*)\[(\d+)\]';
 	
-	static $types = array(
+	static $types = [
 		'VALUE' => 15, 
 		'LINK' => 10,
 		'MEDIA' => 10,
-		'PHP' => 2); #typen
+		'PHP' => 2
+	]; #typen
 	
-	var $values = array();
-	var $out = array();
+	var $values = [];
+	var $out = [];
 	
 	public function __construct($id) {
 		

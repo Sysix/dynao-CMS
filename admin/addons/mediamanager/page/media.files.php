@@ -102,8 +102,8 @@ if($action == '') {
 			
 		$media = new media($table->getSql());
 		
-		$edit = '<a href="'.url::backend('media', array('action'=>'edit', 'id'=>$table->get('id'))).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
-		$delete = '<a href="'.url::backend('media', array('action'=>'delete', 'id'=>$table->get('id'))).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+		$edit = '<a href="'.url::backend('media', ['action'=>'edit', 'id'=>$table->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
+		$delete = '<a href="'.url::backend('media', ['action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 			
 		$table->addRow()
 		->addCell('<img src="'.$media->getPath().'" style="max-width:50px; max-height:50px" />')

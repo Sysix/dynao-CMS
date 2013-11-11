@@ -2,7 +2,7 @@
 
 class pagination {
 	
-	var $disable = array();
+	var $disable = [];
 	var $proSite; // Einträge pro Seite
 	var $maxEntrys; // Maximale Einträge
 	var $start; //SQL Start

@@ -50,10 +50,10 @@ if($action == 'add' || $action == 'edit') {
 
 if($action == '') {
 	
-	echo '<a href="'.url::backend('structure', array('subpage'=>'module', 'action'=>'add')).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
+	echo '<a href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'add']).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
 	echo '<div class="clearfix"></div>';
 
-	$table = table::factory(array('class'=>array('js-sort')));
+	$table = table::factory(['class'=>['js-sort']]);
 	
 	$table->addCollsLayout('20,*,170');
 	
@@ -69,10 +69,10 @@ if($action == '') {
 	
 		$id = $table->get('id');
 		
-		$edit = '<a href="'.url::backend('structure', array('subpage'=>'module', 'action'=>'edit', 'id'=>$id)).'" class="btn btn-sm btn-default">'.lang::get('edit').'</a>';
-		$delete = '<a href="'.url::backend('structure', array('subpage'=>'module','action'=>'delete', 'id'=>$id)).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+		$edit = '<a href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'edit', 'id'=>$id]).'" class="btn btn-sm btn-default">'.lang::get('edit').'</a>';
+		$delete = '<a href="'.url::backend('structure', ['subpage'=>'module','action'=>'delete', 'id'=>$id]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 		
-		$table->addRow(array('data-id'=>$id))
+		$table->addRow(['data-id'=>$id])
 		->addCell('<i class="icon-sort"></i>')
 		->addCell($table->get('name'))
 		->addCell('<span class="btn-group">'.$edit.$delete.'</span>');

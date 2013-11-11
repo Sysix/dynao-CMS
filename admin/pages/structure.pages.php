@@ -1,6 +1,9 @@
 <?php
 
-echo '<a href="'.url::backend('structure', array('action'=>'add', 'parent_id'=>$parent_id)).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
+echo '<select class="form-control">';
+echo page::getTreeStructure();
+echo '</select>';
+echo '<a href="'.url::backend('structure', ['action'=>'add', 'parent_id'=>$parent_id]).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
 echo '<div class="clearfix"></div>';
 
 if(ajax::is()) {
@@ -73,12 +76,12 @@ if($action == 'online') {
 	
 }
 
-if(in_array($action, array('save-add', 'save-edit'))) {
+if(in_array($action, ['save-add', 'save-edit'])) {
 	
 	$sql = sql::factory();
 	$sql->setTable('structure');
 	$sql->setWhere('id='.$id);
-	$sql->getPosts(array('name'=>'string','sort'=>'int', 'parent_id'=>'int'));
+	$sql->getPosts(['name'=>'string','sort'=>'int', 'parent_id'=>'int']);
 	
 	if($action == 'save-edit') {
 		$sql->update();	
@@ -88,7 +91,7 @@ if(in_array($action, array('save-add', 'save-edit'))) {
 	}
 }
 
-$table = table::factory(array('class'=>array('js-sort')));
+$table = table::factory(['class'=>['js-sort']]);
 
 $colFirstWidth = ($action == 'edit' || $action == 'add') ? 50 : 25; 
 
@@ -103,7 +106,7 @@ $table->addSection('tbody');
 	
 $table->setSql('SELECT * FROM '.sql::table('structure').' WHERE parent_id = '.$parent_id.' ORDER BY sort ASC');
 	
-if(in_array($action, array('edit', 'add'))) {
+if(in_array($action, ['edit', 'add'])) {
 		
 	echo '<form method="post" action="index.php">';
 		
@@ -166,15 +169,15 @@ while($table->isNext()) {
 		
 	} else {
 		
-		$edit = '<a href="'.url::backend('structure', array('action'=>'edit', 'id'=>$table->get('id'),'parent_id'=>$parent_id)).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';	
-		$delete = '<a href="'.url::backend('structure', array('action'=>'delete', 'id'=>$table->get('id'),'parent_id'=>$parent_id)).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+		$edit = '<a href="'.url::backend('structure', ['action'=>'edit', 'id'=>$table->get('id'),'parent_id'=>$parent_id]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';	
+		$delete = '<a href="'.url::backend('structure', ['action'=>'delete', 'id'=>$table->get('id'),'parent_id'=>$parent_id]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 		
 		$online = ($table->get('online')) ? 'online' : 'offline';
-		$online = '<a href="'.url::backend('structure', array('action'=>'online', 'id'=>$table->get('id'),'parent_id'=>$parent_id)).'" class="btn btn-sm structure-'.$online.'">'.$online.'</a>';
+		$online = '<a href="'.url::backend('structure', ['action'=>'online', 'id'=>$table->get('id'),'parent_id'=>$parent_id]).'" class="btn btn-sm structure-'.$online.'">'.$online.'</a>';
 	
-		$table->addRow(array('data-id'=>$table->get('id')))
+		$table->addRow(['data-id'=>$table->get('id')])
 		->addCell('<i class="icon-sort"></i>')
-		->addCell('<a href="'.url::backend('structure', array('parent_id'=>$table->get('id'))).'">'.$table->get('name').'</a>')
+		->addCell('<a href="'.url::backend('structure', ['parent_id'=>$table->get('id')]).'">'.$table->get('name').'</a>')
 		->addCell('<span class="btn-group">'.$edit.$delete.$online.'</span>');
 		
 	}
@@ -185,7 +188,7 @@ while($table->isNext()) {
 echo $table->show();
 
 
-if(in_array($action, array('edit', 'add'))) {
+if(in_array($action, ['edit', 'add'])) {
 	echo '</form>';
 }
 

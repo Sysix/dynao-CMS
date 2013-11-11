@@ -9,7 +9,7 @@ function url_addParam($key, $value) {
 
 	if(is_string($key) && is_string($value)) {
 		
-		return http_build_query(array($key=>$value) + $getArray);
+		return http_build_query([$key=>$value] + $getArray);
 		
 	}
 	

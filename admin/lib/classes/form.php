@@ -12,11 +12,11 @@ class form {
 	
 	var $mode = 'add';
 	
-	var $return = array();
-	var $buttons = array();
-	var $params = array();
+	var $return = [];
+	var $buttons = [];
+	var $params = [];
 	
-	var $formAttributes = array();
+	var $formAttributes = [];
 	
 	// Beim Senden schauen ob die Forumluar-Einträge schon übernommen worden sind Methode: setPostsVar
 	var $isGetPosts = false;
@@ -131,7 +131,7 @@ class form {
 	 * @return	class
 	 *
 	 */	
-	public function addFreeField($name, $value, $class, $attributes = array()) {
+	public function addFreeField($name, $value, $class, $attributes = []) {
 	
 		return new $class($name, $value, $attributes);
 		
@@ -163,7 +163,7 @@ class form {
 	 * @return	class
 	 *
 	 */
-	private function addField($name, $value, $class, $attributes = array()) {
+	private function addField($name, $value, $class, $attributes = []) {
 		
 		$field = new $class($name, $value, $attributes);
 		$this->addElement($name, $field);
@@ -181,7 +181,7 @@ class form {
 	 * @return	class
 	 *
 	 */
-	public function addTextField($name, $value, $attributes = array()) {
+	public function addTextField($name, $value, $attributes = []) {
 		
 		$attributes['type'] = 'text';
 		return $this->addField($name, $value, 'formInput', $attributes);
@@ -197,7 +197,7 @@ class form {
 	 * @return	class
 	 *
 	 */
-	public function addPasswordField($name, $value, $attributes = array()) {
+	public function addPasswordField($name, $value, $attributes = []) {
 		
 		$attributes['type'] = 'password';
 		return $this->addField($name, $value, 'formInput', $attributes);
@@ -213,7 +213,7 @@ class form {
 	 * @return	class
 	 *
 	 */
-	public function addHiddenField($name, $value, $attributes = array()) {
+	public function addHiddenField($name, $value, $attributes = []) {
 		
 		$attributes['type'] = 'hidden';
 		$field = $this->addFreeField($name, $value, 'formInput', $attributes);
@@ -233,7 +233,7 @@ class form {
 	 * @return	class
 	 *
 	 */
-	public function addSubmitField($name, $value, $attributes = array(), $toButtons = true) {
+	public function addSubmitField($name, $value, $attributes = [], $toButtons = true) {
 		
 		$attributes['type'] = 'submit';
 		$field = $this->addFreeField($name, $value, 'formButton', $attributes);
@@ -254,7 +254,7 @@ class form {
 	 * @return	class
 	 *
 	 */
-	public function addButtonField($name, $value, $attributes = array(), $toButtons = true) {
+	public function addButtonField($name, $value, $attributes = [], $toButtons = true) {
 		
 		$attributes['type'] = 'button';
 		$field = $this->addFreeField($name, $value, 'formButton', $attributes);
@@ -275,7 +275,7 @@ class form {
 	 * @return	class
 	 *
 	 */
-	public function addResetField($name, $value, $attributes = array(), $toButtons = true) {
+	public function addResetField($name, $value, $attributes = [], $toButtons = true) {
 		
 		$attributes['type'] = 'reset';
 		$field = $this->addFreeField($name, $value, 'formButton', $attributes);
@@ -295,7 +295,7 @@ class form {
 	 * @return	class
 	 *
 	 */
-	public function addTextareaField($name, $value, $attributes = array()) {
+	public function addTextareaField($name, $value, $attributes = []) {
 		
 		return $this->addField($name, $value, 'formTextarea', $attributes);
 		
@@ -310,7 +310,7 @@ class form {
 	 * @return	class
 	 *
 	 */
-	public function addRadioField($name, $value, $attributes = array()) {
+	public function addRadioField($name, $value, $attributes = []) {
 		
 		return $this->addField($name, $value, 'formRadio', $attributes);
 		
@@ -325,7 +325,7 @@ class form {
 	 * @return	class
 	 *
 	 */
-	public function addCheckboxField($name, $value, $attributes = array()) {
+	public function addCheckboxField($name, $value, $attributes = []) {
 		
 		$field = $this->addField($name, $value, 'formCheckbox', $attributes);
 		$field->setChecked($value);
@@ -342,7 +342,7 @@ class form {
 	 * @return	class
 	 *
 	 */
-	public function addSelectField($name, $value, $attributes = array()) {
+	public function addSelectField($name, $value, $attributes = []) {
 		
 		$field = $this->addField($name, $value, 'formSelect', $attributes);
 		$field->setSelected($value);
@@ -762,8 +762,8 @@ class form {
 			
 		}
 		
-		$return = array();
-		$buttons = array();
+		$return = [];
+		$buttons = [];
 		$x = 1;
 		
 		$return[] = '<form'.html_convertAttribute($this->formAttributes).'>'.PHP_EOL;

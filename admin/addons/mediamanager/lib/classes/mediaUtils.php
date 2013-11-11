@@ -7,7 +7,12 @@ class mediaUtils {
 		
 		$name = mb_strtolower($name);
 		
-		$replace = array('ä'=>'ae', 'ö'=>'oe', 'ü'=>'ue', 'ß'=>'ss');
+		$replace = [
+			'ä'=>'ae',
+			'ö'=>'oe',
+			'ü'=>'ue',
+			'ß'=>'ss'
+		];
 		$name = str_replace(array_keys($replace), array_values($replace), $name);
 		
 		$name = preg_replace('/[^a-z0-9._]/', '-', $name);

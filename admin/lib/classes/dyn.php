@@ -2,10 +2,10 @@
 
 class dyn {
 	
-	static $params = array();
+	static $params = [];
 	static $isChange = false;
 	
-	static $newEntrys = array();
+	static $newEntrys = [];
 
 	public function __construct() {
 		

@@ -18,7 +18,7 @@ class formCheckbox extends formField {
 		
 	} 
 	
-	public function add($name, $value, $attributes = array()) {
+	public function add($name, $value, $attributes = []) {
 		
 		$attributes['type'] = 'checkbox';
 		$attributes['value'] = $name;

@@ -3,8 +3,8 @@
 class autoload {
 	
 	
-	static $classes = array();
-	static $dirs = array();
+	static $classes = [];
+	static $dirs = [];
 	static $registered = false;
 	static $isNewCache = false;
 	
@@ -19,14 +19,14 @@ class autoload {
 			return;	
 		}
 		
-		if(spl_autoload_register(array(__CLASS__, 'autoloader')) === false) {
+		if(spl_autoload_register([__CLASS__, 'autoloader']) === false) {
 			//throw new Exception();
 		}
 		
 		self::loadCache();
 		
 		
-        register_shutdown_function(array(__CLASS__, 'saveCache'));
+        register_shutdown_function([__CLASS__, 'saveCache']);
 		
 		self::$registered = true;
 		
@@ -38,7 +38,7 @@ class autoload {
 	 */
 	static public function unregister() {
 	
-		spl_autoload_unregister(array(__CLASS__, 'autoloader'));
+		spl_autoload_unregister([__CLASS__, 'autoloader']);
 		self::$registered = false;
 		
 	}
@@ -89,7 +89,7 @@ class autoload {
 			
 			$cacheFile = cache::getFileName(0, 'autoloadcache');
 			
-			cache::write(json_encode(array(self::$classes, self::$dirs)), $cacheFile);
+			cache::write(json_encode([self::$classes, self::$dirs]), $cacheFile);
 			self::$isNewCache = false;
 			
 		}
@@ -152,7 +152,7 @@ class autoload {
 		
 		foreach($files as $file) {			
 			
-			if(in_array($file, array('.', '..')))
+			if(in_array($file, ['.', '..']))
 				continue;
 				
 			self::addClass(dir::classes($dir.DIRECTORY_SEPARATOR.$file));

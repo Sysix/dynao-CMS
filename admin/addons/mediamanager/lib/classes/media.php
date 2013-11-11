@@ -13,7 +13,7 @@ class media {
 			
 		} else {
 		
-			$this->sql = new sql();
+			$this->sql = sql::factory();
 			$this->sql->result('SELECT * FROM '.sql::table('media').' WHERE id='.$id);
 			
 		}
@@ -25,7 +25,7 @@ class media {
 	// return	object
 	static public function getMediaByName($filename) {
 	
-		$sql = new sql();
+		$sql = sql::factory();
 		$sql->result('SELECT * FROM '.sql::table('media').' WHERE filename="'.$filename.'"');
 		
 		if($sql->num() != 1) {
@@ -44,10 +44,10 @@ class media {
 	// return	array
 	static public function getMediaByExtension($extension) {
 		
-		$returnArray = array();
+		$returnArray = [];
 		$class = __CLASS__;
 	
-		$sql = new sql();
+		$sql = sql::factory();
 		$sql->result('SELECT * FROM '.sql::table('media').' WHERE filename LIKE "%.'.$extension.'"');
 		while($sql->isNext()) {
 			

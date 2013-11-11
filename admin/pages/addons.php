@@ -67,19 +67,19 @@ $addons = scandir(dir::backend('addons/'));
 
 foreach($addons as $dir) {
 	
-	if(in_array($dir, array('.', '..', '.htaccess'))) 
+	if(in_array($dir, ['.', '..', '.htaccess'])) 
 		continue;
 	
 	$curAddon = new addon($dir);
 	
-	$online_url = url::backend('addons', array('addon'=>$dir, 'action'=>'install'));
+	$online_url = url::backend('addons', ['addon'=>$dir, 'action'=>'install']);
 	
 	if($curAddon->isInstall()) {
 		$online = '<a href="'.$online_url.'" class="btn btn-sm structure-online">installiert</a>';
 	} else {
 		$online = '<a href="'.$online_url.'" class="btn btn-sm structure-offline">nicht installiert</a>';
 	}
-	$active_url = url::backend('addons', array('addon'=>$dir, 'action'=>'active'));
+	$active_url = url::backend('addons', ['addon'=>$dir, 'action'=>'active']);
 	
 	if($curAddon->isActive()) {
 		$active = '<a href="'.$active_url.'" class="btn btn-sm structure-online">aktiviert</a>';

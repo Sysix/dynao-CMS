@@ -5,7 +5,7 @@ trait traitFactory {
 	public static function factory() {
 		
 		$class = get_called_class();
-		$args = array();
+		$args = [];
 		
 		if(extension::has($class.'_CLASS')) {
 			$class = extension::get($class.'_CLASS');

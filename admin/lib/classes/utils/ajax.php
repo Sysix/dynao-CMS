@@ -2,7 +2,7 @@
 
 class ajax {
 	
-	static $return = array();
+	static $return = [];
 	
 	public static function is() {
 	

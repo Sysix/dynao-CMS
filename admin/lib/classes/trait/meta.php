@@ -2,8 +2,8 @@
 
 trait traitMeta {
 	
-	protected static $classMethodsStatic = array();
-	protected $classMethods = array();
+	protected static $classMethodsStatic = [];
+	protected $classMethods = [];
 	
 	public static function addClassMethod($name, $method) {
 		

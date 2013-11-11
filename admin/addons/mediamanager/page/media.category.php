@@ -11,7 +11,7 @@ while($while_id) {
 	
 	if($id != $while_id) {
 		
-		$breadcrumb[] = '<li><a href="'.url::backend('media', array('id'=>$while_id, 'subpage'=>'category')).'">'.$sql->get('name').'</a></li>';
+		$breadcrumb[] = '<li><a href="'.url::backend('media', ['id'=>$while_id, 'subpage'=>'category']).'">'.$sql->get('name').'</a></li>';
 		
 	} else {
 		
@@ -23,11 +23,11 @@ while($while_id) {
 	
 }
 
-$breadcrumb[] = '<li><a href="'.url::backend('media', array('subpage'=>'category')).'">Homepage</a></li>';
+$breadcrumb[] = '<li><a href="'.url::backend('media', ['subpage'=>'category']).'">Homepage</a></li>';
 
 echo '<ul class="pull-left breadcrumb">'.implode('', array_reverse($breadcrumb)).'</ul>';
 
-echo '<a href="'.url::backend('media', array('subpage'=>'category', 'action'=>'add', 'id'=>$id)).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
+echo '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'add', 'id'=>$id]).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
 echo '<div class="clearfix"></div>';
 
 if($action == 'delete') {
@@ -68,12 +68,16 @@ if($action == 'delete') {
 		
 }
 
-if(in_array($action, array('save-add', 'save-edit'))) {
+if(in_array($action, ['save-add', 'save-edit'])) {
 	
 	$sql = sql::factory();
 	$sql->setTable('media_cat');
 	$sql->setWhere('id='.$id);
-	$sql->getPosts(array('name'=>'string','sort'=>'int', 'pid'=>'int'));
+	$sql->getPosts([
+		'name'=>'string',
+		'sort'=>'int',
+		'pid'=>'int'
+	]);
 	
 	if($action == 'save-edit') {
 		$sql->update();	
@@ -85,7 +89,7 @@ if(in_array($action, array('save-add', 'save-edit'))) {
 	
 }
 
-$table = table::factory(array('class'=>array('js-sort')));
+$table = table::factory(['class'=>['js-sort']]);
 
 $colFirstWidth = ($action == 'edit' || $action == 'add') ? 50 : 25; 
 
@@ -100,7 +104,7 @@ $table->addSection('tbody');
 	
 $table->setSql('SELECT * FROM '.sql::table('media_cat').' WHERE pid = '.$pid.' ORDER BY sort ASC');
 	
-if(in_array($action, array('edit', 'add'))) {
+if(in_array($action, ['edit', 'add'])) {
 		
 	echo '<form method="post" action="index.php">';
 		
@@ -166,12 +170,12 @@ while($table->isNext()) {
 		
 	} else {
 		
-		$edit = '<a href="'.url::backend('media', array('subpage'=>'category', 'action'=>'edit', 'id'=>$table->get('id'),'pid'=>$pid)).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';	
-		$delete = '<a href="'.url::backend('media', array('subpage'=>'category', 'action'=>'delete', 'id'=>$table->get('id'),'pid'=>$pid)).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+		$edit = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'edit', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';	
+		$delete = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'delete', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 	
 		$table->addRow(array('data-id'=>$table->get('id')))
 		->addCell('<i class="icon-sort"></i>')
-		->addCell('<a href="'.url::backend('media', array('subpage'=>'category', 'pid'=>$table->get('id'))).'">'.$table->get('name').'</a>')
+		->addCell('<a href="'.url::backend('media', ['subpage'=>'category', 'pid'=>$table->get('id')]).'">'.$table->get('name').'</a>')
 		->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
 		
 	}
@@ -182,7 +186,7 @@ while($table->isNext()) {
 echo $table->show();
 
 
-if(in_array($action, array('edit', 'add'))) {
+if(in_array($action, ['edit', 'add'])) {
 	echo '</form>';
 }
 

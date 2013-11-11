@@ -19,7 +19,7 @@ class sql {
 	static $sql;
 	
 	// Zur Speicherung der Einträge
-	var $values = array();
+	var $values = [];
 	var $table;
 	var $where;
 	
@@ -84,7 +84,7 @@ class sql {
 				$this->query($query);
 			}
 			
-			if(!in_array($type, array(MYSQLI_NUM, MYSQLI_ASSOC, MYSQLI_BOTH))) { #[MYSQLI_NUM, MYSQLI_ASSOC, MYSQLI_BOTH]
+			if(!in_array($type, [MYSQLI_NUM, MYSQLI_ASSOC, MYSQLI_BOTH])) {
 				
 				throw new Exception(__CLASS__.'::result erwartet als $type MYSQLI_NUM, MYSQLI_ASSOC oder MYSQLI_BOTH');
 				
@@ -307,7 +307,7 @@ class sql {
 		
 	}
 	
-	static public function sortTable($table, $sort, $up = true, $where = '', $select = array('id', 'sort')) {
+	static public function sortTable($table, $sort, $up = true, $where = '', $select = ['id', 'sort']) {
 		
 		if($where)
 			$where = ' AND '.$where;

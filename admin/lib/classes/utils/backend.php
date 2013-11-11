@@ -2,8 +2,8 @@
 
 class backend {
 	
-	static $navi = array();
-	static $subnavi = array();
+	static $navi = [];
+	static $subnavi = [];
 	
 	public static function addNavi($name, $link, $icon = 'circle', $pos = -1) {
 		
@@ -11,8 +11,8 @@ class backend {
 			$pos = count(self::$navi);
 		}
 		
-		$list = array('name'=>$name, 'link'=>$link, 'icon'=>$icon);
-		array_splice(self::$navi, $pos, 0, array($list));
+		$list = ['name'=>$name, 'link'=>$link, 'icon'=>$icon];
+		array_splice(self::$navi, $pos, 0, [$list]);
 		
 	}
 	
@@ -22,8 +22,8 @@ class backend {
 			$pos = count(self::$subnavi);
 		}
 		
-		$list = array('name'=>$name, 'link'=>$link, 'icon'=>$icon);		
-		array_splice(self::$subnavi, $pos, 0, array($list));
+		$list = ['name'=>$name, 'link'=>$link, 'icon'=>$icon];		
+		array_splice(self::$subnavi, $pos, 0, [$list]);
 		
 	}
 	
@@ -77,7 +77,7 @@ class backend {
 	
 	public static function getSubnaviInclude($addon = false) {
 		
-		$allowPages = array();
+		$allowPages = [];
 		
 		$page = preg_match("/page=(\w*)/", self::$subnavi[0]['link'], $output);
 		$page = $output[1];

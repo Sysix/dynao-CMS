@@ -2,7 +2,7 @@
 
 class pageAreaHtml {
 	
-	public static $modulList = array();
+	public static $modulList = [];
 
 	public static function selectBlock($structureID, $sort = false)  {
 		

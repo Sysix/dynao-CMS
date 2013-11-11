@@ -4,7 +4,7 @@ class formRadio extends formField {
 		
 	var $output = array();
 	
-	public function add($name, $value, $attributes = array()) {
+	public function add($name, $value, $attributes = []) {
 		
 		$attributes['type'] = 'radio';
 		$attributes['value'] = $name;
@@ -13,7 +13,7 @@ class formRadio extends formField {
 		if($attributes['value'] ==  $this->value)
 			$attributes['checked'] = 'checked';
 			
-		$this->output[$attributes['value']] = array('value'=>$value, 'attr'=>$attributes); //Name als Key speicher, für Methode del();	
+		$this->output[$attributes['value']] = ['value'=>$value, 'attr'=>$attributes]; //Name als Key speicher, für Methode del();	
 		
 		return $this;	
 			

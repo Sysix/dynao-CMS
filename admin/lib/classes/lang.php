@@ -3,8 +3,8 @@
 class lang {
 	
 	static $lang;
-	static $langs = array();
-	static $default = array();
+	static $langs = [];
+	static $default = [];
 	static $defaultLang = 'en_gb';
 	
 	/**

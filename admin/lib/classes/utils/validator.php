@@ -3,7 +3,7 @@
 class validator {
 	use traitFactory;
 	
-	protected $types = array();
+	protected $types = [];
 	protected $message;
 	
 	/**
@@ -20,7 +20,11 @@ class validator {
 			throw new Exception(__CLASS__.'::'.__METHOD__.' erwartet als $type eine vorhandene Methode');	
 		}
 		
-		$this->types[] = array('type'=>$type, 'message'=>$message, 'option'=>$option);
+		$this->types[] = [
+			'type'=>$type, 
+			'message'=>$message, 
+			'option'=>$option
+		];
 		
 		return $this;
 		

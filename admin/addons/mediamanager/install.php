@@ -2,22 +2,22 @@
 
 if(!dyn::has('extensions')) {
 	
-	$imageExtensions = array("gif", "jpeg", "jpg", "png", "bmp");
-	$videoExtensions = array("3gp", "avi", "flv", "m4v", "mov", "mp4", "mpg", "wmv", "mkv", "mpeg");
-	$audioExtensions = array("mp3", "wma", "m4a");
+	$imageExtensions = ["gif", "jpeg", "jpg", "png", "bmp"];
+	$videoExtensions = ["3gp", "avi", "flv", "m4v", "mov", "mp4", "mpg", "wmv", "mkv", "mpeg"];
+	$audioExtensions = ["mp3", "wma", "m4a"];
 	
-	dyn::add('extensions', array(
+	dyn::add('extensions', [
 		'image'=>$imageExtensions, 
 		'video'=>$videoExtensions, 
 		'audio'=>$audioExtensions
-	), true);
-	dyn::add('badExtensions', array('php', 'htaccess', 'htpasswd'), true);
+	], true);
+	dyn::add('badExtensions', ['php', 'htaccess', 'htpasswd'], true);
 	dyn::save();
 	
 }
 
 
-$sql = new sql();
+$sql = sql::factory();
 $sql->query('CREATE TABLE IF NOT EXISTS '.sql::table('media').' (
 `id` 			int(16)		unsigned 	NOT NULL 	auto_increment,
 `filename`		varchar(255)			NOT NULL,

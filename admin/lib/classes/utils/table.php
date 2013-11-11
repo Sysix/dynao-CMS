@@ -3,21 +3,21 @@
 class table {
 	use traitFactory;
 	
-	protected $thead = array();
-	protected $tfoot = array();
-	protected $tbody = array();
+	protected $thead = [];
+	protected $tfoot = [];
+	protected $tbody = [];
 	
 	protected $current_section;
 	
-	protected $tableAttr = array();	
-	protected $collsLayout = array();
-	protected $caption = array();
+	protected $tableAttr = [];	
+	protected $collsLayout = [];
+	protected $caption = [];
 	
 	var $sql;
 	var $isSql = false;
 	
 	
-	function __construct($attributes = array()) {
+	function __construct($attributes = []) {
 		// wenn addSection nicht ausgeführt rows zu thead adden
 		$this->addSection('thead');
 		
@@ -28,9 +28,9 @@ class table {
 	}
 	
 	//rows zu der zuletzt aufgerufenden Section hinzufügen
-	public function addSection($section, $attributes = array() ) {
+	public function addSection($section, $attributes = []) {
 		
-		if(in_array($section, array('thead', 'tfoot'))) {
+		if(in_array($section, ['thead', 'tfoot'])) {
 			
 			$this->current_section = $section;
 			
@@ -43,7 +43,7 @@ class table {
 		$ref = $this->getCurrentSection();
 	
 		$ref['attr'] = $attributes;
-		$ref['rows'] = array();
+		$ref['rows'] = [];
 		
 		$this->setCurrentSection($ref);
 		
@@ -81,7 +81,7 @@ class table {
 		if(!is_array($cols)) {			
 			
 			$col2 = explode(',', $cols);
-			$cols = array();
+			$cols = [];
 			
 			foreach($col2 as $key=>$val) {			
 				$cols[]['width'] = $val;			
@@ -111,7 +111,7 @@ class table {
 	// Value z.B: Inhalt
 	// Attribute
 	// End: true => <tag></tag> false => <tag />
-	protected function addTag($name, $attributes = array(), $value = '', $end = true) {
+	protected function addTag($name, $attributes = [], $value = '', $end = true) {
 		
 		$attributes = $this->convertAttr($attributes);
 		
@@ -121,9 +121,9 @@ class table {
 		
 	}
 	
-	public function addCaption($value, $attributes = array() ) {	
+	public function addCaption($value, $attributes = []) {	
 		
-		$this->caption = array('value'=>$value, 'attr'=>$attributes);
+		$this->caption = ['value'=>$value, 'attr'=>$attributes];
 		
 		return $this;
 		
@@ -186,15 +186,15 @@ class table {
 			
 	}
 	
-	public function addRow($attributes = array() ) {
+	public function addRow($attributes = []) {
 		// rows zur letzten Section hinzufügen
 		
 		$ref = $this->getCurrentSection();
 		
-		$ref['rows'][] = array(
+		$ref['rows'][] = [
 			'attr' => $attributes,
-			'cells' => array()
-		);
+			'cells' => []
+		];
 		
 		$this->setCurrentSection($ref);
 		
@@ -202,15 +202,15 @@ class table {
 		
 	}
 	
-	public function addCell($value = '', $attributes = array() ) {
+	public function addCell($value = '', $attributes = []) {
 		
 		$type = ($this->current_section === 'thead') ? 'th' : 'td';
 		
-		$cell = array(
+		$cell = [
 			'value' => $value,
 			'type' => $type,
 			'attr' => $attributes
-		);
+		];
 		
 		$ref = $this->getCurrentSection();
 		
@@ -235,7 +235,7 @@ class table {
 		
 	}
 	
-	public function addCells($values, $attributes = array()) {
+	public function addCells($values, $attributes = []) {
 	
 		if(!is_array($values)) return $this;
 		

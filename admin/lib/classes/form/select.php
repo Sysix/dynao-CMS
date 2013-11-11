@@ -44,25 +44,25 @@ class formSelect extends formField {
 		
 	}
 	
-	public function addGroup($name, $attributes = array()) {
+	public function addGroup($name, $attributes = []) {
 	
 		$attributes['label'] = $name;
 	
 		$this->currentOpt++;
-		$this->output[$this->currentOpt] = array('attr'=>$attributes, 'option'=>array());
+		$this->output[$this->currentOpt] = ['attr'=>$attributes, 'option'=>[]];
 		
 		return $this;
 		
 	}
 	
-	public function add($name, $value, $attributes = array()) {
+	public function add($name, $value, $attributes = []) {
 		
 		$attributes['value'] = $name;
 		
 		if(isset($this->value[$attributes['value']]))
 			$attributes['selected'] = 'selected';
 		
-		$this->output[$this->currentOpt]['option'][] = array('name'=>$value, 'attr'=>$attributes);
+		$this->output[$this->currentOpt]['option'][] = ['name'=>$value, 'attr'=>$attributes];
 		
 		return $this;
 		

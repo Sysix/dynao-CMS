@@ -2,11 +2,13 @@
 
 class layout {
 	
-	static $jsFiles = array();
-	
-	static $cssFiles = array();
+	static $jsFiles = [];	
+	static $cssFiles = [];
 				
-	static $jsCode = array('jquery'=>array(), 'all'=>array());
+	static $jsCode = [
+		'jquery'=>[],
+		'all'=>[]
+	];
 	
 	/**
 	 * Eine Javascript Datei einbinden
@@ -15,7 +17,7 @@ class layout {
 	 * @param	array	$attributes		HTML Attribute
 	 *
 	 */
-	public static function addJs($js_file, $attributes = array()) {
+	public static function addJs($js_file, $attributes = []) {
 		
 		
 		$attributes['src'] = $js_file;
@@ -32,7 +34,7 @@ class layout {
 	 * @param array		$attributes		HTML Attribute
 	 *
 	 */
-	public static function addCss($css_file, $media = 'screen', $attributes = array()) {
+	public static function addCss($css_file, $media = 'screen', $attributes = []) {
 		
 		if(!isset($attributes['rel']))
 			$attributes['rel'] = 'stylesheet';

@@ -2,8 +2,8 @@
 
 class addonConfig {
 	
-	static $all = array();
-	static $allConfig = array();
+	static $all = [];
+	static $allConfig = [];
 	
 	public static function isSaved($addon, $save = true) {
 	

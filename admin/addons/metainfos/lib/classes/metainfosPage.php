@@ -2,7 +2,7 @@
 
 class metainfosPage {
 	
-	static $types = array('text', 'textarea', 'select', 'radio', 'checkbox', 'DYN_LINK', 'DYN_MEDIA', 'DYN_LINK_LIST', 'DYN_MEDIA_LIST');
+	static $types = ['text', 'textarea', 'select', 'radio', 'checkbox', 'DYN_LINK', 'DYN_MEDIA', 'DYN_LINK_LIST', 'DYN_MEDIA_LIST'];
 	
 	static public function Backend($name, $pagename, $tablename, $action, $id) {
 		
@@ -69,7 +69,7 @@ class metainfosPage {
 		$field->fieldName('Standardwert');
 		$field->setSuffix('<small>Bei Mehrauswahl mit einen <b>|</b> trennen</small>');
 		
-		$style = (in_array($form->get('formtype'), array('select', 'radio', 'checkbox'))) ? 'block' : 'none' ;
+		$style = (in_array($form->get('formtype'), ['select', 'radio', 'checkbox'])) ? 'block' : 'none' ;
 		
 		$field = $form->addTextareaField('params', $form->get('params'));
 		$field->fieldName('Parameter');
@@ -129,9 +129,9 @@ class metainfosPage {
 	
 	static protected function BackendShow($name, $pagename) {
 	
-		echo '<a href="'.url::backend('meta', array('subpage'=>$pagename, 'action'=>'add')).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
+		echo '<a href="'.url::backend('meta', ['subpage'=>$pagename, 'action'=>'add']).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
 	
-		$table = table::factory(array('class'=>array('js-sort')));
+		$table = table::factory(['class'=>['js-sort']]);
 		$table->setSql('SELECT * FROM '.sql::table('metainfos').' WHERE `type` = "'.$name.'"');
 		
 		$table->addRow()->addCell()->addCell('Name')->addCell('Aktion');
@@ -141,10 +141,10 @@ class metainfosPage {
 		$table->addSection('tbody');
 		while($table->isNext()) {
 			
-			$edit = '<a href="'.url::backend('meta', array('subpage'=>$pagename, 'action'=>'edit', 'id'=>$table->get('id'))).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
-			$delete = '<a href="'.url::backend('meta', array('subpage'=>$pagename, 'action'=>'delete', 'id'=>$table->get('id'))).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+			$edit = '<a href="'.url::backend('meta', ['subpage'=>$pagename, 'action'=>'edit', 'id'=>$table->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
+			$delete = '<a href="'.url::backend('meta', ['subpage'=>$pagename, 'action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 			
-			$table->addRow(array('data-id'=>$table->get('id')))
+			$table->addRow(['data-id'=>$table->get('id')])
 			->addCell('<i class="icon-sort"></i>')
 			->addCell($table->get('name'))
 			->addCell('<span class="btn-group">'.$edit.$delete.'</span>');

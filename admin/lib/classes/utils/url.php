@@ -2,7 +2,7 @@
 
 class url {
 	
-	public static function backend($page = '', $params = array()) {		
+	public static function backend($page = '', $params = []) {		
 		
 		$return = 'index.php';
 		

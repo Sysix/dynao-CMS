@@ -2,11 +2,11 @@
 
 class metainfos {
 	
-	static $multiTypes = array('select', 'radio', 'checkbox');
+	static $multiTypes = ['select', 'radio', 'checkbox'];
 	
 	public static function getMetaInfos($type) {
 		
-		$return = array();
+		$return = [];
 		
 		$sql = sql::factory();
 		$sql->query('SELECT * FROM '.sql::table('metainfos').' WHERE `type` = "'.$type.'" ORDER BY `sort`')->result();

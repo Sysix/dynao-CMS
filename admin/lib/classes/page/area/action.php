@@ -2,11 +2,12 @@
 
 class pageAreaAction {	
 	
-	static $types = array(
+	static $types = [
 		'VALUE' => 15, 
 		'LINK' => 10,
 		'MEDIA' => 10,
-		'PHP' => 2); #typen
+		'PHP' => 2
+	]; #typen
 	
 	public static function saveBlock() {
 		
@@ -24,7 +25,7 @@ class pageAreaAction {
 		
 		foreach(array_keys(self::$types) as $types) {
 			
-			$array = type::post('DYN_'.$types, 'array', array());
+			$array = type::post('DYN_'.$types, 'array', []);
 			foreach($array as $key=>$value) {
 				$sql->addPost(strtolower($types).$key, $value);			
 			}

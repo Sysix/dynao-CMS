@@ -6,7 +6,7 @@ abstract class formField {
 	var $name;
 	var $value;
 	
-	var $attributes = array();	
+	var $attributes = [];	
 	
 	var $suffix;
 	var $prefix;
@@ -14,7 +14,7 @@ abstract class formField {
 	var $toSave = true;
 	var $validator;
 	
-	public function __construct($name, $value, $attributes = array()) {
+	public function __construct($name, $value, $attributes = []) {
 		
 		$this->name = $name;
 		$this->value = $value;

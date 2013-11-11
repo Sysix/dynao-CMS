@@ -2,7 +2,7 @@
 
 class extension {
 	
-	protected static $extensions = array();
+	protected static $extensions = [];
 	
 	
 	/**
@@ -25,7 +25,7 @@ class extension {
 				
 			}
 			
-			self::$extensions[$name] = array();
+			self::$extensions[$name] = [];
 			
 			if($position < 0) {
 				$position = count(self::$extensions[$name]);

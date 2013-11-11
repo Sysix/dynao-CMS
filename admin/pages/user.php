@@ -55,7 +55,7 @@ if($action == 'add' || $action == 'edit') {
 	$field->setSuffix('<small>Sie sehen das verschlüsselte Passwort! Um ein neues Passwort zu vergeben, einfach eingeben!</small>');
 	
 	$field = $form->addCheckboxField('perms', $form->get('perms'));
-	$field->add('admin[page]', 'PageAdmin?', array('id'=>'pageadmin-button'));
+	$field->add('admin[page]', 'PageAdmin?', ['id'=>'pageadmin-button']);
 		
 	$field = $form->addSelectField('perms', $form->get('perms'));
 	$field->setMultiple(true);
@@ -109,8 +109,8 @@ if($action == '') {
 			
 		$id = $table->get('id');
 			
-		$edit = '<a href="'.url::backend('user', array('action'=>'edit', 'id'=>$id)).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
-		$delete = '<a href="'.url::backend('user', array('action'=>'delete', 'id'=>$id)).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+		$edit = '<a href="'.url::backend('user', ['action'=>'edit', 'id'=>$id]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
+		$delete = '<a href="'.url::backend('user', ['action'=>'delete', 'id'=>$id]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 		
 		$table->addRow()
 		->addCell($table->get('email'))
