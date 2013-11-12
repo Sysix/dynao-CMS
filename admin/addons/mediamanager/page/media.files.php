@@ -1,22 +1,18 @@
 <?php
 
+$catId = type::super('catId', 'int', 0);
+$subaction = type::super('subaction', 'string');
+
 if($action == 'add' || $action == 'edit') {
 	
 	$form = form::factory('media', 'id='.$id, 'index.php');
 	$form->addFormAttribute('enctype', 'multipart/form-data');
 	
 	$field = $form->addTextField('title', $form->get('title'));
-	$field->fieldName('Titel');
+	$field->fieldName('Titel');	
 	
-	$field = $form->addSelectField('category', $form->get('category'));
+	$field = $form->addRawField('<select class="form-control" name="category">'.mediaUtils::getTreeStructure(0, 0,' &nbsp;', $form->get('category')).'</select>');
 	$field->fieldName('Kategorie');
-	
-	$cat = sql::factory();
-	$cat->query('SELECT * FROM '.sql::table('media_cat').' ORDER BY `sort`')->result();
-	while($cat->isNext()) {
-		$field->add($cat->get('id'), $cat->get('name').' ['.$cat->get('id').']');
-		$cat->next();
-	}
 		
 	$form = metainfos::getMetaInfos($form, 'media');
 	
@@ -30,7 +26,10 @@ if($action == 'add' || $action == 'edit') {
 	if($form->isSubmit()) {
 		
 		$file = type::files('file');
-		$form = mediaUtils::saveFile($file, $form);		
+		$form = mediaUtils::saveFile($file, $form);
+		
+		$category = type::super('category', 'int');
+		$form->addPost('category', $category);
 		
 	}
 	
@@ -41,13 +40,19 @@ if($action == 'add' || $action == 'edit') {
 if($action == '') {
 	
 	echo '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'add', 'id'=>$id]).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
-	
-	echo '<select class="form-control">';
-	echo mediaUtils::getTreeStructure();
-	echo '</select>';
-	
+?>
+<div class="clearfix"></div>
+<form action="index.php" method="get">
+	<input type="hidden" name="page" value="media" />
+	<input type="hidden" name="subpage" value="files" />
+	<select class="form-control" id="media-select-category" name="catId">
+	<?php echo mediaUtils::getTreeStructure(0, 0,' &nbsp;', $catId); ?>
+	</select>
+</form>
+<div class="clearfix"></div>
+<?php
 	$table = table::factory();
-	$table->setSql('SELECT * FROM '.sql::table('media'));
+	$table->setSql('SELECT * FROM '.sql::table('media').' WHERE `category` = '.$catId);
 	$table->addRow()
 	->addCell()
 	->addCell('Titel')
@@ -58,9 +63,18 @@ if($action == '') {
 			
 		$media = new media($table->getSql());
 		
-		$edit = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'edit', 'id'=>$table->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
-		$delete = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+		if($subaction == 'popup') {
 			
+			$edit = '<button data-id="'.$table->get('id').'" class="btn btn-sm btn-warning dyn-media-select>Auswählen</button>';
+			$delete = '';
+			
+		} else {
+		
+			$edit = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'edit', 'id'=>$table->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
+			$delete = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+		
+		}
+		
 		$table->addRow()
 		->addCell('<img src="'.$media->getPath().'" style="max-width:50px; max-height:50px" />')
 		->addCell($media->get('title'))

@@ -7,11 +7,11 @@ class metainfos {
 	public static function getMetaInfos($form, $type) {
 		
 		$sql = sql::factory();
-		$sql->query('SELECT * FROM '.sql::table('metainfos').' WHERE `type` = "media" ORDER BY `sort`')->result();
+		$sql->query('SELECT * FROM '.sql::table('metainfos').' WHERE `type` = "'.$type.'" ORDER BY `sort`')->result();
 		while($sql->isNext()) {
 			
 			$element = self::getElement($sql->getRow(), $form->get($sql->get('name')));
-			$form->addElement($meta->get('name'), $element);
+			$form->addElement($sql->get('name'), $element);
 			
 			$sql->next();	
 		}

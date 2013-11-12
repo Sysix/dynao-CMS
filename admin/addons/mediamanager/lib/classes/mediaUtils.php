@@ -35,7 +35,7 @@ class mediaUtils {
 		if(in_array($extension, dyn::get('badExtensions', []))) {
 			
 			$form->setSave(false);
-			echo message::warning(sprintf(lang::get('media_error_bad_extension'), $file['name']));
+			$form->setErrorMessage(sprintf(lang::get('media_error_bad_extension'), $file['name']));
 			
 			return $form;
 			
@@ -50,7 +50,7 @@ class mediaUtils {
 		if(($form->isEditMode() && $media->get('filename') != $fileName)  || file_exists($fileDir)) {
 			
 			$form->setSave(false);
-			echo message::warning(sprintf(lang::get('media_error_already_exist'), $file['name']));
+			$form->setErrorMessage(sprintf(lang::get('media_error_already_exist'), $file['name']));
 			
 			return $form;
 			
@@ -59,7 +59,7 @@ class mediaUtils {
 		if(!move_uploaded_file($file['tmp_name'], $fileDir)) {
 			
 			$form->setSave(false);
-			echo message::warning(sprintf(lang::get('media_error_move'), $file['name']));
+			$form->setErrorMessage(sprintf(lang::get('media_error_move'), $file['name']));
 			
 			return $form;
 			
@@ -72,7 +72,7 @@ class mediaUtils {
 	
 	}
 	
-	public static function getTreeStructure($parentId = 0, $lvl = 0, $spacer = ' &nbsp;') {
+	public static function getTreeStructure($parentId = 0, $lvl = 0, $spacer = ' &nbsp;', $active = 0) {
 		
 		$select = '';
 		
@@ -94,9 +94,11 @@ class mediaUtils {
 				
 			}
 			
-			$select .= '<option value="'.$sql->get('id').'">'.$name.'</option>'.PHP_EOL;
+			$selected = ($active == $sql->get('id')) ? 'selected="selected"' : '';
+			
+			$select .= '<option value="'.$sql->get('id').'" '.$selected.'>'.$name.'</option>'.PHP_EOL;
 						
-			$select .= self::getTreeStructure($sql->get('id'), $lvl+1, $spacer);
+			$select .= self::getTreeStructure($sql->get('id'), $lvl+1, $spacer, $active);
 			
 			$sql->next();
 		}

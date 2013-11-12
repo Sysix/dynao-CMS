@@ -21,6 +21,7 @@ $sql = sql::factory();
 $sql->query('CREATE TABLE IF NOT EXISTS '.sql::table('media').' (
 `id` 			int(16)		unsigned 	NOT NULL 	auto_increment,
 `filename`		varchar(255)			NOT NULL,
+`category`		int(16)		unsigned 	NOT NULL,
 `size` 			int(16)		unsigned 	NOT NULL,
 `title` 		varchar(255)			NOT NULL,
   PRIMARY KEY  (`id`)

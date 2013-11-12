@@ -359,7 +359,7 @@ class form {
 	 */
 	public function addRawField($value) {
 		
-		return $this->addField('', $value, 'formRaw');
+		return $this->addField('form_'.count($this->return), $value, 'formRaw');
 		
 	}
 	
@@ -549,8 +549,10 @@ class form {
 			
 			$name = $ausgabe->getName();
 			$value = $ausgabe->getSaveValue();
-				
-			$this->addPost($name, $value);
+			
+			if($value != '') {				
+				$this->addPost($name, $value);
+			}
 			
 		}
 		
