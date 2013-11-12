@@ -5,6 +5,9 @@ require(dir::addon('mediamanager', 'lib/classes/mediaUtils.php'));
 require(dir::addon('mediamanager', 'lib/classes/formMedia.php'));
 require(dir::addon('mediamanager', 'lib/classes/formMediaList.php'));
 
+
+layout::addJs('addons/mediamanager/layout/js/mediamanager.js');
+
 backend::addNavi('Media', url::backend('media'), 'picture-o', 2);
 
 form::addClassMethod('addMediaField', function($name, $value) {

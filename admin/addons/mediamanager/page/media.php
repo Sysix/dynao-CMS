@@ -7,6 +7,13 @@ backend::addSubnavi('Dateien Synchronisieren',		url::backend('media', ['subpage'
 $action = type::super('action', 'string', '');
 $id = type::super('id', 'int', 0);
 
+if(type::super('subpage', 'string') == 'popup') {
+	
+	dyn::add('contentPage', true);
+	backend::addSubnavi('Popup',		url::backend('media', ['subpage'=>'popup']));
+	
+}
+
 include_once(backend::getSubnaviInclude('mediamanager'));
 
 ?>

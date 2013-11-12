@@ -97,7 +97,13 @@ if(ajax::is()) {
 }
 
 if($login->isLogged()) {
-	include(dir::backend('layout/index.php'));
+	
+	if(dyn::get('contentPage')) {
+		include(dir::backend('layout/contentpage.php'));
+	} else {
+		include(dir::backend('layout/index.php'));
+	}
+	
 } else {
 	include(dir::backend('layout/login.php'));
 }
