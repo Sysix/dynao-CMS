@@ -2,16 +2,16 @@
 
 $pid = type::super('pid', 'int', 0);
 
-$while_id = $id;
+$while_id = $pid;
 
 while($while_id) {
 		
 	$sql = sql::factory();
 	$sql->query('SELECT name, pid FROM '.sql::table('media_cat').' WHERE id='.$while_id)->result();
 	
-	if($id != $while_id) {
+	if($pid != $while_id) {
 		
-		$breadcrumb[] = '<li><a href="'.url::backend('media', ['id'=>$while_id, 'subpage'=>'category']).'">'.$sql->get('name').'</a></li>';
+		$breadcrumb[] = '<li><a href="'.url::backend('media', ['pid'=>$while_id, 'subpage'=>'category']).'">'.$sql->get('name').'</a></li>';
 		
 	} else {
 		
@@ -27,7 +27,7 @@ $breadcrumb[] = '<li><a href="'.url::backend('media', ['subpage'=>'category']).'
 
 echo '<ul class="pull-left breadcrumb">'.implode('', array_reverse($breadcrumb)).'</ul>';
 
-echo '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'add', 'id'=>$id]).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
+echo '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'add', 'pid'=>$pid]).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
 echo '<div class="clearfix"></div>';
 
 if($action == 'delete') {

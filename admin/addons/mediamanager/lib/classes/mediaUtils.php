@@ -21,6 +21,90 @@ class mediaUtils {
 		
 	}
 	
+	public static function saveFile($file, $form) {
+		
+		if(!is_uploaded_file($file['tmp_name'])) {			
+			return $form;				
+		}
+		
+		$fileName = mediaUtils::fixFileName($file['name']);
+		$fileDir = dir::media($fileName);
+		$extension = substr(strrchr($fileName, '.'), 1); // z.B. jpg
+		
+		// Wenn die Datei eine "verbotene" Datei ist
+		if(in_array($extension, dyn::get('badExtensions', []))) {
+			
+			$form->setSave(false);
+			echo message::warning(sprintf(lang::get('media_error_bad_extension'), $file['name']));
+			
+			return $form;
+			
+		}
+		
+		if($form->isEditMode()) {
+			$media = new media($id);
+		}
+		
+		// Wenn Datei nicht Existiert
+		// Oder man möchte sie überspeichern
+		if(($form->isEditMode() && $media->get('filename') != $fileName)  || file_exists($fileDir)) {
+			
+			$form->setSave(false);
+			echo message::warning(sprintf(lang::get('media_error_already_exist'), $file['name']));
+			
+			return $form;
+			
+		}
+		
+		if(!move_uploaded_file($file['tmp_name'], $fileDir)) {
+			
+			$form->setSave(false);
+			echo message::warning(sprintf(lang::get('media_error_move'), $file['name']));
+			
+			return $form;
+			
+		}
+		
+		$form->addPost('filename', $fileName);
+		$form->addPost('size', filesize($fileDir));
+		
+		return $form;
+	
+	}
+	
+	public static function getTreeStructure($parentId = 0, $lvl = 0, $spacer = ' &nbsp;') {
+		
+		$select = '';
+		
+		$sql = sql::factory();
+		$sql->query('SELECT id, name FROM '.sql::table('media_cat').' WHERE pid = '.$parentId.' ORDER BY sort')->result();	
+		while($sql->isNext()) {
+			
+			$name = $sql->get('name');
+			
+			if($lvl) {
+				$name = '- '.$name;
+			}
+			
+			if($spacer != '') {
+				
+				for($i = 1; $i <= $lvl; $i++) {
+					$name = $spacer.$name;
+				}
+				
+			}
+			
+			$select .= '<option value="'.$sql->get('id').'">'.$name.'</option>'.PHP_EOL;
+						
+			$select .= self::getTreeStructure($sql->get('id'), $lvl+1, $spacer);
+			
+			$sql->next();
+		}
+		
+		return $select;
+		
+	}
+	
 }
 
 ?>

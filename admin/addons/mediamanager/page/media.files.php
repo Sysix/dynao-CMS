@@ -17,14 +17,8 @@ if($action == 'add' || $action == 'edit') {
 		$field->add($cat->get('id'), $cat->get('name').' ['.$cat->get('id').']');
 		$cat->next();
 	}
-	
-	$meta = sql::factory();
-	$meta->query('SELECT * FROM '.sql::table('metainfos').' WHERE `type` = "media" ORDER BY `sort`')->result();
-	while($meta->isNext()) {
-		$element = metainfos::getElement($meta->getRow(), $form->get($meta->get('name')));
-		$form->addElement($meta->get('name'), $element);
-		$meta->next();	
-	}
+		
+	$form = metainfos::getMetaInfos($form, 'media');
 	
 	$field = $form->addRawField('<input type="file" name="file" />');
 	$field->fieldName('Datei auswählen');
@@ -35,52 +29,8 @@ if($action == 'add' || $action == 'edit') {
 	
 	if($form->isSubmit()) {
 		
-		$file = type::files('file', '');
-		if(is_uploaded_file($file['tmp_name'])) {
-			
-			$fileName = mediaUtils::fixFileName($file['name']);
-			$fileDir = dir::media($fileName);
-			$extension = substr(strrchr($fileName, '.'), 1); // z.B. jpg
-			
-			// Wenn die Datei eine "verbotene" Datei ist
-			if(!in_array($extension, dyn::get('badExtensions'))) {
-			
-				if($form->isEditMode()) {
-					$media = new media($id);
-				}
-				
-				// Wenn Datei nicht Existiert
-				// Oder man möchte sie überspeichern
-				if(!file_exists($fileDir) || ($form->isEditMode() && $media->get('filename') == $fileName)) {
-				
-					if(move_uploaded_file($file['tmp_name'], $fileDir)) {
-						
-						$form->addPost('filename', $fileName);
-						$form->addPost('size', filesize($fileDir));
-						
-					} else {
-						
-						$form->setSave(false);
-						echo message::warning(sprintf(lang::get('media_error_move'), $file['name']));
-						
-					}
-				
-				} else {
-					
-					$form->setSave(false);
-					echo message::warning(sprintf(lang::get('media_error_already_exist'), $file['name']));
-					
-				}
-				
-			} else {
-				
-				$form->setSave(false);
-				echo message::warning(sprintf(lang::get('media_error_bad_extension'), $file['name']));
-				
-			}
-			
-		}
-		
+		$file = type::files('file');
+		$form = mediaUtils::saveFile($file, $form);		
 		
 	}
 	
@@ -89,6 +39,12 @@ if($action == 'add' || $action == 'edit') {
 }
 
 if($action == '') {
+	
+	echo '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'add', 'id'=>$id]).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
+	
+	echo '<select class="form-control">';
+	echo mediaUtils::getTreeStructure();
+	echo '</select>';
 	
 	$table = table::factory();
 	$table->setSql('SELECT * FROM '.sql::table('media'));
@@ -102,8 +58,8 @@ if($action == '') {
 			
 		$media = new media($table->getSql());
 		
-		$edit = '<a href="'.url::backend('media', ['action'=>'edit', 'id'=>$table->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
-		$delete = '<a href="'.url::backend('media', ['action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+		$edit = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'edit', 'id'=>$table->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
+		$delete = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 			
 		$table->addRow()
 		->addCell('<img src="'.$media->getPath().'" style="max-width:50px; max-height:50px" />')

@@ -4,20 +4,19 @@ class metainfos {
 	
 	static $multiTypes = ['select', 'radio', 'checkbox'];
 	
-	public static function getMetaInfos($type) {
-		
-		$return = [];
+	public static function getMetaInfos($form, $type) {
 		
 		$sql = sql::factory();
-		$sql->query('SELECT * FROM '.sql::table('metainfos').' WHERE `type` = "'.$type.'" ORDER BY `sort`')->result();
+		$sql->query('SELECT * FROM '.sql::table('metainfos').' WHERE `type` = "media" ORDER BY `sort`')->result();
 		while($sql->isNext()) {
-		
-			$return[] = self::getElement($sql->getRow(), null);
-		
+			
+			$element = self::getElement($sql->getRow(), $form->get($sql->get('name')));
+			$form->addElement($meta->get('name'), $element);
+			
 			$sql->next();	
 		}
 		
-		return $return;
+		return $form;
 		
 	}
 	
