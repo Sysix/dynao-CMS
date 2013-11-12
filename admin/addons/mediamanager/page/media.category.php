@@ -62,7 +62,7 @@ if($action == 'delete') {
 	$delete->setWhere('id='.$orginal_id);
 	$delete->delete();
 	
-	sql::sortTable('media_cat', $sql->get('sort'), false, '`pid` = '.$sql->get('pid'));
+	sql::sortTable('media_cat', 0, '`pid` = '.$sql->get('pid'));
 	
 	echo message::success('Artikel erfolgreich gelöscht');
 		
@@ -81,10 +81,14 @@ if(in_array($action, ['save-add', 'save-edit'])) {
 	
 	if($action == 'save-edit') {
 		$sql->update();	
-	} else {
+	} else {			
 		$sql->save();
-		sql::sortTable('media_cat', type::post('sort', 'int'), true, '`pid` = '.type::post('pid', 'int'));	
 	}
+	
+	$sort = type::post('sort', 'int');
+	$parent_id = type::post('pid', 'int');
+	
+	sql::sortTable('media_cat', $sort, '`pid` = '.$parent_id.' AND id != '.$id);
 	
 	
 }

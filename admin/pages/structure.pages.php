@@ -54,7 +54,7 @@ if($action == 'delete') {
 	$delete->setWhere('id='.$orginal_id);
 	$delete->delete();
 	
-	sql::sortTable('structure', $sql->get('sort'), false, '`parent_id` = '.$sql->get('parent_id'));
+	sql::sortTable('structure', 0, '`parent_id` = '.$sql->get('parent_id'));
 	
 	echo message::success('Artikel erfolgreich gelöscht');
 		
@@ -81,14 +81,23 @@ if(in_array($action, ['save-add', 'save-edit'])) {
 	$sql = sql::factory();
 	$sql->setTable('structure');
 	$sql->setWhere('id='.$id);
-	$sql->getPosts(['name'=>'string','sort'=>'int', 'parent_id'=>'int']);
+	$sql->getPosts([
+		'name'=>'string',
+		'sort'=>'int',
+		'parent_id'=>'int'
+	]);
 	
 	if($action == 'save-edit') {
 		$sql->update();	
 	} else {
-		sql::sortTable('structure', type::post('sort', 'int'), true, '`parent_id` = '.type::post('parent_id', 'int'));
-		$sql->save();	
+		$sql->save();
 	}
+	
+	$sort = type::post('sort', 'int');
+	$parent_id = type::post('parent_id', 'int');
+	
+	sql::sortTable('structure', $sort, '`parent_id` = '.$parent_id.' AND id != '.$id);
+	
 }
 
 $table = table::factory(['class'=>['js-sort']]);

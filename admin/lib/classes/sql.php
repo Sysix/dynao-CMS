@@ -307,29 +307,32 @@ class sql {
 		
 	}
 	
-	static public function sortTable($table, $sort, $up = true, $where = '', $select = ['id', 'sort']) {
+	static public function sortTable($table, $sort, $where = '', $select = ['id', 'sort']) {
 		
 		if($where)
-			$where = ' AND '.$where;
+			$where = ' WHERE '.$where;
 		
 		$update = sql::factory();
 		$update->setTable($table);
 		
-		$sql = new sql();
-		$sql->query('SELECT `'.$select[0].'`, `'.$select[1].'` FROM '.self::table($table).' WHERE `'.$select[1].'` >= '.$sort.$where)->result();
+		$i = 1;
+		
+		$sql = sql::factory();
+		$sql->query('SELECT `'.$select[0].'`, `'.$select[1].'` FROM '.self::table($table).$where.' ORDER BY `'.$select[1].'` ASC')->result();
 		
 		while($sql->isNext()) {
 			
-			if($up) {
-				$update->addPost($select[1], $sql->get($select[1])+1);	
-			} else {
-				$update->addPost($select[1], $sql->get($select[1])-1);
+			if($sort == $i) {
+				$i++;	
 			}
+			
+			$update->addPost($select[1], $i);
 			
 			$update->setWhere($select[0].'='.$sql->get($select[0]));
 			$update->update();
 			
 			$sql->next();
+			$i++;
 			
 		}
 		
