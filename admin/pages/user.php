@@ -29,15 +29,9 @@ if($action == 'add' || $action == 'edit') {
 			}
 	});");
 	
-	form::addClassMethod('addCostumLink', function($name, $value) {
-		$field = $this->addTextField($name, $value);
-		$field->addClass('input-sm');
-		return $field;
-	});
-	
 	$form = form::factory('user','id='.$id,'index.php');
 	
-	$field = $form->addCostumLink('test', 'inhalt');
+	$field = $form->addMediaField('test', '');
 	$field->fieldName('Extra Input');
 	
 	$field = $form->addTextField('email', $form->get('email'));

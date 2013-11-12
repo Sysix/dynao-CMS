@@ -24,7 +24,9 @@ trait traitFactory {
 		
 		$class = get_called_class();
 		
-		extension::add($class.'_CLASS', create_function('', 'return "'.$classname.'";'));
+		extension::add($class.'_CLASS', function() use ($classname) {
+			return $classname;
+		});
 		
 	}
 	

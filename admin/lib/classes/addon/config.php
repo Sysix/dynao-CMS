@@ -39,10 +39,13 @@ class addonConfig {
 	
 	public static function includeAllConfig() {
 		
+		$return = [];
+		
 		foreach(self::getAll() as $name) {
-			$configFile = dir::addon($name, 'config.php');
-			include_once($configFile);
+			$return[] = dir::addon($name, 'config.php');
 		}
+		
+		return $return;
 		
 	}
 	

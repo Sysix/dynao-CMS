@@ -2,8 +2,8 @@
 
 trait traitMeta {
 	
-	protected static $classMethodsStatic = [];
-	protected $classMethods = [];
+	public static $classMethodsStatic = [];
+	public $classMethods = [];
 	
 	public static function addClassMethod($name, $method) {
 		
@@ -16,9 +16,9 @@ trait traitMeta {
 	}
 	
 	public function setClassMethod($name) {
-	
+		
 		if(isset(self::$classMethodsStatic[$name])) {
-			$this->classMethods[$name] = Closure::bind(self::$classMethodsStatic[$name], $this, get_class());			
+			$this->classMethods[$name] = Closure::bind(self::$classMethodsStatic[$name], $this, get_class());		
 		}
 		
 	}

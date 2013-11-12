@@ -47,7 +47,10 @@ backend::addNavi('User', url::backend('user'), 'user');
 backend::addNavi('Addons', url::backend('addons'), 'code-fork');
 backend::addNavi('Settings', url::backend('settings'), 'cogs');
 
-addonConfig::includeAllConfig();
+foreach(addonConfig::includeAllConfig() as $file) {
+	include($file);	
+}
+
 addonConfig::includeAllLangFiles();
 
 ob_start();
