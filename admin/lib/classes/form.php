@@ -536,27 +536,21 @@ class form {
 	
 		foreach($this->return as $ausgabe) {
 			
-			$name = $ausgabe->getName();				
-			$val = type::post($name);
-			
-			if(!$ausgabe->isValid($val)) {
+			if(!$ausgabe->isValid()) {
 				
 				$this->setErrorMessage($ausgabe->getError());
 				$this->setSave(false);
-							
+				
 			}
 			
 			if(!$ausgabe->toSave()) {
-				continue;	
-			}			
-			
-			if(is_array($val)) {
-											
-				$val = '|'.implode('|', $val).'|';
-					
+				continue;
 			}
+			
+			$name = $ausgabe->getName();
+			$value = $ausgabe->getSaveValue();
 				
-			$this->addPost($name, $val);
+			$this->addPost($name, $value);
 			
 		}
 		

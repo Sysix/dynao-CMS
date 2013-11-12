@@ -19,7 +19,7 @@ if(ajax::is()) {
 if($action == 'delete') {
 	
 	$sql = sql::factory();
-	$sql->setTable('news');
+	$sql->setTable('module');
 	$sql->setWhere('id='.$id);
 	$sql->delete();
 	

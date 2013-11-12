@@ -52,6 +52,19 @@ abstract class formField {
 		
 	}
 	
+	public function getSaveValue() {
+		
+		$name = $this->getName();
+		$value = type::super($name);
+		
+		if(is_array($value)) {											
+			$value = '|'.implode('|', $value).'|';					
+		}
+		
+		return $value;
+		
+	}
+	
 	public function fieldName($name) {
 		
 		$this->fieldName = $name;	
@@ -107,9 +120,9 @@ abstract class formField {
 		
 	}
 	
-	public function isValid($value) {
+	public function isValid() {
 	
-		return $this->validator->isValid($value);
+		return $this->validator->isValid($this->getSaveValue());
 		
 	}
 	
