@@ -30,18 +30,18 @@ h1, h2, h3, h4, h5, h6 {
 
 
 .btn-default {
-  color: #ffffff;
-  background-color: #474949;
-  border-color: #474949;
+	color: #ffffff;
+	background-color: #474949;
+	border-color: #474949;
 }
 
 .btn-default:hover,
 .btn-default:focus,
 .btn-default:active,
 .btn-default.active {
-  background-color: #3a3c3c;
-  border-color: #2e2f2f;
-  color:#fff;
+	background-color: #3a3c3c;
+	border-color: #2e2f2f;
+	color:#fff;
 }
 
 .btn-default.disabled,
@@ -59,8 +59,8 @@ fieldset[disabled] .btn-default:active,
 .btn-default.disabled.active,
 .btn-default[disabled].active,
 fieldset[disabled] .btn-default.active {
-  background-color: #474949;
-  border-color: #474949;
+	background-color: #474949;
+	border-color: #474949;
 }
 
 .panel-heading h3 {
@@ -111,6 +111,10 @@ h1 {
 
 #login .input-group {
 	padding:10px 0;
+}
+
+#user-mobil {
+	display:none;
 }
 
 #navi {

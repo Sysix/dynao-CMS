@@ -60,6 +60,45 @@
 
 @media (max-width: 620px) {
 	
+	#user-mobil {
+		display:block;
+		position:absolute;
+		right:10px;
+		top:10px;
+		padding:5px;
+		cursor:pointer;
+	}
+	
+	#user-mobil.active {
+		background:#202020;
+		border-bottom:10px solid #202020;
+		color:#fff;
+	}
+	
+	#user-mobil h4, #user-mobil span {
+		line-height:30px;
+	}
+	
+	#user-mobil h4 {
+		font-size:14px;
+		margin:0;
+		float:right;
+		width:85px;
+		padding-left:10px;
+	}
+	
+	#user-mobil img {
+		width:30px;
+		float:right;
+		height:30px;
+	}
+	
+	#user-mobil span {
+		display:block;
+		float:right;
+		line-height:32px;
+	}
+	
 	#subnavi #user, #subnavi h1 {
 		display:none;
 	}
@@ -107,7 +146,7 @@
 		padding:45px 20px 5px 20px;
 	}
 	
-	#subnavi ul.subnav.display li a {
+	#subnavi #user.display, #subnavi ul.subnav.display li a {
 		display:block;
 	}
 	

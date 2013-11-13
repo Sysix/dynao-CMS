@@ -58,6 +58,11 @@ $(document).ready(function () {
 		$("#subnavi").toggleClass("round");	
 	});
 	
+	$("#user-mobil").click(function () {
+		$("#subnavi #user").toggleClass("display");
+		$(this).toggleClass("active");
+	});
+	
 	$('.js-sort tbody').DynSorting();
 	$('#structure-content').DynSorting({children: 'li', handle: '.panel-heading'});
 	
