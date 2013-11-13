@@ -73,6 +73,21 @@ class addon {
 				
 	}
 	
+	public function getConfig() {
+		
+		if($this->isActive() && $this->isInstall()) {
+	
+			return addonConfig::getConfig($this->name);
+			
+		} else {
+			
+			$configFile = dir::addon($this->name, 'config.json');
+			return json_decode(file_get_contents($configFile), true);
+			
+		}
+		
+	}
+	
 }
 
 ?>

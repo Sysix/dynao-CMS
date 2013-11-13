@@ -67,19 +67,62 @@ class addonConfig {
 		
 	}
 	
+	public static function getConfig($name) {
+	
+		$configFile = dir::addon($name, 'config.json');
+		
+		if(file_exists($configFile)) {
+			return json_decode(file_get_contents($configFile), true);
+		}
+		
+		return false;
+			
+	}
+	
 	public static function getAllConfig() {
 		
 		if(!count(self::$allConfig)) {
 		
 			foreach(self::getAll() as $name) {
-				$configFile = dir::addon($name, 'config.json');
-				self::$allConfig[$name] = json_decode(file_get_contents($configFile), true);
+				self::$allConfig[$name] = self::getConfig($name);
 			}
 		
 		}
 		
 		return self::$allConfig;
 		
+	}
+	
+	public static function includePage() {
+		
+		$page = type::super('page', 'string');
+		
+		foreach(self::getAllConfig() as $name=>$config) {
+			
+			if(!array_key_exists($page, $config['page'])) {
+				continue;
+			}
+			
+			foreach($config['need'] as $Needname=>$Needvalue) {
+				$message = addonNeed::check($Needname, $Needvalue);
+				if(is_string($message)) {
+					echo message::warning('Das Addon '.$config['name'].' hat folgende Fehler:<br />'.$message, true);
+					continue 2;
+				}
+				
+			}
+			
+			return dir::addon($name, $config['page'][$page]);
+			
+		}
+		
+		return false;
+		
+	}
+	
+	public static function isActive($name) {
+		
+		return in_array($name, self::$all);
 	}
 	
 }

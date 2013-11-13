@@ -48,23 +48,16 @@ if($action == 'add' || $action == 'edit') {
 	$field->fieldName('Passwort');
 	$field->setSuffix('<small>Sie sehen das verschlüsselte Passwort! Um ein neues Passwort zu vergeben, einfach eingeben!</small>');
 	
-	$field = $form->addCheckboxField('perms', $form->get('perms'));
-	$field->add('admin[page]', 'PageAdmin?', ['id'=>'pageadmin-button']);
+	$field = $form->addCheckboxField('admin', $form->get('admin'));
+	$field->add('1', 'PageAdmin?', ['id'=>'pageadmin-button']);
 		
 	$field = $form->addSelectField('perms', $form->get('perms'));
 	$field->setMultiple(true);
 	$field->setId('pageadmin-content');
 	$field->setSize(8);
-	$field->addGroup('Content');
-	$field->add('content[edit]',	'Content bearbeiten / erstelle');
-	$field->add('content[delete]',	'Content löschen');
-	$field->addGroup('Medien');
-	$field->add('media[edit]',		'Medien bearbeiten / erstellen');
-	$field->add('media[delete]',	'Medien löschen');
-	$field->addGroup('Admin');
-	$field->add('admin[user]',		'Useradmin');
-	$field->add('admin[addon]',		'AddOn Verwaltung');
-	$field->add('admin[page]',		'Seiten Admin');
+	foreach(userPerm::getAll() as $name=>$value) {
+		$field->add($name, $value);	
+	}
 	
 	if($action == 'edit') {
 		$form->addHiddenField('id', $id);

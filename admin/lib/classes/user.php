@@ -3,42 +3,39 @@
 class user {
 	use traitFactory;
 	
-	protected static $userID;
-	protected static $entrys;
+	protected $userId;
+	protected $entrys;
 
-	public static function getUser($id = false) {
+	public function __construct($id = false) {
 	
 		if(!$id)
 			$id = userLogin::getUser();
+		
+		$this->getEntrys($id);
 			
-		if(self::$userID != $id)
-			self::getEntrys($id);
-			
-		self::$userID = $id;
-			
-		return user::factory();
+		$this->userId = $id;
 		
 	}
 	
-	protected static function getEntrys($id) {
+	protected function getEntrys($id) {
 	
 		$sql = sql::factory();
 		$sql->query('SELECT * FROM '.sql::table('user').' WHERE id='.$id)->result();
 		
-		self::$entrys = $sql->result;
+		$this->entrys = $sql->result;
 		
-		$perms = self::$entrys['perms'];
-		self::$entrys['perms'] = explode('|', $perms);
+		$perms = $this->entrys['perms'];
+		$this->entrys['perms'] = explode('|', $perms);
 		
 	}
 	
 	public function get($name) {
 		
-		return self::$entrys[$name];
+		return $this->entrys[$name];
 		
 	}
 	
-	public function getID() {
+	public function getId() {
 	
 		return $this->get('id');
 		
@@ -46,7 +43,7 @@ class user {
 	
 	public function isAdmin() {
 	
-		return isset(self::$entrys['perms']['admin[page]']);
+		return $this->entrys['admin'] == 1;
 		
 	}
 	
@@ -54,14 +51,14 @@ class user {
 		
 		if($this->isAdmin())
 			return true;
-			
-		return isset(self::$entrys['perms'][$perm]);			
+		
+		return in_array($perm, $this->entrys['perms']);
 		
 	}
 	
-	public static function getAll() {
+	public function getAll() {
 	
-		return self::$entrys;	
+		return $this->entrys;	
 		
 	}
 	

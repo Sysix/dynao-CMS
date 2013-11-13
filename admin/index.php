@@ -41,11 +41,28 @@ layout::addJS('http://code.jquery.com/ui/1.10.3/jquery-ui.js');
 layout::addJS('http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js');
 layout::addJS('layout/js/scripts.js');
 
+userPerm::add('content[edit]', 'Content bearbeiten / erstellen');
+userPerm::add('content[delete]', 'Content löschen');
+userPerm::add('admin[user]', 'Useradmin');
+userPerm::add('admin[addon]', 'AddOn Verwaltung');
+
+new userLogin();
+dyn::add('user', new user());
+
 backend::addNavi('Dashboard', url::backend('dashboard'), 'desktop');
 backend::addNavi('Structure', url::backend('structure'), 'list');
-backend::addNavi('User', url::backend('user'), 'user');
-backend::addNavi('Addons', url::backend('addons'), 'code-fork');
-backend::addNavi('Settings', url::backend('settings'), 'cogs');
+
+if(dyn::get('user')->hasPerm('admin[user]')) {
+	backend::addNavi('User', url::backend('user'), 'user');
+}
+
+if(dyn::get('user')->hasPerm('admin[addon]')) {
+	backend::addNavi('Addons', url::backend('addons'), 'code-fork');
+}
+
+if(dyn::get('user')->isAdmin()) {
+	backend::addNavi('Settings', url::backend('settings'), 'cogs');
+}
 
 foreach(addonConfig::includeAllConfig() as $file) {
 	include($file);	
@@ -64,9 +81,7 @@ if(!is_null($errorMsg)) {
 	echo message::success($successMsg);	
 }
 
-$login = new userLogin();
-
-if($login->isLogged()) {
+if(userLogin::isLogged()) {
 	
 	if(file_exists(dir::page($page.'.php'))) {
 		
@@ -74,29 +89,26 @@ if($login->isLogged()) {
 		
 	} else {
 		
-		foreach(addonConfig::getAllConfig() as $name=>$config) {
-			
-			if(array_key_exists($page, $config['page']) && file_exists(dir::addon($name, $config['page'][$page]))) {
-				include(dir::addon($name, $config['page'][$page]));
-				break;
-			}
+		$file = addonConfig::includePage();
+		
+		if(file_exists($file)) {
+			include($file);	
 		}
 		
 	}
 	
 }
 
-$CONTENT = ob_get_contents();
+dyn::add('content', ob_get_contents());
 
 ob_end_clean();
-
 
 if(ajax::is()) {
 	echo ajax::getReturn();
 	die;
 }
 
-if($login->isLogged()) {
+if(userLogin::isLogged()) {
 	
 	if(dyn::get('contentPage')) {
 		include(dir::backend('layout/contentpage.php'));

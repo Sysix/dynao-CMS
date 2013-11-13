@@ -4,8 +4,7 @@
 	"author": "Dynao CMS",
 	"supportlink" : "http://dynao.de/",
 	"need": {
-		"version": 0.1,
-		"perm": "admin[page]"
+		"version": 0.1
 	},
 	"page": {
 		"media": "page/media.php"

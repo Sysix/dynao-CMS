@@ -53,8 +53,6 @@ class userLogin {
 		self::loginSession();
 		self::$userID = $session[0];
 		
-		user::getuser($session[0]);
-		
 		return true;		
 		
 	}
@@ -96,7 +94,6 @@ class userLogin {
 		
 		self::loginSession();
 		self::$userID = $sql->get('id');
-		user::getuser(self::$userID);
 		
 		$_SESSION['login'] = $sql->get('id').'||'.self::hash($password);
 	

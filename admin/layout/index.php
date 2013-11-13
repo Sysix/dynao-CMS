@@ -36,7 +36,7 @@
         </div><!--end #subnavi-->
         
         <div id="content">
-            <?php echo $CONTENT; ?>		
+            <?php echo dyn::get('content'); ?>		
         </div><!--end #content-->
         
         <div class="clearfix"></div>
