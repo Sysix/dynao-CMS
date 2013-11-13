@@ -4,11 +4,22 @@ class backend {
 	
 	static $navi = [];
 	static $subnavi = [];
+	static $currentPage;
+	static $currentSubpage;
 	
 	public static function addNavi($name, $link, $icon = 'circle', $pos = -1) {
 		
 		if($pos < 0) {
 			$pos = count(self::$navi);
+		}
+		
+		if(!self::$currentPage) {
+			
+			$page = type::super('page', 'string');
+			
+			if(strpos($link, 'page='.$page) !== false || (is_null($page) && !count(self::$navi))) {
+				self::$currentPage = $name; 	
+			}
 		}
 		
 		$list = ['name'=>$name, 'link'=>$link, 'icon'=>$icon];
@@ -22,6 +33,15 @@ class backend {
 			$pos = count(self::$subnavi);
 		}
 		
+		if(!self::$currentSubpage) {
+			
+			$subpage = type::super('subpage', 'string');
+			
+			if(strpos($link, 'subpage='.$subpage) !== false || (is_null($subpage) && !count(self::$subnavi))) {
+				self::$currentSubpage = $name; 	
+			}
+		}
+		
 		$list = ['name'=>$name, 'link'=>$link, 'icon'=>$icon];		
 		array_splice(self::$subnavi, $pos, 0, [$list]);
 		
@@ -29,16 +49,12 @@ class backend {
 	
 	public static function getNavi() {
 		
-		$return = '';
-		
-		$first_active = (!type::super('page', 'bool'));
-		$page = type::super('page', 'string', '');
+		$return = '';	
 		
 		foreach(self::$navi as $navi) {
 			
-			if(($page && strpos($navi['link'], 'page='.$page) !== false) || $first_active) {
+			if(self::$currentPage == $navi['name']) {
 				$class = ' class="active"';
-				$first_active = false;
 			} else {
 				$class = '';	
 			}
@@ -55,14 +71,10 @@ class backend {
 		
 		$return = '';
 		
-		$first_active = (!type::super('subpage', 'bool'));
-		$subpage = type::super('subpage', 'string', '');
-		
 		foreach(self::$subnavi as $subnavi) {
 			
-			if(($subpage && strpos($subnavi['link'], 'subpage='.$subpage) !== false) || $first_active) {
+			if(self::$currentSubpage == $subnavi['name']) {
 				$class = ' class="active"';
-				$first_active = false;
 			} else {
 				$class = '';	
 			}
@@ -120,6 +132,28 @@ class backend {
 			
 		}
 		
+		
+	}
+	
+	public static function getCurrentPageName($prefix = '') {
+		
+		if(self::$currentPage) {
+			return $prefix.self::$currentPage;
+		}
+			
+	}
+	
+	public static function getCurrentSubpageName($prefix = '') {
+		
+		if(self::$currentSubpage) {
+			return $prefix.self::$currentSubpage;
+		}
+			
+	}
+	
+	public static function getTitle() {
+		
+		return self::getCurrentPageName().self::getCurrentSubpageName(' - ').' - '.dyn::get('hp_name');
 		
 	}
 	
