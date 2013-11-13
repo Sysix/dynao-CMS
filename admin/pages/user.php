@@ -35,8 +35,8 @@ if($action == 'add' || $action == 'edit') {
 	$field->fieldName('Extra Input');
 	
 	$field = $form->addTextField('email', $form->get('email'));
-	$field->fieldName('E-Mail Adresse');
-	$field->addValidator('email', 'Bitte geben Sie eine gültige E-Mail-Adresse an');
+	$field->fieldName(lang::get('email_adress'));
+	$field->addValidator('email', lang::get('user_wrong_email'));
 	
 	if($form->get('password') != $form->sql->getResult('password')) {
 		$password = userLogin::hash($form->get('password'));
@@ -45,8 +45,8 @@ if($action == 'add' || $action == 'edit') {
 	}
 	
 	$field = $form->addTextField('password', $password);
-	$field->fieldName('Passwort');
-	$field->setSuffix('<small>Sie sehen das verschlüsselte Passwort! Um ein neues Passwort zu vergeben, einfach eingeben!</small>');
+	$field->fieldName(lang::get('password'));
+	$field->setSuffix(lang::get('password_info'));
 	
 	$field = $form->addCheckboxField('admin', $form->get('admin'));
 	$field->add('1', 'PageAdmin?', ['id'=>'pageadmin-button']);
@@ -86,8 +86,8 @@ if($action == '') {
 	$table->addCollsLayout('*,170');
 	
 	$table->addRow()
-	->addCell('E-Mail')
-	->addCell('Aktion');
+	->addCell(lang::get('email'))
+	->addCell(lang::get('action'));
 	
 	$table->addSection('tbody');	
 	

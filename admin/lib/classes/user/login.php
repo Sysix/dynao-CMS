@@ -118,7 +118,7 @@ class userLogin {
 	
 		unset($_SESSION['login']);
 		self::$isLogin = false;
-		echo message::info('Erfolgreich ausgeloggt', true);
+		echo message::info(lang::get('login_logout_success'), true);
 		
 	}
 	

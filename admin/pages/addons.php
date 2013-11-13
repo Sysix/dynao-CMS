@@ -26,7 +26,7 @@ if($action == 'install') {
 		$addonClass->uninstall();	
 	}
 	
-	echo message::success('Addon erfolgreich gespeichert');
+	echo message::success(lang::get('addon_save_success'));
 	
 }
 
@@ -37,7 +37,7 @@ if($action == 'active') {
 	
 	if(!$addonClass->isInstall()) {
 		
-		echo message::danger('Bitte installieren Sie das Addon '.$addon.' zuerst');
+		echo message::danger(sprintf(lang::get('addon_install_first'), $addon));
 			
 	} else {
 	
@@ -47,7 +47,7 @@ if($action == 'active') {
 		$sql->addPost('active', $active);
 		$sql->update();
 		
-		echo message::success('Addon erfolgreich gespeichert');
+		echo message::success(lang::get('addon_save_success'));
 		
 	}
 	
@@ -75,19 +75,19 @@ foreach($addons as $dir) {
 	$online_url = url::backend('addons', ['addon'=>$dir, 'action'=>'install']);
 	
 	if($curAddon->isInstall()) {
-		$online = '<a href="'.$online_url.'" class="btn btn-sm structure-online">installiert</a>';
+		$online = '<a href="'.$online_url.'" class="btn btn-sm structure-online">'.lang::get('addon_installed').'</a>';
 	} else {
-		$online = '<a href="'.$online_url.'" class="btn btn-sm structure-offline">nicht installiert</a>';
+		$online = '<a href="'.$online_url.'" class="btn btn-sm structure-offline">'.lang::get('addon_not_installed').'</a>';
 	}
 	$active_url = url::backend('addons', ['addon'=>$dir, 'action'=>'active']);
 	
 	if($curAddon->isActive()) {
-		$active = '<a href="'.$active_url.'" class="btn btn-sm structure-online">aktiviert</a>';
+		$active = '<a href="'.$active_url.'" class="btn btn-sm structure-online">'.lang::get('addon_actived').'</a>';
 	} else {
-		$active = '<a href="'.$active_url.'" class="btn btn-sm structure-offline">nicht aktiviert</a>';
+		$active = '<a href="'.$active_url.'" class="btn btn-sm structure-offline">'.lang::get('addon_not_actived').'</a>';
 	}
 	
-	$delete = '<a href="#" class="btn btn-sm btn-danger">Entfernen</a>';
+	$delete = '<a href="#" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 	
 	$table->addRow()
 	->addCell('<a href="" class="icon-question"></a>')

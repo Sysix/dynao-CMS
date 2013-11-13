@@ -60,7 +60,7 @@ class sql {
 		try {
 			
 			if(!$this->query) {
-				throw new Exception('Query konnte nicht ausgeführt werden<pre>'.$query.'</pre>Error: '.self::$sql->error);
+				throw new Exception(sprintf(lang::get('sql_query_error'), $query, self::$sql->$error));
 			}
 			
 		} catch(Exception $e) {
@@ -86,13 +86,13 @@ class sql {
 			
 			if(!in_array($type, [MYSQLI_NUM, MYSQLI_ASSOC, MYSQLI_BOTH])) {
 				
-				throw new Exception(__CLASS__.'::result erwartet als $type MYSQLI_NUM, MYSQLI_ASSOC oder MYSQLI_BOTH');
+				throw new Exception(sprintf(lang::get('sql_result_invalid_type'), __CLASS__));
 				
 			}
 			
 			if(!$this->query) {
 				
-				throw new Exception('Resultat vom Query konnte nicht erzeugt werdem');
+				throw new Exception(lang::get('sql_result_error'));
 				
 			} else {		
 			

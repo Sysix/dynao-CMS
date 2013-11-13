@@ -174,7 +174,7 @@ class pageArea {
 		
 		// Falls irgendein Fehler gekommen ist
 		if(false === $content) {
-			echo message::danger('Der ModulCode hat einen PHP Fehler und kann deshalb nicht ausgeführt werden');
+			echo message::danger(lang::get('modul_php_error'));
 		}
 		
 		$output = ob_get_contents();

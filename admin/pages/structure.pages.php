@@ -18,7 +18,7 @@ if(ajax::is()) {
 		$sql->update();	
 	}
 	
-	ajax::addReturn(message::success('Sortierung erfolgreich übernommen', true));
+	ajax::addReturn(message::success(lang::get('save_sorting'), true));
 	
 }
 
@@ -56,7 +56,7 @@ if($action == 'delete') {
 	
 	sql::sortTable('structure', 0, '`parent_id` = '.$sql->get('parent_id'));
 	
-	echo message::success('Artikel erfolgreich gelöscht');
+	echo message::success(lang::get('structure_delete'));
 		
 }
 
@@ -72,7 +72,7 @@ if($action == 'online') {
 	$sql->addPost('online', $online);
 	$sql->update();
 	
-	echo message::success('Status erfoglreich geändert');
+	echo message::success(lang::get('save_status'));
 	
 }
 
@@ -108,8 +108,8 @@ $table->addCollsLayout($colFirstWidth.',*,250');
 	
 $table->addRow()
 ->addCell()
-->addCell('Artikel')
-->addCell('Aktion');
+->addCell(lang::get('article'))
+->addCell(lang::get('action'));
 
 $table->addSection('tbody');
 	
@@ -131,7 +131,7 @@ if(in_array($action, ['edit', 'add'])) {
 	$inputHidden->addAttribute('type', 'hidden');
 	echo $inputHidden->get();
 	
-	$buttonSubmit = formButton::factory('save', 'Artikel speichern');
+	$buttonSubmit = formButton::factory('save', lang::get('article_save'));
 	$buttonSubmit->addAttribute('type', 'submit');
 	$buttonSubmit->addClass('btn-sm');
 	$buttonSubmit->addClass('btn-default');
@@ -181,7 +181,7 @@ while($table->isNext()) {
 		$edit = '<a href="'.url::backend('structure', ['action'=>'edit', 'id'=>$table->get('id'),'parent_id'=>$parent_id]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';	
 		$delete = '<a href="'.url::backend('structure', ['action'=>'delete', 'id'=>$table->get('id'),'parent_id'=>$parent_id]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 		
-		$online = ($table->get('online')) ? 'online' : 'offline';
+		$online = ($table->get('online')) ? lang::get('online') : lang::get('offline');
 		$online = '<a href="'.url::backend('structure', ['action'=>'online', 'id'=>$table->get('id'),'parent_id'=>$parent_id]).'" class="btn btn-sm structure-'.$online.'">'.$online.'</a>';
 	
 		$table->addRow(['data-id'=>$table->get('id')])

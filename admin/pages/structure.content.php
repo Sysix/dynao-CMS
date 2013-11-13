@@ -6,7 +6,7 @@ $sort = type::super('sort', 'int');
 // Bugfix, das neu erstelle Blöcke nicht einzgezeigt werden
 if(!is_null(type::post('save-back')) || !is_null(type::post('save'))) {
 	pageAreaAction::saveBlock();
-	echo message::success('Inhalt erfoglreich übernommen');
+	echo message::success(lang::get('structure_content_save'));
 }
 
 if($action == 'online') {
@@ -21,7 +21,7 @@ if($action == 'online') {
 	$sql->addPost('online', $online);
 	$sql->update();
 	
-	echo message::success('Status erfoglreich geändert');
+	echo message::success(lang::get('save_status'));
 	
 }
 
@@ -36,7 +36,7 @@ if(ajax::is()) {
 		$sql->update();
 	}
 	
-	ajax::addReturn(message::success('Sortierung erfolgreich übernommen', true));
+	ajax::addReturn(message::success(lang::get('save_sorting'), true));
 	
 	
 }
@@ -44,7 +44,7 @@ if(ajax::is()) {
 if($action == 'delete') {
 
 	$structure_id = pageAreaAction::delete($id);
-	echo message::success('Erfolgreich gelöscht');
+	echo message::success(lang::get('structure_content_delete'));
 	
 }
 
@@ -106,10 +106,10 @@ while($sql->isNext()) {
 		
 		if($sql->get('online')) {
 			$statusText = 'ON';
-			$status = 'online';
+			$status = lang::get('online');
 		} else {
 			$statusText = 'OFF';
-			$status = 'offline';
+			$status =  lang::get('offline');
 		}
 		
 		?>

@@ -106,7 +106,7 @@ class addonConfig {
 			foreach($config['need'] as $Needname=>$Needvalue) {
 				$message = addonNeed::check($Needname, $Needvalue);
 				if(is_string($message)) {
-					echo message::warning('Das Addon '.$config['name'].' hat folgende Fehler:<br />'.$message, true);
+					echo message::warning(sprintf(lang::get('addon_errors'), $config['name'], $message), true);
 					continue 2;
 				}
 				

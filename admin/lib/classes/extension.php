@@ -20,7 +20,7 @@ class extension {
 			
 			if(!is_callable($function)) {
 			
-				throw new Exception(__CLASS__ .'::add erwartet als 2. Parameter eine vorhandene Funktion');
+				throw new Exception(sprintf(lang::get('extension_callable_func'), _CLASS__));
 				return false;
 				
 			}

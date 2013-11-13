@@ -34,7 +34,7 @@ while($while_id) {
 	
 }
 
-$breadcrumb[] = '<li><a href="'.url::backend('structure').'">Struktur</a></li>';
+$breadcrumb[] = '<li><a href="'.url::backend('structure').'">'.lang::get('structure').'</a></li>';
 
 echo '<ul class="pull-left breadcrumb">'.implode('', array_reverse($breadcrumb)).'</ul>';
 

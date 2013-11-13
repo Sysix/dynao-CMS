@@ -17,7 +17,7 @@ class validator {
 	public function add($type, $message = null, $option = null) {
 		
 		if(!method_exists($this, $type)) {
-			throw new Exception(__CLASS__.'::'.__METHOD__.' erwartet als $type eine vorhandene Methode');	
+			throw new Exception(sprintf(lang::get('validator_method_exists'), __CLASS__, __METHOD__));	
 		}
 		
 		$this->types[] = [
@@ -84,7 +84,7 @@ class validator {
 				return $this->match($value, '/^[a-zA-Z]+$/');
 				
 			default:
-				throw new Exception(__CLASS__.'::'.__METHOD__.' erwartet int/float/string als $type');			
+				throw new Exception(sprintf(lang::get('validator_wrong_type'), __CLASS__, __METHOD__));			
 		}
 		
 	}

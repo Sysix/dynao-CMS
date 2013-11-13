@@ -17,7 +17,7 @@ class pageAreaHtml {
 			$return .= '		<input type="hidden" name="sort" value="'.$sort.'" />';
 		
 		$return .= '		<select name="modul" class="form-control">';
-		$return .= '		<option>Modul hinzufügen</option>';
+		$return .= '		<option>'.lang::get('module_add').'</option>';
 		$return .= self::moduleList();
 		$return .= '		</select>';
 		$return .= '	</form>';
@@ -74,9 +74,9 @@ class pageAreaHtml {
 		$form->addHiddenField('sort', $module->getSort());
 		
 		$field = $form->addRadioField('online', $online);
-		$field->fieldName('Block Status');
-		$field->add(1, 'Online');
-		$field->add(0, 'Offline');
+		$field->fieldName(lang::get('block_status'));
+		$field->add(1, lang::get('online'));
+		$field->add(0, lang::get('offline'));
 		
 		
 		$form->addHiddenField('id', $module->getId());

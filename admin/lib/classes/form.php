@@ -61,7 +61,7 @@ class form {
 		
 		$this->setButtons();
 		
-		$this->setSuccessMessage('Formular erfolgreich gespeichert');
+		$this->setSuccessMessage(lang::get('form_saved'));
 				
 	}
 	

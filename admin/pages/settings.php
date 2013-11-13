@@ -33,13 +33,13 @@
 				}
 				
 				$field = $form->addTextField('name', dyn::get('hp_name'));
-				$field->fieldName('Name der Website');
+				$field->fieldName(lang::get('settings_name_of_site'));
 				
 				$field = $form->addTextField('url', dyn::get('hp_url'));
-				$field->fieldName('URL der Website');
+				$field->fieldName(lang::get('settings_url_of_site'));
 				
 				$field = $form->addSelectField('lang', dyn::get('lang'));
-				$field->fieldName('Backend Sprache');
+				$field->fieldName(lang::get('settings_backend_lang'));
 							
 				$handle = opendir(dir::backend('lib'.DIRECTORY_SEPARATOR.'lang'.DIRECTORY_SEPARATOR));
 				while($file = readdir($handle)) {

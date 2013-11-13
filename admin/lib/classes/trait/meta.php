@@ -8,7 +8,7 @@ trait traitMeta {
 	public static function addClassMethod($name, $method) {
 		
 		if(!is_callable($method)) {
-			throw new Exception(__CLASS__.'::'.__METHOD__.' erwartet als 2 Parameter eine aufrufbare Funktion');
+			throw new Exception(sprintf(lang::get('traitmeta_callable_func'), __CLASS__, __METHOD__));
 		}
 		
 		self::$classMethodsStatic[$name] = $method;
@@ -33,7 +33,7 @@ trait traitMeta {
 			return call_user_func_array($this->classMethods[$name], $args);
 		}
 		
-		throw new Exception(__CLASS__.' besitzt die Methode '.$name.' nicht');
+		throw new Exception(sprintf(lang::get('traitmeta_not_exists'), __CLASS__, $name));
 		
 	}
 	

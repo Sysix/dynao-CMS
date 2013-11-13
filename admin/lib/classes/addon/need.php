@@ -8,7 +8,7 @@ class addonNeed {
 		$method = 'check'.ucfirst($name);
 		
 		if(!method_exists(get_called_class(), $method)) {
-			throw new Exception(__CLASS__.'::check konnte nicht '.$name.' überprüfen');
+			throw new Exception(sprintf(lang::get('addon_check_error'), __CLASS__, $name));
 		}
 		
 		return self::$method($value);	
@@ -21,7 +21,7 @@ class addonNeed {
 			return true;
 		}
 		
-		return 'Die Aktuelle Version ist '.dyn::get('version').' das Addon braucht Version '.$version;
+		return sprintf(lang::get('addon_wrong_version'), dyn::get('version'), $version);
 		
 	}
 	
@@ -31,7 +31,7 @@ class addonNeed {
 			return true;
 		}
 		
-		return 'Sie haben kein Zugriff auf diesen Bereich';
+		return lang::get('addon_no_access');
 		
 	}
 	
@@ -50,17 +50,17 @@ class addonNeed {
 			
 			// Nicht installiert
 			if(!is_array($config)) {
-				$return .= 'Das Addon '.$name.' wurde nicht gefunden<br />';
+				$return .= sprintf(lang::get('addon_not_found'), $name);
 				continue;
 			}
 			
 			if(!addonConfig::isActive($name)) {				
-				$return .= 'Das Addon '.$name.' muss installiert und aktiviert werden<br />';
+				$return .= sprintf(lang::get('addon_not_install_active'), $name);
 				continue;			
 			}
 			
 			if($version && $config['version'] < $version) {
-				$return .=	'Das Addon '.$name.' muss mindestens in Version '.$version.' vorhanden sein<br />';
+				$return .=	sprintf(lang::get('addon_need_version'), $name, $version);
 				continue;
 			}
 			
