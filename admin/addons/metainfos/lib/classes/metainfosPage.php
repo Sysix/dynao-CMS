@@ -145,7 +145,7 @@ class metainfosPage {
 			$delete = '<a href="'.url::backend('meta', ['subpage'=>$pagename, 'action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 			
 			$table->addRow(['data-id'=>$table->get('id')])
-			->addCell('<i class="icon-sort"></i>')
+			->addCell('<i class="fa fa-sort"></i>')
 			->addCell($table->get('name'))
 			->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
 			

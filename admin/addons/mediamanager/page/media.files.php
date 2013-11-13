@@ -3,6 +3,29 @@
 $catId = type::super('catId', 'int', 0);
 $subaction = type::super('subaction', 'string');
 
+
+if($action == 'delete') {
+	
+	$sql = sql::factory();
+	$sql->setTable('media');
+	$sql->setWhere('id='.$id);
+	$sql->select('filename');
+	$sql->result();
+	
+	if(unlink(dir::media($sql->get('filename')))) {
+		
+		echo message::success('Datei erfolgreich gelöscht');
+		
+	} else {
+		
+		echo message::warning('Die Datei '.dyn::get('hp_url').'media/'.$sql->get('filename').' konnte nicht gelöscht werden');
+		
+	}
+	
+	$sql->delete();
+		
+}
+
 if($action == 'add' || $action == 'edit') {
 	
 	$form = form::factory('media', 'id='.$id, 'index.php');
@@ -26,7 +49,16 @@ if($action == 'add' || $action == 'edit') {
 	if($form->isSubmit()) {
 		
 		$file = type::files('file');
-		$form = mediaUtils::saveFile($file, $form);
+		if(!is_uploaded_file($file['tmp_name'])) {
+			
+			$form->setErrorMessage('Bitte Laden Sie eine Datei hoch');
+			$form->setSave(false);
+			
+		} else {
+			
+			$form = mediaUtils::saveFile($file, $form);
+			
+		}
 		
 		$category = type::super('category', 'int');
 		$form->addPost('category', $category);
@@ -46,7 +78,8 @@ if($action == '') {
 	<input type="hidden" name="page" value="media" />
 	<input type="hidden" name="subpage" value="files" />
 	<select class="form-control" id="media-select-category" name="catId">
-	<?php echo mediaUtils::getTreeStructure(0, 0,' &nbsp;', $catId); ?>
+		<option value="0">Keine Kategorie</option>
+		<?php echo mediaUtils::getTreeStructure(0, 0,' &nbsp;', $catId); ?>
 	</select>
 </form>
 <div class="clearfix"></div>
@@ -65,7 +98,7 @@ if($action == '') {
 		
 		if($subaction == 'popup') {
 			
-			$edit = '<button data-id="'.$table->get('id').'" class="btn btn-sm btn-warning dyn-media-select>Auswählen</button>';
+			$edit = '<button data-id="'.$table->get('id').'" data-name="'.$table->get('filename').'" class="btn btn-sm btn-warning dyn-media-select">Auswählen</button>';
 			$delete = '';
 			
 		} else {
