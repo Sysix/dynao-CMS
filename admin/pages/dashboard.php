@@ -1,6 +1,5 @@
 <?php
 	backend::addSubnavi('Overview',	url::backend('structure'),	'eye');
-	backend::addSubnavi('Statistics',	url::backend('structure'),	'bar-chart-o');
 	backend::addSubnavi('Logs',	url::backend('structure'),	'calendar');
 	
 	layout::addJs('https://www.google.com/jsapi');
@@ -78,7 +77,6 @@
 						</div>
 						<div class="clearfix"></div>
 					</div>
-                    <div class="panel-body">
                     	<table class="table table-striped table-hover">
                             <thead>
                                 <tr>
@@ -156,7 +154,6 @@
                                 </tr>
                             </tbody>
       					</table>
-                    </div>
 				</div>
             </div>
             

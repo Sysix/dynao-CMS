@@ -117,8 +117,19 @@ if($action == '') {
 		$table->next();	
 		
 	}
+	?>
 	
-	echo $table->show();
+	<div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Media</h3>
+                </div>
+                <?php echo $table->show(); ?>
+            </div>
+        </div>
+    </div>
+    <?php
 	
 }
 

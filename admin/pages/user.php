@@ -72,10 +72,22 @@ if($action == 'add' || $action == 'edit') {
 		}
 		
 	}
-		
 	
-	echo $form->show();
-	
+	?>
+	<div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><?php echo $form->get('email'); ?></h3>
+                </div>
+            	<div class="panel-body">
+					<?php echo $form->show(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <?php
 	
 }
 
@@ -106,9 +118,20 @@ if($action == '') {
 		$table->next();	
 		
 	}
-		
-	echo $table->show();
-
+	
+	?>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Benutzer</h3>
+                </div>
+                <?php echo $table->show(); ?>
+            </div>
+        </div>
+    </div>
+    
+    <?php
 	
 }
 

@@ -15,14 +15,15 @@
     <div id="user-mobil">
         <span class="fa fa-chevron-down"></span>
         <h4>Aaron Iker</h4>
-    	<img src="layout/img/user/defaultm.png" alt="Profilbild" />
     </div>
 	
     <div id="wrap">
         <div id="subnavi">
             <div id="user">
-            
-                <img src="layout/img/user/defaultm.png" alt="Profilbild" />
+            	
+                <a href="http://dynao.de" target="_blank">
+                	<img src="layout/img/logo.png" alt="Logo" />
+                </a>
                 
                 <!--<a class="fa fa-cog settings" href=""></a>-->
                     

@@ -54,10 +54,9 @@ if($action == 'active') {
 }
 
 $table = table::factory();
-$table->addCollsLayout('20,*,300');
+$table->addCollsLayout('*,300');
 
 $table->addRow()
-->addCell('')
 ->addCell('Name')
 ->addCell('Aktionen');
 
@@ -90,11 +89,22 @@ foreach($addons as $dir) {
 	$delete = '<a href="#" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 	
 	$table->addRow()
-	->addCell('<a href="" class="icon-question"></a>')
 	->addCell($curAddon->get('name').' <small>'.$curAddon->get('version').'</small>')
 	->addCell('<span class="btn-group">'.$online.$active.$delete.'</span>');
 		
 }
 
-echo $table->show();
+?>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Addons</h3>
+			</div>
+			<?php echo $table->show(); ?>
+		</div>
+	</div>
+</div>
+
+<?php
 ?>
