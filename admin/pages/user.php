@@ -34,6 +34,12 @@ if($action == 'add' || $action == 'edit') {
 	$field = $form->addMediaField('test', '');
 	$field->fieldName('Extra Input');
 	
+	$field = $form->addTextField('firstname', $form->get('firstname'));
+	$field->fieldName("Vorname");
+	
+	$field = $form->addTextField('name', $form->get('name'));
+	$field->fieldName("Nachname");
+	
 	$field = $form->addTextField('email', $form->get('email'));
 	$field->fieldName(lang::get('email_adress'));
 	$field->addValidator('email', lang::get('user_wrong_email'));
@@ -78,7 +84,7 @@ if($action == 'add' || $action == 'edit') {
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><?php echo $form->get('email'); ?></h3>
+                    <h3 class="panel-title">"<?php echo $form->get('firstname')." ".$form->get('name'); ?>" bearbeiten</h3>
                 </div>
             	<div class="panel-body">
 					<?php echo $form->show(); ?>
@@ -95,9 +101,10 @@ if($action == '') {
 
 	$table = table::factory();
 	
-	$table->addCollsLayout('*,170');
+	$table->addCollsLayout('*, 250,170');
 	
 	$table->addRow()
+	->addCell("Name")
 	->addCell(lang::get('email'))
 	->addCell(lang::get('action'));
 	
@@ -112,6 +119,7 @@ if($action == '') {
 		$delete = '<a href="'.url::backend('user', ['action'=>'delete', 'id'=>$id]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 		
 		$table->addRow()
+		->addCell($table->get('firstname')." ".$table->get('name'))
 		->addCell($table->get('email'))
 		->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
 		

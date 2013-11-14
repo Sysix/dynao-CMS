@@ -27,7 +27,7 @@
                 
                 <!--<a class="fa fa-cog settings" href=""></a>-->
                     
-                <h3>Aaron Iker</h3>
+                <h3><?php echo dyn::get('user')->get('firstname')." ".dyn::get('user')->get('name'); ?></h3>
                 Administrator
                 
                 <!--<a class="fa fa-envelope messages" href=""><span>2</span></a>-->
