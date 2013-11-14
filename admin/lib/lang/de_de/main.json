@@ -52,7 +52,7 @@
 	"settings_backend_lang":	"Backend Sprache",
 	
 	#Structure
-	"structure_content_save":	"Inhalt erfoglreich übernommen",
+	"structure_content_save":	"Inhalt erfolgreich übernommen",
 	"structure_content_delete": "Erfolgreich gelöscht",
 	"structure_delete":			"Artikel erfolgreich gelöscht",
 	"article":					"Artikel",

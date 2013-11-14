@@ -29,64 +29,64 @@
 	"login_pwd_false" :			"It is surrounded password is incorrect",
 	"login_remember" :			"Remember me",
 	"login_pwd_forget" :		"Forget your password ?",
-	"login_logout_success":		"Erfolgreich ausgeloggt",
+	"login_logout_success":		"Logged out successfully",
 	
 	#Addon
-	"addon_save_success":		"Addon erfolgreich gespeichert",
-	"addon_install_first":		"Bitte installieren Sie das Addon \"%s\" zuerst",
-	"addon_installed":			"installiert",
-	"addon_not_installed":		"nicht installiert",
-	"addon_actived":			"aktiviert",
-	"addon_not_actived":		"nicht aktiviert",
-	"addon_errors":				"Das Addon %s hat folgende Fehler:<br />%s",
-	"addon_check_error":		"%s::check konnte nicht %s überprüfen",
-	"addon_wrong_version":		"Die Aktuelle Version ist %s das Addon braucht Version %s",
-	"addon_no_access":			"Sie haben kein Zugriff auf diesen Bereich",
-	"addon_not_found":			"Das Addon %s wurde nicht gefunden<br />",
-	"addon_not_install_active":	"Das Addon %s muss installiert und aktiviert werden<br />",
-	"addon_need_version":		"Das Addon %s muss mindestens in Version %s vorhanden sein<br />",
+	"addon_save_success":		"Addon successfully saved",
+	"addon_install_first":		"Please install the addon \"%s\" first",
+	"addon_installed":			"installed",
+	"addon_not_installed":		"not installed",
+	"addon_actived":			"enabled",
+	"addon_not_actived":		"not enabled",
+	"addon_errors":				"The addon %s has the following error:<br />%s",
+	"addon_check_error":		"%s::check could not check %s",
+	"addon_wrong_version":		"The current version is %s, the addon needs version %s",
+	"addon_no_access":			"You have no access to this area",
+	"addon_not_found":			"The addon %s was not found<br />",
+	"addon_not_install_active":	"The addon %s must be installed and enabled<br />",
+	"addon_need_version":		"The addon %s must be present at least in version %s<br />",
 	
 	#Settings
-	"settings_name_of_site":	"Name der Website",
-	"settings_url_of_site":		"URL der Website",
-	"settings_backend_lang":	"Backend Sprache",
+	"settings_name_of_site":	"Name of the site",
+	"settings_url_of_site":		"URL of the site",
+	"settings_backend_lang":	"backend languagee",
 	
 	#Structure
-	"structure_content_save":	"Inhalt erfoglreich übernommen",
-	"structure_content_delete": "Erfolgreich gelöscht",
-	"structure_delete":			"Artikel erfolgreich gelöscht",
-	"article":					"Artikel",
-	"article_save":				"Artikel speichern",
-	"structure":				"Struktur",
+	"structure_content_save":	"content successfully saved",
+	"structure_content_delete": "successfully deleted",
+	"structure_delete":			"Page successfully deleted",
+	"article":					"Page",
+	"article_save":				"save page",
+	"structure":				"Structur",
 	
 	#Modul
-	"modul_php_error":			"Der Modulcode hat einen PHP Fehler und kann deshalb nicht ausgeführt werden",
-	"module_add":				"Modul hinzufügen",
-	"block_status":				"Block Status",
+	"modul_php_error":			"The code module has a PHP error and therefore can not be executed",
+	"module_add":				"add modul",
+	"block_status":				"block status",
 	
 	#User
-	"user_wrong_email":			"Bitte geben Sie eine gültige E-Mail-Adresse an",
-	"email_adress":				"E-Mail Adresse",
-	"password":					"Passwort",
-	"password_info":			"<small>Sie sehen das verschlüsselte Passwort! Um ein neues Passwort zu vergeben, einfach eingeben!</small>",
+	"user_wrong_email":			"please enter a valid email address",
+	"email_adress":				"eMail adress",
+	"password":					"password",
+	"password_info":			"<small>You can see the encrypted password! To assign a new password, simply enter!</small>",
 	"email":					"E-Mail",
 	
 	#SQL
-	"sql_query_error":			"Query konnte nicht ausgeführt werden<pre>%s</pre>Error: %s",
-	"sql_result_invalid_type":	"%s::result erwartet als $type MYSQLI_NUM, MYSQLI_ASSOC oder MYSQLI_BOTH",
-	"sql_result_error":			"Resultat vom Query konnte nicht erzeugt werden",
+	"sql_query_error":			"query could not be executed<pre>%s</pre>Error: %s",
+	"sql_result_invalid_type":	"%s::result expected result as $type MYSQLI_NUM, MYSQLI_ASSOC or MYSQLI_BOTH",
+	"sql_result_error":			"result of the query could not be created",
 	
 	#Form
-	"form_saved":				"Formular erfolgreich gespeichert",
+	"form_saved":				"form successfully saved",
 	
 	#Extension
-	"extension_callable_func":	"%s::add erwartet als 2. Parameter eine vorhandene Funktion",
+	"extension_callable_func":	"%s::add expected as 2 Parameters of an existing function",
 	
 	#Validator
-	"validator_method_exists":	"%s::%s erwartet als $type eine vorhandene Methode",
-	"validator_wrong_type":		"%s::%s erwartet int/float/string als $type",
+	"validator_method_exists":	"%s::%s expected as $type an existing method",
+	"validator_wrong_type":		"%s::%s expected int/float/string as $type",
 	
 	#traitMeta
-	"traitmeta_callable_func":	"%s::%s erwartet als 2. Parameter eine aufrufbare Funktion",
-	"traitmeta_not_exists":		"%s besitzt die Methode %s nicht"
+	"traitmeta_callable_func":	"%s::%s expected as 2 Parameter a callable function",
+	"traitmeta_not_exists":		"%s does not have the method %s"
 }
