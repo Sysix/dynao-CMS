@@ -10,4 +10,4 @@ CM-System
 - http://linssen.me/entry/extending-the-jquery-sortable-with-ajax-mysql/
 - http://www.strassenprogrammierer.de/php-beliebige-anzahl-parameter-an-eine-funktion-uebergeben_tipp_439.html
 - http://phphint.org
-- https://github.com/mjsarfatti/nestedSortable
+- https://github.com/dbushell/Nestable
