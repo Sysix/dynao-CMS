@@ -14,7 +14,7 @@
     
     <div id="user-mobil">
         <span class="fa fa-chevron-down"></span>
-        <h4>Aaron Iker</h4>
+        <h4><?php echo dyn::get('user')->get('firstname')." ".dyn::get('user')->get('name'); ?></h4>
     </div>
 	
     <div id="wrap">
@@ -36,7 +36,7 @@
             
             </div><!--end #user-->
             
-            <h1>Dashboard</h1>
+            <h1><?php echo backend::getCurrentPageName(); ?></h1>
             <div id="mobil">Navigation</div>
             <?php echo backend::getSubnavi(); ?>
             

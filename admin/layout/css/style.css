@@ -99,6 +99,10 @@ h1 {
 	position:relative;
 }
 
+#login form {
+	margin:0;
+}
+
 #remember {
 	font-size:11px;
 }

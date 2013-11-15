@@ -67,6 +67,7 @@
 		top:10px;
 		padding:5px;
 		cursor:pointer;
+		border-radius:4px 4px 0 0;
 	}
 	
 	#user-mobil.active {
@@ -83,8 +84,7 @@
 		font-size:14px;
 		margin:0;
 		float:right;
-		width:85px;
-		padding-left:10px;
+		padding:0 10px;
 	}
 	
 	#user-mobil img {
@@ -97,6 +97,7 @@
 		display:block;
 		float:right;
 		line-height:32px;
+		padding-right:5px;
 	}
 	
 	#subnavi #user, #subnavi h1 {

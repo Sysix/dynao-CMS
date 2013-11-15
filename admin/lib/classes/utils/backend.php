@@ -59,7 +59,7 @@ class backend {
 				$class = '';	
 			}
 			
-			$return .= '<li'.$class.'><a class="fa fa-'.$navi['icon'].'" href="'.$navi['link'].'"> <span>'.$navi['name'].'</span></a>';
+			$return .= '<li'.$class.'><a class="fa fa-'.$navi['icon'].'" href="'.$navi['link'].'" title="'.$navi['name'].'"> <span>'.$navi['name'].'</span></a>';
 			
 		}
 		

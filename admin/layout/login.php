@@ -11,13 +11,13 @@
 	<div id="login" class="panel panel-default">
 		<form action="index.php" method="post">
 			<div class="panel-body">
-				<?php echo $CONTENT; ?>
+				<?php echo dyn::get('content'); ?>
 				<div class="input-group">
-					<span class="input-group-addon icon-envelope"></span>
+					<span class="input-group-addon fa fa-envelope"></span>
 					<input class="form-control" type="text" placeholder="E-Mail" name="email" />
 				</div>
 				<div class="input-group">
-					<span class="input-group-addon icon-key"></span>
+					<span class="input-group-addon fa fa-key"></span>
 					 <input class="form-control" type="password" placeholder="Passwort" name="password" />
 				</div>
 			</div>			
