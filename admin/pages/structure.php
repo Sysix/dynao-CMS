@@ -10,6 +10,8 @@ backend::addSubnavi('Unterseiten',	url::backend('structure', ['parent_id'=>$pare
 backend::addSubnavi('Inhalt',		url::backend('structure', ['structure_id'=>$structure_id, 'subpage'=>'content']),		'edit');
 backend::addSubnavi('Module',		url::backend('structure', ['subpage'=>'module']),										'list-alt');
 
+layout::addJS('layout/js/nestable.js');
+
 
 $breadcrumb = [];
 

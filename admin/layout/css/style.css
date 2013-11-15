@@ -436,3 +436,68 @@ ul.news li .btn {
 .form-horizontal .form-wrap-input {
 	width:83.3333%;
 }
+
+#structure-tree {
+		
+}
+
+#structure-tree ul, .list.dragel {
+	padding:0px;
+	margin:0px;
+	list-style:none;
+}
+
+.list.dragel {
+	position:absolute;
+}
+
+#structure-tree ul li {
+	margin:5px 0px;
+}
+
+#structure-tree ul li div.handle, #structure-tree div.handle,  .list.dragel div.handle {
+	background:#fff;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border:1px solid #373737;
+	padding:0px 10px;
+	height:41px;
+	line-height:41px;
+}
+
+#structure-tree ul li button,  .list.dragel button {
+	border:0px;
+	display:block;
+	cursor:pointer;
+	float:left;
+	position:relative;
+	background:transparent;
+	height:41px;
+	width:30px;
+}
+
+#structure-tree ul li.structure-edit  {
+	background:#fff;
+}
+
+#structure-tree ul li.structure-edit .structure-name {
+	line-height:44px;	
+	height:44px;
+}
+
+#structure-tree ul li div.handle span.btn-group, .list.dragel div.handle span.btn-group {
+	float:right;
+}
+
+#structure-tree ul li ul li {
+	margin-left:20px;
+}
+
+#structure-tree .placeholder {
+	border:1px dashed #373737;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	height:41px;
+}

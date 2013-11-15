@@ -60,7 +60,7 @@ class sql {
 		try {
 			
 			if(!$this->query) {
-				throw new Exception(sprintf(lang::get('sql_query_error'), $query, self::$sql->$error));
+				throw new Exception(sprintf(lang::get('sql_query_error'), $query, self::$sql->error));
 			}
 			
 		} catch(Exception $e) {

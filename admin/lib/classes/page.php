@@ -119,6 +119,100 @@ class page {
 		
 	}
 	
+	public static function getTreeStructurePage($parentId = 0, $lvl = 0) {
+		
+		$id = type::super('id', 'int', 0);
+		$action = type::super('action', 'string');
+		
+		if($action == 'add' || $action == 'edit') {
+			
+			$buttonSubmit = formButton::factory('save', lang::get('article_save'));
+			$buttonSubmit->addAttribute('type', 'submit');
+			$buttonSubmit->addClass('btn-sm');
+			$buttonSubmit->addClass('btn-default');	
+			
+		}
+		
+		if(!$lvl && $action == 'add') {
+			
+			$inputName = formInput::factory('name', '');
+			$inputName->addAttribute('type', 'text');
+			$inputName->addClass('input-sm');
+			
+			$sql = sql::factory();
+			$inputSort = formInput::factory('sort', $sql->num('SELECT 1 FROM '.sql::table('structure').' WHERE `parent_id`= '.$parentId)+1);
+			$inputSort->addAttribute('type', 'text');
+			$inputSort->addClass('input-sm');
+			
+			echo '<ul class="list"><li>'.$inputSort->get().$inputName->get().$buttonSubmit->get().'</li></ul>';
+			
+		}
+		
+		$select = '';
+		
+		$sql = sql::factory();
+		$sql->query('SELECT * FROM '.sql::table('structure').' WHERE parent_id = '.$parentId.' ORDER BY sort')->result();
+		if($sql->num()) {
+			
+			$select .= '<ul class="list">';
+				
+			while($sql->isNext()) {
+				
+				if($action == 'edit' && $sql->get('id') == $id) {
+					
+					$inputName = formInput::factory('name', $sql->get('name'));
+					$inputName->addAttribute('type', 'text');
+					$inputName->addClass('input-sm');
+					$inputName->addClass('structure-name');
+					
+					
+					$inputSort = formInput::factory('sort', $sql->get('sort'));
+					$inputSort->addAttribute('type', 'hidden');
+					echo $inputSort->get();
+					
+					$inputHidden = formInput::factory('id', $sql->get('id'));
+					$inputHidden->addAttribute('type', 'hidden');
+					echo $inputHidden->get();
+					
+					$select .= '<li class="input-group structure-edit">
+						'.$inputName->get().'
+						<span class="input-group-addon">'.$buttonSubmit->get().'<span>
+					</li>';
+					
+				} else {	
+				
+					$online = ($sql->get('online')) ? lang::get('online') : lang::get('offline');
+				
+					$edit = '<a href="'.url::backend('structure', ['action'=>'edit', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';	
+					$delete = '<a href="'.url::backend('structure', ['action'=>'delete', 'id'=>$sql->get('id')]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+					$online = '<a href="'.url::backend('structure', ['action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm structure-'.$online.'">'.$online.'</a>';				
+				
+					$select .= '<li data-id="'.$sql->get('id').'" class="item">'.PHP_EOL.'
+						<div class="handle"><i class="fa fa-sort"></i> '.$sql->get('name').PHP_EOL.'
+							<span class="btn-group">'.PHP_EOL.$edit.PHP_EOL.$delete.PHP_EOL.$online.PHP_EOL.'</span>'.PHP_EOL.'
+						</div>'.PHP_EOL;
+					
+					if($sql->num('SELECT id FROM '.sql::table('structure').' WHERE parent_id = '.$sql->get('id'))) {
+						
+					}
+				
+				}
+				
+				$select .= self::getTreeStructurePage($sql->get('id'), $lvl+1);			
+				
+				$select .= '</li>'.PHP_EOL;
+				
+				$sql->next();
+			}
+			
+			$select .= '</ul>';
+		
+		}
+				
+		return $select;
+		
+	}
+	
 }
 
 ?>
