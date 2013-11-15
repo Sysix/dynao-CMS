@@ -4,10 +4,10 @@ class dir {
 
 	static $base = '../';
 
-	public function __construct() {
-
-		self::$base = $_SERVER['DOCUMENT_ROOT'].str_replace(DIRECTORY_SEPARATOR.'admin'.DIRECTORY_SEPARATOR.'index.php', '', $_SERVER['PHP_SELF']);		
-
+	public function __construct($dir) {
+		
+		self::$base = realpath($dir);
+		
 	}
 
 	public static function base($file = '') {
