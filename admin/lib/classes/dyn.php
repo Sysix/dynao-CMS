@@ -70,7 +70,54 @@ class dyn {
 			
 		}
 		
-	}	
+	}
+	
+	static public function checkVersion() {
+		
+		$cacheFile = cache::getFileName(0, 'dynaoVersion');
+		
+		// jeden Tag
+		if(cache::exists($cacheFile, 86400)) {
+			
+			$content = json_decode($curl, true);
+				
+		} else {
+		
+			$server = 'http://version.dynao.de/';
+			
+			$ch = curl_init($server);
+			curl_setopt($ch, CURLOPT_PORT, 80);
+			curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla (Statuscheck-Script)');
+			curl_setopt($ch, CURLOPT_TIMEOUT, 0);
+			curl_setopt($ch, CURLOPT_DNS_CACHE_TIMEOUT, 300);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			$curl = curl_exec($ch);
+			curl_close($ch);
+			
+			$content = json_decode($curl, true);
+			
+			cache::write($content, $cacheFile);
+			
+		}
+		
+		$version = explode('.', $content['version']);
+		$cversion = explode('.', dyn::get('version'));
+		
+		if($verion[0] != $cversion[0]) {		
+			return 'Sie verwenden eine veraltete Version';	
+		}
+		
+		if($version[1] != $cversion[1]) {
+			return 'Sie verwenden eine veraltete Nebenversion';
+		}
+		
+		if($version[2] != $cversion[2]) {
+			return 'Sie verwenden eine veraltete Minor-Version';	
+		}
+		
+		return true;
+		
+	}
 	
 }
 
