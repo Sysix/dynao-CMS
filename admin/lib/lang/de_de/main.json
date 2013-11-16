@@ -6,8 +6,8 @@
 	"yes":						"ja",
 	"no":						"nein",
 	"name":						"Name",
-	"online":					"Online",
-	"offline":					"Offline",
+	"online":					"online",
+	"offline":					"offline",
 	"action":					"Aktion",
 	
 	#Aktionen

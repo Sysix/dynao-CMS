@@ -7,6 +7,7 @@ $structure_id = type::super('structure_id', 'int', $parent_id);
 $subpage = type::super('subpage', 'string', 'pages');
 
 backend::addSubnavi(lang::get('pages'),	url::backend('structure', ['parent_id'=>$parent_id, 'subpage'=>'pages']), 				'home');
+backend::addSubnavi('Slots',	url::backend('structure', ['subpage'=>'slots']), 				'th-large');
 #backend::addSubnavi('Inhalt',		url::backend('structure', ['structure_id'=>$structure_id, 'subpage'=>'content']),		'edit');
 backend::addSubnavi(lang::get('modules'),		url::backend('structure', ['subpage'=>'module']),										'list-alt');
 

@@ -1,6 +1,6 @@
 <?php
-	backend::addSubnavi('Overview',	url::backend('structure'),	'eye');
-	backend::addSubnavi('Logs',	url::backend('structure'),	'calendar');
+	backend::addSubnavi('Overview',	url::backend('dashboard'),	'eye');
+	backend::addSubnavi('Logs',	url::backend('dashboard', ['subpage'=>'logs']),	'calendar');
 	
 	layout::addJs('https://www.google.com/jsapi');
 	layout::addJSCode("google.load('visualization', '1', {packages:['corechart']});

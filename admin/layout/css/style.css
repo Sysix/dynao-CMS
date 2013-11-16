@@ -368,12 +368,13 @@ h1 {
 }
 
 .structure-offline {
-	background:#e74c3c;
+	background-color: #d9534f;
+	border-color: #d43f3a;
 	color:#fff;
 }
 
 option.page-offline {
-	border-left:3px solid #e74c3c;
+	border-left:3px solid #d9534f;
 }
 
 .structure-online {
