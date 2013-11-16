@@ -182,14 +182,15 @@ class page {
 				} else {	
 				
 					$online = ($sql->get('online')) ? lang::get('online') : lang::get('offline');
-				
+					
+					$module = '<a href="'.url::backend('structure', ['structure_id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('modules').'</a>';	
 					$edit = '<a href="'.url::backend('structure', ['action'=>'edit', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';	
 					$delete = '<a href="'.url::backend('structure', ['action'=>'delete', 'id'=>$sql->get('id')]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 					$online = '<a href="'.url::backend('structure', ['action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm structure-'.$online.'">'.$online.'</a>';				
 				
 					$select .= '<li data-id="'.$sql->get('id').'" class="item">'.PHP_EOL.'
 						<div class="handle"><i class="fa fa-sort"></i> '.$sql->get('name').PHP_EOL.'
-							<span class="btn-group">'.PHP_EOL.$online.PHP_EOL.$edit.PHP_EOL.$delete.PHP_EOL.'</span>'.PHP_EOL.'
+							<span class="btn-group">'.PHP_EOL.$module.PHP_EOL.$online.PHP_EOL.$edit.PHP_EOL.$delete.PHP_EOL.'</span>'.PHP_EOL.'
 						</div>'.PHP_EOL;
 					
 					if($sql->num('SELECT id FROM '.sql::table('structure').' WHERE parent_id = '.$sql->get('id'))) {
