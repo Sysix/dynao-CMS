@@ -183,7 +183,14 @@ class page {
 				
 					$online = ($sql->get('online')) ? lang::get('online') : lang::get('offline');
 					
-					$module = '<a href="'.url::backend('structure', ['structure_id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('modules').'</a>';	
+					$sqlArea = sql::factory();
+					$sqlArea->result('SELECT *
+					FROM '.sql::table('structure_area').'
+					WHERE structure_id = '.$sql->get('id'));
+					
+					$modulName = ($sqlArea->num() == 1) ? lang::get('module') : lang::get('modules');
+					
+					$module = '<a href="'.url::backend('structure', ['structure_id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default">'.$sqlArea->num().' '.$modulName.'</a>';	
 					$edit = '<a href="'.url::backend('structure', ['action'=>'edit', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';	
 					$delete = '<a href="'.url::backend('structure', ['action'=>'delete', 'id'=>$sql->get('id')]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 					$online = '<a href="'.url::backend('structure', ['action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm structure-'.$online.'">'.$online.'</a>';				

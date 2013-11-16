@@ -9,7 +9,6 @@ class pageAreaHtml {
 		$return  = '<div class="structure-addmodul-box">';
 		$return .= '	<form action="index.php" method="get">';
 		$return .= '		<input type="hidden" name="page" value="structure" />';
-		$return .= '		<input type="hidden" name="subpage" value="content" />';
 		$return .= '		<input type="hidden" name="structure_id" value="'.$structureID.'" />';
 		$return .= '		<input type="hidden" name="action" value="add" />';	
 		
