@@ -2,9 +2,14 @@
 <html>
 <head>
 <meta content="charset=UTF-8" />
-<title>Unbenanntes Dokument</title>
+<title>Test Template</title>
 </head>
 
 <body>
+
+	<?php slot::set('slotname'); ?>
+    
+    <?php echo dyn::get('content'); ?>
+
 </body>
 </html>
