@@ -28,6 +28,7 @@
 					dyn::add('hp_name', $form->get('name'), true);
 					dyn::add('hp_url', $url, true);
 					dyn::add('lang', $form->get('lang'), true);
+					dyn::add('template', $form->get('template'), true);
 					dyn::save();
 					
 				}
@@ -42,6 +43,18 @@
 				$field->fieldName(lang::get('settings_backend_lang'));
 							
 				$handle = opendir(dir::backend('lib'.DIRECTORY_SEPARATOR.'lang'.DIRECTORY_SEPARATOR));
+				while($file = readdir($handle)) {
+						
+						if(in_array($file, ['.', '..']))
+							continue;
+						
+						$field->add($file, $file);
+				}
+				
+				$field = $form->addSelectField('template', dyn::get('template'));
+				$field->fieldName('Template');
+							
+				$handle = opendir(dir::template());
 				while($file = readdir($handle)) {
 						
 						if(in_array($file, ['.', '..']))
