@@ -58,11 +58,14 @@
 	"article":					"Artikel",
 	"article_save":				"Artikel speichern",
 	"structure":				"Struktur",
+	"pages":				"Seiten",
 	
 	#Modul
 	"modul_php_error":			"Der Modulcode hat einen PHP Fehler und kann deshalb nicht ausgeführt werden",
 	"module_add":				"Modul hinzufügen",
 	"block_status":				"Block Status",
+	"module":				"Modul",
+	"modules":				"Module",
 	
 	#User
 	"user_wrong_email":			"Bitte geben Sie eine gültige E-Mail-Adresse an",

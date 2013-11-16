@@ -12,7 +12,7 @@ if(ajax::is()) {
 		$sql->update();	
 	}
 	
-	ajax::addReturn(message::success('Sortierung erfolgreich übernommen', true));
+	ajax::addReturn(message::success(lang::get('save_sorting'), true));
 	
 }
 
@@ -44,21 +44,35 @@ if($action == 'add' || $action == 'edit') {
 		$form->addHiddenField('id', $id);
 	}
 	
-	echo $form->show();
+	?>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+                <h3 class="panel-title pull-left"><?php echo ($action == 'add') ? lang::get('module_add') : '"'.$form->get('name').'" '.lang::get('edit'); ?></h3>
+                <div class="btn-group pull-right">
+                    <a class="btn btn-sm btn-default" href="<?php echo url::backend('structure', ['subpage'=>'module']); ?>"><?php echo lang::get('back'); ?></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body">
+			<?php echo $form->show();?>
+            </div>
+		</div>
+	</div>
+</div>
+
+<?php
 	
 }
 
 if($action == '') {
-	
-	echo '<a href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'add']).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
-	echo '<div class="clearfix"></div>';
 
 	$table = table::factory(['class'=>['js-sort']]);
 	
-	$table->addCollsLayout('20,*,170');
+	$table->addCollsLayout('*,170');
 	
 	$table->addRow()
-	->addCell()
 	->addCell('Name')
 	->addCell('Aktion');
 	
@@ -73,14 +87,30 @@ if($action == '') {
 		$delete = '<a href="'.url::backend('structure', ['subpage'=>'module','action'=>'delete', 'id'=>$id]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 		
 		$table->addRow(['data-id'=>$id])
-		->addCell('<i class="icon-sort"></i>')
 		->addCell($table->get('name'))
 		->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
 		
 		$table->next();	
 	}
 
-	echo $table->show();
+	?>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title pull-left"><?php echo lang::get('modules'); ?></h3>
+                    <div class="btn-group pull-right">
+                        <a class="btn btn-sm btn-default" href="<?php echo url::backend('structure', ['subpage'=>'module', 'action'=>'add']); ?>"><?php echo lang::get('add'); ?></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <?php echo $table->show(); ?>
+            </div>
+        </div>
+    </div>
+
+	<?php
 
 }
 

@@ -58,11 +58,14 @@
 	"article":					"Page",
 	"article_save":				"save page",
 	"structure":				"Structur",
+	"pages":				"Pages",
 	
 	#Modul
 	"modul_php_error":			"The code module has a PHP error and therefore can not be executed",
 	"module_add":				"add modul",
 	"block_status":				"block status",
+	"module":				"Module",
+	"modules":				"Modules",
 	
 	#User
 	"user_wrong_email":			"please enter a valid email address",

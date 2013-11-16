@@ -1,10 +1,8 @@
 <?php
 
-echo '<select class="form-control">';
-echo page::getTreeStructure();
-echo '</select>';
-echo '<a href="'.url::backend('structure', ['action'=>'add', 'parent_id'=>$parent_id]).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
-echo '<div class="clearfix"></div>';
+#echo '<select class="form-control">';
+#echo page::getTreeStructure();
+#echo '</select>';
 
 if(ajax::is()) {
 	
@@ -114,10 +112,29 @@ if(in_array($action, ['edit', 'add'])) {
 }
 
 //echo $table->show();
-echo PHP_EOL.'<div id="structure-tree" class="structure-root">'.PHP_EOL;
-echo page::getTreeStructurePage();
-echo '</div>';
+?>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+                <h3 class="panel-title pull-left"><?php echo lang::get('pages'); ?></h3>
+                <div class="btn-group pull-right">
+                    <a class="btn btn-sm btn-default" href="<?php echo url::backend('structure', ['action'=>'add', 'parent_id'=>$parent_id]); ?>"><?php echo lang::get('add'); ?></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body">
+            <?php
+				echo PHP_EOL.'<div id="structure-tree" class="structure-root">'.PHP_EOL;
+				echo page::getTreeStructurePage();
+				echo '</div>';
+			?>
+            </div>
+		</div>
+	</div>
+</div>
 
+<?php
 
 if(in_array($action, ['edit', 'add'])) {
 	echo '</form>';

@@ -460,7 +460,7 @@ ul.news li .btn {
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
 	border-radius:5px;
-	border:1px solid #373737;
+	border:1px solid #ddd;
 	padding:0px 10px;
 	height:41px;
 	line-height:41px;
@@ -495,7 +495,7 @@ ul.news li .btn {
 }
 
 #structure-tree .placeholder {
-	border:1px dashed #373737;
+	border:1px dashed #ddd;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
 	border-radius:5px;
