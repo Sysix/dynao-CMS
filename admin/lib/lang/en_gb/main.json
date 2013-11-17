@@ -67,6 +67,9 @@
 	"module":				"Module",
 	"modules":				"Modules",
 	
+	#Slots
+	"slots_current_page":				"Slots at the current template",
+	
 	#User
 	"user_wrong_email":			"please enter a valid email address",
 	"email_adress":				"eMail adress",

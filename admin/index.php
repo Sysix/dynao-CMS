@@ -50,6 +50,12 @@ foreach(addonConfig::includeAllConfig() as $file) {
 
 addonConfig::includeAllLangFiles();
 
+ob_start();
+
+include(dir::template().DIRECTORY_SEPARATOR.dyn::get('template').DIRECTORY_SEPARATOR."template.php");
+
+$TEMPLATE = ob_get_clean();
+
 if(dyn::get('backend')) {
 	
 	include(dir::backend('backend.php'));
