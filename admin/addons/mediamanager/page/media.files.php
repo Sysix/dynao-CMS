@@ -49,7 +49,7 @@ if($action == 'add' || $action == 'edit') {
 	if($form->isSubmit()) {
 		
 		$file = type::files('file');
-		if(!is_uploaded_file($file['tmp_name'])) {
+		if(!is_uploaded_file($file['tmp_name']) || $form->isEditMode()) {
 			
 			$form->setErrorMessage('Bitte Laden Sie eine Datei hoch');
 			$form->setSave(false);
@@ -72,18 +72,7 @@ if($action == 'add' || $action == 'edit') {
 if($action == '') {
 	
 	echo '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'add', 'id'=>$id]).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
-?>
-<div class="clearfix"></div>
-<form action="index.php" method="get">
-	<input type="hidden" name="page" value="media" />
-	<input type="hidden" name="subpage" value="files" />
-	<select class="form-control" id="media-select-category" name="catId">
-		<option value="0">Keine Kategorie</option>
-		<?php echo mediaUtils::getTreeStructure(0, 0,' &nbsp;', $catId); ?>
-	</select>
-</form>
-<div class="clearfix"></div>
-<?php
+
 	$table = table::factory();
 	$table->setSql('SELECT * FROM '.sql::table('media').' WHERE `category` = '.$catId);
 	$table->addRow()
@@ -125,6 +114,16 @@ if($action == '') {
                 <div class="panel-heading">
                     <h3 class="panel-title">Media</h3>
                 </div>
+				<div class="panel-body">
+					<form action="index.php" method="get">
+						<input type="hidden" name="page" value="media" />
+						<input type="hidden" name="subpage" value="files" />
+						<select class="form-control" id="media-select-category" name="catId">
+							<option value="0">Keine Kategorie</option>
+							<?php echo mediaUtils::getTreeStructure(0, 0,' &nbsp;', $catId); ?>
+						</select>
+					</form>
+				</div>
                 <?php echo $table->show(); ?>
             </div>
         </div>
