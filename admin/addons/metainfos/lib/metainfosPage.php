@@ -51,7 +51,8 @@ class metainfosPage {
 		
 		if($action == 'delete') {
 			self::delete($tablename, $id, $form->get('name'));
-			$GLOBALS['action'] = '';
+			$form->setSuccessMessage('Eintrag erfolgreich gelöscht');
+			$form->redirect();
 			return;
 		}
 		
@@ -112,7 +113,7 @@ class metainfosPage {
 			// Oder bei Editieren vorhanden, jedoch der nicht das 
 			if($colum->num() && $action == 'add' || $action == 'edit' && $colum->num() && $form->sql->getResult('name') != $prefix.$form->get('name')) {
 				
-				echo message::danger('Der Spaltenname '.$prefix.$form->get('name').' ist schon vorhanden');
+				$form->setErrorMessage('Der Spaltenname '.$prefix.$form->get('name').' ist schon vorhanden');
 				$form->setSave(false);
 
 			} else {
