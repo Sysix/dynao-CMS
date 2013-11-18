@@ -148,14 +148,14 @@ class autoload {
 		
 		self::$dirs[] = $dir;
 		
-		$files = scandir(dir::classes($dir));
+		$files = scandir($dir);
 		
 		foreach($files as $file) {			
 			
 			if(in_array($file, ['.', '..']))
 				continue;
 				
-			self::addClass(dir::classes($dir.DIRECTORY_SEPARATOR.$file));
+			self::addClass($dir.DIRECTORY_SEPARATOR.$file);
 			self::$isNewCache = true;
 			
 		}

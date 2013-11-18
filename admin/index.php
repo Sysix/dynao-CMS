@@ -15,7 +15,7 @@ if(isset($DYN['root'])) {
 
 include(dir::classes('autoload.php'));
 autoload::register();
-autoload::addDir('utils');
+autoload::addDir(dir::classes('utils'));
 
 new dyn();
 
@@ -44,6 +44,7 @@ cache::setCache(dyn::get('cache'));
 ajax::convertPOST();
 
 addonConfig::includeAllLangFiles();
+addonConfig::includeAllLibs();
 
 ob_start();
 

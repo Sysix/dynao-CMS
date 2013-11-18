@@ -34,6 +34,19 @@ class addonConfig {
 		}
 				
 		return self::$all;
+
+	}
+	
+	public static function includeAllLibs() {
+		
+		foreach(self::getAll() as $name) {
+			
+			$dir = dir::addon($name, 'lib');
+			if(file_exists($dir)) {
+				autoload::addDir($dir);
+			}
+			
+		}
 		
 	}
 	

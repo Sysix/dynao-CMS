@@ -2,7 +2,13 @@
 
 class metainfosPage {
 	
-	static $types = ['text', 'textarea', 'select', 'radio', 'checkbox', 'DYN_LINK', 'DYN_MEDIA', 'DYN_LINK_LIST', 'DYN_MEDIA_LIST'];
+	static $types = ['text', 'textarea', 'select', 'radio', 'checkbox', 'DYN_LINK', 'DYN_LINK_LIST'];
+	
+	static public function addType($name) {
+		
+		self::$types[] = $name;	
+		
+	}
 	
 	static public function Backend($name, $pagename, $tablename, $action, $id) {
 		
