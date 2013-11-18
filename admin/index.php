@@ -5,12 +5,12 @@ ob_implicit_flush(0);
 mb_internal_encoding('UTF-8');
 session_start();
 
-include('lib/classes/dir.php');
+include('lib'.DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'dir.php');
 
 if(isset($DYN['root'])) {
-	new dir($DYN['root']);
+	new dir($DYN['root']);	
 } else {
-	new dir('../');
+	new dir();	
 }
 
 include(dir::classes('autoload.php'));
@@ -20,7 +20,7 @@ autoload::addDir('utils');
 new dyn();
 
 if(isset($DYN['backend'])) {
-	dyn::add('backend', $DYN['backend']);	
+	dyn::add('backend', $DYN['backend']);
 } else {
 	dyn::add('backend', true);
 }
@@ -36,9 +36,8 @@ lang::setLang(dyn::get('lang'));
 $DB = dyn::get('DB');
 sql::connect($DB['host'], $DB['user'], $DB['password'], $DB['database']);
 
-	
 new userLogin();
-dyn::add('user', new user());
+dyn::add('user', new user(userLogin::getUser()));
 
 cache::setCache(dyn::get('cache'));
 
@@ -52,10 +51,6 @@ addonConfig::includeAllLangFiles();
 
 ob_start();
 
-include(dir::template().DIRECTORY_SEPARATOR.dyn::get('template').DIRECTORY_SEPARATOR."template.php");
-
-$TEMPLATE = ob_get_clean();
-
 if(dyn::get('backend')) {
 	
 	include(dir::backend('backend.php'));
@@ -65,6 +60,5 @@ if(dyn::get('backend')) {
 	include(dir::backend('frontend.php'));
 	
 }
-
 
 ?>

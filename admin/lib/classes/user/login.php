@@ -131,7 +131,7 @@ class userLogin {
 	
 	public static function getUser() {
 		
-		return self::$userID;
+		return (int)self::$userID;
 		
 	}
 	

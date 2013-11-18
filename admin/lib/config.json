@@ -18,8 +18,5 @@
     "logincookie": 86400,
     "lang": "de_de",
     "backend": true,
-    "template": "default",
-    "user": {
-
-    }
+    "template": "default"
 }

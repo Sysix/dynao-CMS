@@ -35,7 +35,6 @@ if(dyn::get('user')->isAdmin()) {
 	backend::addNavi('Settings', url::backend('settings'), 'cogs');
 }
 
-
 $successMsg = type::get('success_msg', 'string');
 $errorMsg = type::get('error_msg', 'string');
 
@@ -71,7 +70,6 @@ if(ajax::is()) {
 	echo ajax::getReturn();
 	die;
 }
-
 
 if(userLogin::isLogged()) {
 	

@@ -4,7 +4,7 @@ class dir {
 
 	static $base = '../';
 
-	public function __construct($dir) {
+	public function __construct($dir = '../') {
 		
 		self::$base = realpath($dir);
 		
@@ -22,9 +22,9 @@ class dir {
 
 	}
 
-	public static function template($file = '') {
+	public static function template($template, $file = '') {
 
-		return self::base('templates'.DIRECTORY_SEPARATOR.$file);
+		return self::base('templates'.DIRECTORY_SEPARATOR.$template.DIRECTORY_SEPARATOR.$file);
 
 	}
 	
