@@ -54,8 +54,12 @@ if($action == 'add' || $action == 'edit') {
 	$field->fieldName(lang::get('password'));
 	$field->setSuffix(lang::get('password_info'));
 	
-	$field = $form->addCheckboxField('admin', $form->get('admin'));
-	$field->add('1', 'PageAdmin?', ['id'=>'pageadmin-button']);
+	if(dyn::get('user')->isAdmin()) {
+
+		$field = $form->addCheckboxField('admin', $form->get('admin'));
+		$field->add('1', 'PageAdmin?', ['id'=>'pageadmin-button']);
+	
+	}
 		
 	$field = $form->addSelectField('perms', $form->get('perms'));
 	$field->setMultiple(true);
