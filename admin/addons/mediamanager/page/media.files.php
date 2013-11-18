@@ -36,8 +36,10 @@ if($action == 'add' || $action == 'edit') {
 	
 	$field = $form->addRawField('<select class="form-control" name="category">'.mediaUtils::getTreeStructure(0, 0,' &nbsp;', $form->get('category')).'</select>');
 	$field->fieldName('Kategorie');
-		
-	$form = metainfos::getMetaInfos($form, 'media');
+	
+	if(addonConfig::isActive('metainfos')) {
+		$form = metainfos::getMetaInfos($form, 'media');
+	}
 	
 	$field = $form->addRawField('<input type="file" name="file" />');
 	$field->fieldName('Datei auswählen');
@@ -49,7 +51,7 @@ if($action == 'add' || $action == 'edit') {
 	if($form->isSubmit()) {
 		
 		$file = type::files('file');
-		if(!is_uploaded_file($file['tmp_name']) || $form->isEditMode()) {
+		if(!is_uploaded_file($file['tmp_name']) && !$form->isEditMode()) {
 			
 			$form->setErrorMessage('Bitte Laden Sie eine Datei hoch');
 			$form->setSave(false);
