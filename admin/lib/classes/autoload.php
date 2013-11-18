@@ -58,18 +58,7 @@ class autoload {
 		
 		preg_match_all("/(?:^|[A-Z])[a-z]+/", $class, $treffer);
 		
-		$classPath = '';
-		$x = 0;
-		foreach($treffer[0] as $dir) {
-			
-			if($x) {
-				$classPath .= DIRECTORY_SEPARATOR.strtolower($dir);
-			} else {
-				$classPath .= strtolower($dir);
-			}
-			
-			$x++;
-		}
+		$classPath = implode(DIRECTORY_SEPARATOR, array_map('strtolower', $treffer[0]));
 		
 		if(file_exists(dir::classes($classPath.'.php'))) {
 			self::addClass(dir::classes($classPath.'.php'));
