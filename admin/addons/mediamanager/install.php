@@ -16,7 +16,6 @@ if(!dyn::has('extensions')) {
 	
 }
 
-
 $sql = sql::factory();
 $sql->query('CREATE TABLE IF NOT EXISTS '.sql::table('media').' (
 `id` 			int(16)		unsigned 	NOT NULL 	auto_increment,
@@ -34,6 +33,18 @@ $sql->query('CREATE TABLE IF NOT EXISTS '.sql::table('media_cat').' (
 `pid` 			int(16)		unsigned	NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
+
+$sql->query('ALTER TABLE '.sql::table('structure').' 
+ADD `media01` int(16) NOT NULL,
+ADD `media02` int(16) NOT NULL,
+ADD `media03` int(16) NOT NULL,
+ADD `media04` int(16) NOT NULL,
+ADD `media05` int(16) NOT NULL,
+ADD `media06` int(16) NOT NULL,
+ADD `media07` int(16) NOT NULL,
+ADD `media08` int(16) NOT NULL,
+ADD `media09` int(16) NOT NULL,
+ADD `media10` int(16) NOT NULL');
 
 
 

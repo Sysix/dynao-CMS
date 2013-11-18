@@ -1,10 +1,5 @@
 <?php
 
-require(dir::addon('mediamanager', 'lib/classes/media.php'));
-require(dir::addon('mediamanager', 'lib/classes/mediaUtils.php'));
-require(dir::addon('mediamanager', 'lib/classes/formMedia.php'));
-require(dir::addon('mediamanager', 'lib/classes/formMediaList.php'));
-
 layout::addJs('addons/mediamanager/layout/js/mediamanager.js');
 
 userPerm::add('media[edit]', 'Medien bearbeiten / erstellen');
@@ -32,5 +27,14 @@ form::addClassMethod('addMediaListField', function($name, $value) {
 	return $this->addField($name, $value, 'formMediaList');
 	
 });
+
+pageArea::addType('MEDIA', 10);
+
+if(addonConfig::isActive('metainfos')) {
+	
+	metainfosPage::addType('DYN_MEDIA');
+	metainfosPage::addType('DYN_MEDIA_LIST');
+		
+}
 
 ?>

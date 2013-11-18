@@ -2,13 +2,6 @@
 
 class pageAreaAction {	
 	
-	static $types = [
-		'VALUE' => 15, 
-		'LINK' => 10,
-		'MEDIA' => 10,
-		'PHP' => 2
-	]; #typen
-	
 	public static function saveBlock() {
 		
 		$id = type::post('id', 'int');
@@ -23,7 +16,7 @@ class pageAreaAction {
 			'online'=>'int'
 		]);
 		
-		foreach(array_keys(self::$types) as $types) {
+		foreach(array_keys(pageArea::$types) as $types) {
 			
 			$array = type::post('DYN_'.$types, 'array', []);
 			foreach($array as $key=>$value) {

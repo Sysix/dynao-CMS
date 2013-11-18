@@ -12,7 +12,6 @@ class pageArea {
 	static $types = [
 		'VALUE' => 15, 
 		'LINK' => 10,
-		'MEDIA' => 10,
 		'PHP' => 2
 	]; #typen
 	
@@ -33,6 +32,12 @@ class pageArea {
 		}
 		
 		$this->setNew($this->sql->num() == 0);
+	}
+	
+	public static function addType($name, $count) {
+			
+		self::$types[$name] = $count;
+			
 	}
 	
 	public function setNew($new) {
