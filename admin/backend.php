@@ -35,6 +35,11 @@ if(dyn::get('user')->isAdmin()) {
 	backend::addNavi('Settings', url::backend('settings'), 'cogs');
 }
 
+
+foreach(addonConfig::includeAllConfig() as $file) {
+	include($file);	
+}
+
 $successMsg = type::get('success_msg', 'string');
 $errorMsg = type::get('error_msg', 'string');
 

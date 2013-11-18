@@ -43,10 +43,6 @@ cache::setCache(dyn::get('cache'));
 
 ajax::convertPOST();
 
-foreach(addonConfig::includeAllConfig() as $file) {
-	include($file);	
-}
-
 addonConfig::includeAllLangFiles();
 
 ob_start();
