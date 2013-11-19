@@ -92,13 +92,16 @@ class form {
 				
 		$submit = $this->addSubmitField('save', lang::get('save'));
 		$submit->addClass('btn-default');
+		$submit->setSave(false);
 			
 		$submit = $this->addSubmitField('save-back', lang::get('apply'));
 		$submit->addClass('btn-default');	
+		$submit->setSave(false);
 		
 		$back = $this->addButtonField('back', lang::get('back'));
 		$back->addClass('btn-warning');
 		$back->addClass('form-back');
+		$back->setSave(false);
 		
 		return $this;
 		
@@ -216,11 +219,8 @@ class form {
 	public function addHiddenField($name, $value, $attributes = []) {
 		
 		$attributes['type'] = 'hidden';
-		$field = $this->addFreeField($name, $value, 'formInput', $attributes);
-		$this->addButton($field);
+		return $this->addField($name, $value, 'formInput', $attributes);
 		
-		return $field;
-						
 	}
 	
 	/**
@@ -727,12 +727,10 @@ class form {
 	 * @return	string
 	 *
 	 */
-	public function show() {
+	public function show() {		
 		
-		
-		$action = $this->addHiddenField('action', $this->mode);
-		$action->setSave(false);
-		
+		$this->addParam('action', $this->mode);
+
 		foreach($this->getParams() as $key=>$value) {
 			$param = $this->addHiddenField($key, $value);
 			$param->setSave(false);
@@ -764,7 +762,12 @@ class form {
 		
 		$return[] = '<form'.html_convertAttribute($this->formAttributes).'>'.PHP_EOL;
 		
-		foreach($this->return as $ausgabe) {			
+		foreach($this->return as $ausgabe) {
+			
+			if($ausgabe->getAttribute('type') == 'hidden') {
+				$buttons[] = $ausgabe->get();
+				continue;
+			}
 				
 			if(!$ausgabe->hasAttribute('id')) {
 				$ausgabe->addAttribute('id', 'form_'.$x);
@@ -779,12 +782,12 @@ class form {
 			
 		}		
 		
-		foreach($this->buttons as $buttons) {
-			$buttons_echo[] = $buttons->get();
+		foreach($this->buttons as $button) {
+			$buttons[] = $button->get();
 		}
 		
 		$return[] = '<div class="form-group">';
-		$return[] = '<div class="col-sm-offset-2 col-sm-10 btn-group">'.implode(PHP_EOL, $buttons_echo).'</div>';
+		$return[] = '<div class="col-sm-offset-2 col-sm-10 btn-group">'.implode(PHP_EOL, $buttons).'</div>';
 		$return[] = '</div>';
 			
 		$return[] = '</form>';
