@@ -11,9 +11,6 @@ backend::addSubnavi('Slots',	url::backend('structure', ['subpage'=>'slots']), 		
 #backend::addSubnavi('Inhalt',		url::backend('structure', ['structure_id'=>$structure_id, 'subpage'=>'content']),		'edit');
 backend::addSubnavi(lang::get('modules'),		url::backend('structure', ['subpage'=>'module']),										'list-alt');
 
-layout::addJS('layout/js/nestable.js');
-
-
 $breadcrumb = [];
 
 $while_id = $parent_id;

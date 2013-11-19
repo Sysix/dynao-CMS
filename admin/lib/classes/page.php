@@ -150,11 +150,13 @@ class page {
 		
 		$select = '';
 		
+		$id = (!$lvl) ? 'id="structure-tree"' : '';
+		
 		$sql = sql::factory();
 		$sql->query('SELECT * FROM '.sql::table('structure').' WHERE parent_id = '.$parentId.' ORDER BY sort')->result();
 		if($sql->num()) {
 			
-			$select .= '<ul class="list">';
+			$select .= '<ul '.$id.'>';
 				
 			while($sql->isNext()) {
 				
@@ -188,7 +190,7 @@ class page {
 					$delete = '<a href="'.url::backend('structure', ['action'=>'delete', 'id'=>$sql->get('id')]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 					$online = '<a href="'.url::backend('structure', ['action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm structure-'.$online.'">'.$online.'</a>';				
 				
-					$select .= '<li data-id="'.$sql->get('id').'" class="item">'.PHP_EOL.'
+					$select .= '<li data-id="'.$sql->get('id').'">'.PHP_EOL.'
 						<div class="handle"><i class="fa fa-sort"></i> '.$sql->get('name').PHP_EOL.'
 							<span class="btn-group">'.PHP_EOL.$module.PHP_EOL.$online.PHP_EOL.$edit.PHP_EOL.$delete.PHP_EOL.'</span>'.PHP_EOL.'
 						</div>'.PHP_EOL;
