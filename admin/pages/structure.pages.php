@@ -156,10 +156,6 @@ if($structure_id) {
 
 //Wenn structure_id leer
 } else {
-
-	#echo '<select class="form-control">';
-	#echo page::getTreeStructure();
-	#echo '</select>';
 	
 	if(ajax::is()) {
 		
