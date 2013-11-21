@@ -136,7 +136,11 @@ if($action == '') {
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Benutzer</h3>
+                    <h3 class="panel-title pull-left">Benutzer</h3>
+					<div class="btn-group pull-right">
+						<a href="<?php echo url::backend('user', ['action'=>'add']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('add'); ?></a>
+					</div>
+					<div class="clearfix"></div>
                 </div>
                 <?php echo $table->show(); ?>
             </div>

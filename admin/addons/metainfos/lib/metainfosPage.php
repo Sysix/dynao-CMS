@@ -127,16 +127,26 @@ class metainfosPage {
 			}
 			
 		}
-		
-		echo $form->show();
+?>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Metainfos bearbeiten</h3>
+			</div>
+			<div class="panel-body">
+				<?php echo $form->show(); ?>
+			</div>
+		</div>
+	</div>
+</div>
+<?php
 		
 		self::jsSelect();
 		
 	}
 	
 	static protected function BackendShow($name, $pagename) {
-	
-		echo '<a href="'.url::backend('meta', ['subpage'=>$pagename, 'action'=>'add']).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
 	
 		$table = table::factory(['class'=>['js-sort']]);
 		$table->setSql('SELECT * FROM '.sql::table('metainfos').' WHERE `type` = "'.$name.'"');
@@ -159,8 +169,22 @@ class metainfosPage {
 			$table->next();	
 			
 		}
-		
-		echo $table->show();
+		?>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title pull-left">Media</h3>
+				<div class="btn-group pull-right">
+					<a href="<?php echo url::backend('meta', ['subpage'=>$pagename, 'action'=>'add']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('add'); ?></a>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<?php echo $table->show(); ?>
+		</div>
+	</div>
+</div>
+		<?php
 		
 	}
 	

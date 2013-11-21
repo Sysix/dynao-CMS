@@ -6,23 +6,44 @@ $subaction = type::super('subaction', 'string');
 
 if($action == 'delete') {
 	
-	$sql = sql::factory();
-	$sql->setTable('media');
-	$sql->setWhere('id='.$id);
-	$sql->select('filename');
-	$sql->result();
+	$values = [];
+	for($i = 1; $i <= 10; $i++) {
+		$values[] = '`media'.$i.'` = '.$id;
+	}
 	
-	if(unlink(dir::media($sql->get('filename')))) {
+	/*
+	for($i = 1; $i <= 10; $i++) {
+		$values[] = '`medialist'.$i.'` LIKE "%|'.$id.'|%"';
+	}
+	*/
+	
+	$sql = sql::factory();
+	$sql->query('SELECT id FROM '.sql::table('structure_area').' WHERE '.implode(' OR ', $values))->result();
+	if($sql->num()) {
 		
-		echo message::success('Datei erfolgreich gelöscht');
+		echo message::warning('Einzelne Seiten benutzen diese Datei noch');
 		
 	} else {
 		
-		echo message::warning('Die Datei '.dyn::get('hp_url').'media/'.$sql->get('filename').' konnte nicht gelöscht werden');
+		$sql = sql::factory();
+		$sql->setTable('media');
+		$sql->setWhere('id='.$id);
+		$sql->select('filename');
+		$sql->result();
+	
+		if(unlink(dir::media($sql->get('filename')))) {
+			
+			echo message::success('Datei erfolgreich gelöscht');
+			
+		} else {
+			
+			echo message::warning('Die Datei '.dyn::get('hp_url').'media/'.$sql->get('filename').' konnte nicht gelöscht werden');
+			
+		}
+		
+		$sql->delete();
 		
 	}
-	
-	$sql->delete();
 		
 }
 
@@ -67,13 +88,25 @@ if($action == 'add' || $action == 'edit') {
 		
 	}
 	
-	echo $form->show();	
+?>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Media bearbeiten</h3>
+			</div>
+			<div class="panel-body">
+				<?php echo $form->show(); ?>
+			</div>
+		</div>
+	</div>
+</div>
+<?php
 	
 }
 
 if($action == '') {
 	
-	echo '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'add', 'id'=>$id]).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
 
 	$table = table::factory();
 	$table->setSql('SELECT * FROM '.sql::table('media').' WHERE `category` = '.$catId);
@@ -82,6 +115,9 @@ if($action == '') {
 	->addCell('Titel')
 	->addCell('Endung')
 	->addCell('Aktion');
+	
+	$table->addCollsLayout('50,*,100,250');
+	
 	$table->addSection('tbody');
 	while($table->isNext()) {
 			
@@ -114,7 +150,11 @@ if($action == '') {
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Media</h3>
+                    <h3 class="panel-title pull-left">Media</h3>
+					<div class="btn-group pull-right">
+						<a href="<?php echo url::backend('media', ['subpage'=>'files', 'action'=>'add', 'id'=>$id]); ?>" class="btn btn-sm btn-default"><?php echo lang::get('add'); ?></a>
+					</div>
+					<div class="clearfix"></div>
                 </div>
 				<div class="panel-body">
 					<form action="index.php" method="get">

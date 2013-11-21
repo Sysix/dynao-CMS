@@ -27,44 +27,40 @@ $breadcrumb[] = '<li><a href="'.url::backend('media', ['subpage'=>'category']).'
 
 echo '<ul class="pull-left breadcrumb">'.implode('', array_reverse($breadcrumb)).'</ul>';
 
-echo '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'add', 'pid'=>$pid]).'" class="btn btn-sm btn-primary pull-right">'.lang::get('add').'</a>';
-echo '<div class="clearfix"></div>';
-
 if($action == 'delete') {
 	
-	$orginal_id = $id;
+	$error = [];
 	
-	while($id) {
-	
-		$sql = sql::factory();
-		$sql->query('SELECT id FROM '.sql::table('media_cat').' WHERE `pid` = '.$id)->result();
-		if($sql->num()) {
-			
-			$id = $sql->get('id');
-			
-			$delete = sql::factory();
-			$delete->setTable('media_cat');
-			$delete->setWhere('id='.$id);
-			$delete->delete();			
-			
-		} else {
-			$id = false;	
-		}
-		
+	$sql = sql::factory();
+	$sql->query('SELECT id FROM '.sql::table('media_cat').' WHERE `pid` = '.$id)->result();
+	if($sql->num()) {
+			$error[] = 'Es sind noch Unterkategorien vorhanden';
 	}
 	
+	$sql->query('SELECT id FROM '.sql::table('media').' WHERE `category` = '.$id)->result();
+	if($sql->num()) {
+			$error[] = 'Bestimmte Bilder sind noch in der Kategorie';
+	}
 	
-	$sql = sql::factory();		
-	$sql->query('SELECT `sort`, `pid` FROM '.sql::table('media_cat').' WHERE id='.$orginal_id)->result();
+	if(count($error)) {
+		
+		echo message::danger(implode('<br />', $error));
+		
+	} else {
 	
-	$delete = sql::factory();
-	$delete->setTable('media_cat');
-	$delete->setWhere('id='.$orginal_id);
-	$delete->delete();
-	
-	sql::sortTable('media_cat', 0, '`pid` = '.$sql->get('pid'));
-	
-	echo message::success('Artikel erfolgreich gelöscht');
+		$sql = sql::factory();		
+		$sql->query('SELECT `sort`, `pid` FROM '.sql::table('media_cat').' WHERE id='.$id)->result();
+		
+		$delete = sql::factory();
+		$delete->setTable('media_cat');
+		$delete->setWhere('id='.$id);
+		$delete->delete();
+		
+		sql::sortTable('media_cat', 0, '`pid` = '.$sql->get('pid'));
+		
+		echo message::success('Artikel erfolgreich gelöscht');
+		
+	}
 		
 }
 
@@ -101,7 +97,7 @@ $table->addCollsLayout($colFirstWidth.',*,250');
 	
 $table->addRow()
 ->addCell()
-->addCell('Artikel')
+->addCell('Kategorie')
 ->addCell('Aktion');
 
 $table->addSection('tbody');
@@ -186,8 +182,23 @@ while($table->isNext()) {
 	
 	$table->next();	
 }
-
-echo $table->show();
+?>
+<div class="clearfix"></div>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title pull-left">Media</h3>
+				<div class="btn-group pull-right">
+					<a href="<?php echo url::backend('media', ['subpage'=>'category', 'action'=>'add', 'pid'=>$pid]); ?>" class="btn btn-sm btn-default"><?php echo lang::get('add'); ?></a>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<?php echo $table->show(); ?>
+		</div>
+	</div>
+</div>
+<?php
 
 
 if(in_array($action, ['edit', 'add'])) {
