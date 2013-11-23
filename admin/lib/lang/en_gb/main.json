@@ -1,34 +1,41 @@
 {
 	#Einstellungen
-	"lang" :					"English",
-	"dateformat" :				"%d.$m.$Y",
+	"lang":						"English",
+	"dateformat":				"%d.$m.$Y",
 	
-	"yes" :						"yes",
-	"no" :						"no",
-	"name" :					"name",
+	"yes":						"yes",
+	"no":						"no",
+	"name":						"name",
 	"online":					"online",
 	"offline":					"offline",
 	"action":					"action",
 	
 	#Aktionen
-	"update" :					"update",
-	"add" :						"add",
-	"edit" :					"edit",
-	"delete" :					"delete",
-	"save" :					"save",
-	"back" :					"back",
-	"apply" :					"apply",
+	"update":					"update",
+	"add":						"add",
+	"edit":						"edit",
+	"delete":					"delete",
+	"save":						"save",
+	"back":						"back",
+	"apply":					"apply",
+	"try_again":				"try again",
 	
 	#Misc
 	"save_status":				"Status erfoglreich geändert",
 	"save_sorting":				"Sortierung erfolgreich übernommen",
 	
+	#Versioncheck
+	"version_fail_connect":		"Connection to the server could not be established",
+	"version_fail_version1":	"You are using an outdated version",
+	"version_fail_version2":	"You are using an outdated minor version",
+	"version_fail_version3":	"You are using an outdated minor version",
+	
 	#Login	
-	"login_form_notfull" :		"Form was not completely sent!",
-	"login_no_user" :			"No user with the e-mail address \"%s\" found",
-	"login_pwd_false" :			"It is surrounded password is incorrect",
-	"login_remember" :			"Remember me",
-	"login_pwd_forget" :		"Forget your password ?",
+	"login_form_notfull":		"Form was not completely sent!",
+	"login_no_user":			"No user with the e-mail address \"%s\" found",
+	"login_pwd_false":			"It is surrounded password is incorrect",
+	"login_remember":			"Remember me",
+	"login_pwd_forget":			"Forget your password ?",
 	"login_logout_success":		"Logged out successfully",
 	
 	#Addon
@@ -58,17 +65,17 @@
 	"article":					"Page",
 	"article_save":				"save page",
 	"structure":				"Structur",
-	"pages":				"Pages",
+	"pages":					"Pages",
 	
 	#Modul
 	"modul_php_error":			"The code module has a PHP error and therefore can not be executed",
 	"module_add":				"add modul",
 	"block_status":				"block status",
-	"module":				"Module",
-	"modules":				"Modules",
+	"module":					"Module",
+	"modules":					"Modules",
 	
 	#Slots
-	"slots_current_page":				"Slots at the current template",
+	"slots_current_page":		"Slots at the current template",
 	
 	#User
 	"user_wrong_email":			"please enter a valid email address",

@@ -77,7 +77,7 @@ class dyn {
 		$cacheFile = cache::getFileName(0, 'dynaoVersion');
 		
 		// jeden Tag
-		if(cache::exists($cacheFile, 86400)) {
+		if(cache::exist($cacheFile, 86400)) {
 			
 			$content = json_decode($curl, true);
 				
@@ -100,19 +100,23 @@ class dyn {
 			
 		}
 		
+		if(is_null($content)) {
+			return lang::get('version_fail_connect');
+		}
+		
 		$version = explode('.', $content['version']);
 		$cversion = explode('.', dyn::get('version'));
 		
 		if($verion[0] != $cversion[0]) {		
-			return 'Sie verwenden eine veraltete Version';	
+			return lang::get('version_fail_version1');	
 		}
 		
 		if($version[1] != $cversion[1]) {
-			return 'Sie verwenden eine veraltete Nebenversion';
+			return lang::get('version_fail_version2');
 		}
 		
 		if($version[2] != $cversion[2]) {
-			return 'Sie verwenden eine veraltete Minor-Version';	
+			return lang::get('version_fail_version3');
 		}
 		
 		return true;

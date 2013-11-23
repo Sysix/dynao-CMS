@@ -44,119 +44,31 @@
 	window.onload = resize();
    	window.onresize = resize;
   }", false);
+  
+ if(type::get('checkversion', 'int', 0) == 1) {
+	$cacheFile = cache::getFileName(0, 'dynaoVersion');
+	cache::exist($cacheFile, 0);
+	echo message::success('Verbindung wird erneut hergestellt', true); 
+ }
+  
+  
+  $versionCheck = dyn::checkVersion();
+  
+    if($versionCheck == lang::get('version_fail_connect')) {
+        $message = lang::get('version_fail_connect');
+        $message .= '<br /><a href="'.url::backend('dashboard', ['page'=>'dashboard', 'checkversion'=>1]).'">'.lang::get('try_again').'</a>';
+        echo message::danger($message, true);  
+	} elseif($versionCheck !== true) {
+        echo message::danger($versionCheck, true);
+    }
+	
+	extension::add('DASHBOARD_OVERVIEW', function($text) {
+		return $text.message::info('Extension erfolgreich geladen');
+	});
+	
+	echo extension::get('DASHBOARD_OVERVIEW', '');
 ?>		
 
-<?php echo message::info('<strong>Warning!</strong> Please check your Version of dynao CMS', true); ?>
-		<div class="row">		
-			<div class="col-lg-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title pull-left">Visitor statistics</h3>
-						<div class="btn-group pull-right">
-							<button type="button" class="btn btn-sm btn-default">&laquo;</button>
-							<button type="button" class="btn btn-sm btn-default">2013</button>
-							<button type="button" class="btn btn-sm btn-default">&raquo;</button>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					<div id="visitchart" style="height:280px;"></div>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-			
-		</div>
-        
-        <div class="row">
-        	<div class="col-lg-6">
-            	<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title pull-left">Newest User</h3>
-                        <div class="btn-group pull-right">
-							<button type="button" class="btn btn-sm btn-default">View all</button>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-                    	<table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Date</th>
-                                    <th width="100">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            	<tr>
-                                    <td>5</td>
-                                    <td>Test</td>
-                                    <td>08-11-2013</td>
-                                    <td>
-                                    	<span class="btn-group">
-                                            <a title="Move up" href="" class="fa fa-caret-up btn btn-xs btn-default"></a> 
-                                            <a title="Move down" href="" class="fa fa-caret-down btn btn-xs btn-default"></a> 
-                                            <a title="Edit" href="" class="fa fa-pencil btn btn-xs btn-default"></a> 
-                                            <a title="Delete" href="" class="fa fa-trash-o btn btn-xs btn-danger"></a>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Döner</td>
-                                    <td>08-04-2013</td>
-                                    <td>
-                                    	<span class="btn-group">
-                                             <a title="Move up" href="" class="fa fa-caret-up btn btn-xs btn-default"></a> 
-                                            <a title="Move down" href="" class="fa fa-caret-down btn btn-xs btn-default"></a> 
-                                            <a title="Edit" href="" class="fa fa-pencil btn btn-xs btn-default"></a> 
-                                            <a title="Delete" href="" class="fa fa-trash-o btn btn-xs btn-danger"></a>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Fresh Dumbledore</td>
-                                    <td>08-04-2013</td>
-                                    <td>
-                                    	<span class="btn-group">
-                                             <a title="Move up" href="" class="fa fa-caret-up btn btn-xs btn-default"></a> 
-                                            <a title="Move down" href="" class="fa fa-caret-down btn btn-xs btn-default"></a> 
-                                            <a title="Edit" href="" class="fa fa-pencil btn btn-xs btn-default"></a> 
-                                            <a title="Delete" href="" class="fa fa-trash-o btn btn-xs btn-danger"></a>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Aaron</td>
-                                    <td>08-02-2013</td>
-                                    <td>
-                                    	<span class="btn-group">
-                                             <a title="Move up" href="" class="fa fa-caret-up btn btn-xs btn-default"></a> 
-                                            <a title="Move down" href="" class="fa fa-caret-down btn btn-xs btn-default"></a> 
-                                            <a title="Edit" href="" class="fa fa-pencil btn btn-xs btn-default"></a> 
-                                            <a title="Delete" href="" class="fa fa-trash-o btn btn-xs btn-danger"></a>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Alexander</td>
-                                    <td>08-01-2013</td>
-                                    <td>
-                                    	<span class="btn-group">
-                                            <a title="Move up" href="" class="fa fa-caret-up btn btn-xs btn-default"></a> 
-                                            <a title="Move down" href="" class="fa fa-caret-down btn btn-xs btn-default"></a> 
-                                            <a title="Edit" href="" class="fa fa-pencil btn btn-xs btn-default"></a> 
-                                            <a title="Delete" href="" class="fa fa-trash-o btn btn-xs btn-danger"></a>
-                                        </span>
-                                    </td>
-                                </tr>
-                            </tbody>
-      					</table>
-				</div>
-            </div>
-            
             <div class="col-lg-6">
             	<div class="panel panel-default">
 					<div class="panel-heading">
