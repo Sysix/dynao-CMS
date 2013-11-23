@@ -275,7 +275,9 @@ class table {
 		
 	}
 	
-	public function show() {		
+	public function show() {
+		
+		extension::get('TABLE_BEFORE_ACTION', $this);
 				
 		$return = $this->getCaption();
 		
@@ -284,7 +286,9 @@ class table {
 		$return .= $this->getSection($this->tfoot, 'tfoot');		
 		$return .= $this->getSection($this->tbody , 'tbody');				
 		
-		return $this->addTag('table', $this->tableAttr, PHP_EOL.$return);
+		$return =  $this->addTag('table', $this->tableAttr, PHP_EOL.$return);
+		
+		return extension::get('TABLE_BEFORE_SHOW', $return);
 		
 	}
 	

@@ -609,6 +609,8 @@ class form {
 	 * @return	this
 	 */
 	private function saveForm() {
+		
+		extension::get('FORM_BEFORE_SAVE', $this->sql);
 	
 		if(!$this->toSave)
 			return $this;
@@ -727,7 +729,9 @@ class form {
 	 * @return	string
 	 *
 	 */
-	public function show() {		
+	public function show() {
+		
+		extension::get('FORM_BEFORE_ACTION', $this);
 		
 		$this->addParam('action', $this->mode);
 
@@ -792,7 +796,9 @@ class form {
 			
 		$return[] = '</form>';
 		
-		return implode(PHP_EOL, $return);
+		$return = extension::get('FORM_BEFORE_SHOW', implode(PHP_EOL, $return));
+		
+		return $return;
 		
 	}
 	
