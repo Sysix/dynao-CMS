@@ -2,8 +2,6 @@
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
-ob_start();
 ob_implicit_flush(0);
 mb_internal_encoding('UTF-8');
 session_start();
@@ -39,6 +37,8 @@ lang::setLang(dyn::get('lang'));
 $DB = dyn::get('DB');
 sql::connect($DB['host'], $DB['user'], $DB['password'], $DB['database']);
 
+ob_start();
+
 new userLogin();
 dyn::add('user', new user(userLogin::getUser()));
 
@@ -46,8 +46,6 @@ cache::setCache(dyn::get('cache'));
 
 addonConfig::includeAllLangFiles();
 addonConfig::includeAllLibs();
-
-ob_start();
 
 if(dyn::get('backend')) {
 	

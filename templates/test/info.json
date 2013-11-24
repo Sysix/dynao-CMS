@@ -1,0 +1,22 @@
+{
+	"name": "Test Template",
+	"version": 0.1,
+	"author": "Dynao CMS",
+	"supportlink" : "http://dynao.de/",
+	"slots": {
+		"navigation": {
+			"description": "navi zum navigieren"
+		},
+		"login": {
+			"description": "user login für user"
+		},
+	},
+	"need": {
+		"addons": {
+			"blabla",
+			"bla2"	
+		},
+		"version": 0.1
+	}
+	
+}
