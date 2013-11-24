@@ -24,7 +24,7 @@ class ajax {
 	
 	public static function convertPOST() {
 		
-		if(ajax::is()) {
+		if(ajax::is() && isset($_POST['ajaxGet'])) {
 			
 			parse_str($_POST['ajaxGet'], $post);
 			$_POST = array_merge($_POST, $post);
