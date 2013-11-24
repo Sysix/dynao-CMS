@@ -17,9 +17,13 @@ $('.dny-media .dyn-media-del').click(function() {
 	var div = $(this).closest('.dyn-media').find('input').val('');
 });
 
-$(document.body).on("change", "#media-select-category", function() {
+$('#media-select-category').change(function() { 
+	$(this).closest('form').submit();  
+});
+
+$(document.body).on('change', '#media-select-category-ajax', function() {
 	var catId = $(this).val();
-	$("#load").load("index.php?page=media&subpage=popup&catId=" + catId + " #load");
+	$('#load').load('index.php?page=media&subpage=popup&catId='+catId+' #load');
 });
 
 $(document.body).on("click", '.dyn-media-select', function() {

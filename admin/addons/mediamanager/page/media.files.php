@@ -144,6 +144,7 @@ if($action == '') {
 		$table->next();	
 		
 	}
+	
 	?>
 	
 	<div class="row">

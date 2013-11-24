@@ -32,7 +32,6 @@ while($table->isNext()) {
 
 }
 
-
 ?>
 <div class="row">
 	<div class="col-lg-12">
@@ -42,7 +41,7 @@ while($table->isNext()) {
 				<div class="clearfix"></div>
 			</div>
 			<div class="panel-body">
-				<select class="form-control" id="media-select-category" name="catId">
+				<select class="form-control" id="media-select-category-ajax" name="catId">
 					<option value="0">Keine Kategorie</option>
 					<?php echo mediaUtils::getTreeStructure(0, 0,' &nbsp;', $catId); ?>
 				</select>
