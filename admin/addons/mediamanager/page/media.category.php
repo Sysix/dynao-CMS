@@ -34,12 +34,12 @@ if($action == 'delete') {
 	$sql = sql::factory();
 	$sql->query('SELECT id FROM '.sql::table('media_cat').' WHERE `pid` = '.$id)->result();
 	if($sql->num()) {
-			$error[] = lang::get('media_no_subcat');
+			$error[] = 'Es sind noch Unterkategorien vorhanden';
 	}
 	
 	$sql->query('SELECT id FROM '.sql::table('media').' WHERE `category` = '.$id)->result();
 	if($sql->num()) {
-			$error[] = lang::get('media_img_in_cat');
+			$error[] = 'Bestimmte Bilder sind noch in der Kategorie';
 	}
 	
 	if(count($error)) {
@@ -58,7 +58,7 @@ if($action == 'delete') {
 		
 		sql::sortTable('media_cat', 0, '`pid` = '.$sql->get('pid'));
 		
-		echo message::success(lang::get('media_cat_del'));
+		echo message::success('Artikel erfolgreich gelöscht');
 		
 	}
 		
@@ -93,12 +93,12 @@ $table = table::factory(['class'=>['js-sort']]);
 
 $colFirstWidth = ($action == 'edit' || $action == 'add') ? 50 : 25; 
 
-$table->addCollsLayout($colFirstWidth.',*,250');
+$table->addCollsLayout($colFirstWidth.',*, 110');
 	
 $table->addRow()
 ->addCell()
-->addCell(lang::get('media_cat'))
-->addCell(lang::get('action'));
+->addCell('Kategorie')
+->addCell('Aktion');
 
 $table->addSection('tbody');
 	
@@ -124,7 +124,7 @@ if(in_array($action, ['edit', 'add'])) {
 	$inputHidden->addAttribute('type', 'hidden');
 	echo $inputHidden->get();
 	
-	$buttonSubmit = formButton::factory('save', lang::get('save'));
+	$buttonSubmit = formButton::factory('save', 'Artikel speichern');
 	$buttonSubmit->addAttribute('type', 'submit');
 	$buttonSubmit->addClass('btn-sm');
 	$buttonSubmit->addClass('btn-default');
@@ -170,8 +170,8 @@ while($table->isNext()) {
 		
 	} else {
 		
-		$edit = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'edit', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';	
-		$delete = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'delete', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+		$edit = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'edit', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';	
+		$delete = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'delete', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm btn-danger fa fa-trash-o"></a>';
 	
 		$table->addRow(array('data-id'=>$table->get('id')))
 		->addCell('<i class="fa fa-sort"></i>')

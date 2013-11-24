@@ -9,6 +9,7 @@
 	"online":					"online",
 	"offline":					"offline",
 	"action":					"action",
+	"actions":					"actions",
 	
 	#Aktionen
 	"update":					"update",
@@ -21,8 +22,9 @@
 	"try_again":				"try again",
 	
 	#Misc
-	"save_status":				"Status erfoglreich geändert",
-	"save_sorting":				"Sortierung erfolgreich übernommen",
+	"save_status":				"Status successfully changed",
+	"save_sorting":				"Sorting successfully saved",
+	"overview":					"Overview",
 	
 	#Versioncheck
 	"version_fail_connect":		"Connection to the server could not be established",
@@ -56,7 +58,7 @@
 	#Settings
 	"settings_name_of_site":	"Name of the site",
 	"settings_url_of_site":		"URL of the site",
-	"settings_backend_lang":	"backend languagee",
+	"settings_backend_lang":	"backend language",
 	
 	#Structure
 	"structure_content_save":	"content successfully saved",
@@ -83,6 +85,7 @@
 	"password":					"password",
 	"password_info":			"<small>You can see the encrypted password! To assign a new password, simply enter!</small>",
 	"email":					"E-Mail",
+	"user":					"User",
 	
 	#SQL
 	"sql_query_error":			"query could not be executed<pre>%s</pre>Error: %s",

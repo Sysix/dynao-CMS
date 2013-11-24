@@ -9,6 +9,7 @@
 	"online":					"online",
 	"offline":					"offline",
 	"action":					"Aktion",
+	"actions":					"Aktionen",
 	
 	#Aktionen
 	"update":					"aktualisieren",
@@ -18,11 +19,12 @@
 	"save":						"speichern",
 	"back":						"zurück",
 	"apply":					"übernehmen",
+	"try_again":				"Erneut versuchen",
 	
 	#Misc
 	"save_status":				"Status erfoglreich geändert",
 	"save_sorting":				"Sortierung erfolgreich übernommen",
-	"try_again":				"Erneut versuchen",
+	"overview":					"Übersicht",
 	
 	#Versioncheck
 	"version_fail_connect":		"Verbindung zum Server konnte nicht hergestellt werden",
@@ -83,6 +85,7 @@
 	"password":					"Passwort",
 	"password_info":			"<small>Sie sehen das verschlüsselte Passwort! Um ein neues Passwort zu vergeben, einfach eingeben!</small>",
 	"email":					"E-Mail",
+	"user":					"Benutzer",
 	
 	#SQL
 	"sql_query_error":			"Query konnte nicht ausgeführt werden<pre>%s</pre>Error: %s",
