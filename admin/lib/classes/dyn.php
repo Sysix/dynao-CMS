@@ -98,16 +98,16 @@ class dyn {
 			
 			cache::write($content, $cacheFile);
 			
-		}
+		}		
 		
 		if(is_null($content)) {
 			return lang::get('version_fail_connect');
 		}
 		
-		$version = explode('.', $content['version']);
+		$version = explode('.', $content['current']['version']);
 		$cversion = explode('.', dyn::get('version'));
 		
-		if($verion[0] != $cversion[0]) {		
+		if($version[0] != $cversion[0]) {		
 			return lang::get('version_fail_version1');	
 		}
 		
