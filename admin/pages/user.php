@@ -58,19 +58,19 @@ if($action == 'add' || $action == 'edit') {
 
 		$field = $form->addCheckboxField('admin', $form->get('admin'));
 		$field->add('1', 'PageAdmin?', ['id'=>'pageadmin-button']);
-	
-	}
 		
-	$field = $form->addSelectField('perms', $form->get('perms'));
+		$field = $form->addSelectField('perms', $form->get('perms'));
+		
+		if($form->get('admin') == 1)
+			$field->addAttribute('style', 'display:none;');
+		
+		$field->setMultiple(true);
+		$field->setId('pageadmin-content');
+		$field->setSize(8);
+		foreach(userPerm::getAll() as $name=>$value) {
+			$field->add($name, $value);	
+		}
 	
-	if($form->get('admin') == 1)
-		$field->addAttribute('style', 'display:none;');
-	
-	$field->setMultiple(true);
-	$field->setId('pageadmin-content');
-	$field->setSize(8);
-	foreach(userPerm::getAll() as $name=>$value) {
-		$field->add($name, $value);	
 	}
 	
 	if($action == 'edit') {
