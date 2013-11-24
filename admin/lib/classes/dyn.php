@@ -83,7 +83,7 @@ class dyn {
 				
 		} else {
 		
-			$server = 'http://version.dynao.de/';
+			$server = 'http://api.dynao.de/version.json';
 			
 			$ch = curl_init($server);
 			curl_setopt($ch, CURLOPT_PORT, 80);
