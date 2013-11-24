@@ -2,7 +2,7 @@
 $action = type::super('action', 'string');
 $addon = type::super('addon', 'string');
 
-backend::addSubnavi('Übersicht',	url::backend('addons'), 	'archive', 0);
+backend::addSubnavi(lang::get('overview'),	url::backend('addons'), 	'eye', 0);
 
 if($action == 'install') {
 
@@ -54,11 +54,11 @@ if($action == 'active') {
 }
 
 $table = table::factory();
-$table->addCollsLayout('*,300');
+$table->addCollsLayout('*,215');
 
 $table->addRow()
 ->addCell('Name')
-->addCell('Aktionen');
+->addCell(lang::get('actions'));
 
 $table->addSection('tbody');
 
@@ -86,7 +86,7 @@ foreach($addons as $dir) {
 		$active = '<a href="'.$active_url.'" class="btn btn-sm structure-offline">'.lang::get('addon_not_actived').'</a>';
 	}
 	
-	$delete = '<a href="#" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+	$delete = '<a href="#" class="btn btn-sm btn-danger fa fa-trash-o"></a>';
 	
 	$table->addRow()
 	->addCell($curAddon->get('name').' <small>'.$curAddon->get('version').'</small>')

@@ -145,14 +145,20 @@ if($action == '') {
 		
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/master
 
 layout::addJSCode('
 $("#media-select-category").change(function() {  
 	$(this).closest("form").submit();  
 });
 ');
+<<<<<<< HEAD
 >>>>>>> 262e7c3a55e622f56a9b0381f2470af094b14e22
+=======
+>>>>>>> origin/master
 	
 	?>
 	

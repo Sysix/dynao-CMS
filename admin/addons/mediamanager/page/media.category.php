@@ -93,7 +93,7 @@ $table = table::factory(['class'=>['js-sort']]);
 
 $colFirstWidth = ($action == 'edit' || $action == 'add') ? 50 : 25; 
 
-$table->addCollsLayout($colFirstWidth.',*,250');
+$table->addCollsLayout($colFirstWidth.',*, 110');
 	
 $table->addRow()
 ->addCell()
@@ -170,8 +170,8 @@ while($table->isNext()) {
 		
 	} else {
 		
-		$edit = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'edit', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';	
-		$delete = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'delete', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+		$edit = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'edit', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';	
+		$delete = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'delete', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm btn-danger fa fa-trash-o"></a>';
 	
 		$table->addRow(array('data-id'=>$table->get('id')))
 		->addCell('<i class="fa fa-sort"></i>')

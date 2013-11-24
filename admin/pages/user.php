@@ -3,6 +3,7 @@
 $action = type::super('action', 'string');
 $id = type::super('id', 'int', 0);
 
+backend::addSubnavi(lang::get('overview'),		url::backend('user'), 		'eye');
 
 if($action == 'delete') {
 	
@@ -92,7 +93,7 @@ if($action == 'add' || $action == 'edit') {
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">"<?php echo $form->get('firstname')." ".$form->get('name'); ?>" bearbeiten</h3>
+                    <h3 class="panel-title">"<?php echo $form->get('firstname')." ".$form->get('name'); ?>" <?php echo lang::get('edit'); ?></h3>
                 </div>
             	<div class="panel-body">
 					<?php echo $form->show(); ?>
@@ -109,7 +110,7 @@ if($action == '') {
 
 	$table = table::factory();
 	
-	$table->addCollsLayout('*, 250,170');
+	$table->addCollsLayout('*, 250,110');
 	
 	$table->addRow()
 	->addCell("Name")
@@ -123,8 +124,8 @@ if($action == '') {
 			
 		$id = $table->get('id');
 			
-		$edit = '<a href="'.url::backend('user', ['action'=>'edit', 'id'=>$id]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
-		$delete = '<a href="'.url::backend('user', ['action'=>'delete', 'id'=>$id]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+		$edit = '<a href="'.url::backend('user', ['action'=>'edit', 'id'=>$id]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';
+		$delete = '<a href="'.url::backend('user', ['action'=>'delete', 'id'=>$id]).'" class="btn btn-sm btn-danger fa fa-trash-o"></a>';
 		
 		$table->addRow()
 		->addCell($table->get('firstname')." ".$table->get('name'))
@@ -140,7 +141,7 @@ if($action == '') {
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title pull-left">Benutzer</h3>
+                    <h3 class="panel-title pull-left"><?php echo lang::get('user'); ?></h3>
 					<div class="btn-group pull-right">
 						<a href="<?php echo url::backend('user', ['action'=>'add']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('add'); ?></a>
 					</div>

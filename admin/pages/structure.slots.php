@@ -56,7 +56,7 @@ if($action == 'show') {
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">"<?php echo $sql->get('name') ?>" bearbeiten</h3>
+                    <h3 class="panel-title">"<?php echo $sql->get('name') ?>" <?php echo lang::get('edit'); ?></h3>
                 </div>
             	<div class="panel-body">
 					<?php echo $form->show(); ?>
