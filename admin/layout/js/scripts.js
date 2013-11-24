@@ -36,7 +36,7 @@
 				
 				var getString = document.location.search.substr(1,document.location.search.length);
 				
-				$.post('index.php', { ajaxGet : getString, array: results }, function(data) {
+				$.post('index.php?'+getString, {array: results }, function(data) {
 					$(settings.prependTo).prepend(data);
 				});
 			}

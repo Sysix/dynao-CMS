@@ -71,7 +71,9 @@ dyn::add('content', ob_get_contents());
 
 ob_end_clean();
 
-if(ajax::is()) {
+
+
+if(ajax::is() && !(dyn::has('ajaxContinue') && dyn::get('ajaxContinue') == true)) {
 	echo ajax::getReturn();
 	die;
 }

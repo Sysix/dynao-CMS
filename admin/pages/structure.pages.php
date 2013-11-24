@@ -158,18 +158,33 @@ if($structure_id) {
 } else {
 	
 	if(ajax::is()) {
-		
-		$sort = type::post('array', 'array');
-		
-		$sql = sql::factory();
-		$sql->setTable('structure');
-		foreach($sort as $s=>$id) {
-			$sql->setWhere('id='.$id);
-			$sql->addPost('sort', $s+1);
-			$sql->update();	
+		$post = type::super('array');
+		$sort = json_decode($post, true);
+		function sortStructure($sort, $pid = 0) {
+			
+			$sql = sql::factory();
+			$sql->setTable('structure');
+			$return = '';
+			$i = 1;
+			foreach($sort as $name=>$value) {
+				
+				$sql->addPost('sort', $i);
+				$sql->addPost('parent_id', $pid);
+				$sql->setWhere('id='.$value['id']);
+				$sql->update();				
+				
+				if(isset($value['children'])) {
+					
+					$return .= sortStructure($value['children'], $value['id']);	
+				}
+				
+				$i++;
+			}
+			
+			return $return;
 		}
 		
-		ajax::addReturn(message::success(lang::get('save_sorting'), true));
+		sortStructure($sort);
 		
 	}
 	

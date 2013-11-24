@@ -44,8 +44,6 @@ dyn::add('user', new user(userLogin::getUser()));
 
 cache::setCache(dyn::get('cache'));
 
-ajax::convertPOST();
-
 addonConfig::includeAllLangFiles();
 addonConfig::includeAllLibs();
 

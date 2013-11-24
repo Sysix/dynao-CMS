@@ -5,13 +5,12 @@ class ajax {
 	static $return = [];
 	
 	public static function is() {
-	
+		
 		return type::server('HTTP_X_REQUESTED_WITH', 'string', '') == 'XMLHttpRequest';
 		
 	}
 	
 	public static function addReturn($text) {
-		
 		self::$return[] = $text;
 		
 	}
@@ -22,16 +21,6 @@ class ajax {
 		
 	}
 	
-	public static function convertPOST() {
-		
-		if(ajax::is() && isset($_POST['ajaxGet'])) {
-			
-			parse_str($_POST['ajaxGet'], $post);
-			$_POST = array_merge($_POST, $post);
-			
-		}
-		
-	}
 }
 
 ?>

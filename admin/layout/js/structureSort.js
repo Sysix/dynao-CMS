@@ -25,28 +25,44 @@ $('#structure-tree li').prepend('<div class="dropzone"></div>');
 				var data,
 					depth = 0,
 					list = this;
-					step = function(level, depth)
+					isIn = [];
+					step = function(level)
 					{
 						var array = [ ],
 							items = level.children('li');
 						items.each(function()
 						{
 							var li = $(this),
-								item = $.extend({}, li.data()),
-								sub = li.children('ul');
+								item = {};
+								
+							item.id = li.data('id');
+							
+							if($.inArray(item.id, isIn) >= 0) {
+								return;	
+							}							
+									
+							isIn.push(item.id);
+							
+							sub = li.children('ul');
+								
 							if (sub.length) {
-								item.children = step(sub, depth + 1);
+								item.children = step(sub);
 							}
 							array.push(item);
+							
 						});
 						return array;
 					};
-				data = step(object, depth);
+				data = JSON.stringify(step(object, depth));
 				return data;
 			};
+						
+			var getString = document.location.search.substr(1,document.location.search.length);
+				
+			$.post('index.php?'+getString, {array: returnArray() }, function(data) {
+				$('#content').prepend(data);
+			});
 			
-			var retunArray = returnArray();
-			console.log(JSON.stringify(returnArray));
 			
         },
         over: function() {
