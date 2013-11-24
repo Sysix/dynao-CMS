@@ -63,6 +63,10 @@ fieldset[disabled] .btn-default.active {
 	border-color: #474949;
 }
 
+#modal, .modal .modal-body{
+    max-height: 100%;
+}
+
 .panel-heading h3 {
 	line-height:30px;
 }

@@ -28,6 +28,12 @@ form::addClassMethod('addMediaListField', function($name, $value) {
 	
 });
 
+if($page == "media" && $subpage == "popup") {
+
+	dyn::add('ajaxContinue', true);
+
+}
+
 pageArea::addType('MEDIA', 10);
 
 if(addonConfig::isActive('metainfos')) {

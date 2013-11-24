@@ -62,6 +62,10 @@ if($action == 'add' || $action == 'edit') {
 	}
 		
 	$field = $form->addSelectField('perms', $form->get('perms'));
+	
+	if($form->get('admin') == 1)
+		$field->addAttribute('style', 'display:none;');
+	
 	$field->setMultiple(true);
 	$field->setId('pageadmin-content');
 	$field->setSize(8);

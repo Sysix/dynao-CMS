@@ -5,17 +5,16 @@ $('.dyn-media .dyn-media-add').click(function() {
 	var _this = $(this);
 	_this.addClass('dyn-media-active');
 	
-	MediaWindow = window.open('index.php?page=media&subpage=files&subaction=popup', '_mediapopup', 'width=800,height=600,scrolllbar=yes');
-	MediaWindow.focus();
+	$("body").append('<div class="modal fade" id="selectMedia" tabindex="-1" role="dialog" aria-labelledby="selectMediaLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="selectMediaLabel">Media</h4></div><div class="modal-body"></div></div></div></div>');
+	
+	$(".modal-body").load('index.php?page=media&subpage=popup #content .row .panel-body, #content .row #load');
+	
+	$('#selectMedia').modal('show');
 		
 });
 
 $('.dny-media .dyn-media-del').click(function() {	
 	var div = $(this).closest('.dyn-media').find('input').val('');
-});
-
-$('#media-select-category').change(function() {	
-	$(this).closest('form').submit();	
 });
 
 $('.dyn-media-select').click(function() {
@@ -30,6 +29,6 @@ $('.dyn-media-select').click(function() {
 	input_wrap.nextAll('input[type=text]:first').val(name);
 	input_wrap.removeClass('dyn-media-active');
 	
-	window.close();
+	$('#selectMedia').modal('hide');
 	
 });

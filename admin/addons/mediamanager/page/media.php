@@ -6,7 +6,7 @@ backend::addSubnavi('Medienkategorien verwalten',	url::backend('media', ['subpag
 $action = type::super('action', 'string', '');
 $id = type::super('id', 'int', 0);
 
-if(type::super('subaction', 'string') == 'popup') {
+if($subpage == 'popup') {
 	
 	dyn::add('contentPage', true);
 	backend::addSubnavi('Popup',		url::backend('media', ['subpage'=>'popup']));
