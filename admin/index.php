@@ -39,6 +39,8 @@ lang::setLang(dyn::get('lang'));
 $DB = dyn::get('DB');
 sql::connect($DB['host'], $DB['user'], $DB['password'], $DB['database']);
 
+ob_start();
+
 new userLogin();
 dyn::add('user', new user(userLogin::getUser()));
 
@@ -46,8 +48,6 @@ cache::setCache(dyn::get('cache'));
 
 addonConfig::includeAllLangFiles();
 addonConfig::includeAllLibs();
-
-ob_start();
 
 if(dyn::get('backend')) {
 	

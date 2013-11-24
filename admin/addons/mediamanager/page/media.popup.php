@@ -32,13 +32,6 @@ while($table->isNext()) {
 
 }
 
-layout::addJSCode('
-$(".panel-body").on("change", "#media-select-category", function() {
-	alert("test");
-	var catId = $(this).val();
-	$("#load").load("index.php?page=media&subpage=popup&catId=" + catId + " #load");
-});
-');
 
 ?>
 <div class="row">
