@@ -39,7 +39,7 @@ class formTextarea extends formField {
 			$this->addRows(5);	
 		}
 		
-		return '<textarea'.$this->convertAttr().'>'.$this->value.'</textarea>';
+		return '<textarea'.$this->convertAttr().'>'.htmlspecialchars($this->value).'</textarea>';
 		
 	}
 	
