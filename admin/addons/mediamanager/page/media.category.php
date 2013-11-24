@@ -23,9 +23,9 @@ while($while_id) {
 	
 }
 
-$breadcrumb[] = '<li><a href="'.url::backend('media', ['subpage'=>'category']).'">Homepage</a></li>';
+$breadcrumb[] = '<li><a href="'.url::backend('media', ['subpage'=>'category']).'">'.lang::get('media_all_cat').'</a></li>';
 
-echo '<ul class="pull-left breadcrumb">'.implode('', array_reverse($breadcrumb)).'</ul>';
+echo '<ul class="breadcrumb">'.implode('', array_reverse($breadcrumb)).'</ul>';
 
 if($action == 'delete') {
 	
@@ -174,7 +174,7 @@ while($table->isNext()) {
 		$delete = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'delete', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 	
 		$table->addRow(array('data-id'=>$table->get('id')))
-		->addCell('<i class="icon-sort"></i>')
+		->addCell('<i class="fa fa-sort"></i>')
 		->addCell('<a href="'.url::backend('media', ['subpage'=>'category', 'pid'=>$table->get('id')]).'">'.$table->get('name').'</a>')
 		->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
 		
