@@ -26,15 +26,17 @@ class pageAreaHtml {
 		
 	}
 	
-	public static function moduleList() {
+	public static function moduleList($active = false) {
 	
 		if(empty(self::$modulList)) {
 	
 			$sql = sql::factory();				
 			$sql->result('SELECT id, name FROM '.sql::table('module').' ORDER BY `sort`');
 			while($sql->isNext()) {
+				
+				$selected = ($active && $active == $sql->get('id')) ? 'selected="selected"' : '' ;
 			
-				self::$modulList[] = '<option value="'.$sql->get('id').'">'.$sql->get('name').'</option>';
+				self::$modulList[] = '<option value="'.$sql->get('id').'" '.$selected.'>'.$sql->get('name').'</option>';
 			
 				$sql->next();
 			}

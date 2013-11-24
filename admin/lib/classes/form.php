@@ -679,7 +679,9 @@ class form {
 			
 			$this->addParam('success_msg', $this->successMessage);
 			
-		}		
+		}
+		
+		$this->delParam('action');	
 	
 		$params = url_addParam(
 			array_keys($this->getParams()), 
@@ -689,6 +691,7 @@ class form {
 		$url = 'index.php?'.$params;
 		
 		header('Location: '.$url);
+		die;
 		
 	}
 	

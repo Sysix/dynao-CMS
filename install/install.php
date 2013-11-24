@@ -117,8 +117,8 @@ $sql->query('CREATE TABLE IF NOT EXISTS `addons` (
 $sql->query('CREATE TABLE IF NOT EXISTS `slots` (
   `id` 			int(11) 	unsigned	NOT NULL	auto_increment,
   `name` 		varchar(255)			NOT NULL,
-  `template` 		varchar(255)			NOT NULL,
-  `module_id` 		int(11)					NOT NULL,
+  `description`	varchar(255)			NOT NULL,
+  `module_id` 	int(11)		unsigned	NOT NULL,
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 
 echo message::success('Update erfolgreich');
