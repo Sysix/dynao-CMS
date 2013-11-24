@@ -34,12 +34,12 @@ if($action == 'delete') {
 	$sql = sql::factory();
 	$sql->query('SELECT id FROM '.sql::table('media_cat').' WHERE `pid` = '.$id)->result();
 	if($sql->num()) {
-			$error[] = 'Es sind noch Unterkategorien vorhanden';
+			$error[] = lang::get('media_no_subcat');
 	}
 	
 	$sql->query('SELECT id FROM '.sql::table('media').' WHERE `category` = '.$id)->result();
 	if($sql->num()) {
-			$error[] = 'Bestimmte Bilder sind noch in der Kategorie';
+			$error[] = lang::get('media_img_in_cat');
 	}
 	
 	if(count($error)) {
@@ -58,7 +58,7 @@ if($action == 'delete') {
 		
 		sql::sortTable('media_cat', 0, '`pid` = '.$sql->get('pid'));
 		
-		echo message::success('Artikel erfolgreich gelöscht');
+		echo message::success(lang::get('media_cat_del'));
 		
 	}
 		
@@ -97,8 +97,8 @@ $table->addCollsLayout($colFirstWidth.',*,250');
 	
 $table->addRow()
 ->addCell()
-->addCell('Kategorie')
-->addCell('Aktion');
+->addCell(lang::get('media_cat'))
+->addCell(lang::get('action'));
 
 $table->addSection('tbody');
 	
@@ -124,7 +124,7 @@ if(in_array($action, ['edit', 'add'])) {
 	$inputHidden->addAttribute('type', 'hidden');
 	echo $inputHidden->get();
 	
-	$buttonSubmit = formButton::factory('save', 'Artikel speichern');
+	$buttonSubmit = formButton::factory('save', lang::get('save'));
 	$buttonSubmit->addAttribute('type', 'submit');
 	$buttonSubmit->addClass('btn-sm');
 	$buttonSubmit->addClass('btn-default');

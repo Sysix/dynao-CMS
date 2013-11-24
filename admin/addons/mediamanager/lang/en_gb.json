@@ -2,5 +2,12 @@
 	"media_error_move": "%s could not be saved.<br />The file could not be moved to the directory.",
 	"media_error_already_exist": "%s could not be saved.<br />The file already exists.",
 	"media_error_bad_extension": "%s could not be saved.<br />The file extension is not allowed.",
-	"media_all_cat" : "Categories"
+	"media_all_cat" : "Categories",
+	"media_cat" : "Category",
+	"media_no_cat" : "No category",
+	"media_edit" : "Edit media",
+	"media_edit_cat" : "Edit media categories",
+	"media_no_subcat" : "There are currently subcategories",
+	"media_img_in_cat" : "There are still images in this category",
+	"media_cat_del" : "Category deleted successfully"
 }

@@ -2,5 +2,12 @@
 	"media_error_move": "%s konnte nicht gespeichert werden.<br />Die Datei konnte nicht ins Verzeichnis verschoben werden.",
 	"media_error_already_exist": "%s konnte nicht gespeichert werden.<br />Der Datei existiert bereits.",
 	"media_error_bad_extension": "%s konnte nicht gespeichert werden.<br />Die Dateiendung ist nicht erlaubt.",
-	"media_all_cat" : "Kategorien"
+	"media_all_cat" : "Kategorien",
+	"media_cat" : "Kategorie",
+	"media_no_cat" : "Keine Kategorie",
+	"media_edit" : "Medien verwalten",
+	"media_edit_cat" : "Medienkategorien verwalten",
+	"media_no_subcat" : "Es sind noch Unterkategorien vorhanden",
+	"media_img_in_cat" : "Bilder sind noch in dieser Kategorie",
+	"media_cat_del" : "Kategorie erfolgreich gelöscht"
 }

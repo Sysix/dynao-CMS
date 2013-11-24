@@ -144,6 +144,15 @@ if($action == '') {
 		$table->next();	
 		
 	}
+<<<<<<< HEAD
+=======
+
+layout::addJSCode('
+$("#media-select-category").change(function() {  
+	$(this).closest("form").submit();  
+});
+');
+>>>>>>> 262e7c3a55e622f56a9b0381f2470af094b14e22
 	
 	?>
 	
@@ -162,7 +171,7 @@ if($action == '') {
 						<input type="hidden" name="page" value="media" />
 						<input type="hidden" name="subpage" value="files" />
 						<select class="form-control" id="media-select-category" name="catId">
-							<option value="0">Keine Kategorie</option>
+							<option value="0"><?php echo lang::get('media_no_cat'); ?></option>
 							<?php echo mediaUtils::getTreeStructure(0, 0,' &nbsp;', $catId); ?>
 						</select>
 					</form>
