@@ -79,18 +79,28 @@ if($action == '') {
 	$table->addSection('tbody');
 
 	$table->setSql('SELECT * FROM '.sql::table('module').' ORDER BY sort ');
-	while($table->isNext()) {
 	
-		$id = $table->get('id');
+	if($table->numSql()) {
+	
+		while($table->isNext()) {
 		
-		$edit = '<a href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'edit', 'id'=>$id]).'" class="btn btn-sm btn-default fa fa-pencil-square-o"></a>';
-		$delete = '<a href="'.url::backend('structure', ['subpage'=>'module','action'=>'delete', 'id'=>$id]).'" class="btn btn-sm btn-danger fa fa-trash-o"></a>';
+			$id = $table->get('id');
+			
+			$edit = '<a href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'edit', 'id'=>$id]).'" class="btn btn-sm btn-default fa fa-pencil-square-o"></a>';
+			$delete = '<a href="'.url::backend('structure', ['subpage'=>'module','action'=>'delete', 'id'=>$id]).'" class="btn btn-sm btn-danger fa fa-trash-o"></a>';
+			
+			$table->addRow(['data-id'=>$id])
+			->addCell($table->get('name'))
+			->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
+			
+			$table->next();	
+		}
+	
+	} else {
 		
-		$table->addRow(['data-id'=>$id])
-		->addCell($table->get('name'))
-		->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
+		$table->addRow()
+		->addCell(lang::get('no_entries'), ['colspan'=>2]);
 		
-		$table->next();	
 	}
 
 	?>
