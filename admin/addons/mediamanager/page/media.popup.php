@@ -16,6 +16,9 @@ $table->addRow()
 $table->addCollsLayout('50,*,100,250');
 
 $table->addSection('tbody');
+
+if($table->numSql()) {
+
 while($table->isNext()) {
 		
 	$media = new media($table->getSql());
@@ -30,6 +33,13 @@ while($table->isNext()) {
 	
 	$table->next();
 
+}
+
+} else {
+	
+	$table->addRow()
+	->addCell(lang::get('no_entries'), ['colspan'=>4]);
+		
 }
 
 ?>

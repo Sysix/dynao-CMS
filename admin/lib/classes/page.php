@@ -182,13 +182,15 @@ class page {
 					</li>';
 					
 				} else {	
-				
-					$online = ($sql->get('online')) ? lang::get('online') : lang::get('offline');
 					
 					$module = '<a href="'.url::backend('structure', ['structure_id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('modules').'</a>';	
 					$edit = '<a href="'.url::backend('structure', ['action'=>'edit', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';	
 					$delete = '<a href="'.url::backend('structure', ['action'=>'delete', 'id'=>$sql->get('id')]).'" class="btn btn-sm btn-danger fa fa-trash-o"></a>';
-					$online = '<a href="'.url::backend('structure', ['action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm structure-'.$online.'">'.$online.'</a>';				
+					
+					$online = '<a href="'.url::backend('structure', ['action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm structure-online fa fa-check" title="'.lang::get('online').'"></a>';	
+					$offline = '<a href="'.url::backend('structure', ['action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm structure-offline fa fa-times" title="'.lang::get('offline').'"></a>';			
+					
+					$online = ($sql->get('online')) ? $online : $offline;
 				
 					$select .= '<li data-id="'.$sql->get('id').'">'.PHP_EOL.'
 						<div class="handle"><i class="fa fa-sort"></i> '.$sql->get('name').PHP_EOL.'

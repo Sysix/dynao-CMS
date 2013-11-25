@@ -70,7 +70,7 @@ if($action == '') {
 
 	$table = table::factory(['class'=>['js-sort']]);
 	
-	$table->addCollsLayout('*,170');
+	$table->addCollsLayout('*,110');
 	
 	$table->addRow()
 	->addCell('Name')
@@ -83,8 +83,8 @@ if($action == '') {
 	
 		$id = $table->get('id');
 		
-		$edit = '<a href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'edit', 'id'=>$id]).'" class="btn btn-sm btn-default">'.lang::get('edit').'</a>';
-		$delete = '<a href="'.url::backend('structure', ['subpage'=>'module','action'=>'delete', 'id'=>$id]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+		$edit = '<a href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'edit', 'id'=>$id]).'" class="btn btn-sm btn-default fa fa-pencil-square-o"></a>';
+		$delete = '<a href="'.url::backend('structure', ['subpage'=>'module','action'=>'delete', 'id'=>$id]).'" class="btn btn-sm btn-danger fa fa-trash-o"></a>';
 		
 		$table->addRow(['data-id'=>$id])
 		->addCell($table->get('name'))

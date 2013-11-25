@@ -148,40 +148,50 @@ if($action == 'add') {
 	
 }
 
-while($table->isNext()) {
-	
-	if($action == 'edit' && $table->get('id') == $id) {
+if($table->numSql()) {
+
+	while($table->isNext()) {
+		
+		if($action == 'edit' && $table->get('id') == $id) {
+				
+			$inputName = formInput::factory('name', $table->get('name'));
+			$inputName->addAttribute('type', 'text');
+			$inputName->addClass('input-sm');
 			
-		$inputName = formInput::factory('name', $table->get('name'));
-		$inputName->addAttribute('type', 'text');
-		$inputName->addClass('input-sm');
+			$inputSort = formInput::factory('sort', $table->get('sort'));
+			$inputSort->addAttribute('type', 'text');
+			$inputSort->addClass('input-sm');
+			
+			$inputHidden = formInput::factory('id', $table->get('id'));
+			$inputHidden->addAttribute('type', 'hidden');
+			
+			$table->addRow()
+			->addCell($inputSort->get())
+			->addCell($inputName->get())
+			->addCell($inputHidden->get().$buttonSubmit->get());
+			
+		} else {
+			
+			$edit = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'edit', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';	
+			$delete = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'delete', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm btn-danger fa fa-trash-o"></a>';
 		
-		$inputSort = formInput::factory('sort', $table->get('sort'));
-		$inputSort->addAttribute('type', 'text');
-		$inputSort->addClass('input-sm');
+			$table->addRow(array('data-id'=>$table->get('id')))
+			->addCell('<i class="fa fa-sort"></i>')
+			->addCell('<a href="'.url::backend('media', ['subpage'=>'category', 'pid'=>$table->get('id')]).'">'.$table->get('name').'</a>')
+			->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
+			
+		}
 		
-		$inputHidden = formInput::factory('id', $table->get('id'));
-		$inputHidden->addAttribute('type', 'hidden');
-		
-		$table->addRow()
-		->addCell($inputSort->get())
-		->addCell($inputName->get())
-		->addCell($inputHidden->get().$buttonSubmit->get());
-		
-	} else {
-		
-		$edit = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'edit', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';	
-		$delete = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'delete', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm btn-danger fa fa-trash-o"></a>';
-	
-		$table->addRow(array('data-id'=>$table->get('id')))
-		->addCell('<i class="fa fa-sort"></i>')
-		->addCell('<a href="'.url::backend('media', ['subpage'=>'category', 'pid'=>$table->get('id')]).'">'.$table->get('name').'</a>')
-		->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
-		
+		$table->next();	
 	}
+
+} else {
 	
-	$table->next();	
+	$table->addRow()
+	->addCell(lang::get('no_entries'), ['colspan'=>3]);
+	
 }
+
 ?>
 <div class="clearfix"></div>
 <div class="row">

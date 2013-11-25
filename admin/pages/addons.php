@@ -81,9 +81,9 @@ foreach($addons as $dir) {
 	$active_url = url::backend('addons', ['addon'=>$dir, 'action'=>'active']);
 	
 	if($curAddon->isActive()) {
-		$active = '<a href="'.$active_url.'" class="btn btn-sm structure-online">'.lang::get('addon_actived').'</a>';
+		$active = '<a href="'.$active_url.'" class="btn btn-sm structure-online fa fa-check" title="'.lang::get('addon_actived').'"></a>';
 	} else {
-		$active = '<a href="'.$active_url.'" class="btn btn-sm structure-offline">'.lang::get('addon_not_actived').'</a>';
+		$active = '<a href="'.$active_url.'" class="btn btn-sm structure-offline fa fa-times" title="'.lang::get('addon_not_actived').'"></a>';
 	}
 	
 	$delete = '<a href="#" class="btn btn-sm btn-danger fa fa-trash-o"></a>';

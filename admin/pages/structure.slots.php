@@ -72,7 +72,7 @@ if($action == '') {
 
 	$table = table::factory();
 	
-	$table->addCollsLayout('200,*,200');
+	$table->addCollsLayout('200,*,110');
 	
 	$table->addRow()
 	->addCell(lang::get('name'))
@@ -84,8 +84,8 @@ if($action == '') {
 	while($table->isNext()) {
 		
 		$name = '<a href="'.url::backend('structure', ['subpage'=>'slots', 'action'=>'show', 'id'=>$table->get('id')]).'">'.$table->get('name').'</a>';
-		$edit = '<a href='.url::backend('structure', ['subpage'=>'slots', 'action'=>'edit', 'id'=>$table->get('id')]).' class="btn btn-sm btn-default">'.lang::get('edit').'</a>';
-		$delete = '<a href='.url::backend('structure', ['subpage'=>'slots', 'action'=>'delete', 'id'=>$table->get('id')]).' class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+		$edit = '<a href='.url::backend('structure', ['subpage'=>'slots', 'action'=>'edit', 'id'=>$table->get('id')]).' class="btn btn-sm btn-default fa fa-pencil-square-o"></a>';
+		$delete = '<a href='.url::backend('structure', ['subpage'=>'slots', 'action'=>'delete', 'id'=>$table->get('id')]).' class="btn btn-sm btn-danger fa fa-trash-o"></a>';
 		
 		$table->addRow()
 		->addCell($name)

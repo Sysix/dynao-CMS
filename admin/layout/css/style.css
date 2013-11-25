@@ -24,6 +24,10 @@ h1, h2, h3, h4, h5, h6 {
 	font-family:'Open Sans';
 }
 
+.btn {
+	font-weight:normal;
+}
+
 a, a:visited {
 	color:#bf1e2e;
 }
@@ -31,11 +35,6 @@ a, a:visited {
 a.btn {
 	color:#fff;
 }
-
-.btn {
-	font-weight:normal;
-}
-
 
 .btn-default {
 	color: #ffffff;
@@ -78,10 +77,6 @@ fieldset[disabled] .btn-default.active {
 
 .panel-heading h3 {
 	line-height:30px;
-}
-
-#modal, .modal .modal-body{
-	max-height: 100%;
 }
 
 h1 { 
@@ -382,6 +377,12 @@ h1 {
 	border:1px solid #dfdfdf;
 	padding:20px;
 	margin-bottom:20px;
+}
+
+.structure-offline.fa,
+.structure-online.fa {
+	width:35px;
+	text-align:center;
 }
 
 .structure-offline {

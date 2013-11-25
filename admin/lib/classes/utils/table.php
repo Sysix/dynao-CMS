@@ -160,6 +160,12 @@ class table {
 		
 	}
 	
+	public function numSql() {
+		
+		return $this->sql->num();
+		
+	}
+	
 	public function isNext() {
 	
 		return $this->sql->isNext();

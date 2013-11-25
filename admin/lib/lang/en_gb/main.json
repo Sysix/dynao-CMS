@@ -25,6 +25,7 @@
 	"save_status":				"Status successfully changed",
 	"save_sorting":				"Sorting successfully saved",
 	"overview":					"Overview",
+	"no_entries":				"No entries",
 	
 	#Versioncheck
 	"version_fail_connect":		"Connection to the server could not be established",

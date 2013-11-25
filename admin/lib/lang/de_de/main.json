@@ -25,6 +25,7 @@
 	"save_status":				"Status erfoglreich geändert",
 	"save_sorting":				"Sortierung erfolgreich übernommen",
 	"overview":					"Übersicht",
+	"no_entries":				"Keine Einträge",
 	
 	#Versioncheck
 	"version_fail_connect":		"Verbindung zum Server konnte nicht hergestellt werden",

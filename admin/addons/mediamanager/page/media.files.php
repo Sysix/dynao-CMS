@@ -119,37 +119,41 @@ if($action == '') {
 	$table->addCollsLayout('50,*,100,250');
 	
 	$table->addSection('tbody');
-	while($table->isNext()) {
-			
-		$media = new media($table->getSql());
+	
+	if($table->numSql()) {
 		
-		if($subaction == 'popup') {
+		while($table->isNext()) {
+				
+			$media = new media($table->getSql());
 			
-			$edit = '<button data-id="'.$table->get('id').'" data-name="'.$table->get('filename').'" class="btn btn-sm btn-warning dyn-media-select">Auswählen</button>';
-			$delete = '';
+			if($subaction == 'popup') {
+				
+				$edit = '<button data-id="'.$table->get('id').'" data-name="'.$table->get('filename').'" class="btn btn-sm btn-warning dyn-media-select">Auswählen</button>';
+				$delete = '';
+				
+			} else {
 			
-		} else {
-		
-			$edit = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'edit', 'id'=>$table->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
-			$delete = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
-		
+				$edit = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'edit', 'id'=>$table->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
+				$delete = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+			
+			}
+			
+			$table->addRow()
+			->addCell('<img src="'.$media->getPath().'" style="max-width:50px; max-height:50px" />')
+			->addCell($media->get('title'))
+			->addCell($media->getExtension())
+			->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
+			
+			$table->next();	
+			
 		}
+	
+	} else {
 		
 		$table->addRow()
-		->addCell('<img src="'.$media->getPath().'" style="max-width:50px; max-height:50px" />')
-		->addCell($media->get('title'))
-		->addCell($media->getExtension())
-		->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
-		
-		$table->next();	
+		->addCell(lang::get('no_entries'), ['colspan'=>4]);
 		
 	}
-
-layout::addJSCode('
-$("#media-select-category").change(function() {  
-	$(this).closest("form").submit();  
-});
-');
 	
 	?>
 	
@@ -168,7 +172,7 @@ $("#media-select-category").change(function() {
 						<input type="hidden" name="page" value="media" />
 						<input type="hidden" name="subpage" value="files" />
 						<select class="form-control" id="media-select-category" name="catId">
-							<option value="0"><?php echo lang::get('media_no_cat'); ?></option>
+							<option value="0">Keine Kategorie</option>
 							<?php echo mediaUtils::getTreeStructure(0, 0,' &nbsp;', $catId); ?>
 						</select>
 					</form>
