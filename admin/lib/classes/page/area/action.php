@@ -25,14 +25,14 @@ class pageAreaAction {
 						
 		}
 		
-		self::saveSortUp($sql->getPost('structure_id'), $sql->getPost('sort'));
-		
 		if($id) {
 			$sql->setWhere('id='.$id);
 			$sql->update();
 		} else {
 			$sql->save();
 		}
+		
+		self::saveSortUp($sql->getPost('structure_id'), $sql->getPost('sort'));
 		
 	}	
 	
@@ -46,15 +46,15 @@ class pageAreaAction {
 		$delete->setWhere('id='.$id);
 		$delete->delete();
 		
-		self::saveSortUp($sql->get('structure_id'), $sql->get('sort'), false);
+		self::saveSortUp($sql->get('structure_id'), $sql->get('sort'));
 		
 		return $sql->get('structure_id');
 		
 	}
 	
-	protected static function saveSortUp($id, $sort, $up = true) {		
+	protected static function saveSortUp($id, $sort) {		
 	
-		sql::sortTable('structure_area', $sort, $up, '`structure_id` = '.$id);
+		sql::sortTable('structure_area', $sort, '`structure_id` = '.$id);
 		
 	}
 		

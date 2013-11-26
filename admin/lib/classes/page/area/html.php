@@ -52,6 +52,7 @@ class pageAreaHtml {
 		$form = form::factory('module', 'id='.$module->getModulId(), 'index.php');
 		$form->setSave(false);
 		$form->addFormAttribute('class', '');
+		$form->setSuccessMessage(null);
 		
 		$input = $module->OutputFilter($form->get('input'), $module->getSql());
 		

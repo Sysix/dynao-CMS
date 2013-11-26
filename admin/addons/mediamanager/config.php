@@ -27,6 +27,7 @@ form::addClassMethod('addMediaListField', function($name, $value) {
 	return $this->addField($name, $value, 'formMediaList');
 	
 });
+$page = type::super('page', 'string');
 
 if($page == "media" && $subpage == "popup") {
 

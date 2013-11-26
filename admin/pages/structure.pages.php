@@ -7,7 +7,7 @@ if($structure_id) {
 	// Bugfix, das neu erstelle Blöcke nicht einzgezeigt werden
 	if(!is_null(type::post('save-back')) || !is_null(type::post('save'))) {
 		pageAreaAction::saveBlock();
-		echo message::success(lang::get('structure_content_save'));
+		echo message::success(lang::get('structure_content_save'), true);
 	}
 	
 	if($action == 'online') {
@@ -140,7 +140,6 @@ if($structure_id) {
 	?>	
 	</ul>
 	<?php
-	$module = new module();
 	if((!$sql->num() || ($i == $sort)) && $action == 'add') {
 		
 		$form_id = type::super('modul', 'int');

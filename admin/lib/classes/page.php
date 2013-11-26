@@ -17,20 +17,10 @@ class page {
 			$extraWhere = '';
 			
 			if(!$offlinePages) {				
-				$extraWhere =  'AND WHERE s.online = 1';				
+				$extraWhere =  'AND WHERE online = 1';				
 			}
-	
 			$this->sql = sql::factory();
-			$this->sql->query('SELECT * 
-								FROM '.sql::table('structure').' as s
-								LEFT JOIN 
-									'.sql::table('structure_area').' as a
-										ON s.id = a.structure_id
-									LEFT JOIN
-										'.sql::table('module').' as m
-										ON m.id = a.modul
-								WHERE s.id = '.$id.$extraWhere.'
-								')->result();
+			$this->sql->query('SELECT *	FROM '.sql::table('structure').' WHERE id = '.$id.$extraWhere)->result();		
 		
 		}
 		
@@ -49,14 +39,7 @@ class page {
 	}
 	
 	public function getBlocks() {
-		$return = [];
-		
-		while($this->sql->isNext()) {
-			$return[] = new module($this->sql);
-			$this->sql->next();	
-		}
-		
-		return $return;
+		return module::getByStructureId($this->get('id'));
 	}
 	
 	public static function getChildPages($parentId, $offlinePages = true) {
