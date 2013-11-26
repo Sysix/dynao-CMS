@@ -293,7 +293,7 @@ if($structure_id) {
 				</div>
 				<div class="panel-body">
 				<?php
-					echo page::getTreeStructurePage();
+					echo pageMisc::getTreeStructurePage();
 				?>
 				</div>
 			</div>
