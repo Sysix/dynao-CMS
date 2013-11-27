@@ -168,16 +168,16 @@ abstract class formField {
 		
 	}
 	
-	public function autocomplete($auto) {
+	public function autofocus($auto) {
 		
 		if(!is_bool($auto)) {
 			//new Exception();				
 		}
 		
 		if($read) {
-			$this->addAttribute('autocomplete', 'autocomplete');	
+			$this->addAttribute('autofocus');	
 		} else {
-			$this->delAttribute('autocomplete');	
+			$this->delAttribute('autofocus');	
 		}
 		
 		return $this;

@@ -121,7 +121,7 @@ class pageMisc {
 				
 					$select .= '<li data-id="'.$sql->get('id').'">'.PHP_EOL.'
 						<div class="handle"><i class="fa fa-sort"></i> '.$sql->get('name').PHP_EOL.'
-							<span class="btn-group">'.PHP_EOL.$module.PHP_EOL.$online.PHP_EOL.$edit.PHP_EOL.$delete.PHP_EOL.'</span>'.PHP_EOL.'
+							<span class="btn-group">'.$module.$online.$edit.$delete.'</span>'.PHP_EOL.'
 						</div>'.PHP_EOL;
 					
 					if($sql->num('SELECT id FROM '.sql::table('structure').' WHERE parent_id = '.$sql->get('id'))) {

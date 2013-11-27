@@ -34,12 +34,12 @@ if($action == 'delete') {
 	$sql = sql::factory();
 	$sql->query('SELECT id FROM '.sql::table('media_cat').' WHERE `pid` = '.$id)->result();
 	if($sql->num()) {
-			$error[] = 'Es sind noch Unterkategorien vorhanden';
+			$error[] = lang::get('media_underfile_exist');
 	}
 	
 	$sql->query('SELECT id FROM '.sql::table('media').' WHERE `category` = '.$id)->result();
 	if($sql->num()) {
-			$error[] = 'Bestimmte Bilder sind noch in der Kategorie';
+			$error[] = lang::get('media_underfile_exist2');
 	}
 	
 	if(count($error)) {
@@ -58,7 +58,7 @@ if($action == 'delete') {
 		
 		sql::sortTable('media_cat', 0, '`pid` = '.$sql->get('pid'));
 		
-		echo message::success('Artikel erfolgreich gelöscht');
+		echo message::success(lang::get('file_deleted'));
 		
 	}
 		
@@ -97,8 +97,8 @@ $table->addCollsLayout($colFirstWidth.',*, 110');
 	
 $table->addRow()
 ->addCell()
-->addCell('Kategorie')
-->addCell('Aktion');
+->addCell(lang::get('category'))
+->addCell(lang::get('action'));
 
 $table->addSection('tbody');
 	
@@ -124,7 +124,7 @@ if(in_array($action, ['edit', 'add'])) {
 	$inputHidden->addAttribute('type', 'hidden');
 	echo $inputHidden->get();
 	
-	$buttonSubmit = formButton::factory('save', 'Artikel speichern');
+	$buttonSubmit = formButton::factory('save', lang::get('category_save'));
 	$buttonSubmit->addAttribute('type', 'submit');
 	$buttonSubmit->addClass('btn-sm');
 	$buttonSubmit->addClass('btn-default');
@@ -188,7 +188,7 @@ if($table->numSql()) {
 } else {
 	
 	$table->addRow()
-	->addCell(lang::get('no_entries'), ['colspan'=>3]);
+	->addCell(lang::get('no_categories'), ['colspan'=>3]);
 	
 }
 
@@ -198,7 +198,7 @@ if($table->numSql()) {
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title pull-left">Media</h3>
+				<h3 class="panel-title pull-left"><?php echo lang::get('media'); ?></h3>
 				<div class="btn-group pull-right">
 					<a href="<?php echo url::backend('media', ['subpage'=>'category', 'action'=>'add', 'pid'=>$pid]); ?>" class="btn btn-sm btn-default"><?php echo lang::get('add'); ?></a>
 				</div>

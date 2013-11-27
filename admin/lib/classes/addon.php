@@ -82,6 +82,8 @@ class addon {
 		    ->setWhere('`name` = "'.$this->name.'"')
 			->delete();
 			
+		unlink(dir::addon($this->name));
+			
 		return message::success(sprintf(lang::get('addon_deleted'), $this->name));
 		
 	}

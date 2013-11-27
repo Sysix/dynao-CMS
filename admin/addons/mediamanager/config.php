@@ -2,10 +2,10 @@
 
 layout::addJs('addons/mediamanager/layout/js/mediamanager.js');
 
-userPerm::add('media[edit]', 'Medien bearbeiten / erstellen');
-userPerm::add('media[delete]', 'Medien löschen');
-userPerm::add('media[category][edit]', 'Medienkategorien bearbeiten / erstellen');
-userPerm::add('media[category][delete]', 'Medienkategorien löschen');
+userPerm::add('media[edit]', lang::get('media[edit]'));
+userPerm::add('media[delete]', lang::get('media[delete]'));
+userPerm::add('media[category][edit]', lang::get('media[category][edit]'));
+userPerm::add('media[category][delete]', lang::get('media[category][delete]'));
 
 if(
 	dyn::get('user')->hasPerm('media[edit]') ||
@@ -13,7 +13,7 @@ if(
 	dyn::get('user')->hasPerm('media[category][edit]') ||
 	dyn::get('user')->hasPerm('media[category][delete]')
 ) {
-	backend::addNavi('Media', url::backend('media'), 'picture-o', 2);
+	backend::addNavi(lang::get('media'), url::backend('media'), 'picture-o', 2);
 }
 
 form::addClassMethod('addMediaField', function($name, $value) {

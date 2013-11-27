@@ -1,2 +1,15 @@
 {
+	"metainfos[edit]":			"Metadaten bearbeiten / erstellen",
+	"metainfos[delete]":		"Metadaten löschen",
+	
+	"entry_deleted":			"Eintrag erfolgreich gelöscht",
+	"prefix":					"Prefix",
+	"description":				"Beschreibung",
+	"field_type":				"Feldtype",
+	"default_value":			"Standardwert",
+	"meta_pre_selection":		"<small>Bei Vorauswahl mit einem <b>|</b> trennen",
+	"meta_parameter":			"Paramater",
+	"examples":					"Beispiele",
+	"col_name_exists":			"Der Spaltenname %s ist schon vorhanden",
+	"metainfo_edit":			"Metainfo editieren"
 }

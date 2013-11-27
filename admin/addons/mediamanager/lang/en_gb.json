@@ -1,13 +1,22 @@
 {
-	"media_error_move": "%s could not be saved.<br />The file could not be moved to the directory.",
-	"media_error_already_exist": "%s could not be saved.<br />The file already exists.",
-	"media_error_bad_extension": "%s could not be saved.<br />The file extension is not allowed.",
-	"media_all_cat" : "Categories",
-	"media_cat" : "Category",
-	"media_no_cat" : "No category",
-	"media_edit" : "Edit media",
-	"media_edit_cat" : "Edit media categories",
-	"media_no_subcat" : "There are currently subcategories",
-	"media_img_in_cat" : "There are still images in this category",
-	"media_cat_del" : "Category deleted successfully"
+	"media":						"Meda",
+	"media_error_move":				"%s could not be saved.<br />The file could not be moved to the directory.",
+	"media_error_already_exist":	"%s could not be saved.<br />The file already exists.",
+	"media_error_bad_extension":	"%s could not be saved.<br />The file extension is not allowed.",
+	"media_manage":					"Edit media",
+	"media_manage_cat":				"Edit media categories",
+	"media_underfile_exist":		"There are subcategories available",
+	"media_underfile_exist2":		"Certain images are still in the category",
+	"file_deleted":					"Successfully deleted file",
+	"file_not_deleted":				"The file% Smedia% s could not be deleted",
+	"file_in_use":					"pages use this file yet",
+	"select_file":					"select file",
+	"please_load_file":				"Please upload a file",
+	"media_edit":					"edit media",
+	"file_type":					"file type",	
+	
+	"media[edit]":					"media edit / upload",
+	"media[delete]":				"Media delete",
+	"media[category][edit]":		"mediacategories edit / create",
+	"media[category][delete]":		"Mediacategories delete"
 }

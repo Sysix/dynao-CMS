@@ -1,13 +1,22 @@
 {
-	"media_error_move": "%s konnte nicht gespeichert werden.<br />Die Datei konnte nicht ins Verzeichnis verschoben werden.",
-	"media_error_already_exist": "%s konnte nicht gespeichert werden.<br />Der Datei existiert bereits.",
-	"media_error_bad_extension": "%s konnte nicht gespeichert werden.<br />Die Dateiendung ist nicht erlaubt.",
-	"media_all_cat" : "Kategorien",
-	"media_cat" : "Kategorie",
-	"media_no_cat" : "Keine Kategorie",
-	"media_edit" : "Medien verwalten",
-	"media_edit_cat" : "Medienkategorien verwalten",
-	"media_no_subcat" : "Es sind noch Unterkategorien vorhanden",
-	"media_img_in_cat" : "Bilder sind noch in dieser Kategorie",
-	"media_cat_del" : "Kategorie erfolgreich gelöscht"
+	"media":						"Medien",
+	"media_error_move": 			"%s konnte nicht gespeichert werden.<br />Die Datei konnte nicht ins Verzeichnis verschoben werden.",
+	"media_error_already_exist":	"%s konnte nicht gespeichert werden.<br />Der Datei existiert bereits.",
+	"media_error_bad_extension":	"%s konnte nicht gespeichert werden.<br />Die Dateiendung ist nicht erlaubt.",
+	"media_manage":					"Medien verwalten",
+	"media_manage_cat":				"Medienkategorien verwalten",
+	"media_underfile_exist":		"Es sind noch Unterkategorien vorhanden",
+	"media_underfile_exist2":		"Bestimmte Bilder sind noch in der Kategorie",
+	"file_deleted":					"Datei erfolgreich gelöscht",
+	"file_not_deleted":				"Die Datei %smedia%s konnte nicht gelöscht werden",
+	"file_in_use":					"Einzelne Seiten benutzen diese Datei noch",
+	"select_file":					"Datei auswählen",
+	"please_load_file":				"Bitte Laden Sie eine Datei hoch",
+	"media_edit":					"Media bearbeiten",
+	"file_type":					"Dateityp",
+	
+	"media[edit]":					"Medien bearbeiten / hochladen",
+	"media[delete]":				"Medien löschen",
+	"media[category][edit]":		"Medienkategorien bearbeiten / erstellen",
+	"media[category][delete]":		"Medienkategorien löschen"
 }

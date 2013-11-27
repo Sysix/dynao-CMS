@@ -39,7 +39,7 @@ class metainfosPage {
 			$sql->update();	
 		}
 		
-		ajax::addReturn(message::success('Sortierung erfolgreich übernommen', true));
+		ajax::addReturn(message::success(lang::get('save_sorting'), true));
 		
 	}
 	
@@ -51,37 +51,37 @@ class metainfosPage {
 		
 		if($action == 'delete') {
 			self::delete($tablename, $id, $form->get('name'));
-			$form->setSuccessMessage('Eintrag erfolgreich gelöscht');
+			$form->setSuccessMessage(lang::get('entry_deleted'));
 			$form->redirect();
 			return;
 		}
 		
 		$field = $form->addRawField($prefix);
-		$field->fieldName('prefix');
+		$field->fieldName(lang::get('description'));
 	
 		$field = $form->addTextField('label', $form->get('label'));
-		$field->fieldName('Beschreibung');
+		$field->fieldName(lang::get('description'));
 		
 		$field = $form->addTextField('name', substr($form->get('name'), 4));
-		$field->fieldName('Name');
+		$field->fieldName(lang::get('name'));
 		
 		$field = $form->addSelectField('formtype', $form->get('formtype'));
-		$field->fieldName('Feldtyp');
+		$field->fieldName(lang::get('field_type'));
 		$field->addAttribute('id', 'formtype');
 		foreach(self::$types as $type) {
 			$field->add($type, $type);	
 		}
 		
 		$field = $form->addTextField('default', $form->get('default'));
-		$field->fieldName('Standardwert');
-		$field->setSuffix('<small>Bei Mehrauswahl mit einen <b>|</b> trennen</small>');
+		$field->fieldName(lang::get('default_value'));
+		$field->setSuffix(lang::get('meta_pre_selection'));
 		
 		$style = (in_array($form->get('formtype'), ['select', 'radio', 'checkbox'])) ? 'block' : 'none' ;
 		
 		$field = $form->addTextareaField('params', $form->get('params'));
-		$field->fieldName('Parameter');
+		$field->fieldName(lang::get('meta_parameter'));
 		$field->setPrefix('<div id="param_info" style="display:'.$style.'">');
-		$field->setSuffix('Beispiele:<br />a) all|user|admin<br />b) 1:all|2:user|3:admin</div>');
+		$field->setSuffix(lang::get('examples').':<br />a) all|user|admin<br />b) 1:all|2:user|3:admin</div>');
 		
 		$field = $form->addTextareaField('attributes', $form->get('attributes'));
 		$field->fieldName('HTML-Attribute');
@@ -113,7 +113,7 @@ class metainfosPage {
 			// Oder bei Editieren vorhanden, jedoch der nicht das 
 			if($colum->num() && $action == 'add' || $action == 'edit' && $colum->num() && $form->sql->getResult('name') != $prefix.$form->get('name')) {
 				
-				$form->setErrorMessage('Der Spaltenname '.$prefix.$form->get('name').' ist schon vorhanden');
+				$form->setErrorMessage(sprintf(lang::get('col_name_exists'), $prefix.$form->get('name')));
 				$form->setSave(false);
 
 			} else {
@@ -132,7 +132,7 @@ class metainfosPage {
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Metainfos bearbeiten</h3>
+				<h3 class="panel-title"><?php echo lang::get('metainfo_edit'); ?></h3>
 			</div>
 			<div class="panel-body">
 				<?php echo $form->show(); ?>
@@ -159,7 +159,7 @@ class metainfosPage {
 		while($table->isNext()) {
 			
 			$edit = '<a href="'.url::backend('meta', ['subpage'=>$pagename, 'action'=>'edit', 'id'=>$table->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
-			$delete = '<a href="'.url::backend('meta', ['subpage'=>$pagename, 'action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+			$delete = '<a href="'.url::backend('meta', ['subpage'=>$pagename, 'action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger delete">'.lang::get('delete').'</a>';
 			
 			$table->addRow(['data-id'=>$table->get('id')])
 			->addCell('<i class="fa fa-sort"></i>')
@@ -174,7 +174,7 @@ class metainfosPage {
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title pull-left">Media</h3>
+				<h3 class="panel-title pull-left"><?php echo backend::getCurrentSubpageName(); ?></h3>
 				<div class="btn-group pull-right">
 					<a href="<?php echo url::backend('meta', ['subpage'=>$pagename, 'action'=>'add']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('add'); ?></a>
 				</div>

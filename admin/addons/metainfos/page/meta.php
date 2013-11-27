@@ -1,7 +1,6 @@
 <?php
 
-backend::addSubnavi('Artikel',						url::backend('meta', ['subpage'=>'articles']));
-backend::addSubnavi('Medien',						url::backend('meta', ['subpage'=>'media']));
+backend::addSubnavi(lang::get('article'),	url::backend('meta', ['subpage'=>'articles']));
 
 $action = type::super('action', 'string', '');
 $id = type::super('id', 'int', 0);

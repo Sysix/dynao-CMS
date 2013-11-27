@@ -1,2 +1,15 @@
 {
+	"metainfos[edit]":			"metadata edit / create",
+	"metainfos[delete]":		"Metadata delete",
+	
+	"entry_deleted":			"entry successfully deleted",
+	"prefix":					"prefix",
+	"description":				"description",
+	"field_type":				"fieldtype",
+	"default_value":			"default value",
+	"meta_pre_selection":		"<small>Seperate pre-selection with a <b>|</b>",
+	"meta_parameter":			"paramater",
+	"examples":					"examples",
+	"col_name_exists":			"the columnname %s already exists",
+	"metainfo_edit":			"metainfo edit"
 }

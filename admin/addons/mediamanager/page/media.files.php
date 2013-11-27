@@ -21,7 +21,7 @@ if($action == 'delete') {
 	$sql->query('SELECT id FROM '.sql::table('structure_area').' WHERE '.implode(' OR ', $values))->result();
 	if($sql->num()) {
 		
-		echo message::warning('Einzelne Seiten benutzen diese Datei noch');
+		echo message::warning(lang::get('file_in_use'));
 		
 	} else {
 		
@@ -33,11 +33,11 @@ if($action == 'delete') {
 	
 		if(unlink(dir::media($sql->get('filename')))) {
 			
-			echo message::success('Datei erfolgreich gelöscht');
+			echo message::success(lang::get('file_deleted'));
 			
 		} else {
 			
-			echo message::warning('Die Datei '.dyn::get('hp_url').'media/'.$sql->get('filename').' konnte nicht gelöscht werden');
+			echo message::warning(sprintf(lang::get('file_not_deleted'), dyn::get('hp_url'), $sql->get('filename')));
 			
 		}
 		
@@ -53,17 +53,17 @@ if($action == 'add' || $action == 'edit') {
 	$form->addFormAttribute('enctype', 'multipart/form-data');
 	
 	$field = $form->addTextField('title', $form->get('title'));
-	$field->fieldName('Titel');	
+	$field->fieldName(lang::get('title'));	
 	
 	$field = $form->addRawField('<select class="form-control" name="category">'.mediaUtils::getTreeStructure(0, 0,' &nbsp;', $form->get('category')).'</select>');
-	$field->fieldName('Kategorie');
+	$field->fieldName(lang::get('category'));
 	
 	if(addonConfig::isActive('metainfos')) {
 		$form = metainfos::getMetaInfos($form, 'media');
 	}
 	
 	$field = $form->addRawField('<input type="file" name="file" />');
-	$field->fieldName('Datei auswählen');
+	$field->fieldName(lang::get('select_file'));
 	
 	if($action == 'edit') {
 		$form->addHiddenField('id', $id);
@@ -74,7 +74,7 @@ if($action == 'add' || $action == 'edit') {
 		$file = type::files('file');
 		if(!is_uploaded_file($file['tmp_name']) && !$form->isEditMode()) {
 			
-			$form->setErrorMessage('Bitte Laden Sie eine Datei hoch');
+			$form->setErrorMessage(lang::get('please_load_file'));
 			$form->setSave(false);
 			
 		} else {
@@ -93,7 +93,7 @@ if($action == 'add' || $action == 'edit') {
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Media bearbeiten</h3>
+				<h3 class="panel-title"><?php echo lang::get('media_edit'); ?></h3>
 			</div>
 			<div class="panel-body">
 				<?php echo $form->show(); ?>
@@ -112,9 +112,9 @@ if($action == '') {
 	$table->setSql('SELECT * FROM '.sql::table('media').' WHERE `category` = '.$catId);
 	$table->addRow()
 	->addCell()
-	->addCell('Titel')
-	->addCell('Endung')
-	->addCell('Aktion');
+	->addCell(lang::get('title'))
+	->addCell(lang::get('file_type'))
+	->addCell(lang::get('action'));
 	
 	$table->addCollsLayout('50,*,100,250');
 	
@@ -124,19 +124,11 @@ if($action == '') {
 		
 		while($table->isNext()) {
 				
-			$media = new media($table->getSql());
+			$media = new media($table->getSql());			
 			
-			if($subaction == 'popup') {
-				
-				$edit = '<button data-id="'.$table->get('id').'" data-name="'.$table->get('filename').'" class="btn btn-sm btn-warning dyn-media-select">Auswählen</button>';
-				$delete = '';
-				
-			} else {
+			$edit = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'edit', 'id'=>$table->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
+			$delete = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
 			
-				$edit = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'edit', 'id'=>$table->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
-				$delete = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
-			
-			}
 			
 			$table->addRow()
 			->addCell('<img src="'.$media->getPath().'" style="max-width:50px; max-height:50px" />')
@@ -161,7 +153,7 @@ if($action == '') {
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title pull-left">Media</h3>
+                    <h3 class="panel-title pull-left"><?php echo lang::get('media'); ?></h3>
 					<div class="btn-group pull-right">
 						<a href="<?php echo url::backend('media', ['subpage'=>'files', 'action'=>'add', 'id'=>$id]); ?>" class="btn btn-sm btn-default"><?php echo lang::get('add'); ?></a>
 					</div>
@@ -172,7 +164,7 @@ if($action == '') {
 						<input type="hidden" name="page" value="media" />
 						<input type="hidden" name="subpage" value="files" />
 						<select class="form-control" id="media-select-category" name="catId">
-							<option value="0">Keine Kategorie</option>
+							<option value="0"><?php echo lang::get('no_category'); ?></option>
 							<?php echo mediaUtils::getTreeStructure(0, 0,' &nbsp;', $catId); ?>
 						</select>
 					</form>

@@ -15,10 +15,10 @@ layout::addJS('http://code.jquery.com/ui/1.10.3/jquery-ui.js');
 layout::addJS('http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js');
 layout::addJS('layout/js/scripts.js');
 
-userPerm::add('content[edit]', 'Content bearbeiten / erstellen');
-userPerm::add('content[delete]', 'Content löschen');
-userPerm::add('admin[user]', 'Useradmin');
-userPerm::add('admin[addon]', 'AddOn Verwaltung');
+userPerm::add('page[edit]', lang::get('page[edit]'));
+userPerm::add('page[delete]', lang::get('page[delete]'));
+userPerm::add('admin[user]', lang::get('admin[user]'));
+userPerm::add('admin[addon]', lang::get('admin[addon]'));
 
 backend::addNavi('Dashboard', url::backend('dashboard'), 'desktop');
 backend::addNavi('Structure', url::backend('structure'), 'list');

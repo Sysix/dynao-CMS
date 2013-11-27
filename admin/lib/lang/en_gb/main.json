@@ -10,6 +10,8 @@
 	"offline":					"offline",
 	"action":					"action",
 	"actions":					"actions",
+	"title":					"title",
+	"select":					"select",
 	
 	#Aktionen
 	"update":					"update",
@@ -29,6 +31,20 @@
 	"no_entries":				"No entries",
 	"connection_again":			"Connection has been made again",
 	"template":					"Template",
+	
+	#Kategorien
+	"category_save":			"save category",
+	"category":					"category",
+	"categories":				"categories",
+	"no_categories":			"no categories",
+	"no_category":				"no category",
+	"category_deleted":			"category successfully deleted",
+	
+	#Rights
+	"page[edit]":				"page edit / create",
+	"page[delete]":				"page delete",
+	"admin[user]":				"useradmin",
+	"admin[addons]":			"addon's-admin",
 	
 	#Versioncheck
 	"version_fail_connect":		"Connection to the server could not be established",
