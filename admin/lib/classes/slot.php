@@ -6,21 +6,72 @@ class slot {
 	
 	static $slots = [];
 	
-	protected $sql;
+	public $sql;
+	
+	public function __construct($id) {
+		
+		self::generateAll();
+		$this->sql = self::$slots[$id];
+	}
+	
+	public function getContent() {
+		$pageArea = new pageArea($this->sql);
+		
+		return $pageArea->OutputFilter($this->sql->get('output'), $this->sql);	
+	}
+	
+	protected static function generateAll() {
+		
+		if(empty(self::$slots)) {
+			
+			$sql = sql::factory();
+			$sql->query('
+			SELECT 
+			  s.*, m.output 
+			FROM 
+			  '.sql::table('slots').' AS s
+			  LEFT JOIN
+			  	'.sql::table('module').' AS m
+					ON m.id = s.modul
+			')->result();
+			while($sql->isNext()) {
+				self::$slots[$sql->get('id')] = $sql;
+				
+				$sql->next();
+			}
+			
+		}
+		
+	}
 	
 	public static function getArray() {
+		
+		self::generateAll();
 		
 		return self::$slots;
 		
 	}
 	
-	public static function set($name) {
+	public static function saveBlock() {
 		
-		array_push(self::$slots, $name);
+		$id = type::post('id', 'int');
+		
+		$sql = sql::factory();
+		$sql->setTable('slots');
+		
+		foreach(array_keys(pageArea::$types) as $types) {
+			
+			$array = type::post('DYN_'.$types, 'array', []);
+			foreach($array as $key=>$value) {
+				$sql->addPost(strtolower($types).$key, $value);			
+			}
+						
+		}
+		
+		$sql->setWhere('id='.$id);
+		$sql->update();
 		
 	}
-	
-	//Slots sollen Platzhalter im Template sein, die automatisch im Backend dann aufgelistet werden, diesen Slots kann man dann Inhalt in Form von Modulen zuteilen, um z.B. was im Header zu platizeren oder in der Sidebar, optional können Slots dann auch im Backend erstellt werden - den dazugehörigen Code muss man dann im Template einfügen - wie man diese dann nen Template zuordnet oder ob diese dann nur für jedes Template gelten ... bin mir noch nicht 100% sicher :D was hälts du davon ?
 	
 }
 

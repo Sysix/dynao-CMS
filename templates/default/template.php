@@ -8,6 +8,11 @@
 <body>
 
 	<?php echo dyn::get('content'); ?>
+<h2>Slots</h2>
+<?php
 
+$slot = slot::factory(1);
+echo $slot->getContent();
+?>
 </body>
 </html>
