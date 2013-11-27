@@ -22,7 +22,13 @@ class dir {
 
 	}
 
-	public static function template($template, $file = '') {
+	public static function template($template = '', $file = '') {
+		
+		if($template == '') {
+			
+			return self::base('templates'.DIRECTORY_SEPARATOR);
+			
+		}
 
 		return self::base('templates'.DIRECTORY_SEPARATOR.$template.DIRECTORY_SEPARATOR.$file);
 

@@ -1,5 +1,5 @@
 <?php
-	backend::addSubnavi(lang::get('general'),	url::backend(''),	'eye');
+	backend::addSubnavi(lang::get('general'),	url::backend('settings'),	'eye');
 ?>
 
 <div class="row">
