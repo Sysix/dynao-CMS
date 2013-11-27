@@ -1,5 +1,5 @@
 <?php
-	backend::addSubnavi('General',	url::backend(''),	'eye');
+	backend::addSubnavi(lang::get('general'),	url::backend(''),	'eye');
 ?>
 
 <div class="row">
@@ -7,7 +7,7 @@
     <div class="col-lg-8">
         <div class="panel panel-default">
             <div class="panel-heading">
-            	<h3 class="panel-title">General</h3>
+            	<h3 class="panel-title"><?php echo lang::get('general'); ?></h3>
             </div>
             <div class="panel-body">
             	<?php
@@ -52,7 +52,7 @@
 				}
 				
 				$field = $form->addSelectField('template', dyn::get('template'));
-				$field->fieldName('Template');
+				$field->fieldName(lang::get('template'));
 							
 				$handle = opendir(dir::template());
 				while($file = readdir($handle)) {
@@ -72,7 +72,7 @@
     <div class="col-lg-4">
         <div class="panel panel-default">
             <div class="panel-heading">
-            	<h3 class="panel-title">System</h3>
+            	<h3 class="panel-title"><?php echo lang::get('system'); ?></h3>
             </div>
 			<?php
 			
@@ -88,15 +88,15 @@
 			$table->addSection('tbody');
 			
 			$table->addRow()
-			->addCell('Dynao Version')
+			->addCell(lang::get('dyn_version'))
 			->addCell(dyn::get('version'));
 			
 			$table->addRow()
-			->addCell('PHP Version')
+			->addCell(lang::get('php_version'))
 			->addCell(phpversion());
 			
 			$table->addRow()
-			->addCell('MYSQL Version')
+			->addCell(lang::get('mysql_version'))
 			->addCell($sql->get('VERSION()'));
 			
 			

@@ -32,13 +32,13 @@ if($action == 'add' || $action == 'edit') {
 	$form = form::factory('module', 'id='.$id, 'index.php');
 	
 	$field = $form->addTextField('name', $form->get('name'));
-	$field->fieldName('Name');
+	$field->fieldName(lang::get('name'));
 	
 	$field = $form->addTextareaField('input', $form->get('input'));
-	$field->fieldName('Eingabe');
+	$field->fieldName(lang::get('input'));
 	
 	$field = $form->addTextareaField('output', $form->get('output'));
-	$field->fieldName('Ausgabe');
+	$field->fieldName(lang::get('output'));
 	
 	if($action == 'edit') {
 		$form->addHiddenField('id', $id);
@@ -87,7 +87,7 @@ if($action == '') {
 			$id = $table->get('id');
 			
 			$edit = '<a href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'edit', 'id'=>$id]).'" class="btn btn-sm btn-default fa fa-pencil-square-o"></a>';
-			$delete = '<a href="'.url::backend('structure', ['subpage'=>'module','action'=>'delete', 'id'=>$id]).'" class="btn btn-sm btn-danger fa fa-trash-o"></a>';
+			$delete = '<a href="'.url::backend('structure', ['subpage'=>'module','action'=>'delete', 'id'=>$id]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
 			
 			$table->addRow(['data-id'=>$id])
 			->addCell($table->get('name'))

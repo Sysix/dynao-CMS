@@ -73,6 +73,19 @@ class addon {
 				
 	}
 	
+	public function delete() {
+	
+		$this->uninstall();
+		
+		$sql = sql::factory();
+		$sql->setTable('addons')
+		    ->setWhere('`name` = "'.$this->name.'"')
+			->delete();
+			
+		return message::success(sprintf(lang::get('addon_deleted'), $this->name));
+		
+	}
+	
 	public function getConfig() {
 		
 		if($this->isActive() && $this->isInstall()) {

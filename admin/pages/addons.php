@@ -4,6 +4,12 @@ $addon = type::super('addon', 'string');
 
 backend::addSubnavi(lang::get('overview'),	url::backend('addons'), 	'eye', 0);
 
+if($action == 'delete') {
+	
+	$addonClass = new addon($addon, false);
+	echo $addonClass->delete();
+}
+
 if($action == 'install') {
 
 	$addonClass= new addon($addon, false);	
@@ -57,7 +63,7 @@ $table = table::factory();
 $table->addCollsLayout('*,215');
 
 $table->addRow()
-->addCell('Name')
+->addCell(lang::get('name'))
 ->addCell(lang::get('actions'));
 
 $table->addSection('tbody');
@@ -74,19 +80,21 @@ foreach($addons as $dir) {
 	$online_url = url::backend('addons', ['addon'=>$dir, 'action'=>'install']);
 	
 	if($curAddon->isInstall()) {
-		$online = '<a href="'.$online_url.'" class="btn btn-sm structure-online">'.lang::get('addon_installed').'</a>';
+		$online = '<a href="'.$online_url.'" class="btn btn-sm dyn-online">'.lang::get('addon_installed').'</a>';
 	} else {
-		$online = '<a href="'.$online_url.'" class="btn btn-sm structure-offline">'.lang::get('addon_not_installed').'</a>';
+		$online = '<a href="'.$online_url.'" class="btn btn-sm dyn-offline">'.lang::get('addon_not_installed').'</a>';
 	}
 	$active_url = url::backend('addons', ['addon'=>$dir, 'action'=>'active']);
 	
 	if($curAddon->isActive()) {
-		$active = '<a href="'.$active_url.'" class="btn btn-sm structure-online fa fa-check" title="'.lang::get('addon_actived').'"></a>';
+		$active = '<a href="'.$active_url.'" class="btn btn-sm dyn-online fa fa-check" title="'.lang::get('addon_actived').'"></a>';
 	} else {
-		$active = '<a href="'.$active_url.'" class="btn btn-sm structure-offline fa fa-times" title="'.lang::get('addon_not_actived').'"></a>';
+		$active = '<a href="'.$active_url.'" class="btn btn-sm dyn-offline fa fa-times" title="'.lang::get('addon_not_actived').'"></a>';
 	}
 	
-	$delete = '<a href="#" class="btn btn-sm btn-danger fa fa-trash-o"></a>';
+	$delete_url = url::backend('addons', ['addon'=>$dir, 'action'=>'delete']);
+	
+	$delete = '<a href="'.$delete_url.'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
 	
 	$table->addRow()
 	->addCell($curAddon->get('name').' <small>'.$curAddon->get('version').'</small>')
@@ -99,7 +107,7 @@ foreach($addons as $dir) {
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Addons</h3>
+				<h3 class="panel-title"><?php echo lang::get('addons'); ?></h3>
 			</div>
 			<?php echo $table->show(); ?>
 		</div>

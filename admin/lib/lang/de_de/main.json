@@ -25,7 +25,10 @@
 	"save_status":				"Status erfoglreich geändert",
 	"save_sorting":				"Sortierung erfolgreich übernommen",
 	"overview":					"Übersicht",
-	"no_entries":				"Keine Einträge",
+	"logs":						"Logs",
+	"no_entries":				"Keine Einträge",	
+	"connection_again":			"Verbindung wurde erneut hergestellt",
+	"template":					"Template",
 	
 	#Versioncheck
 	"version_fail_connect":		"Verbindung zum Server konnte nicht hergestellt werden",
@@ -42,6 +45,7 @@
 	"login_logout_success":		"Erfolgreich ausgeloggt",
 	
 	#Addon
+	"addons":					"Addons",
 	"addon_save_success":		"Addon erfolgreich gespeichert",
 	"addon_install_first":		"Bitte installieren Sie das Addon \"%s\" zuerst",
 	"addon_installed":			"installiert",
@@ -55,11 +59,17 @@
 	"addon_not_found":			"Das Addon %s wurde nicht gefunden<br />",
 	"addon_not_install_active":	"Das Addon %s muss installiert und aktiviert werden<br />",
 	"addon_need_version":		"Das Addon %s muss mindestens in Version %s vorhanden sein<br />",
+	"addon_deleted":			"Das Addon %s wurde erfolgreich gelöscht",
 	
 	#Settings
 	"settings_name_of_site":	"Name der Website",
 	"settings_url_of_site":		"URL der Website",
 	"settings_backend_lang":	"Backend Sprache",
+	"general":					"Allgemein",
+	"system":					"System",
+	"dynao_version":			"Dynao Version",
+	"php_version":				"PHP Version",
+	"mysql_version":			"MYSQL Version",
 	
 	#Structure
 	"structure_content_save":	"Inhalt erfolgreich übernommen",
@@ -76,9 +86,12 @@
 	"block_status":				"Block Status",
 	"module":					"Modul",
 	"modules":					"Module",
+	"input":					"Eingabe",
+	"output":					"Ausgabe",
 	
 	#Slots
 	"slots_current_page":		"Slots im aktuellen Template",
+	"slots":					"Slots",
 	
 	#User
 	"user_wrong_email":			"Bitte geben Sie eine gültige E-Mail-Adresse an",
@@ -86,7 +99,7 @@
 	"password":					"Passwort",
 	"password_info":			"<small>Sie sehen das verschlüsselte Passwort! Um ein neues Passwort zu vergeben, einfach eingeben!</small>",
 	"email":					"E-Mail",
-	"user":					"Benutzer",
+	"user":						"Benutzer",
 	
 	#SQL
 	"sql_query_error":			"Query konnte nicht ausgeführt werden<pre>%s</pre>Error: %s",

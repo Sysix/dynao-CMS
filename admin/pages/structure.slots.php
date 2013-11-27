@@ -85,7 +85,7 @@ if($action == '') {
 		
 		$name = '<a href="'.url::backend('structure', ['subpage'=>'slots', 'action'=>'show', 'id'=>$table->get('id')]).'">'.$table->get('name').'</a>';
 		$edit = '<a href='.url::backend('structure', ['subpage'=>'slots', 'action'=>'edit', 'id'=>$table->get('id')]).' class="btn btn-sm btn-default fa fa-pencil-square-o"></a>';
-		$delete = '<a href='.url::backend('structure', ['subpage'=>'slots', 'action'=>'delete', 'id'=>$table->get('id')]).' class="btn btn-sm btn-danger fa fa-trash-o"></a>';
+		$delete = '<a href='.url::backend('structure', ['subpage'=>'slots', 'action'=>'delete', 'id'=>$table->get('id')]).' class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
 		
 		$table->addRow()
 		->addCell($name)

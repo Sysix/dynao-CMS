@@ -25,7 +25,10 @@
 	"save_status":				"Status successfully changed",
 	"save_sorting":				"Sorting successfully saved",
 	"overview":					"Overview",
+	"logs":						"logs",
 	"no_entries":				"No entries",
+	"connection_again":			"Connection has been made again",
+	"template":					"Template",
 	
 	#Versioncheck
 	"version_fail_connect":		"Connection to the server could not be established",
@@ -42,6 +45,7 @@
 	"login_logout_success":		"Logged out successfully",
 	
 	#Addon
+	"addons":					"Addons",
 	"addon_save_success":		"Addon successfully saved",
 	"addon_install_first":		"Please install the addon \"%s\" first",
 	"addon_installed":			"installed",
@@ -55,11 +59,17 @@
 	"addon_not_found":			"The addon %s was not found<br />",
 	"addon_not_install_active":	"The addon %s must be installed and enabled<br />",
 	"addon_need_version":		"The addon %s must be present at least in version %s<br />",
+	"addon_deleted":			"The addon %s was successfully deleted",
 	
 	#Settings
 	"settings_name_of_site":	"Name of the site",
 	"settings_url_of_site":		"URL of the site",
 	"settings_backend_lang":	"backend language",
+	"general":					"general",
+	"system":					"system",
+	"dynao_version":			"Dynao version",
+	"php_version":				"PHP version",
+	"mysql_version":			"MYSQL version",
 	
 	#Structure
 	"structure_content_save":	"content successfully saved",
@@ -79,6 +89,7 @@
 	
 	#Slots
 	"slots_current_page":		"Slots at the current template",
+	"slots":					"slots",
 	
 	#User
 	"user_wrong_email":			"please enter a valid email address",
@@ -86,7 +97,7 @@
 	"password":					"password",
 	"password_info":			"<small>You can see the encrypted password! To assign a new password, simply enter!</small>",
 	"email":					"E-Mail",
-	"user":					"User",
+	"user":						"User",
 	
 	#SQL
 	"sql_query_error":			"query could not be executed<pre>%s</pre>Error: %s",

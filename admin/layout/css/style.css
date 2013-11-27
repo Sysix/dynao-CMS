@@ -402,13 +402,13 @@ h1 {
 	margin-bottom:20px;
 }
 
-.structure-offline.fa,
-.structure-online.fa {
+.dyn-offline.fa,
+.dyn-online.fa {
 	width:35px;
 	text-align:center;
 }
 
-.structure-offline {
+.dyn-offline {
 	background-color: #d9534f;
 	border-color: #d43f3a;
 	color:#fff;
@@ -418,7 +418,7 @@ option.page-offline {
 	border-left:3px solid #d9534f;
 }
 
-.structure-online {
+.dyn-online {
 	background:#2ecc71;
 	color:#fff;
 }
