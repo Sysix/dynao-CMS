@@ -123,13 +123,12 @@ class backend {
 			
 			$return .= '<li'.$class.'><a class="fa fa-'.$subnavi['icon'].'" href="'.$subnavi['link'].'"> <span>'.$subnavi['name'].'</span></a>';
 			
-			if(self::$currentSubpage == $subnavi['name']) {
-				self::getSecondnavi();
-			}
+			if(self::$currentSubpage == $subnavi['name'])
+				$secondnav = self::getSecondnavi();
 			
 		}
 		
-		return '<ul class="subnav">'.$return.'</ul>';
+		return '<ul class="subnav">'.$return.$secondnav.'</ul>';
 		
 	}
 	

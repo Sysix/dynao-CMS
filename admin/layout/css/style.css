@@ -322,11 +322,34 @@ h1 {
 	color:#000;
 }
 
+#subnavi ul.subnav li ul li.active a:hover, 
+#subnavi ul.subnav li.active ul li a:hover  {
+	color:#fff;
+}
+
 #subnavi ul.subnav li.active a {
 	border-radius:3px 0 0 3px;
 	background:url(../img/bg/noise.png) repeat;
 	margin-right:0;
 	padding-left:20px;
+}
+
+#subnavi ul.subnav li.active ul li a {
+	border-radius:0;
+	background:none;
+	border:0;
+	margin-right:0;
+	padding-left:15px;
+	color:#5c5c5c;
+}
+
+#subnavi ul.subnav li ul li.active a {
+	border-radius:0;
+	background:none;
+	margin-right:0;
+	border:0;
+	padding-left:15px;
+	color:#fff;
 }
 
 #content {
