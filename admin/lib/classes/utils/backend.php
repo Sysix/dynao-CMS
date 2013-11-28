@@ -104,8 +104,8 @@ class backend {
 			$return .= '<li'.$class.'><a href="'.$secondnavi['link'].'"> <span>'.$secondnavi['name'].'</span></a>';
 			
 		}
-		
-		return '<ul class="secondnav">'.$return.'</ul>';
+		if($return)
+			return '<ul class="secondnav">'.$return.'</ul>';
 		
 	}
 	
@@ -124,11 +124,11 @@ class backend {
 			$return .= '<li'.$class.'><a class="fa fa-'.$subnavi['icon'].'" href="'.$subnavi['link'].'"> <span>'.$subnavi['name'].'</span></a>';
 			
 			if(self::$currentSubpage == $subnavi['name'])
-				$secondnav = self::getSecondnavi();
+				$return .= self::getSecondnavi();
 			
 		}
 		
-		return '<ul class="subnav">'.$return.$secondnav.'</ul>';
+		return '<ul class="subnav">'.$return.'</ul>';
 		
 	}
 	
