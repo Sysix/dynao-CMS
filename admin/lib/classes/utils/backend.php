@@ -7,6 +7,7 @@ class backend {
 	static $secondnavi = [];
 	static $currentPage;
 	static $currentSubpage;
+	static $currentSublink;
 	static $currentSecondpage;
 	
 	public static function addNavi($name, $link, $icon = 'circle', $pos = -1) {
@@ -30,6 +31,8 @@ class backend {
 	}
 	
 	public static function addSubnavi($name, $link, $icon = 'circle', $pos = -1) {
+		
+		self::$currentSublink = $link;
 		
 		if($pos < 0) {
 			$pos = count(self::$subnavi);
@@ -64,7 +67,7 @@ class backend {
 			}
 		}
 		
-		$list = ['name'=>$name, 'link'=>$link];		
+		$list = ['name'=>$name, 'link'=>$link, 'parent'=>self::$currentSublink];		
 		array_splice(self::$secondnavi, $pos, 0, [$list]);
 		
 	}
@@ -89,7 +92,7 @@ class backend {
 		
 	}
 	
-	public static function getSecondnavi() {
+	public static function getSecondnavi($link) {
 		
 		$return = '';
 		
@@ -101,7 +104,8 @@ class backend {
 				$class = '';	
 			}
 			
-			$return .= '<li'.$class.'><a href="'.$secondnavi['link'].'"> <span>'.$secondnavi['name'].'</span></a>';
+			if($secondnavi['parent'] == $link)
+				$return .= '<li'.$class.'><a href="'.$secondnavi['link'].'"> <span>'.$secondnavi['name'].'</span></a>';
 			
 		}
 		if($return)
@@ -124,7 +128,7 @@ class backend {
 			$return .= '<li'.$class.'><a class="fa fa-'.$subnavi['icon'].'" href="'.$subnavi['link'].'"> <span>'.$subnavi['name'].'</span></a>';
 			
 			if(self::$currentSubpage == $subnavi['name'])
-				$return .= self::getSecondnavi();
+				$return .= self::getSecondnavi($subnavi['link']);
 			
 		}
 		
