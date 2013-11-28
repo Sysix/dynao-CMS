@@ -1,5 +1,3 @@
-var MediaWindow;
-
 $('.dyn-media .dyn-media-add').click(function() {
 	
 	var _this = $(this);
@@ -7,7 +5,7 @@ $('.dyn-media .dyn-media-add').click(function() {
 	
 	$("body").append('<div class="modal fade" id="selectMedia" tabindex="-1" role="dialog" aria-labelledby="selectMediaLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="selectMediaLabel">Media</h4></div><div class="modal-body"></div></div></div></div>');
 	
-	$(".modal-body").load('index.php?page=media&subpage=popup #content .row .panel-body, #content .row #load');
+	$(".modal-body").load('index.php?page=media&subpage=popup #content .row .panel-body, #load');
 	
 	$('#selectMedia').modal('show');
 		

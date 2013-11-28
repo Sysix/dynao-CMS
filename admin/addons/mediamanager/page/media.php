@@ -5,12 +5,13 @@ backend::addSubnavi(lang::get('media_manage_cat'),			url::backend('media', ['sub
 
 $action = type::super('action', 'string', '');
 $id = type::super('id', 'int', 0);
+$subpage = type::super('subpage', 'string');
 
 if($subpage == 'popup') {
 	
-	layout::addJsCode("$(document.body).on(''change', ''#media-select-category', function() {
+	layout::addJsCode("$(document.body).on('change', '#media-select-category', function() {
 	var catId = $(this).val();
-	$(''#load').load('index.php?page=media&subpage=popup&catId='+catId+' #load');
+	$('#load').load('index.php?page=media&subpage=popup&catId='+catId+' #load');
 });");
 	
 	dyn::add('contentPage', true);

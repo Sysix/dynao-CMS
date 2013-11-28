@@ -143,6 +143,44 @@ class pageMisc {
 		
 	}
 	
+	public static function getTreeStructurePagePopup($parentId = 0, $lvl = 0) {
+		
+		$select = '';
+		
+		$id = (!$lvl) ? 'id="structure-tree"' : '';
+		
+		$sql = sql::factory();
+		$sql->query('SELECT * FROM '.sql::table('structure').' WHERE parent_id = '.$parentId.' ORDER BY sort')->result();
+		if($sql->num()) {
+			
+			$select .= '<ul '.$id.'>';
+				
+			while($sql->isNext()) {
+				
+					
+				$button = '<button data-id="'.$sql->get('id').'" data-name="'.$sql->get('name').'" class="btn btn-sm btn-warning dyn-link-select">'.lang::get('select').'</button>';
+				
+				$select .= '<li>'.PHP_EOL.'
+					<div class="handle">'.$sql->get('name').PHP_EOL.'
+						<span class="btn-group">'.$button.'</span>'.PHP_EOL.'
+					</div>'.PHP_EOL;
+					
+				
+				$select .= self::getTreeStructurePagePopup($sql->get('id'), $lvl+1);			
+				
+				$select .= '</li>'.PHP_EOL;
+				
+				$sql->next();
+			}
+			
+			$select .= '</ul>';
+		
+		}
+				
+		return $select;
+		
+	}
+	
 }
 
 ?>

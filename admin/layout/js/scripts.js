@@ -101,6 +101,21 @@ $(document).ready(function () {
 		var div = $(this).closest('.dyn-link').find('input').val('');
 	});
 	
+	$(document.body).on("click", '.dyn-link-select', function() {
+	
+		var _this = $(this),
+			name = _this.data('name'),
+			id = _this.data('id')
+			input_wrap = $('.dyn-link-active').closest('.dyn-link');
+		
+		input_wrap.find('input[type=hidden]:first').val(id);
+		input_wrap.find('input[type=text]:first').val(name);
+		input_wrap.removeClass('dyn-media-active');
+		
+		$('#selectLink').modal('hide');
+		
+	});
+	
 	$(document.body).on('hidden.bs.modal','.modal',function(){
 		$(this).remove();
 	});
