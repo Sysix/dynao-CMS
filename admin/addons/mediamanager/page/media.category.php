@@ -136,6 +136,7 @@ if($action == 'add') {
 	$inputName = formInput::factory('name', '');
 	$inputName->addAttribute('type', 'text');
 	$inputName->addClass('input-sm');
+	$inputName->autofocus();
 	
 	$inputSort = formInput::factory('sort', $table->getSql()->num()+1);
 	$inputSort->addAttribute('type', 'text');
@@ -157,6 +158,7 @@ if($table->numSql()) {
 			$inputName = formInput::factory('name', $table->get('name'));
 			$inputName->addAttribute('type', 'text');
 			$inputName->addClass('input-sm');
+			$inputName->autofocus();
 			
 			$inputSort = formInput::factory('sort', $table->get('sort'));
 			$inputSort->addAttribute('type', 'text');
@@ -173,7 +175,7 @@ if($table->numSql()) {
 		} else {
 			
 			$edit = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'edit', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';	
-			$delete = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'delete', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm btn-danger fa fa-trash-o"></a>';
+			$delete = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'delete', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
 		
 			$table->addRow(array('data-id'=>$table->get('id')))
 			->addCell('<i class="fa fa-sort"></i>')

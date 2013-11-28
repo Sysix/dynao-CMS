@@ -65,6 +65,7 @@ class pageMisc {
 			$inputName = formInput::factory('name', '');
 			$inputName->addAttribute('type', 'text');
 			$inputName->addClass('input-sm');
+			$inputName->autofocus();
 			
 			$sql = sql::factory();
 			$inputSort = formInput::factory('sort', $sql->num('SELECT 1 FROM '.sql::table('structure').' WHERE `parent_id`= '.$parentId)+1);
@@ -93,6 +94,7 @@ class pageMisc {
 					$inputName->addAttribute('type', 'text');
 					$inputName->addClass('input-sm');
 					$inputName->addClass('structure-name');
+					$inputName->autofocus();
 					
 					
 					$inputSort = formInput::factory('sort', $sql->get('sort'));
@@ -110,9 +112,9 @@ class pageMisc {
 					
 				} else {	
 					
-					$module = '<a href="'.url::backend('structure', ['structure_id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('modules').'</a>';	
-					$edit = '<a href="'.url::backend('structure', ['action'=>'edit', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';	
-					$delete = '<a href="'.url::backend('structure', ['action'=>'delete', 'id'=>$sql->get('id')]).'" class="btn btn-sm btn-danger fa fa-trash-o"></a>';
+					$module = '<a href="'.url::backend('structure', ['secondpage'=>'show', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('modules').'</a>';	
+					$edit = '<a href="'.url::backend('structure', ['secondpage'=>'edit', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';	
+					$delete = '<a href="'.url::backend('structure', ['action'=>'delete', 'id'=>$sql->get('id')]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
 					
 					$online = '<a href="'.url::backend('structure', ['action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-online fa fa-check" title="'.lang::get('online').'"></a>';	
 					$offline = '<a href="'.url::backend('structure', ['action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-offline fa fa-times" title="'.lang::get('offline').'"></a>';			
@@ -123,10 +125,6 @@ class pageMisc {
 						<div class="handle"><i class="fa fa-sort"></i> '.$sql->get('name').PHP_EOL.'
 							<span class="btn-group">'.$module.$online.$edit.$delete.'</span>'.PHP_EOL.'
 						</div>'.PHP_EOL;
-					
-					if($sql->num('SELECT id FROM '.sql::table('structure').' WHERE parent_id = '.$sql->get('id'))) {
-						
-					}
 				
 				}
 				

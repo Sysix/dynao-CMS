@@ -82,6 +82,7 @@ class pageAreaHtml {
 		
 		
 		$form->addHiddenField('id', $module->getId());
+		$form->addParam('secondpage', 'show');
 
 		return $form;
 		

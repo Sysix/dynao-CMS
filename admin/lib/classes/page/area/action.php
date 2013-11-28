@@ -10,9 +10,6 @@ class pageAreaAction {
 		$sql->setTable('structure_area');
 		
 		$sql->getPosts([
-			'structure_id'=>'int',
-			'sort'=>'int',
-			'modul'=>'int',
 			'online'=>'int'
 		]);
 		

@@ -33,6 +33,7 @@ if($action == 'add' || $action == 'edit') {
 	
 	$field = $form->addTextField('name', $form->get('name'));
 	$field->fieldName(lang::get('name'));
+	$field->autofocus();
 	
 	$field = $form->addTextareaField('input', $form->get('input'));
 	$field->fieldName(lang::get('input'));

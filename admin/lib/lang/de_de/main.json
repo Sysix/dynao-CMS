@@ -116,6 +116,8 @@
 	"password_info":			"<small>Sie sehen das verschlüsselte Passwort! Um ein neues Passwort zu vergeben, einfach eingeben!</small>",
 	"email":					"E-Mail",
 	"user":						"Benutzer",
+	"user_email_empty":			"Das E-Mail-Feld darf nicht leer sein",
+	"user_password_empty":		"Das Passwort-Feld darf nicht leer sein",
 	
 	#SQL
 	"sql_query_error":			"Query konnte nicht ausgeführt werden<pre>%s</pre>Error: %s",

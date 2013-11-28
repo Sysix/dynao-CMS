@@ -53,14 +53,11 @@ if($action == 'add' || $action == 'edit') {
 	$form->addFormAttribute('enctype', 'multipart/form-data');
 	
 	$field = $form->addTextField('title', $form->get('title'));
-	$field->fieldName(lang::get('title'));	
+	$field->fieldName(lang::get('title'));
+	$field->autofocus();
 	
 	$field = $form->addRawField('<select class="form-control" name="category">'.mediaUtils::getTreeStructure(0, 0,' &nbsp;', $form->get('category')).'</select>');
 	$field->fieldName(lang::get('category'));
-	
-	if(addonConfig::isActive('metainfos')) {
-		$form = metainfos::getMetaInfos($form, 'media');
-	}
 	
 	$field = $form->addRawField('<input type="file" name="file" />');
 	$field->fieldName(lang::get('select_file'));

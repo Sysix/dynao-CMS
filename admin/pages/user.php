@@ -37,12 +37,14 @@ if($action == 'add' || $action == 'edit') {
 	
 	$field = $form->addTextField('firstname', $form->get('firstname'));
 	$field->fieldName("Vorname");
+	$field->autofocus();
 	
 	$field = $form->addTextField('name', $form->get('name'));
 	$field->fieldName("Nachname");
 	
 	$field = $form->addTextField('email', $form->get('email'));
 	$field->fieldName(lang::get('email_adress'));
+	$field->addValidator('notEmpty', lang::get('user_email_empty'));
 	$field->addValidator('email', lang::get('user_wrong_email'));
 	
 	if($form->get('password') != $form->sql->getResult('password')) {
@@ -52,6 +54,7 @@ if($action == 'add' || $action == 'edit') {
 	}
 	
 	$field = $form->addTextField('password', $password);
+	$field->addValidator('notEmpty', lang::get('user_password_empty'));
 	$field->fieldName(lang::get('password'));
 	$field->setSuffix(lang::get('password_info'));
 	

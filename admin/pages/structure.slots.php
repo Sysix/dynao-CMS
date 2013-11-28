@@ -59,6 +59,7 @@ if(!is_null($secondpage)) {
 		
 		$field = $form->addTextField('name', $form->get('name'));
 		$field->fieldName(lang::get('name'));
+		$field->autofocus();
 		
 		$field = $form->addTextField('description', $form->get('description'));
 		$field->fieldName(lang::get('description'));

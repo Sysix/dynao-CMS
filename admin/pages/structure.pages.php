@@ -1,6 +1,7 @@
 <?php
+$secondpage = type::super('secondpage', 'string');
 
-if($structure_id) {
+if($secondpage == 'show') {	
 
 	$sort = type::super('sort', 'int');
 	
@@ -44,7 +45,7 @@ if($structure_id) {
 	
 	if($action == 'delete') {
 	
-		$structure_id = pageAreaAction::delete($id);
+		$id = pageAreaAction::delete($id);
 		echo message::success(lang::get('structure_content_delete'));
 		
 	}
@@ -60,7 +61,7 @@ if($structure_id) {
 	LEFT JOIN 
 		'.sql::table('module').' as m
 			ON m.id = s.modul
-	WHERE structure_id = '.$structure_id.'
+	WHERE structure_id = '.$id.'
 	ORDER BY `sort`');
 	$i = 1;
 	while($sql->isNext()) {
@@ -120,9 +121,9 @@ if($structure_id) {
 			  <div class="panel-heading">
 				<h3 class="panel-title pull-left"><?php echo $sql->get('name'); ?></h3>
 				<div class="pull-right btn-group">
-					<a href="<?php echo url::backend('structure', ['structure_id'=>$structure_id, 'action'=>'online', 'id'=>$sql->get('id')]); ?>" class="btn btn-sm dyn-<?php echo $class; ?>"><?php echo $statusText; ?></a>
-					<a href="<?php echo url::backend('structure', ['structure_id'=>$structure_id, 'action'=>'edit', 'id'=>$sql->get('id')]); ?>" class="btn btn-default btn-sm fa fa-edit"></a>
-					<a href="<?php echo url::backend('structure', ['structure_id'=>$structure_id, 'action'=>'delete', 'id'=>$sql->get('id')]); ?>" class="btn btn-danger btn-sm fa fa-trash-o delete"></a>
+					<a href="<?php echo url::backend('structure', ['secondpage'=>$secondpage, 'action'=>'online', 'id'=>$sql->get('id')]); ?>" class="btn btn-sm dyn-<?php echo $class; ?>"><?php echo $statusText; ?></a>
+					<a href="<?php echo url::backend('structure', ['secondpage'=>$secondpage, 'action'=>'edit', 'id'=>$sql->get('id')]); ?>" class="btn btn-default btn-sm fa fa-edit"></a>
+					<a href="<?php echo url::backend('structure', ['secondpage'=>$secondpage, 'action'=>'delete', 'id'=>$sql->get('id')]); ?>" class="btn btn-danger btn-sm fa fa-trash-o delete"></a>
 				</div>
 				<div class="clearfix"></div>
 			  </div>
@@ -151,11 +152,31 @@ if($structure_id) {
 		
 	} else {
 		
-		echo pageAreaHtml::selectBlock($structure_id,  $sql->num()+1);
+		echo pageAreaHtml::selectBlock($id,  $sql->num()+1);
 		
 	}
 
-//Wenn structure_id leer
+//Wenn secondpage
+} elseif($secondpage == 'edit') {
+	
+	$form = form::factory('structure', 'id='.$id, 'index.php');
+	
+	$field = $form->addTextField('name', $form->get('name'));
+	$field->fieldName(lang::get('name'));
+	$field->autofocus();
+	
+	$field = $form->addRadioField('online', $form->get('online'));
+	$field->fieldName(lang::get('status'));
+	$field->add(1, lang::get('online'));
+	$field->add(0, lang::get('offline'));
+	
+	$form->addParam('id', $id);
+	$field = $form->addHiddenField('secondpage', $secondpage);
+	$field->setSave(false);
+	
+	
+	echo $form->show();
+	
 } else {
 	
 	if(ajax::is()) {

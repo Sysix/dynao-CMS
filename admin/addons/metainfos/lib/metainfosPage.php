@@ -61,8 +61,15 @@ class metainfosPage {
 	
 		$field = $form->addTextField('label', $form->get('label'));
 		$field->fieldName(lang::get('description'));
+		$field->autofocus();
 		
-		$field = $form->addTextField('name', substr($form->get('name'), 4));
+		if($form->isSubmit()) {
+			$name = $form->get('name');	
+		} else {
+			$name = substr($form->get('name'), 4);
+		}
+		
+		$field = $form->addTextField('name', $name);
 		$field->fieldName(lang::get('name'));
 		
 		$field = $form->addSelectField('formtype', $form->get('formtype'));

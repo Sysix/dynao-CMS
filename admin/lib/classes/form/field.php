@@ -73,7 +73,7 @@ abstract class formField {
 		
 	}
 	
-	public function addAttribute($name, $value) {
+	public function addAttribute($name, $value = '') {
 		
 		if($name == 'class') {
 			$this->addClass($value);
@@ -168,13 +168,13 @@ abstract class formField {
 		
 	}
 	
-	public function autofocus($auto) {
+	public function autofocus($auto = true) {
 		
 		if(!is_bool($auto)) {
 			//new Exception();				
 		}
 		
-		if($read) {
+		if($auto) {
 			$this->addAttribute('autofocus');	
 		} else {
 			$this->delAttribute('autofocus');	
