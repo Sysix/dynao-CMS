@@ -6,7 +6,7 @@ abstract class formField {
 	var $name;
 	var $value;
 	
-	var $attributes = [];	
+	var $attributes;	
 	
 	var $suffix;
 	var $prefix;

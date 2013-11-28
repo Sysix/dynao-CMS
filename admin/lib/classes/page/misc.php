@@ -2,7 +2,7 @@
 
 class pageMisc {
 	
-	public static function getTreeStructure($offlinePages = true, $spacer = '&nbsp; &nbsp;', $parentId = 0, $lvl = 0) {
+	public static function getTreeStructure($offlinePages = true, $selected, $spacer = '&nbsp; &nbsp;', $parentId = 0, $lvl = 0, $select = false) {
 		
 		$extraWhere = '';
 		
@@ -11,32 +11,30 @@ class pageMisc {
 			$extraWhere =  ' AND online = 1';				
 		}
 		
-		$select = '';
+		if($select === false) {
+			$select = formSelect::factory('structure', $selected);
+		}
 		
 		$sql = sql::factory();
 		$sql->query('SELECT id, name, online FROM '.sql::table('structure').' WHERE parent_id = '.$parentId.$extraWhere.' ORDER BY sort')->result();	
 		while($sql->isNext()) {
 			
 			if($offlinePages) {
-				$style = ($sql->get('online') == 1) ? ' class="page-online"' : ' class="page-offline"';
+				$style = ($sql->get('online') == 1) ? 'page-online' : 'page-offline';
 			} else {
 				$style = '';	
 			}
 			
 			$name = $sql->get('name');
-			
-			if($spacer != '') {
 				
-				for($i = 1; $i <= $lvl; $i++) {
-					$name = $spacer.$name;
-				}
-				
+			for($i = 1; $i <= $lvl; $i++) {
+				$name = $spacer.$name;
 			}
 			
-			$select .= '<option value="'.$sql->get('id').'"'.$style.'>'.$name.'</option>'.PHP_EOL;
+			$select->add($sql->get('id'), $name, ['class'=>$style]);
 			
 			if($sql->num('SELECT id FROM '.sql::table('structure').' WHERE parent_id = '.$sql->get('id').$extraWhere)) {
-				$select .= self::getTreeStructure($offlinePages, $spacer, $sql->get('id'), $lvl+1);
+				self::getTreeStructure($offlinePages, $selected, $spacer, $sql->get('id'), $lvl+1, $select);
 			}
 			
 			$sql->next();

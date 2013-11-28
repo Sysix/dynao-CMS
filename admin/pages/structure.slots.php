@@ -54,7 +54,19 @@ if(!is_null($secondpage)) {
 } else {
 	
 	if($action == 'add' || $action == 'edit') {
+		
+		layout::addJsCode("
+	var button = $('#allcat-button');
+	var content = $('#allcat-content');
 	
+	button.change(function() {
+			if(button.is(':checked')) {
+				content.stop().slideUp(300);
+			} else {
+				content.stop().slideDown(300);
+			}
+	});");
+		print_r($_POST);
 		$form = form::factory('slots', 'id='.$id, 'index.php');
 		
 		$field = $form->addTextField('name', $form->get('name'));
@@ -66,6 +78,20 @@ if(!is_null($secondpage)) {
 		
 		$field = $form->addRawField('<select name="modul" class="form-control">'.pageAreaHtml::moduleList($form->get('modul_id')).'</select>');
 		$field->fieldName(lang::get('modul'));
+		
+		$field = $form->addCheckboxField('is-structure', $form->get('is-structure'));
+		$field->fieldName(lang::get('show'));
+		$field->add('1', lang::get('all_categoriees'), ['id'=>'allcat-button']);
+		
+		$select = pageMisc::getTreeStructure(true, $form->get('structure'));
+		
+		if($form->get('is-structure') == 1)
+			$field->addAttribute('style', 'display:none;');
+		
+		$select->setMultiple();
+		$select->setSize(10);
+		$select->setId('allcat-content');
+		$form->addElement('pages', $select);
 		
 		if($action == 'edit') {
 			$form->addHiddenField('id', $id);	

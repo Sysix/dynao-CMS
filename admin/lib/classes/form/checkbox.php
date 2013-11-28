@@ -22,7 +22,7 @@ class formCheckbox extends formField {
 		
 		$attributes['type'] = 'checkbox';
 		$attributes['value'] = $name;
-		$attributes['name'] = $this->name.'[]';	
+		$attributes['name'] = $this->name;
 		
 		if(isset($this->value[$attributes['value']]))
 			$attributes['checked'] = 'checked';
@@ -44,7 +44,11 @@ class formCheckbox extends formField {
 	public function get() {
 		
 		$return = '';
+		$count = count($this->output);
 		foreach($this->output as $val) {
+			if($count > 1) {
+				$val['attr']['name'] = $this->name.'[]';
+			}
 			$return .= '<label class="checkbox-inline"><input'.$this->convertAttr($val['attr']).'> '.$val['value'].'</label>';
 		}
 		

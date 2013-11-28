@@ -6,16 +6,20 @@ class formSelect extends formField {
 	
 	var $output = [];
 	
-	
-	public function setSelected($selected) {
+	public function __construct($name, $value, $attributes = []) {
 		
-		if(!is_array($selected)) {
-			$selected = explode('|', $selected);
+		parent::__construct($name, $value, $attributes);
+		$this->setSelected();
+		
+	}	
+	
+	public function setSelected() {
+		
+		if(!is_array($this->value)) {
+			$this->value = explode('|', $this->value);
 		}
 		
-		$selected = array_flip($selected);
-		
-		$this->value = $selected;
+		$this->value = array_flip($this->value);
 		
 		return $this;
 		
