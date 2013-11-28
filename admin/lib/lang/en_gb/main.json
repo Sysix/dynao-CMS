@@ -31,6 +31,7 @@
 	"no_entries":				"No entries",
 	"connection_again":			"Connection has been made again",
 	"template":					"Template",
+	"dashboard":				"Dashboard",
 	
 	#Kategorien
 	"category_save":			"save category",
@@ -86,6 +87,7 @@
 	"dynao_version":			"Dynao version",
 	"php_version":				"PHP version",
 	"mysql_version":			"MYSQL version",
+	"settings":					"Settings",
 	
 	#Structure
 	"structure_content_save":	"content successfully saved",

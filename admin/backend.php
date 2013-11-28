@@ -20,19 +20,19 @@ userPerm::add('page[delete]', lang::get('page[delete]'));
 userPerm::add('admin[user]', lang::get('admin[user]'));
 userPerm::add('admin[addon]', lang::get('admin[addon]'));
 
-backend::addNavi('Dashboard', url::backend('dashboard'), 'desktop');
-backend::addNavi('Structure', url::backend('structure'), 'list');
+backend::addNavi(lang::get('dashboard'), url::backend('dashboard'), 'desktop');
+backend::addNavi(lang::get('structure'), url::backend('structure'), 'list');
 
 if(dyn::get('user')->hasPerm('admin[user]')) {
-	backend::addNavi('User', url::backend('user'), 'user');
+	backend::addNavi(lang::get('user'), url::backend('user'), 'user');
 }
 
 if(dyn::get('user')->hasPerm('admin[addon]')) {
-	backend::addNavi('Addons', url::backend('addons'), 'code-fork');
+	backend::addNavi(lang::get('addons'), url::backend('addons'), 'code-fork');
 }
 
 if(dyn::get('user')->isAdmin()) {
-	backend::addNavi('Settings', url::backend('settings'), 'cogs');
+	backend::addNavi(lang::get('settings'), url::backend('settings'), 'cogs');
 }
 
 
