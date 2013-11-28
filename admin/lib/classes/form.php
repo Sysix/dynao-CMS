@@ -18,8 +18,6 @@ class form {
 	
 	var $formAttributes = [];
 	
-	// Beim Senden schauen ob die Forumluar-Einträge schon übernommen worden sind Methode: setPostsVar
-	var $isGetPosts = false;
 	var $isSubmit;
 	
 	// Formular wirklich speichern
@@ -95,16 +93,13 @@ class form {
 				
 		$submit = $this->addSubmitField('save', lang::get('save'));
 		$submit->addClass('btn-default');
-		$submit->setSave(false);
 			
 		$submit = $this->addSubmitField('save-back', lang::get('apply'));
-		$submit->addClass('btn-default');	
-		$submit->setSave(false);
+		$submit->addClass('btn-default');
 		
 		$back = $this->addButtonField('back', lang::get('back'));
 		$back->addClass('btn-warning');
 		$back->addClass('form-back');
-		$back->setSave(false);
 		
 		return $this;
 		
@@ -401,7 +396,8 @@ class form {
 	 * @return	this
 	 */
 	public function addButton($field) {
-	
+		
+		$field->setSave(false);
 		$this->buttons[$field->getName()] = $field;
 				
 		return $this;
@@ -498,36 +494,26 @@ class form {
 		
 		// Wurde schon isSubmit ausgeführt? dann schnelles Return
 		if(!is_null($this->isSubmit)) {
-			return $this->isSubmit;				
+			return $this->isSubmit;
 		}
-			
+		
 		$save = type::post('save');
-
-		$save_edit = null;	
-		if($this->isSaveEdit()) {
-			$save_edit = type::post('save-back');	
-		}
+		$save_edit = type::post('save-back');
 		
 		if(!is_null($save) || !is_null($save_edit)) {
-			
-			if(!$this->isGetPosts) {
 		
-				$this->setPostsVar();
-				$this->isGetPosts = true;
-				
-			}
+			$this->setPostsVar();
 			
 			$this->isSubmit = true;
-			
-			return true;				
 				
+		} else {
+			
+			$this->isSubmit = false;
+			
 		}
-		
-		$this->isSubmit = false;
-		
-		return false;
-		
-		
+				
+		return $this->isSubmit;	
+			
 	}
 	
 	/**
