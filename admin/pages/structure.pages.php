@@ -174,9 +174,27 @@ if($secondpage == 'show') {
 	$field = $form->addHiddenField('secondpage', $secondpage);
 	$field->setSave(false);
 	
-	
-	echo $form->show();
-	
+?>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title pull-left"><?php echo $form->get('name'); ?></h3>
+                    <div class="btn-group pull-right">
+						<a class="btn btn-sm btn-default" href="<?php echo url::backend('structure'); ?>"><?php echo lang::get('back'); ?></a>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="panel-body">
+				<?php
+					echo $form->show();
+				?>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php	
+
 } else {
 	
 	if(ajax::is()) {
