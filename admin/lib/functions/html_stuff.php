@@ -17,7 +17,7 @@ function html_convertAttribute($attributes) {
 				$val = implode(' ', $val);	
 			}
 			
-			$return .= ' '.$key.'="'.$val.'"';	
+			$return .= ' '.htmlspecialchars($key).'="'.htmlspecialchars($val).'"';	
 			
 		}			
 		
