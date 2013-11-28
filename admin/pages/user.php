@@ -35,6 +35,9 @@ if($action == 'add' || $action == 'edit') {
 	$field = $form->addMediaField('test', '');
 	$field->fieldName('Extra Input');
 	
+	$field = $form->addLinkField('test2', '');
+	$field->fieldName('Link');
+	
 	$field = $form->addTextField('firstname', $form->get('firstname'));
 	$field->fieldName("Vorname");
 	$field->autofocus();

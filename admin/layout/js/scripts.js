@@ -84,4 +84,26 @@ $(document).ready(function () {
 		
 	});
 	
+	$('.dyn-link .dyn-link-add').click(function() {
+	
+		var _this = $(this);
+		_this.closest('.dyn-link').addClass('dyn-link-active');
+		
+		$("body").append('<div class="modal fade" id="selectLink" tabindex="-1" role="dialog" aria-labelledby="selectLinkLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="selectLinkLabel">Artikel</h4></div><div class="modal-body"></div></div></div></div>');
+		
+		$(".modal-body").load('index.php?page=structure&subpage=popup #content .row .panel-body, #content .row #load');
+		
+		$('#selectLink').modal('show');
+			
+	});
+	
+	$('.dny-link .dyn-link-del').click(function() {	
+		var div = $(this).closest('.dyn-link').find('input').val('');
+	});
+	
+	$(document.body).on('hidden.bs.modal','.modal',function(){
+		$(this).remove();
+	});
+
+	
 });

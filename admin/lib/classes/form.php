@@ -53,7 +53,9 @@ class form {
 		
 		$this->setTable($table);
 		
-		$this->loadBackend();
+		if(dyn::get('backend')) {
+			$this->loadBackend();
+		}
 		
 		$this->addFormAttribute('class', 'form-horizontal');
 		$this->addFormAttribute('action', $this->action);
@@ -62,7 +64,8 @@ class form {
 		$this->setButtons();
 		
 		$this->setSuccessMessage(lang::get('form_saved'));
-				
+		$this->addParam('action', $this->mode);
+		
 	}
 	
 	/**
@@ -360,6 +363,34 @@ class form {
 	public function addRawField($value) {
 		
 		return $this->addField('form_'.count($this->return), $value, 'formRaw');
+		
+	}
+	
+	/**
+	 * Ein Linkfeld erstellen
+	 *
+	 * @param	string	$name			Der Name
+	 * @param	string	$value			Der Value
+	 * @return	class
+	 *
+	 */
+	public function addLinkField($name, $value, $attributes = []) {
+		
+		return $this->addField($name, $value, 'formLink', $attributes);
+		
+	}
+	
+	/**
+	 * Ein Linkfeld erstellen
+	 *
+	 * @param	string	$name			Der Name
+	 * @param	string	$value			Der Value
+	 * @return	class
+	 *
+	 */
+	public function addLinklistField($name, $value, $attributes = []) {
+		
+		return $this->addField($name, $value, 'formLinklist', $attributes);
 		
 	}
 	
@@ -735,8 +766,6 @@ class form {
 	public function show() {
 		
 		extension::get('FORM_BEFORE_ACTION', $this);
-		
-		$this->addParam('action', $this->mode);
 
 		foreach($this->getParams() as $key=>$value) {
 			$param = $this->addHiddenField($key, $value);
