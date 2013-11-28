@@ -15,7 +15,7 @@ $('.dny-media .dyn-media-del').click(function() {
 	var div = $(this).closest('.dyn-media').find('input').val('');
 });
 
-$('#media-select-category').change(function() { 
+$('#media-select-category').change(function() {
 	$(this).closest('form').submit();  
 });
 

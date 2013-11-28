@@ -509,17 +509,6 @@ ul.news li .btn {
 	height:6px;
 }
 
-#structure-tree li button {
-	border:0px;
-	display:block;
-	cursor:pointer;
-	float:left;
-	position:relative;
-	background:transparent;
-	height:41px;
-	width:30px;
-}
-
 #structure-tree li.structure-edit  {
 	background:#fff;
 }

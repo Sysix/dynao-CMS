@@ -1,3 +1,3 @@
 <?php
-echo pageMisc::getTreeStructurePagePopup();
+ajax::addReturn(pageMisc::getTreeStructurePagePopup());
 ?>
