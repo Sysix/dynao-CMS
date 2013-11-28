@@ -2,10 +2,11 @@
 
 class addon {
 	
-	var $config = [];
-	var $name;
-	var $addonConfig;
-	var $sql;
+	public $config = [];
+	public $name;
+	public $sql;
+	public $isChange = false;
+	protected $newEntrys = [];
 	
 	const INSTALL_FILE = 'install.php';
 	const UNINSTALL_FILE = 'uninstall.php';
@@ -36,6 +37,28 @@ class addon {
 	public function get($name) {
 	
 		return $this->config[$name];
+		
+	}
+	
+	public function add($name, $value, $toSave = false) {
+		
+		$this->config[$name] = $value;
+		
+		if($toSave) {
+			$this->isChange = true;
+			$this->newEntrys[$name] = $value;
+		}
+		
+	}
+	
+	public function saveConfig() {
+		
+		if(!$this->isChange)
+			return true;
+			
+		$newEntrys = array_merge($this->config, $this->newEntrys);
+			
+		return file_put_contents(dir::addon($this->name, 'config.json'), json_encode($newEntrys, JSON_PRETTY_PRINT));
 		
 	}
 	
@@ -90,16 +113,7 @@ class addon {
 	
 	public function getConfig() {
 		
-		if($this->isActive() && $this->isInstall()) {
-	
-			return addonConfig::getConfig($this->name);
-			
-		} else {
-			
-			$configFile = dir::addon($this->name, 'config.json');
-			return json_decode(file_get_contents($configFile), true);
-			
-		}
+		return $this->config;
 		
 	}
 	
