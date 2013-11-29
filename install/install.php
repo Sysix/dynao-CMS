@@ -2,20 +2,19 @@
 
 error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors', 1);
-session_start();
 
-include_once('../admin/lib/classes/dir.php');
+include('../admin/lib'.DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'dir.php');
+
 new dir();
-dir::$base = $_SERVER['DOCUMENT_ROOT'].str_replace(DIRECTORY_SEPARATOR.'install'.DIRECTORY_SEPARATOR.'install.php', '', $_SERVER['PHP_SELF']);
 
 include_once(dir::classes('autoload.php'));
 autoload::register();
-autoload::addDir('utils');
+autoload::addDir(dir::classes('utils'));
 
-include_once(dir::functions('html_stuff.php'));
-include_once(dir::functions('url_stuff.php'));
+new dyn();
 
-sql::connect('localhost', 'dynao_user', 'dasisteinpasswort', 'dynao');
+$DB = dyn::get('DB');
+sql::connect($DB['host'], $DB['user'], $DB['password'], $DB['database']);
 
 $sql = new sql();
 $sql = $sql->query('CREATE TABLE IF NOT EXISTS `module` (
@@ -109,8 +108,8 @@ $sql->query('CREATE TABLE IF NOT EXISTS `structure_area` (
 $sql->query('CREATE TABLE IF NOT EXISTS `addons` (
   `id` 			int(11) 	unsigned	NOT NULL	auto_increment,
   `name` 		varchar(255)			NOT NULL,
-  `online`		int(1)					NOT NULL,
   `active`		int(1)					NOT NULL,
+  `install`		int(1)					NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 
@@ -148,7 +147,8 @@ $sql->query('CREATE TABLE IF NOT EXISTS `slots` (
   `link10` 		varchar(255) 			NOT NULL,
   `php1` 		text 					NOT NULL,
   `php2` 		text 					NOT NULL,
+    PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 
-echo message::success('Update erfolgreich');
+echo 'Update erfolgreich';
 ?>

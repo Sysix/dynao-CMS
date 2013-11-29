@@ -11,6 +11,8 @@ foreach($blocks as $block) {
 	echo $block->getContent();
 }
 
+echo markdown::parse('#Hello World!');
+
 dyn::add('content', ob_get_contents());
 
 ob_end_clean();
