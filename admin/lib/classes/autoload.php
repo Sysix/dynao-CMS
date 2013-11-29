@@ -8,16 +8,21 @@ class autoload {
 	static $registered = false;
 	static $isNewCache = false;
 	
+	protected static $composer;
+	
 	
 	/**
 	 * Autoload registrieren
-	 *
 	 */
 	static public function register() {
 		
 		if(self::$registered) {
 			return;	
 		}
+		
+		self::$composer = include dir::vendor('autoload.php');
+		// kein Autoload da wir den PSR-0 Standard von loadClass() benutzen
+		self::$composer->unregister();
 		
 		if(spl_autoload_register([__CLASS__, 'autoloader']) === false) {
 			//throw new Exception();
@@ -34,7 +39,6 @@ class autoload {
 	
 	/**
 	 * Autoload de-registrieren
-	 *
 	 */
 	static public function unregister() {
 	
@@ -48,11 +52,10 @@ class autoload {
 	 *
 	 * @param	string	$class			Der Klassennamen
 	 * @return	bool
-	 *
 	 */	
 	static public function autoloader($class) {
 		
-		if(class_exists($class) || trait_exists($class)) {
+		if(self::classExists($class)) {
 			return true;
 		}
 		
@@ -60,17 +63,45 @@ class autoload {
 		
 		$classPath = implode(DIRECTORY_SEPARATOR, array_map('strtolower', $treffer[0]));
 		
-		if(file_exists(dir::classes($classPath.'.php'))) {
-			self::addClass(dir::classes($classPath.'.php'));
+		if(isset(self::$classes[$class])) {
+			
+			if(is_readable(self::$classes[$class])) {
+				self::addClass($class, self::$classes[$class]);
+				
+				if(self::classExists($class)) {
+					return true;
+				}				
+			}
+			
+			// Datei im Cache drin, jedoch exsistiert sie nichtmehr
+			unset(self::$classes[$class]);
+			self::$isNewCache = true;
 		}
 		
-		return class_exists($class);
+		if(is_readable(dir::classes($classPath.'.php'))) {
+			self::addClass($class, dir::classes($classPath.'.php'));
+		}
+		
+		$classPath = self::$composer->findFile($class);
+		if(!is_null($classPath)) {
+			self::addClass($class, $classPath);	
+		}
+		
+		return self::classExists($class);
+		
+	}
+	
+	/**
+	 * Überprüfen ob die Klasse|Trait|Interface exsistiert
+	 */
+	public static function classExists($class) {
+	
+		return class_exists($class, false) || trait_exists($class, false) || interface_exists($class, false);
 		
 	}
 	
 	/**
 	 * Die ganzen Klassen in einer Cache Datei speichern
-	 *
 	 */
 	static public function saveCache() {
 		
@@ -87,7 +118,6 @@ class autoload {
 	
 	/**
 	 * Den Cache laden
-	 *
 	 */
 	static protected function loadCache() {
 		
@@ -98,21 +128,16 @@ class autoload {
 				
 		list(self::$classes, self::$dirs) = json_decode(cache::read($cacheFile), true);
 		
-		foreach(self::$classes as $class) {
-			include_once($class);
-		}
-		
 	}
 	
 	/**
 	 * Hinzufügen einer Klasse
 	 *
 	 * @param	string	$path			Der Pfad der Datei
-	 *
 	 */
-	static public function addClass($path) {
+	static public function addClass($class, $path) {
 		
-		self::$classes[] = $path;
+		self::$classes[$class] = $path;
 		
 		include_once($path);
 		
@@ -122,7 +147,6 @@ class autoload {
 	 * Einen ganzen Ordner durchscannen und alle Klassen includen
 	 *
 	 * @param	string	$dir			Der Ordner
-	 *
 	 */
 	static public function addDir($dir) {
 		

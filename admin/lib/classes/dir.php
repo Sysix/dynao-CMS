@@ -45,6 +45,12 @@ class dir {
 		return self::backend('lib'.DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.$file);
 
 	}
+	
+	public static function vendor($file = '') {
+
+		return self::backend('lib'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.$file);
+
+	}
 
 	public static function functions($file = '') {
 
