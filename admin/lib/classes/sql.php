@@ -138,6 +138,24 @@ class sql {
 		
 	}
 	
+	public function getArray($row, $delimer = '|') {
+	
+		return explode($this->get($row), $delimer);
+		
+	}
+	
+	public function getJson($row) {
+	
+		return json_decode($this->get($row), true);
+		
+	}
+	
+	public function getSerialize($row) {
+	
+		return unserialize($row);
+		
+	}
+	
 	public function getResult($row, $default = null) {
 		
 		if(isset($this->result[$row])) {

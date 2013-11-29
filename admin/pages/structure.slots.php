@@ -80,8 +80,8 @@ if(!is_null($secondpage)) {
 		$field->fieldName(lang::get('modul'));
 		
 		$field = $form->addCheckboxField('is-structure', $form->get('is-structure'));
-		$field->fieldName(lang::get('show'));
-		$field->add('1', lang::get('all_categoriees'), ['id'=>'allcat-button']);
+		$field->fieldName(lang::get('slots_show'));
+		$field->add('1', lang::get('all_categories'), ['id'=>'allcat-button']);
 		
 		$select = pageMisc::getTreeStructure(true, $form->get('structure'));
 		

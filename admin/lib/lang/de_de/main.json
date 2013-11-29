@@ -32,6 +32,7 @@
 	"connection_again":			"Verbindung wurde erneut hergestellt",
 	"template":					"Template",
 	"dashboard":				"Dashboard",
+	"description":				"Beschreibung",
 	
 	#Kategorien
 	"category_save":			"Kategorie speichern",
@@ -40,6 +41,7 @@
 	"no_categories":			"Keine Kategorien",
 	"no_category":				"Keine Kategorie",
 	"category_deleted":			"Kategorie erfolgreich gelöscht",
+	"all_categories":			"Alle Kategorien",
 	
 	#Rights
 	"page[edit]":				"Seiten bearbeiten / erstellen",
@@ -110,6 +112,8 @@
 	#Slots
 	"slots_current_page":		"Slots im aktuellen Template",
 	"slots":					"Slots",
+	"slot_name_not_exist":		"[Der Slot \"%s\" existiert nicht]",
+	"slots_show":				"Anzeigen in",
 	
 	#User
 	"user_wrong_email":			"Bitte geben Sie eine gültige E-Mail-Adresse an",
