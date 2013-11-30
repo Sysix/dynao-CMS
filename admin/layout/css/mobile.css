@@ -1,6 +1,24 @@
+@media (min-width: 600px) {
+	
+	body {
+		background:url(../img/bg/wood_sm.jpg) no-repeat fixed #552413;
+		-webkit-background-size:cover;
+		-moz-background-size:cover;
+		-o-background-size:cover;
+		background-size:cover;
+	}
+	
+}
 
-@media (min-width: 978px) and (max-width: 1200px) {
-
+@media (min-width: 978px) {
+	
+	body {
+		background:url(../img/bg/wood.jpg) no-repeat fixed #552413;
+		-webkit-background-size:cover;
+		-moz-background-size:cover;
+		-o-background-size:cover;
+		background-size:cover;
+	}
  
 }
 
