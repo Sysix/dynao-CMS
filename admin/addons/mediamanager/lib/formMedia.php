@@ -29,15 +29,15 @@ class formMedia extends formField {
 		$this->addAttribute('name', $this->name);
 		
 		$this->addAttribute('type', 'text');
-		$this->addAttribute('placeholder', 'Medium auswählen...');
+		$this->addAttribute('placeholder', lang::get('select_media').'...');
 		$this->addClass('form-control');
 		
 		return '
 		<div class="input-group dyn-media">
-			<span class="input-group-addon"><i class="fa dyn-media-add" title="Medium auswählen">=</i></span>
+			<span class="input-group-addon"><i class="fa dyn-media-add" title="'.lang::get('select_media').'">=</i></span>
 			<input type="hidden" name="'.$this->name.'_id" value="'.$this->value.'">
 			<input'.$this->convertAttr().'>
-			<span class="input-group-addon"><i class="fa fa-minus-square-o  dyn-media-del" title="Feld leeren"></i></span>
+			<span class="input-group-addon"><i class="fa fa-minus-square-o  dyn-media-del" title="'.lang::get('field_set_empty').'"></i></span>
 		</div>';
 		
 	}

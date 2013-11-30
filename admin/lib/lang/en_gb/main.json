@@ -12,7 +12,8 @@
 	"actions":					"actions",
 	"title":					"title",
 	"select":					"select",
-	"description":				"description",
+	"selected":					"selected",
+	"description":				"description",	
 	
 	#Aktionen
 	"update":					"update",
@@ -79,6 +80,7 @@
 	"addon_not_install_active":	"The addon %s must be installed and enabled<br />",
 	"addon_need_version":		"The addon %s must be present at least in version %s<br />",
 	"addon_deleted":			"The addon %s was successfully deleted",
+	"addon_no_readme":			"no README.md exists",
 	
 	#Settings
 	"settings_name_of_site":	"Name of the site",
@@ -138,5 +140,14 @@
 	
 	#traitMeta
 	"traitmeta_callable_func":	"%s::%s expected as 2 Parameter a callable function",
-	"traitmeta_not_exists":		"%s does not have the method %s"
+	"traitmeta_not_exists":		"%s does not have the method %s",
+	
+	#formLink
+	"select_page":				"select page",
+	"field_set_empty":			"empty field",
+	"element_to_top":			"move item to the top",
+	"element_to_up":			"move item up",
+	"element_to_down":			"move item down",
+	"element_to_bottom":		"move item to the bottom",
+	"element_delete":			"delete item"
 }

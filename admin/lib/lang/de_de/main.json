@@ -12,6 +12,8 @@
 	"actions":					"Aktionen",
 	"title":					"Titel",
 	"select":					"Auswählen",
+	"selected":					"ausgewählt",
+	"description":				"Beschreibung",
 	
 	#Aktionen
 	"update":					"aktualisieren",
@@ -32,7 +34,6 @@
 	"connection_again":			"Verbindung wurde erneut hergestellt",
 	"template":					"Template",
 	"dashboard":				"Dashboard",
-	"description":				"Beschreibung",
 	
 	#Kategorien
 	"category_save":			"Kategorie speichern",
@@ -79,6 +80,7 @@
 	"addon_not_install_active":	"Das Addon %s muss installiert und aktiviert werden<br />",
 	"addon_need_version":		"Das Addon %s muss mindestens in Version %s vorhanden sein<br />",
 	"addon_deleted":			"Das Addon %s wurde erfolgreich gelöscht",
+	"addon_no_readme":			"Keine README.md vorhanden",
 	
 	#Settings
 	"settings_name_of_site":	"Name der Website",
@@ -142,6 +144,15 @@
 	
 	#traitMeta
 	"traitmeta_callable_func":	"%s::%s erwartet als 2. Parameter eine aufrufbare Funktion",
-	"traitmeta_not_exists":		"%s besitzt die Methode %s nicht"	
+	"traitmeta_not_exists":		"%s besitzt die Methode %s nicht",
+	
+	#formLink
+	"select_page":				"Seite auswählen",
+	"field_set_empty":			"Feld leeren",
+	"element_to_top":			"Element nach ganz oben verschieben",
+	"element_to_up":			"Element nach oben verschieben",
+	"element_to_down":			"Element nach unten verschieben",
+	"element_to_bottom":		"Element nach ganz unten verschieben",
+	"element_delete":			"Element löschen"
 	
 }

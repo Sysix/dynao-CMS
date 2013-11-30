@@ -29,15 +29,15 @@ class formLink extends formField {
 		$this->addAttribute('name', $this->name);
 		
 		$this->addAttribute('type', 'text');
-		$this->addAttribute('placeholder', 'Seite auswählen...');
+		$this->addAttribute('placeholder', lang::get('select_page').'...');
 		$this->addClass('form-control');
 		
 		return '
 		<div class="input-group dyn-link">
-			<span class="input-group-addon"><i class="fa dyn-link-add" title="Seite auswählen">=</i></span>
+			<span class="input-group-addon"><i class="fa dyn-link-add" title="'.lang::get('select_page').'">=</i></span>
 			<input type="hidden" name="'.$this->name.'_id" value="'.$this->value.'">
 			<input'.$this->convertAttr().'>
-			<span class="input-group-addon"><i class="fa fa-minus-square-o  dyn-link-del" title="Feld leeren"></i></span>
+			<span class="input-group-addon"><i class="fa fa-minus-square-o  dyn-link-del" title="'.lang::get('field_set_empty').'"></i></span>
 		</div>';
 		
 	}

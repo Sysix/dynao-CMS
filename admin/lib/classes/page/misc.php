@@ -156,7 +156,7 @@ class pageMisc {
 			while($sql->isNext()) {
 				
 					
-				$button = '<button data-id="'.$sql->get('id').'" data-name="'.$sql->get('name').'" class="btn btn-sm btn-warning dyn-link-select">'.lang::get('select').'</button>';
+				$button = '<button data-id="'.$sql->get('id').'" data-name="'.$sql->get('name').'" data-loading-text="'.lang::get('selected').'" class="btn btn-sm btn-warning dyn-link-select">'.lang::get('select').'</button>';
 				
 				$select .= '<li>'.PHP_EOL.'
 					<div class="handle">'.$sql->get('name').PHP_EOL.'

@@ -79,15 +79,6 @@ fieldset[disabled] .btn-default.active {
 	line-height:30px;
 }
 
-h1 { 
-	line-height:85px;
-	font-weight:300;
-	font-size:24px;
-	color:#fff;
-	margin:0;
-	padding:0 0 0 20px; 
-}
-
 #wrap { 
 	background:url(../img/bg/noise_side.png) repeat-y top left;
 	left:130px;
@@ -194,6 +185,15 @@ h1 {
 #subnavi {
 	width:240px;
 	position:absolute;
+}
+
+#subnavi h1 { 
+	line-height:85px;
+	font-weight:300;
+	font-size:24px;
+	color:#fff;
+	margin:0;
+	padding:0 0 0 20px; 
 }
 
 #user {

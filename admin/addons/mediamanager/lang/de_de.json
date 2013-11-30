@@ -12,8 +12,9 @@
 	"file_in_use":					"Einzelne Seiten benutzen diese Datei noch",
 	"select_file":					"Datei auswählen",
 	"please_load_file":				"Bitte Laden Sie eine Datei hoch",
-	"media_edit":					"Media bearbeiten",
+	"media_edit":					"Medium bearbeiten",
 	"file_type":					"Dateityp",
+	"select_media":					"Medium auswählen",
 	
 	"media[edit]":					"Medien bearbeiten / hochladen",
 	"media[delete]":				"Medien löschen",

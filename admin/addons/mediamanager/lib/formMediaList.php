@@ -67,12 +67,12 @@ class formMediaList extends formField {
 			'.$this->getOptions().'
 			</select>
 			<span class="input-group-addon">
-				<i class="fa dyn-medialist-add" title="Medium auswählen">=</i>
-				<i class="fa fa-minus-square-o dyn-medialist-del" title="Feld leeren"></i>
-				<i class="fa fa-angle-double-up dyn-medialist-top" title="Medium auswählen"></i>
-				<i class="fa fa-angle-up dyn-medialist-up" title="Medium auswählen"></i>
-				<i class="fa fa-angle-down dyn-medialist-down" title="Medium auswählen"></i>
-				<i class="fa fa-angle-double-down dyn-medialist-bottom" title="Medium auswählen"></i>		
+				<i class="fa dyn-medialist-add" title="'.lang::get('select_media').'">=</i>
+				<i class="fa fa-minus-square-o dyn-medialist-del" title="'.lang::get('element_delete').'"></i>
+				<i class="fa fa-angle-double-up dyn-medialist-top" title="'.lang::get('element_to_top').'"></i>
+				<i class="fa fa-angle-up dyn-medialist-up" title="'.lang::get('element_to_up').'"></i>
+				<i class="fa fa-angle-down dyn-medialist-down" title="'.lang::get('element_to_down').'"></i>
+				<i class="fa fa-angle-double-down dyn-medialist-bottom" title="'.lang::get('element_to_bottom').'"></i>		
 			</span>
 		</div>';
 	}
