@@ -1,6 +1,8 @@
 <?php
 
 class media {
+	use traitFactory;
+	use traitMeta;
 	
 	public $sql;
 

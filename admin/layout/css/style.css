@@ -151,7 +151,7 @@ h1 {
 	padding-top:100px;
 }
 
-#navi ul li a {
+#navi a {
 	width:100px;
 	height:85px;
 	padding-top:15px;
@@ -169,18 +169,18 @@ h1 {
 	transition: all 0.5s ease-in-out;
 }
 
-#navi ul li.active a {
+#navi li.active a {
 	background:#252525;
 	border-bottom:3px solid #202020;
 	color:#fff;
 	opacity:1;
 }
 
-#navi ul li a:hover {
+#navi a:hover {
 	opacity:1;
 }
 
-#navi ul li a span {
+#navi span {
 	display:block;
 	font-size:12px;
 	line-height:normal;
@@ -196,7 +196,7 @@ h1 {
 	position:absolute;
 }
 
-#subnavi #user {
+#user {
 	width:240px;
 	height:100px;
 	background:#202020;
@@ -208,7 +208,7 @@ h1 {
 	line-height:normal;
 }
 
-#subnavi #user h3 {
+#user h3 {
 	color:#fff;
 	font-size:18px;
 	font-weight:300;
@@ -216,7 +216,7 @@ h1 {
 	padding:0; 
 }
 
-#subnavi #user img {
+#user img {
 	border-radius:4px;
 	width:80px;
 	height:80px;
@@ -225,7 +225,7 @@ h1 {
 	left:-90px;
 }
 
-#subnavi #user a.settings {
+#user a.settings {
 	color:#5c5c5c;
 	font-size:18px;
 	position:absolute;
@@ -238,7 +238,7 @@ h1 {
 	transition: all 0.5s ease-in-out;
 }
 
-#subnavi #user a.messages {
+#user a.messages {
 	color:#fff;
 	font-size:18px;
 	position:absolute;
@@ -251,7 +251,7 @@ h1 {
 	transition: all 0.5s ease-in-out;
 }
 
-#subnavi #user a.messages span {
+#user a.messages span {
 	position:absolute;
 	top:-5px;
 	right:-5px;
@@ -264,11 +264,11 @@ h1 {
 	font-family:'Open Sans';
 }
 
-#subnavi #mobil {
+#mobil {
 	display:none;
 }
 
-#subnavi #user a.logout {
+#user a.logout {
 	color:#5c5c5c;
 	position:absolute;
 	bottom:20px;
@@ -280,11 +280,11 @@ h1 {
 	transition: all 0.5s ease-in-out;
 }
 
-#subnavi #user a.logout span {
+#user a.logout span {
 	font-family:'Open Sans';
 }
 
-#subnavi #user a:hover {
+#user a:hover {
 	color:#fff;
 }
 
@@ -534,4 +534,12 @@ ul.news li .btn {
 	border-radius:5px;
 	height:41px;
 	visibility:visible !important;
+}
+
+.input-group-addon .fa {
+	display:block;
+	margin:2px 0px;
+	cursor:pointer;
+	height:14px;
+	width:14px;
 }

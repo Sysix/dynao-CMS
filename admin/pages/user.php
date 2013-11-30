@@ -32,11 +32,11 @@ if($action == 'add' || $action == 'edit') {
 	
 	$form = form::factory('user','id='.$id,'index.php');
 	
-	$field = $form->addMediaField('test', '');
-	$field->fieldName('Extra Input');
+	$field = $form->addMediaField('avatar', $form->get('avatar'));
+	$field->fieldName('Avatar');
 	
-	$field = $form->addLinkField('test2', '');
-	$field->fieldName('Link');
+	$field = $form->addMediaListField('gallery', $form->get('gallery'));
+	$field->fieldName('Gallery');	
 	
 	$field = $form->addTextField('firstname', $form->get('firstname'));
 	$field->fieldName("Vorname");
