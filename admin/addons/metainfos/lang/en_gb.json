@@ -1,7 +1,8 @@
 {
-	"metainfos[edit]":			"metadata edit / create",
+	"metainfos[edit]":			"metadata edit/create",
 	"metainfos[delete]":		"Metadata delete",
 	
+	"metainfos":				"meta info's",
 	"entry_deleted":			"entry successfully deleted",
 	"prefix":					"prefix",
 	"description":				"description",

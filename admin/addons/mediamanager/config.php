@@ -37,11 +37,4 @@ if($page == "media" && $subpage == "popup") {
 
 pageArea::addType('MEDIA', 10);
 
-if(addonConfig::isActive('metainfos')) {
-	
-	metainfosPage::addType('DYN_MEDIA');
-	metainfosPage::addType('DYN_MEDIA_LIST');
-		
-}
-
 ?>

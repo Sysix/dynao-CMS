@@ -1,11 +1,15 @@
 <?php
 
-if(type::super('page', 'string') == 'addons') {
-	backend::addSubnavi('Meta Infos', url::backend('meta'), 'plus');
-}
-
 userPerm::add('metainfos[edit]', lang::get('metainfos[edit]'));
 userPerm::add('metainfos[delete]', lang::get('metainfos[delete]'));
+
+if((
+	dyn::get('user')->hasPerm('metainfos[edit]') ||
+	dyn::get('user')->hasPerm('metainfos[delete]')
+	) && type::super('page', 'string') == 'addons'
+) {
+	backend::addSubnavi(lang::get('metainfos'), url::backend('meta'), 'plus');
+}
 
 $page = type::super('page', 'string');
 $subpage = type::super('subpage', 'string');
@@ -20,11 +24,18 @@ if($page == 'structure' && $secondpage == 'edit') {
 	
 }
 
-if(addonConfig::isActive('mediamanager') && $page == 'media' && $subpage == 'files' && in_array($action, ['add', 'edit'])) {
+if(addonConfig::isActive('mediamanager')) {
 	
-	extension::add('FORM_BEFORE_ACTION', function($form) {
-		$form = metainfos::getMetaInfos($form, 'media');
-	});	
+	if($page == 'media' && $subpage == 'files' && in_array($action, ['add', 'edit'])) {
+		
+		metainfosPage::addType('DYN_MEDIA');
+		metainfosPage::addType('DYN_MEDIA_LIST');
+	
+		extension::add('FORM_BEFORE_ACTION', function($form) {
+			$form = metainfos::getMetaInfos($form, 'media');
+		});
+	
+	}
 		
 }
 ?>

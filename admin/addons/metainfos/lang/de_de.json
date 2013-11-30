@@ -1,7 +1,8 @@
 {
-	"metainfos[edit]":			"Metadaten bearbeiten / erstellen",
+	"metainfos[edit]":			"Metadaten bearbeiten/erstellen",
 	"metainfos[delete]":		"Metadaten löschen",
 	
+	"metainfos":				"Meta Info's",
 	"entry_deleted":			"Eintrag erfolgreich gelöscht",
 	"prefix":					"Prefix",
 	"description":				"Beschreibung",

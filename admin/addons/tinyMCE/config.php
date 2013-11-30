@@ -12,6 +12,4 @@ layout::addJsCode('tinymce.init({
 });
 ', false);
 
-userPerm::add('tinyMCE[]', 'TinyMCE konfigurieren');
-
 ?>

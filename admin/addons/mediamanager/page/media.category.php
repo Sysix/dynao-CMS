@@ -27,7 +27,7 @@ $breadcrumb[] = '<li><a href="'.url::backend('media', ['subpage'=>'category']).'
 
 echo '<ul class="breadcrumb">'.implode('', array_reverse($breadcrumb)).'</ul>';
 
-if($action == 'delete') {
+if($action == 'delete' && dyn::get('user')->hasPerm('media[category][delete]')) {
 	
 	$error = [];
 	
@@ -64,7 +64,7 @@ if($action == 'delete') {
 		
 }
 
-if(in_array($action, ['save-add', 'save-edit'])) {
+if(in_array($action, ['save-add', 'save-edit']) && dyn::get('user')->hasPerm('media[category][edit]')) {
 	
 	$sql = sql::factory();
 	$sql->setTable('media_cat');
@@ -104,7 +104,7 @@ $table->addSection('tbody');
 	
 $table->setSql('SELECT * FROM '.sql::table('media_cat').' WHERE pid = '.$pid.' ORDER BY sort ASC');
 	
-if(in_array($action, ['edit', 'add'])) {
+if(in_array($action, ['edit', 'add']) && dyn::get('user')->hasPerm('media[category][edit]')) {
 		
 	echo '<form method="post" action="index.php">';
 		
@@ -131,7 +131,7 @@ if(in_array($action, ['edit', 'add'])) {
 	
 }
 
-if($action == 'add') {
+if($action == 'add' && dyn::get('user')->hasPerm('media[category][edit]')) {
 	
 	$inputName = formInput::factory('name', '');
 	$inputName->addAttribute('type', 'text');
@@ -153,7 +153,7 @@ if($table->numSql()) {
 
 	while($table->isNext()) {
 		
-		if($action == 'edit' && $table->get('id') == $id) {
+		if($action == 'edit' && $table->get('id') == $id && dyn::get('user')->hasPerm('media[category][edit]')) {
 				
 			$inputName = formInput::factory('name', $table->get('name'));
 			$inputName->addAttribute('type', 'text');
@@ -174,8 +174,16 @@ if($table->numSql()) {
 			
 		} else {
 			
-			$edit = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'edit', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';	
-			$delete = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'delete', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
+			$edit = '';
+			$delete = '';
+			
+			if(dyn::get('user')->hasPerm('media[category][edit]')) {
+				$edit = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'edit', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';
+			}
+			
+			if(dyn::get('user')->hasPerm('media[category][delete]')) {
+				$delete = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'delete', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
+			}
 		
 			$table->addRow(array('data-id'=>$table->get('id')))
 			->addCell('<i class="fa fa-sort"></i>')
@@ -201,9 +209,15 @@ if($table->numSql()) {
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title pull-left"><?php echo lang::get('media'); ?></h3>
+                <?php
+				if(dyn::get('user')->hasPerm('media[category][edit]')) {
+				?>
 				<div class="btn-group pull-right">
 					<a href="<?php echo url::backend('media', ['subpage'=>'category', 'action'=>'add', 'pid'=>$pid]); ?>" class="btn btn-sm btn-default"><?php echo lang::get('add'); ?></a>
 				</div>
+                <?php
+				}
+				?>
 				<div class="clearfix"></div>
 			</div>
 			<?php echo $table->show(); ?>
@@ -213,7 +227,7 @@ if($table->numSql()) {
 <?php
 
 
-if(in_array($action, ['edit', 'add'])) {
+if(in_array($action, ['edit', 'add']) && dyn::get('user')->hasPerm('media[category][edit]')) {
 	echo '</form>';
 }
 

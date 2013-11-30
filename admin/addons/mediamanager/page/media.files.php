@@ -4,7 +4,7 @@ $catId = type::super('catId', 'int', 0);
 $subaction = type::super('subaction', 'string');
 
 
-if($action == 'delete') {
+if($action == 'delete' && dyn::get('user')->hasPerm('media[delete]')) {
 	
 	$values = [];
 	for($i = 1; $i <= 10; $i++) {
@@ -47,7 +47,7 @@ if($action == 'delete') {
 		
 }
 
-if($action == 'add' || $action == 'edit') {
+if(in_array($action, ['add', 'edit']) && dyn::get('user')->hasPerm('media[edit]')) {
 	
 	$form = form::factory('media', 'id='.$id, 'index.php');
 	$form->addFormAttribute('enctype', 'multipart/form-data');
@@ -123,9 +123,13 @@ if($action == '') {
 				
 			$media = new media($table->getSql());			
 			
-			$edit = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'edit', 'id'=>$table->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
-			$delete = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+			if(dyn::get('user')->hasPerm('media[edit]')) {
+				$edit = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'edit', 'id'=>$table->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
+			}
 			
+			if(dyn::get('user')->hasPerm('media[delete]')) {
+				$delete = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+			}
 			
 			$table->addRow()
 			->addCell('<img src="'.$media->getPath().'" style="max-width:50px; max-height:50px" />')
@@ -151,9 +155,15 @@ if($action == '') {
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title pull-left"><?php echo lang::get('media'); ?></h3>
+                    <?php
+					if(dyn::get('user')->hasPerm('media[edit]')) {
+					?>
 					<div class="btn-group pull-right">
 						<a href="<?php echo url::backend('media', ['subpage'=>'files', 'action'=>'add', 'id'=>$id]); ?>" class="btn btn-sm btn-default"><?php echo lang::get('add'); ?></a>
 					</div>
+                    <?php
+					}
+					?>
 					<div class="clearfix"></div>
                 </div>
 				<div class="panel-body">

@@ -1,7 +1,16 @@
 <?php
-
-backend::addSubnavi(lang::get('media_manage'),				url::backend('media', ['subpage'=>'files']));
-backend::addSubnavi(lang::get('media_manage_cat'),			url::backend('media', ['subpage'=>'category']));
+if(
+	dyn::get('user')->hasPerm('media[edit]') ||
+	dyn::get('user')->hasPerm('media[delete]')
+) {
+	backend::addSubnavi(lang::get('media_manage'),				url::backend('media', ['subpage'=>'files']));
+}
+if(
+	dyn::get('user')->hasPerm('media[category][edit]') ||
+	dyn::get('user')->hasPerm('media[category][delete]')
+) {
+	backend::addSubnavi(lang::get('media_manage_cat'),			url::backend('media', ['subpage'=>'category']));
+}
 
 $action = type::super('action', 'string', '');
 $id = type::super('id', 'int', 0);

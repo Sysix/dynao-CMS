@@ -16,8 +16,8 @@
 	"file_type":					"Dateityp",
 	"select_media":					"Medium auswählen",
 	
-	"media[edit]":					"Medien bearbeiten / hochladen",
+	"media[edit]":					"Medien bearbeiten/hochladen",
 	"media[delete]":				"Medien löschen",
-	"media[category][edit]":		"Medienkategorien bearbeiten / erstellen",
+	"media[category][edit]":		"Medienkategorien bearbeiten/erstellen",
 	"media[category][delete]":		"Medienkategorien löschen"
 }

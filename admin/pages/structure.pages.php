@@ -326,9 +326,15 @@ if($secondpage == 'show' && dyn::get('user')->hasPerm('page[content]')) {
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title pull-left"><?php echo lang::get('pages'); ?></h3>
+                    <?php
+					if(dyn::get('user')->hasPerm('page[edit]')) {
+					?>
 					<div class="btn-group pull-right">
 						<a class="btn btn-sm btn-default" href="<?php echo url::backend('structure', ['action'=>'add', 'parent_id'=>$parent_id]); ?>"><?php echo lang::get('add'); ?></a>
 					</div>
+                    <?php
+					}
+					?>
 					<div class="clearfix"></div>
 				</div>
 				<div class="panel-body">
@@ -342,10 +348,13 @@ if($secondpage == 'show' && dyn::get('user')->hasPerm('page[content]')) {
 	
 	<?php
 	
-	if(in_array($action, ['edit', 'add'])) {
-		echo '</form>';
+	if(dyn::get('user')->hasPerm('page[edit]')) {
+		
+		if(in_array($action, ['edit', 'add'])) {
+			echo '</form>';
+		}
+		
+		layout::addJs("layout/js/structureSort.js");
 	}
-	
-	layout::addJs("layout/js/structureSort.js");
 }
 ?>

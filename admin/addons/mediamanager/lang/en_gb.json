@@ -16,8 +16,8 @@
 	"file_type":					"file type",
 	"select_media":					"select media",
 	
-	"media[edit]":					"media edit / upload",
+	"media[edit]":					"media edit/upload",
 	"media[delete]":				"Media delete",
-	"media[category][edit]":		"mediacategories edit / create",
+	"media[category][edit]":		"mediacategories edit/create",
 	"media[category][delete]":		"Mediacategories delete"
 }
