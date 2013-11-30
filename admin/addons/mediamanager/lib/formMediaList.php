@@ -12,7 +12,7 @@ class formMediaList extends formField {
 	
 	public function setSelected() {
 		
-		if(!is_array($this->value)) {
+		if(!is_array($this->value) && strpos($this->value, ',') !== false) {
 			$this->value = explode(',', $this->value);
 		}
 				
@@ -42,7 +42,7 @@ class formMediaList extends formField {
 		}
 		
 		$sql = sql::factory();
-		$sql->result('SELECT * FROM '.sql::table('media').' WHERE id IN ('.implode(',', $this->value).')  ORDER BY FIND_IN_SET(id, "'.implode(',', $this->value).'")');
+		$sql->result('SELECT * FROM '.sql::table('media').' WHERE id IN ('.implode(',', (array)$this->value).')  ORDER BY FIND_IN_SET(id, "'.implode(',', (array)$this->value).'")');
 		while($sql->isNext()) {
 			
 			$return[] = '<option value="'.$sql->get('id').'">'.$sql->get('filename').'</option>';

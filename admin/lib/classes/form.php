@@ -566,10 +566,8 @@ class form {
 			
 			$name = $ausgabe->getName();
 			$value = $ausgabe->getSaveValue();
-			
-			if($value != '') {				
-				$this->addPost($name, $value);
-			}
+						
+			$this->addPost($name, $value);
 			
 		}
 		

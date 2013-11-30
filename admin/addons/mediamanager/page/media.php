@@ -9,11 +9,6 @@ $subpage = type::super('subpage', 'string');
 
 if($subpage == 'popup') {
 	
-	layout::addJsCode("$(document.body).on('change', '#media-select-category', function() {
-	var catId = $(this).val();
-	$('#load').load('index.php?page=media&subpage=popup&catId='+catId+' #load');
-});");
-	
 	dyn::add('contentPage', true);
 	backend::addSubnavi('Popup',		url::backend('media', ['subpage'=>'popup']));
 	

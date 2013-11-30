@@ -36,7 +36,13 @@ if($action == 'add' || $action == 'edit') {
 	$field->fieldName('Avatar');
 	
 	$field = $form->addMediaListField('gallery', $form->get('gallery'));
-	$field->fieldName('Gallery');	
+	$field->fieldName('Gallery');
+	
+	$field = $form->addLinkField('startseite', $form->get('startseite'));
+	$field->fieldName('Startseite');
+	
+	$field = $form->addLinkListField('structure', $form->get('structure'));
+	$field->fieldName('structure');
 	
 	$field = $form->addTextField('firstname', $form->get('firstname'));
 	$field->fieldName("Vorname");

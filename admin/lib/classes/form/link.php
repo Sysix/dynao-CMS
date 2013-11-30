@@ -2,6 +2,13 @@
 
 class formLink extends formField {
 	
+	public function __construct($name, $value) {
+		
+		parent::__construct($name, $value);
+		$this->value = type::super($name.'_id', '', $this->value);
+			
+	}
+	
 	public function getSaveValue() {
 		
 		$name = $this->getName();
@@ -13,17 +20,24 @@ class formLink extends formField {
 	
 	public function get() {
 		
+		if($this->value != '') {
+			$page = page::factory($this->value);
+			$this->addAttribute('value', $page->get('name'));
+		}
+		
+		$this->addAttribute('disabled', 'disabled');
 		$this->addAttribute('name', $this->name);
-		$this->addAttribute('value', $this->value);
+		
 		$this->addAttribute('type', 'text');
-		$this->addClass('form-control');		
+		$this->addAttribute('placeholder', 'Seite auswählen...');
+		$this->addClass('form-control');
 		
 		return '
 		<div class="input-group dyn-link">
-			<span class="input-group-addon dyn-link-add"><i class="fa fa-bars" title="Link auswählen"></i></span>
-			<input type="hidden" name="'.$this->name.'_id">
+			<span class="input-group-addon"><i class="fa dyn-link-add" title="Seite auswählen">=</i></span>
+			<input type="hidden" name="'.$this->name.'_id" value="'.$this->value.'">
 			<input'.$this->convertAttr().'>
-			<span class="input-group-addon dyn-link-del"><i class="fa fa-minus-square" title="Feld leeren"></i></span>
+			<span class="input-group-addon"><i class="fa fa-minus-square-o  dyn-link-del" title="Feld leeren"></i></span>
 		</div>';
 		
 	}

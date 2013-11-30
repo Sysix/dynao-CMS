@@ -12,8 +12,8 @@ $('.dyn-media-add, .dyn-medialist-add').on('click', function() {
 		
 });
 
-$('.dny-media-del').click(function() {	
-	$(this).closest('.dyn-media').find('input, select').val('');
+$('.dyn-media-del').on('click', function() {
+	$(this).closest('.dyn-media').find('input').removeAttr('value');
 });
 
 $('.dyn-medialist-del').on('click', function() {

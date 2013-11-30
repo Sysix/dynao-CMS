@@ -84,41 +84,145 @@ $(document).ready(function () {
 		
 	});
 	
-	$('.dyn-link .dyn-link-add').click(function() {
+	//
+	// formLink, formLinkList
+	//
 	
-		var _this = $(this);
-		_this.closest('.dyn-link').addClass('dyn-link-active');
+	
+	$('.dyn-link-add, .dyn-linklist-add').on('click', function() {
+	var _this = $(this);
+		_this.closest('.dyn-link, .dyn-linklist').attr('id', 'dyn-link-active');
+	
+	
+	
+	$("body").append('<div class="modal fade" id="selectLink" tabindex="-1" role="dialog" aria-labelledby="selectLinkLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="selectLinkLabel">Struktur</h4></div><div class="modal-body"></div></div></div></div>');
+	
+	$(".modal-body").load('index.php?page=structure&subpage=popup');
+	
+	$('#selectLink').modal('show');
 		
-		$("body").append('<div class="modal fade" id="selectLink" tabindex="-1" role="dialog" aria-labelledby="selectLinkLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="selectLinkLabel">Artikel</h4></div><div class="modal-body"></div></div></div></div>');
+});
+
+$('.dyn-link-del').click(function() {	
+	$(this).closest('.dyn-link').find('input').removeAttr('value');
+});
+
+$('.dyn-linklist-del').on('click', function() {
+	
+	var selectForm = $(this).closest('.dyn-linklist').children('select'),
+		index = selectForm[0].selectedIndex;
 		
-		$("#selectLink .modal-body").load('index.php?page=structure&subpage=popup');
+	selectForm.children('option').eq(index).remove().end().eq(index-1).attr('selected', 'selected');
+	
+});
+	
+
+$('.dyn-linklist-up').on('click', function() {
+	
+	var selectForm = $(this).closest('.dyn-linklist').children('select'),
+		index = selectForm[0].selectedIndex,
+		options = selectForm.children('option');
 		
-		$('#selectLink').modal('show');
-			
-	});
+	if(index  < 1) {
+		return $(this);	
+	}	
 	
-	$('.dny-link .dyn-link-del').click(function() {	
-		var div = $(this).closest('.dyn-link').find('input').val('');
-	});
+	var option = options.eq(index);
 	
-	$(document.body).on("click", '.dyn-link-select', function() {
+	options.eq(index - 1).before('<option value="'+option.val()+'" selected="selected">'+option.text()+'</option>');
+	option.remove();
+});
+
+$('.dyn-linklist-down').on('click', function() {
 	
-		var _this = $(this),
-			name = _this.data('name'),
-			id = _this.data('id')
-			input_wrap = $('.dyn-link-active').closest('.dyn-link');
+	var selectForm = $(this).closest('.dyn-linklist').children('select'),
+		index = selectForm[0].selectedIndex,
+		options = selectForm.children('option');
+		
+	if(index  == options.size()) {
+		return $(this);	
+	}		
+		
+	var option = options.eq(index);
+	
+	options.eq(index + 1).after('<option value="'+option.val()+'" selected="selected">'+option.text()+'</option>');
+	option.remove();
+});
+
+$('.dyn-linklist-bottom').on('click', function() {
+	
+	var selectForm = $(this).closest('.dyn-linklist').children('select'),
+		index = selectForm[0].selectedIndex,
+		options = selectForm.children('option');
+		
+	if(index  == options.size()) {
+		return $(this);	
+	}		
+		
+	var option = options.eq(index);
+	
+	selectForm.append('<option value="'+option.val()+'" selected="selected">'+option.text()+'</option>');
+	option.remove();
+});
+
+$('.dyn-linklist-top').on('click', function() {
+	
+	var selectForm = $(this).closest('.dyn-linklist').children('select'),
+		index = selectForm[0].selectedIndex,
+		options = selectForm.children('option');
+		
+	if(index  == 0) {
+		return $(this);	
+	}		
+		
+	var option = options.eq(index);
+	
+	selectForm.prepend('<option value="'+option.val()+'" selected="selected">'+option.text()+'</option>');
+	option.remove();
+});
+
+$('form').on('submit', function() {
+	var selectForm = $('.dyn-linklist').find('select');
+	if(selectForm.length) {
+		selectForm.attr('multiple', 'multiple');
+		selectForm.children('option').prop('selected', true);
+	}
+});
+
+$(document.body).on("click", '.dyn-link-select', function() {
+	
+	var _this = $(this),
+		name = _this.data('name'),
+		id = _this.data('id')
+		input_wrap = $('#dyn-link-active'),
+		tr = _this.closest('tr');
+	
+	_this.button('loading');
+	var interval = setInterval(function() {
+		_this.button('reset');
+		// Sich selbst auflösen, da Button mehrmals geklickt werden kann
+		clearInterval(interval);
+	}, 300);
+	
+	if(input_wrap.children('select').length == 1) {
+		
+		input_wrap.find('select').append('<option value="'+id+'">"'+name+'"</option>');		
+		
+	} else {
 		
 		input_wrap.find('input[type=hidden]:first').val(id);
 		input_wrap.find('input[type=text]:first').val(name);
-		input_wrap.removeClass('dyn-media-active');
 		
 		$('#selectLink').modal('hide');
-		
-	});
+	}
 	
-	$(document.body).on('hidden.bs.modal','.modal',function(){
-		$(this).remove();
-	});
+});
+
+$(document).on('hidden.bs.modal', '#selectLink', function () {
+	$('#dyn-link-active').removeAttr('id');
+	$(this).remove();	
+})
+
 
 	
 });

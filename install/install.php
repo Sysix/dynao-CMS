@@ -56,6 +56,8 @@ $sql->query('INSERT INTO `structure` (
 
 $sql->query('CREATE TABLE IF NOT EXISTS `user` (
   `id` 			int(11) 	unsigned	NOT NULL	auto_increment,
+  `firstname` 		varchar(255)			NOT NULL,
+  `name` 		varchar(255)			NOT NULL,
   `email` 		varchar(255)			NOT NULL,
   `password`	varchar(255)			NOT NULL,
   `perms`		varchar(255)			NOT NULL,
