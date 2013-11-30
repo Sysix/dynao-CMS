@@ -46,6 +46,11 @@ class addonConfig {
 				autoload::addDir($dir);
 			}
 			
+			$dir = dir::addon($name, 'vendor');
+			if(file_exists($dir)) {
+				autoload::addDir($dir);
+			}
+			
 		}
 		
 	}
