@@ -32,18 +32,6 @@ if($action == 'add' || $action == 'edit') {
 	
 	$form = form::factory('user','id='.$id,'index.php');
 	
-	$field = $form->addMediaField('avatar', $form->get('avatar'));
-	$field->fieldName('Avatar');
-	
-	$field = $form->addMediaListField('gallery', $form->get('gallery'));
-	$field->fieldName('Gallery');
-	
-	$field = $form->addLinkField('startseite', $form->get('startseite'));
-	$field->fieldName('Startseite');
-	
-	$field = $form->addLinkListField('structure', $form->get('structure'));
-	$field->fieldName('structure');
-	
 	$field = $form->addTextField('firstname', $form->get('firstname'));
 	$field->fieldName("Vorname");
 	$field->autofocus();

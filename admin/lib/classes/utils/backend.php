@@ -16,13 +16,14 @@ class backend {
 			$pos = count(self::$navi);
 		}
 		
-		if(!self::$currentPage) {
+		if($pos == 0) {
+			self::$currentPage = $name;
+		}
 			
-			$page = type::super('page', 'string');
+		$page = type::super('page', 'string');
 			
-			if(strpos($link, 'page='.$page) !== false || (is_null($page) && !count(self::$navi))) {
-				self::$currentPage = $name; 	
-			}
+		if(strpos($link, 'page='.$page) !== false && !is_null($page)) {
+			self::$currentPage = $name; 	
 		}
 		
 		$list = ['name'=>$name, 'link'=>$link, 'icon'=>$icon];
@@ -38,13 +39,14 @@ class backend {
 			$pos = count(self::$subnavi);
 		}
 		
-		if(!self::$currentSubpage) {
+		if($pos == 0) {
+			self::$currentSubpage = $name;
+		}		
 			
-			$subpage = type::super('subpage', 'string');
-			
-			if(strpos($link, 'subpage='.$subpage) !== false || (is_null($subpage) && !count(self::$subnavi))) {
-				self::$currentSubpage = $name; 	
-			}
+		$subpage = type::super('subpage', 'string');
+		
+		if(strpos($link, 'subpage='.$subpage) !== false && !is_null($subpage)) {
+			self::$currentSubpage = $name; 	
 		}
 		
 		$list = ['name'=>$name, 'link'=>$link, 'icon'=>$icon];		
@@ -58,13 +60,14 @@ class backend {
 			$pos = count(self::$secondnavi);
 		}
 		
-		if(!self::$currentSecondpage) {
+		if($pos == 0) {
+			self::$currentSubpage = $name;
+		}
 			
-			$secondpage = type::super('secondpage', 'string');
+		$secondpage = type::super('secondpage', 'string');
 			
-			if(strpos($link, 'secondpage='.$secondpage) !== false || (is_null($secondpage) && !count(self::$secondnavi))) {
-				self::$currentSecondpage = $name; 	
-			}
+		if(strpos($link, 'secondpage='.$secondpage) !== false && !is_null($secondpage)) {
+			self::$currentSecondpage = $name; 	
 		}
 		
 		$list = ['name'=>$name, 'link'=>$link, 'parent'=>self::$currentSublink];		
@@ -206,6 +209,21 @@ class backend {
 		
 	}
 	
+	public static function setCurrents() {
+	
+		if(is_null(self::$currentPage)) {
+			self::$currentPage = self::$navi[0]['name'];	
+		}
+		
+		if(is_null(self::$currentSubpage)) {
+			self::$currentSubpage = self::$subnavi[0]['name'];	
+		}
+		
+		if(is_null(self::$currentSecondpage) && isset(self::$secondnavi[0])) {
+			self::$currentSecondpage = self::$secondnavi[0]['name'];	
+		}
+		
+	}
 }
 
 ?>
