@@ -49,7 +49,7 @@ class pageMisc {
 		$id = type::super('id', 'int', 0);
 		$action = type::super('action', 'string');
 		
-		if($action == 'add' || $action == 'edit') {
+		if($action == 'add' || $action == 'edit' && dyn::get('user')->hasPerm('page[edit]')) {
 			
 			$buttonSubmit = formButton::factory('save', lang::get('article_save'));
 			$buttonSubmit->addAttribute('type', 'submit');
@@ -58,7 +58,7 @@ class pageMisc {
 			
 		}
 		
-		if(!$lvl && $action == 'add') {
+		if(!$lvl && $action == 'add' && dyn::get('user')->hasPerm('page[edit]')) {
 			
 			$inputName = formInput::factory('name', '');
 			$inputName->addAttribute('type', 'text');
@@ -86,7 +86,7 @@ class pageMisc {
 				
 			while($sql->isNext()) {
 				
-				if($action == 'edit' && $sql->get('id') == $id) {
+				if($action == 'edit' && $sql->get('id') == $id && dyn::get('user')->hasPerm('page[edit]')) {
 					
 					$inputName = formInput::factory('name', $sql->get('name'));
 					$inputName->addAttribute('type', 'text');
@@ -108,15 +108,28 @@ class pageMisc {
 						<span class="input-group-addon">'.$buttonSubmit->get().'<span>
 					</li>';
 					
-				} else {	
+				} else {
 					
-					$module = '<a href="'.url::backend('structure', ['secondpage'=>'show', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('modules').'</a>';	
-					$edit = '<a href="'.url::backend('structure', ['secondpage'=>'edit', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';	
-					$delete = '<a href="'.url::backend('structure', ['action'=>'delete', 'id'=>$sql->get('id')]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
+					$module = '';
+					$edit = '';
+					$online = '';
+					$offline = '';
+					$delete = '';
+						
+					if(dyn::get('user')->hasPerm('page[content]')) {
+						$module = '<a href="'.url::backend('structure', ['secondpage'=>'show', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('modules').'</a>';
+					}
 					
-					$online = '<a href="'.url::backend('structure', ['action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-online fa fa-check" title="'.lang::get('online').'"></a>';	
-					$offline = '<a href="'.url::backend('structure', ['action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-offline fa fa-times" title="'.lang::get('offline').'"></a>';			
+					if(dyn::get('user')->hasPerm('page[edit]')) {
+						$edit = '<a href="'.url::backend('structure', ['secondpage'=>'edit', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';
+						$online = '<a href="'.url::backend('structure', ['action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-online fa fa-check" title="'.lang::get('online').'"></a>';	
+						$offline = '<a href="'.url::backend('structure', ['action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-offline fa fa-times" title="'.lang::get('offline').'"></a>';	
+					}
 					
+					if(dyn::get('user')->hasPerm('page[delete]')) {
+						$delete = '<a href="'.url::backend('structure', ['action'=>'delete', 'id'=>$sql->get('id')]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
+					}
+
 					$online = ($sql->get('online')) ? $online : $offline;
 				
 					$select .= '<li data-id="'.$sql->get('id').'">'.PHP_EOL.'

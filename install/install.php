@@ -119,7 +119,7 @@ $sql->query('CREATE TABLE IF NOT EXISTS `slots` (
   `id` 			int(11) 	unsigned	NOT NULL	auto_increment,
   `name` 		varchar(255)			NOT NULL,
   `description`	varchar(255)			NOT NULL,
-  `module`	 	int(11)		unsigned	NOT NULL,
+  `modul`	 	int(11)		unsigned	NOT NULL,
   `is-structure`int(1)		unsigned	NOT NULL	DEFAULT "1",
   `structure` 	varchar(255)			NOT NULL,
   `value1` 		text 					NOT NULL,

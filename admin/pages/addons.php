@@ -1,4 +1,10 @@
 <?php
+
+if(!dyn::get('user')->hasPerm('admin[addon]')) {
+	echo message::danger(lang::get('access_denied'));
+	return;	
+}
+
 $action = type::super('action', 'string');
 $addon = type::super('addon', 'string');
 

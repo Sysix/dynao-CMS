@@ -13,7 +13,8 @@
 	"title":					"title",
 	"select":					"select",
 	"selected":					"selected",
-	"description":				"description",	
+	"description":				"description",
+	"access_denied":			"access denied!",	
 	
 	#Aktionen
 	"update":					"update",
@@ -45,10 +46,12 @@
 	"all_categories":			"all categories",
 	
 	#Rights
-	"page[edit]":				"page edit / create",
-	"page[delete]":				"page delete",
-	"admin[user]":				"useradmin",
-	"admin[addons]":			"addon's-admin",
+	"page[edit]":				"edit/create page",
+	"page[delete]":				"delete page",
+	"page[content]":			"manage content",
+	"page[module]":				"modules manage",
+	"admin[user]":				"manage user",
+	"admin[addon]":				"manage addon's",
 	
 	#Versioncheck
 	"version_fail_connect":		"Connection to the server could not be established",
@@ -114,6 +117,7 @@
 	"slots":					"slots",
 	"slot_name_not_exist":		"[the slot \"%s\" does not exist]",
 	"slots_show":				"show in",
+	"slot_deleted":				"slot successfully deleted",
 	
 	#User
 	"user_wrong_email":			"please enter a valid email address",

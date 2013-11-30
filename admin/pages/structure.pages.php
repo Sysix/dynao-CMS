@@ -1,7 +1,7 @@
 <?php
 $secondpage = type::super('secondpage', 'string');
 
-if($secondpage == 'show') {	
+if($secondpage == 'show' && dyn::get('user')->hasPerm('page[content]')) {	
 
 	$sort = type::super('sort', 'int');
 	
@@ -157,7 +157,7 @@ if($secondpage == 'show') {
 	}
 
 //Wenn secondpage
-} elseif($secondpage == 'edit') {
+} elseif($secondpage == 'edit' && dyn::get('user')->hasPerm('page[edit]')) {
 	
 	$form = form::factory('structure', 'id='.$id, 'index.php');
 	
@@ -197,7 +197,7 @@ if($secondpage == 'show') {
 
 } else {
 	
-	if(ajax::is()) {
+	if(ajax::is() && dyn::get('user')->hasPerm('page[edit]')) {
 		$post = type::super('array');
 		$sort = json_decode($post, true);
 		function sortStructure($sort, $pid = 0) {
@@ -228,7 +228,7 @@ if($secondpage == 'show') {
 		
 	}
 	
-	if($action == 'delete') {
+	if($action == 'delete'  && dyn::get('user')->hasPerm('page[delete]')) {
 		
 		$orginal_id = $id;
 		
@@ -266,7 +266,7 @@ if($secondpage == 'show') {
 			
 	}
 	
-	if($action == 'online') {
+	if($action == 'online' && dyn::get('user')->hasPerm('page[edit]')) {
 	
 		$sql = sql::factory();
 		$sql->query('SELECT online FROM '.sql::table('structure').' WHERE id='.$id)->result();
@@ -282,7 +282,7 @@ if($secondpage == 'show') {
 		
 	}
 	
-	if(in_array($action, ['save-add', 'save-edit'])) {
+	if(in_array($action, ['save-add', 'save-edit']) && dyn::get('user')->hasPerm('page[edit]')) {
 		
 		$sql = sql::factory();
 		$sql->setTable('structure');
@@ -305,7 +305,7 @@ if($secondpage == 'show') {
 		
 	}
 		
-	if(in_array($action, ['edit', 'add'])) {
+	if(in_array($action, ['edit', 'add']) && dyn::get('user')->hasPerm('page[edit]')) {
 			
 		echo '<form method="post" action="index.php">';
 			

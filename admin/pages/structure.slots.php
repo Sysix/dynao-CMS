@@ -2,7 +2,7 @@
 
 $secondpage = type::super('secondpage', 'string');
 
-if(!is_null($secondpage)) {
+if(!is_null($secondpage) && dyn::get('user')->hasPerm('page[content]')) {
 	
 	if(!is_null(type::post('save-back')) || !is_null(type::post('save'))) {
 		slot::saveBlock();
@@ -53,7 +53,19 @@ if(!is_null($secondpage)) {
 	
 } else {
 	
-	if($action == 'add' || $action == 'edit') {
+	if($action == 'delete' && dyn::get('user')->hasPerm('page[delete]')) {
+		
+		$sql = sql::factory();
+		$sql->setTable('slots');
+		$sql->setWhere('id='.$id);
+		$sql->delete();
+		
+		echo message::success(lang::get('slot_deleted'), true);
+		
+		$action = '';	
+	}
+	
+	if($action == 'add' || $action == 'edit' && dyn::get('user')->hasPerm('page[edit]')) {
 		
 		layout::addJsCode("
 	var button = $('#allcat-button');
@@ -66,7 +78,7 @@ if(!is_null($secondpage)) {
 				content.stop().slideDown(300);
 			}
 	});");
-		print_r($_POST);
+	
 		$form = form::factory('slots', 'id='.$id, 'index.php');
 		
 		$field = $form->addTextField('name', $form->get('name'));
@@ -134,9 +146,22 @@ if(!is_null($secondpage)) {
 		$table->setSql('SELECT * FROM '.sql::table('slots'));
 		while($table->isNext()) {
 			
-			$name = '<a href="'.url::backend('structure', ['subpage'=>'slots', 'secondpage'=>'show', 'id'=>$table->get('id')]).'">'.$table->get('name').'</a>';
-			$edit = '<a href='.url::backend('structure', ['subpage'=>'slots', 'action'=>'edit', 'id'=>$table->get('id')]).' class="btn btn-sm btn-default fa fa-pencil-square-o"></a>';
-			$delete = '<a href='.url::backend('structure', ['subpage'=>'slots', 'action'=>'delete', 'id'=>$table->get('id')]).' class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
+			$edit = '';
+			$deleted = '';
+			
+			if(dyn::get('user')->hasPerm('page[content]')) {
+				$name = '<a href="'.url::backend('structure', ['subpage'=>'slots', 'secondpage'=>'show', 'id'=>$table->get('id')]).'">'.$table->get('name').'</a>';
+			} else {
+				$name = $table->get('name');	
+			}
+			
+			if(dyn::get('user')->hasPerm('page[edit]')) {
+				$edit = '<a href='.url::backend('structure', ['subpage'=>'slots', 'action'=>'edit', 'id'=>$table->get('id')]).' class="btn btn-sm btn-default fa fa-pencil-square-o"></a>';
+			}
+			
+			if(dyn::get('user')->hasPerm('page[delete]')) {
+				$delete = '<a href='.url::backend('structure', ['subpage'=>'slots', 'action'=>'delete', 'id'=>$table->get('id')]).' class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
+			}
 			
 			$table->addRow()
 			->addCell($name)
@@ -151,9 +176,15 @@ if(!is_null($secondpage)) {
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title pull-left"><?php echo lang::get('slots_current_page'); ?></h3>
+                    <?php
+					if(dyn::get('user')->hasPerm('page[edit]')) { 
+					?>
 					<span class="btn-group pull-right">
 						<a href="<?php echo url::backend('structure', ['subpage'=>'slots', 'action'=>'add']); ?>" class="btn btn-default"><?php echo lang::get('add'); ?></a>
 					</span>
+                   	<?php
+					}
+					?>
 					<div class="clearfix"></div>
 				</div>
 				<?php echo $table->show(); ?>

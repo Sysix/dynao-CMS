@@ -17,11 +17,21 @@ layout::addJS('layout/js/scripts.js');
 
 userPerm::add('page[edit]', lang::get('page[edit]'));
 userPerm::add('page[delete]', lang::get('page[delete]'));
+userPerm::add('page[content]', lang::get('page[content]'));
+userPerm::add('page[module]', lang::get('page[module]'));
 userPerm::add('admin[user]', lang::get('admin[user]'));
 userPerm::add('admin[addon]', lang::get('admin[addon]'));
 
 backend::addNavi(lang::get('dashboard'), url::backend('dashboard'), 'desktop');
-backend::addNavi(lang::get('structure'), url::backend('structure'), 'list');
+
+if(
+	dyn::get('user')->hasPerm('page[edit]') ||
+	dyn::get('user')->hasPerm('page[delete]') ||
+	dyn::get('user')->hasPerm('page[content]') ||
+	dyn::get('user')->hasPerm('page[module]')
+) {
+	backend::addNavi(lang::get('structure'), url::backend('structure'), 'list');
+}
 
 if(dyn::get('user')->hasPerm('admin[user]')) {
 	backend::addNavi(lang::get('user'), url::backend('user'), 'user');

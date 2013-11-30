@@ -14,6 +14,7 @@
 	"select":					"Auswählen",
 	"selected":					"ausgewählt",
 	"description":				"Beschreibung",
+	"access_denied":			"Zugriff verweigert!",
 	
 	#Aktionen
 	"update":					"aktualisieren",
@@ -45,10 +46,12 @@
 	"all_categories":			"Alle Kategorien",
 	
 	#Rights
-	"page[edit]":				"Seiten bearbeiten / erstellen",
+	"page[edit]":				"Seiten bearbeiten/erstellen",
 	"page[delete]":				"Seiten löschen",
-	"admin[user]":				"Benutzer Admin",
-	"admin[addons]":			"Addon's Admin",
+	"page[content]":			"Content verwalten",
+	"page[module]":				"Module verwalten",
+	"admin[user]":				"Benutzer verwalten",
+	"admin[addon]":				"Addon's verwalten",
 	
 	#Versioncheck
 	"version_fail_connect":		"Verbindung zum Server konnte nicht hergestellt werden",
@@ -116,6 +119,7 @@
 	"slots":					"Slots",
 	"slot_name_not_exist":		"[Der Slot \"%s\" existiert nicht]",
 	"slots_show":				"Anzeigen in",
+	"slot_deleted":				"Slot erfolgreich gelöscht",
 	
 	#User
 	"user_wrong_email":			"Bitte geben Sie eine gültige E-Mail-Adresse an",

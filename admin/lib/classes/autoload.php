@@ -111,7 +111,7 @@ class autoload {
 		
 		if(self::$isNewCache) {
 			
-			$cacheFile = cache::getFileName(0, 'autoloadcache');
+			$cacheFile = cache::getFileName(0, 'autoloader');
 			
 			cache::write(json_encode([self::$classes, self::$dirs]), $cacheFile);
 			self::$isNewCache = false;
