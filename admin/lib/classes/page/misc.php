@@ -117,11 +117,11 @@ class pageMisc {
 					$delete = '';
 						
 					if(dyn::get('user')->hasPerm('page[content]')) {
-						$module = '<a href="'.url::backend('structure', ['secondpage'=>'show', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('modules').'</a>';
+						$module = '<a href="'.url::backend('structure', ['subpage'=>'show', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('modules').'</a>';
 					}
 					
 					if(dyn::get('user')->hasPerm('page[edit]')) {
-						$edit = '<a href="'.url::backend('structure', ['secondpage'=>'edit', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';
+						$edit = '<a href="'.url::backend('structure', ['subpage'=>'edit', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';
 						$online = '<a href="'.url::backend('structure', ['action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-online fa fa-check" title="'.lang::get('online').'"></a>';	
 						$offline = '<a href="'.url::backend('structure', ['action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-offline fa fa-times" title="'.lang::get('offline').'"></a>';	
 					}

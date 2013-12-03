@@ -481,6 +481,14 @@ ul.news li .btn {
 	margin:0px;
 }
 
+.form-horizontal label.radio-inline {
+	width:auto;
+}
+
+.form-horizontal label.radio-inline input {
+	margin-left:-15px;
+}
+
 .form-horizontal .form-wrap-input {
 	width:83.3333%;
 }

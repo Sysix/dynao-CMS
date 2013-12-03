@@ -1,5 +1,5 @@
 {
-	"media":						"Meda",
+	"media":						"Media",
 	"media_error_move":				"%s could not be saved.<br />The file could not be moved to the directory.",
 	"media_error_already_exist":	"%s could not be saved.<br />The file already exists.",
 	"media_error_bad_extension":	"%s could not be saved.<br />The file extension is not allowed.",
@@ -9,15 +9,15 @@
 	"media_underfile_exist2":		"Certain images are still in the category",
 	"file_deleted":					"Successfully deleted file",
 	"file_not_deleted":				"The file% Smedia% s could not be deleted",
-	"file_in_use":					"pages use this file yet",
-	"select_file":					"select file",
+	"file_in_use":					"Pages use this file yet",
+	"select_file":					"Select file",
 	"please_load_file":				"Please upload a file",
-	"media_edit":					"edit media",
-	"file_type":					"file type",
-	"select_media":					"select media",
+	"media_edit":					"Edit media",
+	"file_type":					"File type",
+	"select_media":					"Select media",
 	
-	"media[edit]":					"media edit/upload",
+	"media[edit]":					"Media edit/upload",
 	"media[delete]":				"Media delete",
-	"media[category][edit]":		"mediacategories edit/create",
+	"media[category][edit]":		"Mediacategories edit/create",
 	"media[category][delete]":		"Mediacategories delete"
 }

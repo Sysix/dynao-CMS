@@ -1,7 +1,7 @@
 <?php
-$secondpage = type::super('secondpage', 'string');
+$subpage = type::super('subpage', 'string');
 
-if($secondpage == 'show' && dyn::get('user')->hasPerm('page[content]')) {	
+if($subpage == 'show' && dyn::get('user')->hasPerm('page[content]')) {	
 
 	$sort = type::super('sort', 'int');
 	
@@ -121,9 +121,9 @@ if($secondpage == 'show' && dyn::get('user')->hasPerm('page[content]')) {
 			  <div class="panel-heading">
 				<h3 class="panel-title pull-left"><?php echo $sql->get('name'); ?></h3>
 				<div class="pull-right btn-group">
-					<a href="<?php echo url::backend('structure', ['secondpage'=>$secondpage, 'action'=>'online', 'id'=>$sql->get('id')]); ?>" class="btn btn-sm dyn-<?php echo $class; ?>"><?php echo $statusText; ?></a>
-					<a href="<?php echo url::backend('structure', ['secondpage'=>$secondpage, 'action'=>'edit', 'id'=>$sql->get('id')]); ?>" class="btn btn-default btn-sm fa fa-edit"></a>
-					<a href="<?php echo url::backend('structure', ['secondpage'=>$secondpage, 'action'=>'delete', 'id'=>$sql->get('id')]); ?>" class="btn btn-danger btn-sm fa fa-trash-o delete"></a>
+					<a href="<?php echo url::backend('structure', ['subpage'=>$subpage, 'action'=>'online', 'id'=>$sql->get('id')]); ?>" class="btn btn-sm dyn-<?php echo $class; ?>"><?php echo $statusText; ?></a>
+					<a href="<?php echo url::backend('structure', ['subpage'=>$subpage, 'action'=>'edit', 'id'=>$sql->get('id')]); ?>" class="btn btn-default btn-sm fa fa-edit"></a>
+					<a href="<?php echo url::backend('structure', ['subpage'=>$subpage, 'action'=>'delete', 'id'=>$sql->get('id')]); ?>" class="btn btn-danger btn-sm fa fa-trash-o delete"></a>
 				</div>
 				<div class="clearfix"></div>
 			  </div>
@@ -156,8 +156,8 @@ if($secondpage == 'show' && dyn::get('user')->hasPerm('page[content]')) {
 		
 	}
 
-//Wenn secondpage
-} elseif($secondpage == 'edit' && dyn::get('user')->hasPerm('page[edit]')) {
+//Wenn subpage
+} elseif($subpage == 'edit' && dyn::get('user')->hasPerm('page[edit]')) {
 	
 	$form = form::factory('structure', 'id='.$id, 'index.php');
 	
@@ -171,7 +171,7 @@ if($secondpage == 'show' && dyn::get('user')->hasPerm('page[content]')) {
 	$field->add(0, lang::get('offline'));
 	
 	$form->addParam('id', $id);
-	$field = $form->addHiddenField('secondpage', $secondpage);
+	$field = $form->addHiddenField('subpage', $subpage);
 	$field->setSave(false);
 	
 ?>
@@ -180,6 +180,44 @@ if($secondpage == 'show' && dyn::get('user')->hasPerm('page[content]')) {
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title pull-left"><?php echo $form->get('name'); ?></h3>
+                    <div class="btn-group pull-right">
+						<a class="btn btn-sm btn-default" href="<?php echo url::backend('structure'); ?>"><?php echo lang::get('back'); ?></a>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="panel-body">
+				<?php
+					echo $form->show();
+				?>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php	
+
+} elseif($subpage == 'add' && dyn::get('user')->hasPerm('page[edit]')) {
+	
+	$form = form::factory('structure', 'id='.$id, 'index.php');
+	
+	$field = $form->addTextField('name', $form->get('name'));
+	$field->fieldName(lang::get('name'));
+	$field->autofocus();
+	
+	$field = $form->addRadioField('online', $form->get('online'));
+	$field->fieldName(lang::get('status'));
+	$field->add(1, lang::get('online'));
+	$field->add(0, lang::get('offline'));
+	
+	$form->addParam('id', $id);
+	$field = $form->addHiddenField('subpage', $subpage);
+	$field->setSave(false);
+	
+?>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title pull-left"><?php echo lang::get('add'); ?></h3>
                     <div class="btn-group pull-right">
 						<a class="btn btn-sm btn-default" href="<?php echo url::backend('structure'); ?>"><?php echo lang::get('back'); ?></a>
 					</div>
@@ -330,7 +368,7 @@ if($secondpage == 'show' && dyn::get('user')->hasPerm('page[content]')) {
 					if(dyn::get('user')->hasPerm('page[edit]')) {
 					?>
 					<div class="btn-group pull-right">
-						<a class="btn btn-sm btn-default" href="<?php echo url::backend('structure', ['action'=>'add', 'parent_id'=>$parent_id]); ?>"><?php echo lang::get('add'); ?></a>
+						<a class="btn btn-sm btn-default" href="<?php echo url::backend('structure', ['subpage'=>'add']); ?>"><?php echo lang::get('add'); ?></a>
 					</div>
                     <?php
 					}
