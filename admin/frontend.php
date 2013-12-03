@@ -5,6 +5,8 @@ foreach(addonConfig::includeAllConfig() as $file) {
 	include($file);	
 }
 
+include(dir::template(dyn::get('template'), 'config.php'));
+
 $page = new page(1);
 $blocks = $page->getBlocks();
 foreach($blocks as $block) {

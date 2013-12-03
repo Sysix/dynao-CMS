@@ -4,9 +4,7 @@
     <meta content="charset=UTF-8" />
     <title>Default Template</title>
     
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato:300,400,700">
-    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="/templates/default/css/style.css" />
+    <?php echo template::getCSS(); ?>
 </head>
 
 <body>
@@ -53,7 +51,6 @@
         </div>
     </div>
     
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<?php echo template::getJS(); ?>
 </body>
 </html>
