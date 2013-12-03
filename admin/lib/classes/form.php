@@ -92,13 +92,13 @@ class form {
 	public function setButtons() {
 				
 		$submit = $this->addSubmitField('save', lang::get('save'));
-		$submit->addClass('btn-default');
+		$submit->addClass('btn-default btn-sm');
 			
 		$submit = $this->addSubmitField('save-back', lang::get('apply'));
-		$submit->addClass('btn-default');
+		$submit->addClass('btn-default btn-sm');
 		
 		$back = $this->addButtonField('back', lang::get('back'));
-		$back->addClass('btn-warning');
+		$back->addClass('btn-warning btn-sm');
 		$back->addClass('form-back');
 		
 		return $this;
@@ -778,6 +778,7 @@ class form {
 		
 		$return = [];
 		$buttons = [];
+		$hidden = [];
 		$x = 1;
 		
 		$return[] = '<form'.html_convertAttribute($this->formAttributes).'>'.PHP_EOL;
@@ -785,7 +786,7 @@ class form {
 		foreach($this->return as $ausgabe) {
 			
 			if($ausgabe->getAttribute('type') == 'hidden') {
-				$buttons[] = $ausgabe->get();
+				$hidden[] = $ausgabe->get();
 				continue;
 			}
 				
@@ -806,6 +807,7 @@ class form {
 			$buttons[] = $button->get();
 		}
 		
+		$return[] = implode(PHP_EOL, $hidden);
 		$return[] = '<div class="form-group">';
 		$return[] = '<div class="col-sm-offset-2 col-sm-10 btn-group">'.implode(PHP_EOL, $buttons).'</div>';
 		$return[] = '</div>';

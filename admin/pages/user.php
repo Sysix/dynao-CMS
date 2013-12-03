@@ -97,7 +97,15 @@ if($action == 'add' || $action == 'edit') {
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">"<?php echo $form->get('firstname')." ".$form->get('name'); ?>" <?php echo lang::get('edit'); ?></h3>
+                	<?php if($action == 'edit') { ?>
+                    	<h3 class="panel-title pull-left">"<?php echo $form->get('firstname')." ".$form->get('name'); ?>" <?php echo lang::get('edit'); ?></h3>
+                    <?php } else { ?>
+                    	<h3 class="panel-title pull-left"><?php echo lang::get('add'); ?></h3>
+                    <?php } ?>
+                    <div class="btn-group pull-right">
+						<a href="<?php echo url::backend('user'); ?>" class="btn btn-sm btn-default"><?php echo lang::get('back'); ?></a>
+					</div>
+					<div class="clearfix"></div>
                 </div>
             	<div class="panel-body">
 					<?php echo $form->show(); ?>

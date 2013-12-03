@@ -87,13 +87,13 @@
 			$table = table::factory(['class'=> ['table', 'table-spriped', 'table-hover']]);
 			
 			$table->addRow()
-			->addCell('Type')
-			->addCell('Value');
+			->addCell(lang::get('type'))
+			->addCell(lang::get('value'));
 			
 			$table->addSection('tbody');
 			
 			$table->addRow()
-			->addCell(lang::get('dyn_version'))
+			->addCell(lang::get('dynao_version'))
 			->addCell(dyn::get('version'));
 			
 			$table->addRow()

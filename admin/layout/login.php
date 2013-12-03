@@ -9,7 +9,7 @@
 <body>
 	<div id="center"></div>
 	<div id="login" class="panel panel-default">
-		<form action="index.php" method="post">
+		<form action="index.php?page=dashboard" method="post">
 			<div class="panel-body">
 				<?php echo dyn::get('content'); ?>
 				<div class="input-group">
