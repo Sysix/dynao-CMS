@@ -63,7 +63,7 @@ class formSelect extends formField {
 		
 		$attributes['value'] = $name;
 		
-		if(isset($this->value[$attributes['value']]))
+		if(in_array($attributes['value'], $this->value))
 			$attributes['selected'] = 'selected';
 		
 		$this->output[$this->currentOpt]['option'][] = ['name'=>$value, 'attr'=>$attributes];

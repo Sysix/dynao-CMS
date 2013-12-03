@@ -112,6 +112,7 @@ if(!is_null($secondpage) && dyn::get('user')->hasPerm('page[content]')) {
 		if($form->isSubmit()) {
 			
 			$form->addPost('modul', $form->get('modul'));
+			$form->addPost('template', dyn::get('template'));
 				
 		}
 		
@@ -143,32 +144,39 @@ if(!is_null($secondpage) && dyn::get('user')->hasPerm('page[content]')) {
 		->addCell(lang::get('action'));
 		
 		$table->addSection('tbody');
-		$table->setSql('SELECT * FROM '.sql::table('slots'));
-		while($table->isNext()) {
-			
-			$edit = '';
-			$deleted = '';
-			
-			if(dyn::get('user')->hasPerm('page[content]')) {
-				$name = '<a href="'.url::backend('structure', ['subpage'=>'slots', 'secondpage'=>'show', 'id'=>$table->get('id')]).'">'.$table->get('name').'</a>';
-			} else {
-				$name = $table->get('name');	
+		$table->setSql("SELECT * FROM ".sql::table('slots')." WHERE template = '".dyn::get('template')."'");
+		if($table->numSql()) {
+			while($table->isNext()) {
+				
+				$edit = '';
+				$deleted = '';
+				
+				if(dyn::get('user')->hasPerm('page[content]')) {
+					$name = '<a href="'.url::backend('structure', ['subpage'=>'slots', 'secondpage'=>'show', 'id'=>$table->get('id')]).'">'.$table->get('name').'</a>';
+				} else {
+					$name = $table->get('name');	
+				}
+				
+				if(dyn::get('user')->hasPerm('page[edit]')) {
+					$edit = '<a href='.url::backend('structure', ['subpage'=>'slots', 'action'=>'edit', 'id'=>$table->get('id')]).' class="btn btn-sm btn-default fa fa-pencil-square-o"></a>';
+				}
+				
+				if(dyn::get('user')->hasPerm('page[delete]')) {
+					$delete = '<a href='.url::backend('structure', ['subpage'=>'slots', 'action'=>'delete', 'id'=>$table->get('id')]).' class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
+				}
+				
+				$table->addRow()
+				->addCell($name)
+				->addCell($table->get('description'))
+				->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
+				
+				$table->next();
 			}
-			
-			if(dyn::get('user')->hasPerm('page[edit]')) {
-				$edit = '<a href='.url::backend('structure', ['subpage'=>'slots', 'action'=>'edit', 'id'=>$table->get('id')]).' class="btn btn-sm btn-default fa fa-pencil-square-o"></a>';
-			}
-			
-			if(dyn::get('user')->hasPerm('page[delete]')) {
-				$delete = '<a href='.url::backend('structure', ['subpage'=>'slots', 'action'=>'delete', 'id'=>$table->get('id')]).' class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
-			}
-			
+		} else {
+		
 			$table->addRow()
-			->addCell($name)
-			->addCell($table->get('description'))
-			->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
-			
-			$table->next();
+			->addCell(lang::get('no_entries'), ['colspan'=>3]);
+		
 		}
 	?>
 	<div class="row">
