@@ -24,19 +24,15 @@
                 <a href="http://dynao.de" target="_blank">
                 	<img src="layout/img/logo.png" alt="Logo" />
                 </a>
-                
-                <!--<a class="fa fa-cog settings" href=""></a>-->
                     
                 <h3><?php echo dyn::get('user')->get('firstname')." ".dyn::get('user')->get('name'); ?></h3>
-                Administrator
-                
-                <!--<a class="fa fa-envelope messages" href=""><span>2</span></a>-->
                 
                 <a href="index.php?logout=1" class="fa fa-lock logout"> <span>Logout</span></a>
             
             </div><!--end #user-->
             
             <h1><?php echo backend::getCurrentPageName(); ?></h1>
+            
             <div id="mobil">Navigation</div>
             <?php echo backend::getSubnavi(); ?>
             
@@ -51,7 +47,7 @@
 	
 	<div id="tools">
 	
-		<a id="trash" href=""></a>
+		<a id="trash" data-toggle="tooltip" data-placement="bottom" data-original-title="Nicht in der Beta verfügbar!" href=""></a>
 		
 	</div><!--end #tools-->
 

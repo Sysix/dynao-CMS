@@ -381,26 +381,6 @@ fieldset[disabled] .btn-default.active {
 	background:url(../img/bin.png) no-repeat;
 }
 
-#tools #trash-text {
-	width:200px;
-	padding:10px;
-	background:#252525;
-	position:absolute;
-	right:-230px;
-	font-size:10px;
-	color:#5c5c5c;
-	overflow:hidden;
-	top:130px;
-	border-radius:3px;
-}
-
-#tools #trash-text h4 {
-	color:#fff;
-	font-weight:300;
-	font-size:14px;
-	margin-bottom:5px;
-}
-
 .box {
 	background:#fff;
 	border:1px solid #dfdfdf;

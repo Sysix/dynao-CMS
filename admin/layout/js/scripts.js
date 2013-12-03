@@ -53,6 +53,8 @@ $(document).ready(function () {
 		 window.history.go(-1);
 	});
 	
+	$('#trash').tooltip();
+	
 	$("#mobil").click(function() {
 		$("#subnavi ul.subnav").toggleClass("display");	
 		$("#subnavi").toggleClass("round");	
