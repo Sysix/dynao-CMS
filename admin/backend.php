@@ -1,8 +1,5 @@
 <?php
 
-$page = type::super('page', 'string', 'dashboard');
-$subpage = type::super('subpage', 'string');
-
 layout::addCSS('http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700|Open+Sans+Condensed:300,700');
 layout::addCSS('http://netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css');
 layout::addCSS('http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css');
@@ -45,10 +42,12 @@ if(dyn::get('user')->isAdmin()) {
 	backend::addNavi(lang::get('settings'), url::backend('settings'), 'cogs');
 }
 
-
 foreach(addonConfig::includeAllConfig() as $file) {
 	include($file);	
 }
+
+$page = type::super('page', 'string', 'dashboard');
+$subpage = type::super('subpage', 'string');
 
 $successMsg = type::get('success_msg', 'string');
 $errorMsg = type::get('error_msg', 'string');
@@ -60,7 +59,6 @@ if(!is_null($errorMsg)) {
 }
 
 if(userLogin::isLogged()) {
-	
 	if(file_exists(dir::page($page.'.php'))) {
 		
 		include(dir::page($page.'.php'));
@@ -72,7 +70,6 @@ if(userLogin::isLogged()) {
 		if(file_exists($file)) {
 			include($file);	
 		}
-		
 	}
 	
 }
