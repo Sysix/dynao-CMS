@@ -10,7 +10,7 @@ class backend {
 	static $currentSublink;
 	static $currentSecondpage;
 	
-	public static function addNavi($name, $link, $icon = 'circle', $pos = -1) {
+	public static function addNavi($name, $link, $icon = 'circle', $pos = -1, $file = false) {
 		
 		if($pos < 0) {
 			$pos = count(self::$navi);
@@ -31,7 +31,7 @@ class backend {
 		
 	}
 	
-	public static function addSubnavi($name, $link, $icon = 'circle', $pos = -1) {
+	public static function addSubnavi($name, $link, $icon = 'circle', $pos = -1, $file = false) {
 		
 		self::$currentSublink = $link;
 		
@@ -54,7 +54,7 @@ class backend {
 		
 	}
 	
-	public static function addSecondnavi($name, $link, $pos = -1) {
+	public static function addSecondnavi($name, $link, $pos = -1, $file = false) {
 		
 		if($pos < 0) {
 			$pos = count(self::$secondnavi);
