@@ -343,7 +343,6 @@ class form {
 	public function addSelectField($name, $value, $attributes = []) {
 		
 		$field = $this->addField($name, $value, 'formSelect', $attributes);
-		$field->setSelected();
 		return $field;
 		
 	}
