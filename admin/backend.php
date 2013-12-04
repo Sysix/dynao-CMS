@@ -89,11 +89,7 @@ if(ajax::is() && !(dyn::has('ajaxContinue') && dyn::get('ajaxContinue') == true)
 
 if(userLogin::isLogged()) {
 	
-	if(dyn::get('contentPage')) {
-		include(dir::backend('layout/contentpage.php'));
-	} else {
-		include(dir::backend('layout/index.php'));
-	}
+	include(dir::backend('layout/index.php'));
 	
 } else {
 	include(dir::backend('layout/login.php'));
