@@ -5,7 +5,7 @@ class pageAreaHtml {
 	public static $modulList = [];
 
 	public static function selectBlock($structureID, $sort = false)  {
-		
+	
 		$return  = '<div class="structure-addmodul-box">';
 		$return .= '	<form action="index.php" method="get">';
 		$return .= '		<input type="hidden" name="page" value="structure" />';
@@ -82,7 +82,6 @@ class pageAreaHtml {
 		
 		
 		$form->addHiddenField('id', $module->getId());
-		$form->addParam('secondpage', 'show');
 
 		return $form;
 		

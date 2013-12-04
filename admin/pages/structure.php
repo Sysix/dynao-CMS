@@ -3,10 +3,10 @@
 $action = type::super('action', 'string');
 $id = type::super('id', 'int', 0);
 $subpage = type::super('subpage', 'string', 'pages');
+$structure_id = type::super('structure_id', 'int');
 
 if($subpage == 'popup') {
 	
-	dyn::add('contentPage', true);
 	backend::addSubnavi('Popup',		url::backend('structure', ['subpage'=>'popup']));
 	
 }
