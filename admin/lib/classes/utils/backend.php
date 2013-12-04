@@ -26,8 +26,22 @@ class backend {
 			self::$currentPage = $name; 	
 		}
 		
-		$list = ['name'=>$name, 'link'=>$link, 'icon'=>$icon];
+		$addon = self::isAddon();
+		
+		$list = ['name'=>$name, 'link'=>$link, 'icon'=>$icon, 'addon'=>$addon];
 		array_splice(self::$navi, $pos, 0, [$list]);
+		
+	}
+	
+	protected static function isAddon() {
+		
+		$addon = debug_backtrace();
+		$addon = $addon[1]['file'];
+		$addon = explode(DIRECTORY_SEPARATOR, $addon);
+		if(in_array("addons", $addon))
+			return true;
+		else
+			return false;
 		
 	}
 	
@@ -49,7 +63,9 @@ class backend {
 			self::$currentSubpage = $name; 	
 		}
 		
-		$list = ['name'=>$name, 'link'=>$link, 'icon'=>$icon];		
+		$addon = self::isAddon();
+		
+		$list = ['name'=>$name, 'link'=>$link, 'icon'=>$icon, 'addon'=>$addon];		
 		array_splice(self::$subnavi, $pos, 0, [$list]);
 		
 	}
@@ -70,7 +86,9 @@ class backend {
 			self::$currentSecondpage = $name; 	
 		}
 		
-		$list = ['name'=>$name, 'link'=>$link, 'parent'=>self::$currentSublink];		
+		$addon = self::isAddon();
+		
+		$list = ['name'=>$name, 'link'=>$link, 'parent'=>self::$currentSublink, 'addon'=>$addon];		
 		array_splice(self::$secondnavi, $pos, 0, [$list]);
 		
 	}
@@ -183,7 +201,6 @@ class backend {
 			}
 			
 		}
-		
 		
 	}
 	
