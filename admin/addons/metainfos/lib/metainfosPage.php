@@ -196,7 +196,7 @@ class metainfosPage {
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title pull-left"><?php echo backend::getCurrentSubpageName(); ?></h3>
+				<h3 class="panel-title pull-left"><?php echo backend::getSubpageName(); ?></h3>
                 <?php
 				if(dyn::get('user')->hasPerm('metainfos[edit]')) {
 				?>

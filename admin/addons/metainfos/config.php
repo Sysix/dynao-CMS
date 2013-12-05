@@ -8,7 +8,9 @@ if((
 	dyn::get('user')->hasPerm('metainfos[delete]')
 	) && type::super('page', 'string') == 'addons'
 ) {
-	backend::addSubnavi(lang::get('metainfos'), url::backend('meta'), 'plus');
+	backend::addSubnavi(lang::get('metainfos'), url::backend('addons', ['subpage'=>'meta']), 'plus', -1, function() {
+		return dir::addon('metainfos', 'page/meta.php');
+	});
 }
 
 $page = type::super('page', 'string');
