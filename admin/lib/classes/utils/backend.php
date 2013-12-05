@@ -6,9 +6,6 @@ class backend {
 	public static $subnavi = array();
 	public static $secondnavi = array();
 	
-<<<<<<< HEAD
-	public static function addNavi($name, $link, $icon = 'circle', $pos = -1, $file = false) {
-=======
 	public static $page;
 	public static $subpage;
 	public static $secondpage;
@@ -19,7 +16,6 @@ class backend {
 	 * Hauptnavigation Methoden
 	 */
 	public static function addNavi($name, $link, $icon = 'circle', $pos = -1, $callback = null) {
->>>>>>> update backend class
 		
 		if(empty(self::$getVars)) {
 			self::setGets();	
@@ -35,28 +31,6 @@ class backend {
 			self::setPageName($name);
 		}
 		
-<<<<<<< HEAD
-		$addon = self::isAddon();
-		
-		$list = ['name'=>$name, 'link'=>$link, 'icon'=>$icon, 'addon'=>$addon];
-		array_splice(self::$navi, $pos, 0, [$list]);
-		
-	}
-	
-	protected static function isAddon() {
-		
-		$addon = debug_backtrace();
-		$addon = $addon[1]['file'];
-		$addon = explode(DIRECTORY_SEPARATOR, $addon);
-		if(in_array("addons", $addon))
-			return true;
-		else
-			return false;
-		
-	}
-	
-	public static function addSubnavi($name, $link, $icon = 'circle', $pos = -1, $file = false) {
-=======
 		$item = [
 			'name'=>$name,
 			'link'=>$link,
@@ -65,7 +39,6 @@ class backend {
 		];
 		
 		self::array_insert(self::$navi,	$pos, [$name=>$item]);
-		
 		
 	}
 	
@@ -76,7 +49,6 @@ class backend {
 	}
 	
 	public static function setPageName($name) {
->>>>>>> update backend class
 		
 		self::$page = $name;
 		
@@ -110,16 +82,6 @@ class backend {
 			self::setSubpageName($name);
 		}
 		
-<<<<<<< HEAD
-		$addon = self::isAddon();
-		
-		$list = ['name'=>$name, 'link'=>$link, 'icon'=>$icon, 'addon'=>$addon];		
-		array_splice(self::$subnavi, $pos, 0, [$list]);
-		
-	}
-	
-	public static function addSecondnavi($name, $link, $pos = -1, $file = false) {
-=======
 		$item = [
 			'name'=>$name,
 			'link'=>$link,
@@ -132,7 +94,6 @@ class backend {
 	}
 	
 	public static function getSubNavi() {
->>>>>>> update backend class
 		
 		return self::generateNavi(self::$subnavi, self::getSubpageName(), 'subnav', self::getSecondNavi());
 		
@@ -171,12 +132,6 @@ class backend {
 			self::setSecondpageName($name);
 		}
 		
-<<<<<<< HEAD
-		$addon = self::isAddon();
-		
-		$list = ['name'=>$name, 'link'=>$link, 'parent'=>self::$currentSublink, 'addon'=>$addon];		
-		array_splice(self::$secondnavi, $pos, 0, [$list]);
-=======
 		$item = [
 			'name'=>$name,
 			'link'=>$link,
@@ -184,7 +139,6 @@ class backend {
 		];
 		
 		self::array_insert(self::$secondnavi, $pos, [$name=>$item]);
->>>>>>> update backend class
 		
 	}
 	
@@ -291,8 +245,6 @@ class backend {
 	
 		return self::getSubpageName().self::getPageName(' - ').' - '.dyn::get('hp_name');
 		
-<<<<<<< HEAD
-=======
 	}
 	 
 	public static function setGets() {
@@ -302,13 +254,12 @@ class backend {
 		$secondpage = type::super('secondpage', 'string');
 		
 		self::$getVars = [$page, $subpage, $secondpage];
-		
->>>>>>> update backend class
+
 	}
 	
 	public static function array_insert(&$array, $position, $insert) {
 		$first_array = array_splice($array, 0, $position);
-  		$array = array_merge($first_array, $insert, $array); 
+  		$array = array_merge($first_array, $insert, $array);
 	}
 	
 	public static function setCurrents() {
