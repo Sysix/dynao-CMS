@@ -36,6 +36,11 @@ if($page == "media" && $subpage == "popup") {
 
 }
 
+extension::add('PAGE_AREA_BEFORE_OUTPUTFILTER', function($return) {
+	return mediaUtils::convertMediaVars($return[0], $return[1], $return[2]);
+});
+
 pageArea::addType('MEDIA', 10);
+pageArea::addType('MEDIA_LIST', 10);
 
 ?>

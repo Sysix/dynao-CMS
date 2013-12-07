@@ -549,8 +549,6 @@ class form {
 	
 		foreach($this->return as $ausgabe) {
 			
-			print_r($ausgabe);
-			
 			if(!$ausgabe->isValid()) {
 				
 				$this->setErrorMessage($ausgabe->getError());
@@ -624,7 +622,6 @@ class form {
 	private function saveForm() {
 		
 		extension::get('FORM_BEFORE_SAVE', $this->sql);
-		print_r($this->sql);
 	
 		if(!$this->toSave)
 			return $this;

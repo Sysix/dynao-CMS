@@ -35,28 +35,48 @@ $sql->query('CREATE TABLE IF NOT EXISTS '.sql::table('media_cat').' (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 
 $sql->query('ALTER TABLE '.sql::table('structure_area').' 
-ADD `media01` int(16) NOT NULL,
-ADD `media02` int(16) NOT NULL,
-ADD `media03` int(16) NOT NULL,
-ADD `media04` int(16) NOT NULL,
-ADD `media05` int(16) NOT NULL,
-ADD `media06` int(16) NOT NULL,
-ADD `media07` int(16) NOT NULL,
-ADD `media08` int(16) NOT NULL,
-ADD `media09` int(16) NOT NULL,
-ADD `media10` int(16) NOT NULL');
+ADD `media1` 		int(16) NOT NULL,
+ADD `media2` 		int(16) NOT NULL,
+ADD `media3` 		int(16) NOT NULL,
+ADD `media4` 		int(16) NOT NULL,
+ADD `media5` 		int(16) NOT NULL,
+ADD `media6` 		int(16) NOT NULL,
+ADD `media7` 		int(16) NOT NULL,
+ADD `media8` 		int(16) NOT NULL,
+ADD `media9` 		int(16) NOT NULL,
+ADD `media10` 		int(16) NOT NULL,
+ADD `media_list1`	int(16) NOT NULL,
+ADD `media_list2`	int(16) NOT NULL,
+ADD `media_list3`	int(16) NOT NULL,
+ADD `media_list4`	int(16) NOT NULL,
+ADD `media_list5`	int(16) NOT NULL,
+ADD `media_list6`	int(16) NOT NULL,
+ADD `media_list7`	int(16) NOT NULL,
+ADD `media_list8`	int(16) NOT NULL,
+ADD `media_list9`	int(16) NOT NULL,
+ADD `media_list10`	int(16) NOT NULL');
 
 $sql->query('ALTER TABLE '.sql::table('slots').' 
-ADD `media01` int(16) NOT NULL,
-ADD `media02` int(16) NOT NULL,
-ADD `media03` int(16) NOT NULL,
-ADD `media04` int(16) NOT NULL,
-ADD `media05` int(16) NOT NULL,
-ADD `media06` int(16) NOT NULL,
-ADD `media07` int(16) NOT NULL,
-ADD `media08` int(16) NOT NULL,
-ADD `media09` int(16) NOT NULL,
-ADD `media10` int(16) NOT NULL');
+ADD `media1` 		int(16) NOT NULL,
+ADD `media2` 		int(16) NOT NULL,
+ADD `media3` 		int(16) NOT NULL,
+ADD `media4` 		int(16) NOT NULL,
+ADD `media5` 		int(16) NOT NULL,
+ADD `media6` 		int(16) NOT NULL,
+ADD `media7` 		int(16) NOT NULL,
+ADD `media8` 		int(16) NOT NULL,
+ADD `media9` 		int(16) NOT NULL,
+ADD `media10` 		int(16) NOT NULL,
+ADD `media_list1`	int(16) NOT NULL,
+ADD `media_list2`	int(16) NOT NULL,
+ADD `media_list3`	int(16) NOT NULL,
+ADD `media_list4`	int(16) NOT NULL,
+ADD `media_list5`	int(16) NOT NULL,
+ADD `media_list6`	int(16) NOT NULL,
+ADD `media_list7`	int(16) NOT NULL,
+ADD `media_list8`	int(16) NOT NULL,
+ADD `media_list9`	int(16) NOT NULL,
+ADD `media_list10`	int(16) NOT NULL');
 
 
 
