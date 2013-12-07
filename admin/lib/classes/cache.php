@@ -113,9 +113,9 @@ class cache {
 	 * Die ganzen Cache Dateien löschen
 	 *
 	 */
-	static public function clear() {
+	static public function clear($folder = '') {
 		
-		if($dir =  opendir(dir::cache())) {
+		if($dir =  opendir(dir::cache($folder))) {
 			
 			while (($file = readdir($dir)) !== false) {
 		

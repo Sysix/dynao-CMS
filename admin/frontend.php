@@ -17,10 +17,12 @@ if(page::isValid($page)) {
 	$page = new page(dyn::get('error_page'));	
 }
 
-$blocks = $page->getBlocks();
-foreach($blocks as $block) {
-	echo $block->getContent();
+if(!pageCache::exist($page->get('id'))) {
+	echo 'Cache Content';
+	pageCache::generateArticle($page->get('id'));
 }
+	
+echo pageCache::read($page->get('id'));
 
 $content = extension::get('FRONTEND_OUTPUT', ob_get_contents());
 

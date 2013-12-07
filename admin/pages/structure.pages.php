@@ -7,6 +7,7 @@ if($structure_id && dyn::get('user')->hasPerm('page[content]')) {
 	// Bugfix, das neu erstelle Blöcke nicht einzgezeigt werden
 	if(!is_null(type::post('save-back')) || !is_null(type::post('save'))) {
 		pageAreaAction::saveBlock();
+		pageCache:generateArticle($id);
 		echo message::success(lang::get('structure_content_save'), true);
 	}
 	
@@ -45,6 +46,7 @@ if($structure_id && dyn::get('user')->hasPerm('page[content]')) {
 	if($action == 'delete') {
 	
 		$id = pageAreaAction::delete($id);
+		pageCache::deleteFile($id);
 		echo message::success(lang::get('structure_content_delete'));
 		
 	}
