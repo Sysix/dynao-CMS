@@ -97,6 +97,8 @@
 	"settings":					"Einstellungen",
 	"type":						"Typ",
 	"value":					"Wert",
+	"start_page":				"Startseite",
+	"error_page":				"Fehlerseite",
 	
 	#Structure
 	"structure_content_save":	"Inhalt erfolgreich übernommen",

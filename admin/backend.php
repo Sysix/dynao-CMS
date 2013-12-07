@@ -74,23 +74,19 @@ if(userLogin::isLogged()) {
 	
 }
 
-backend::setCurrents();
+$content = extension::get('BACKEND_OUTPUT', ob_get_contents());
 
-dyn::add('content', ob_get_contents());
+dyn::add('content', $content);
 
 ob_end_clean();
-
-
 
 if(ajax::is() && !(dyn::has('ajaxContinue') && dyn::get('ajaxContinue') == true)) {
 	echo ajax::getReturn();
 	die;
 }
 
-if(userLogin::isLogged()) {
-	
-	include(dir::backend('layout/index.php'));
-	
+if(userLogin::isLogged()) {	
+	include(dir::backend('layout/index.php'));	
 } else {
 	include(dir::backend('layout/login.php'));
 }

@@ -531,3 +531,13 @@ ul.news li .btn {
 	height:14px;
 	width:14px;
 }
+
+.form-horizontal .form-wrap-input, .form-horizontal label {
+	width:100%;
+	float:none;
+}
+
+.form-horizontal label {
+	padding-top:0;
+	margin:5px;
+}

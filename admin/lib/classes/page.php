@@ -72,6 +72,11 @@ class page {
 		
 	}
 	
+	public static function isValid($id) {
+		
+		$sql = sql::factory();
+		return (bool)$sql->num('SELECT id FROM '.sql::table('structure').' WHERE id = '.$id);
+	}
 	
 }
 

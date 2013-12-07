@@ -97,6 +97,8 @@
 	"settings":					"Settings",
 	"type":						"Type",
 	"value":					"Value",
+	"start_page":				"startpage",
+	"error_page":				"errorpage",
 	
 	#Structure
 	"structure_content_save":	"Content successfully saved",

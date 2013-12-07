@@ -6,7 +6,7 @@
 		-moz-background-size:cover;
 		-o-background-size:cover;
 		background-size:cover;
-	}
+	}	
 	
 }
 
@@ -18,6 +18,18 @@
 		-moz-background-size:cover;
 		-o-background-size:cover;
 		background-size:cover;
+	}
+	
+	.form-horizontal .form-wrap-input {
+		width:83.3333%;
+		float:left;
+	}
+	
+	.form-horizontal label {
+		padding-top:7px;
+		margin:0;
+		width:16.6667%;
+		float:left;
 	}
  
 }
