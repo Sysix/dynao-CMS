@@ -115,6 +115,8 @@
 	"modules":					"Module",
 	"input":					"Eingabe",
 	"output":					"Ausgabe",
+	"module_deleted":			"Modul erfolgreich gelöscht",
+	"module_in_use":			"Das Modul wird noch verwendet",
 	
 	#Slots
 	"slots_current_page":		"Slots im aktuellen Template",

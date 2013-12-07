@@ -23,10 +23,22 @@ if(ajax::is()) {
 if($action == 'delete') {
 	
 	$sql = sql::factory();
-	$sql->setTable('module');
-	$sql->setWhere('id='.$id);
-	$sql->delete();
+	$num = $sql->num('SELECT id FROM '.sql::table('structure_area').' WHERE modul = '.$id);
+	$num2 = $sql->num('SELECT id FROM '.sql::table('slots').' WHERE modul = '.$id);
 	
+	if($num || $num2) {
+		
+		echo message::danger(lang::get('module_in_use'));
+		
+	} else {
+		
+		$sql->setTable('module');
+		$sql->setWhere('id='.$id);
+		$sql->delete();
+		
+		echo message::success(lang::get('module_deleted'));
+	
+	}
 	$action = '';
 	
 }
