@@ -21,19 +21,4 @@ if($page == 'structure' && $action == 'edit') {
 	});
 	
 }
-
-if(addonConfig::isActive('mediamanager')) {
-	
-	if($page == 'media' && $subpage == 'files' && in_array($action, ['add', 'edit'])) {
-		
-		metainfosPage::addType('DYN_MEDIA');
-		metainfosPage::addType('DYN_MEDIA_LIST');
-	
-		extension::add('FORM_BEFORE_ACTION', function($form) {
-			$form = metainfos::getMetaInfos($form, 'media');
-		});
-	
-	}
-		
-}
 ?>

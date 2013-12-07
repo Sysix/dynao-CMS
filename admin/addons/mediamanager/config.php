@@ -43,4 +43,27 @@ extension::add('PAGE_AREA_BEFORE_OUTPUTFILTER', function($return) {
 pageArea::addType('MEDIA', 10);
 pageArea::addType('MEDIA_LIST', 10);
 
+if(addonConfig::isActive('metainfos')) {
+	
+	metainfosPage::addType('DYN_MEDIA');
+	metainfosPage::addType('DYN_MEDIA_LIST');
+	
+	if($page == 'meta') {
+		
+		backend::addSubNavi(lang::get('media'),	url::backend('meta', ['subpage'=>'media']), 'circle', -1, function() {
+			return dir::addon('mediamanager', 'page'.DIRECTORY_SEPARATOR.'meta.media.php');
+		});
+		
+	}
+	
+	if($page == 'media' && $subpage == 'files' && in_array($action, ['add', 'edit'])) {	
+	
+		extension::add('FORM_BEFORE_ACTION', function($form) {
+			$form = metainfos::getMetaInfos($form, 'media');
+		});
+	
+	}
+		
+}
+
 ?>
