@@ -10,7 +10,10 @@ class pageAreaAction {
 		$sql->setTable('structure_area');
 		
 		$sql->getPosts([
-			'online'=>'int'
+			'online'=>'int',
+			'modul'=>'int',
+			'structure_id'=>'int',
+			'sort'=>'int'
 		]);
 		
 		foreach(array_keys(pageArea::$types) as $types) {

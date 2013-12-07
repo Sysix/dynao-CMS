@@ -3,22 +3,18 @@
 userPerm::add('metainfos[edit]', lang::get('metainfos[edit]'));
 userPerm::add('metainfos[delete]', lang::get('metainfos[delete]'));
 
-if((
+if(
 	dyn::get('user')->hasPerm('metainfos[edit]') ||
 	dyn::get('user')->hasPerm('metainfos[delete]')
-	) && type::super('page', 'string') == 'addons'
 ) {
-	backend::addSubnavi(lang::get('metainfos'), url::backend('addons', ['subpage'=>'meta']), 'plus', -1, function() {
-		return dir::addon('metainfos', 'page/meta.php');
-	});
+	backend::addAddonNavi(lang::get('metainfos'), url::backend('meta'));
 }
 
 $page = type::super('page', 'string');
 $subpage = type::super('subpage', 'string');
-$secondpage = type::super('secondpage', 'string');
 $action = type::super('action', 'string');
 
-if($page == 'structure' && $secondpage == 'edit') {
+if($page == 'structure' && $action == 'edit') {
 	
 	extension::add('FORM_BEFORE_ACTION', function($form) {
 		$form = metainfos::getMetaInfos($form, 'structure');

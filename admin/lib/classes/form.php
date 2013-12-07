@@ -325,9 +325,7 @@ class form {
 	 */
 	public function addCheckboxField($name, $value, $attributes = []) {
 		
-		$field = $this->addField($name, $value, 'formCheckbox', $attributes);
-		$field->setChecked($value);
-		return $field; 
+		return $this->addField($name, $value, 'formCheckbox', $attributes);
 		
 	}
 	
@@ -342,8 +340,7 @@ class form {
 	 */
 	public function addSelectField($name, $value, $attributes = []) {
 		
-		$field = $this->addField($name, $value, 'formSelect', $attributes);
-		return $field;
+		return $this->addField($name, $value, 'formSelect', $attributes);
 		
 	}
 	
@@ -552,6 +549,8 @@ class form {
 	
 		foreach($this->return as $ausgabe) {
 			
+			print_r($ausgabe);
+			
 			if(!$ausgabe->isValid()) {
 				
 				$this->setErrorMessage($ausgabe->getError());
@@ -625,6 +624,7 @@ class form {
 	private function saveForm() {
 		
 		extension::get('FORM_BEFORE_SAVE', $this->sql);
+		print_r($this->sql);
 	
 		if(!$this->toSave)
 			return $this;

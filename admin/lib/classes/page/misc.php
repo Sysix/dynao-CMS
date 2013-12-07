@@ -117,17 +117,17 @@ class pageMisc {
 					$delete = '';
 						
 					if(dyn::get('user')->hasPerm('page[content]')) {
-						$module = '<a href="'.url::backend('structure', ['structure_id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('modules').'</a>';
+						$module = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('modules').'</a>';
 					}
 					
 					if(dyn::get('user')->hasPerm('page[edit]')) {
-						$edit = '<a href="'.url::backend('structure', ['action'=>'edit', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';
-						$online = '<a href="'.url::backend('structure', ['action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-online fa fa-check" title="'.lang::get('online').'"></a>';	
-						$offline = '<a href="'.url::backend('structure', ['action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-offline fa fa-times" title="'.lang::get('offline').'"></a>';	
+						$edit = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'action'=>'edit', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';
+						$online = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-online fa fa-check" title="'.lang::get('online').'"></a>';	
+						$offline = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-offline fa fa-times" title="'.lang::get('offline').'"></a>';	
 					}
 					
 					if(dyn::get('user')->hasPerm('page[delete]')) {
-						$delete = '<a href="'.url::backend('structure', ['action'=>'delete', 'id'=>$sql->get('id')]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
+						$delete = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'action'=>'delete', 'id'=>$sql->get('id')]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
 					}
 
 					$online = ($sql->get('online')) ? $online : $offline;

@@ -52,6 +52,7 @@ class metainfosPage {
 	
 	static protected function BackendFormular($name, $pagename, $tablename, $action, $id) {
 		
+		print_r($_POST);
 		$prefix = substr($tablename, 0, 3).'_';
 		
 		$form = form::factory('metainfos', 'id='.$id, 'index.php');
@@ -64,7 +65,7 @@ class metainfosPage {
 		}
 		
 		$field = $form->addRawField($prefix);
-		$field->fieldName(lang::get('description'));
+		$field->fieldName(lang::get('prefix'));
 	
 		$field = $form->addTextField('label', $form->get('label'));
 		$field->fieldName(lang::get('description'));
@@ -99,7 +100,7 @@ class metainfosPage {
 		
 		$field = $form->addTextareaField('attributes', $form->get('attributes'));
 		$field->fieldName('HTML-Attribute');
-		$field->setSuffix('<small>Beispiel:<br /> style=color:red<br />multiple=multiple<br />class=my_css_class</small>');
+		$field->setSuffix('<small>'.lang::get('examples').':<br /> style=color:red<br />multiple=multiple<br />class=my_css_class</small>');
 		
 		$form->addHiddenField('type', $name);
 		
@@ -141,6 +142,8 @@ class metainfosPage {
 			}
 			
 		}
+		
+		
 ?>
 <div class="row">
 	<div class="col-lg-12">

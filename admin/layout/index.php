@@ -31,7 +31,7 @@
             
             </div><!--end #user-->
             
-            <h1><?php echo backend::getCurrentPageName(); ?></h1>
+            <h1><?php echo backend::getPageName(); ?></h1>
             
             <div id="mobil">Navigation</div>
             <?php echo backend::getSubnavi(); ?>
@@ -48,6 +48,7 @@
 	<div id="tools">
 	
 		<a id="trash" data-toggle="tooltip" data-placement="bottom" data-original-title="Nicht in der Beta verfügbar!" href=""></a>
+        <?php echo backend::getAddonNavi(); ?>
 		
 	</div><!--end #tools-->
 

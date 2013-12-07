@@ -9,8 +9,9 @@ class pageAreaHtml {
 		$return  = '<div class="structure-addmodul-box">';
 		$return .= '	<form action="index.php" method="get">';
 		$return .= '		<input type="hidden" name="page" value="structure" />';
+		$return .= '		<input type="hidden" name="subpage" value="pages" />';	
 		$return .= '		<input type="hidden" name="structure_id" value="'.$structureID.'" />';
-		$return .= '		<input type="hidden" name="action" value="add" />';	
+		$return .= '		<input type="hidden" name="action" value="add" />';			
 		
 		if($sort)
 			$return .= '		<input type="hidden" name="sort" value="'.$sort.'" />';
@@ -82,6 +83,7 @@ class pageAreaHtml {
 		
 		
 		$form->addHiddenField('id', $module->getId());
+		$form->addParam('structure_id', type::super('structure_id', 'int'));
 
 		return $form;
 		

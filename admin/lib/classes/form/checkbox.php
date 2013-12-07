@@ -4,15 +4,20 @@ class formCheckbox extends formField {
 	
 	var $output = [];
 	
-	public function setChecked($checked) {
+	public function __construct($name, $value, $attributes = []) {
 		
-		if(!is_array($checked)) {
-			$checked = explode('|', $checked);
+		parent::__construct($name, $value, $attributes);
+		$this->setChecked();
+		
+	}
+	
+	public function setChecked() {
+		
+		if(!is_array($this->value)) {
+			$this->value = explode('|', $this->value);
 		}
 		
-		$checked = array_flip($checked);
-		
-		$this->value = $checked;
+		$this->value = array_flip($this->value);
 		
 		return $this;
 		

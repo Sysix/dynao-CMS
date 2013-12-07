@@ -4,11 +4,10 @@ class backend {
 	
 	public static $navi = array();
 	public static $subnavi = array();
-	public static $secondnavi = array();
+	public static $addonNavi = array();
 	
 	public static $page;
 	public static $subpage;
-	public static $secondpage;
 	
 	public static $getVars = [];
 
@@ -95,7 +94,7 @@ class backend {
 	
 	public static function getSubNavi() {
 		
-		return self::generateNavi(self::$subnavi, self::getSubpageName(), 'subnav', self::getSecondNavi());
+		return self::generateNavi(self::$subnavi, self::getSubpageName(), 'subnav');
 		
 	}
 	
@@ -113,23 +112,20 @@ class backend {
 		
 	}
 	
-	/*
-	 * Subnavigation Methoden
-	 */
-	public static function addSecondNavi($name, $link, $pos = -1, $callback = null) {
+	public static function addAddonNavi($name, $link, $pos = -1, $callback = null) {
 		
 		if(empty(self::$getVars)) {
 			self::setGets();	
 		}
 		
 		if($pos < 0) {
-			$pos = count(self::$secondnavi);	
+			$pos = count(self::$addonNavi);	
 		}
 		
-		$secondpage = self::$getVars[2];
+		$page = self::$getVars[0];
 		
-		if(strpos($link, 'secondpage='.$secondpage) !== false && !is_null($secondpage)) {
-			self::setSecondpageName($name);
+		if(strpos($link, 'page='.$page) !== false && !is_null($page)) {
+			self::setPageName($name);
 		}
 		
 		$item = [
@@ -137,28 +133,13 @@ class backend {
 			'link'=>$link,
 			'callback'=>$callback
 		];
-		
-		self::array_insert(self::$secondnavi, $pos, [$name=>$item]);
-		
+	
+		self::array_insert(self::$addonNavi, $pos, [$name=>$item]);
 	}
 	
-	public static function getSecondNavi() {
+	public static function getAddonNavi() {
 		
-		return self::generateNavi(self::$secondnavi, self::getSecondpageName());
-		
-	}
-	
-	public static function setSecondpageName($name) {
-		
-		self::$secondpage = $name;
-		
-	}
-	
-	public static function getSecondpageName($prefix = '') {
-		
-		if(self::$secondpage) {
-			return $prefix.self::$secondpage;
-		}
+		return self::generateNavi(self::$addonNavi, self::getPageName());
 		
 	}
 	
@@ -210,32 +191,6 @@ class backend {
 		}
 		 
 	 }
-	 
-	 /*
-	 * Include der Subnavigation
-	 */
-	 public static function getSecondnaviInclude($addon = false) {
-		
-		self::setCurrents();
-		
-		$page = self::$getVars[0];
-		$subpage = self::$getVars[1];
-		$secondpage = self::$getVars[2];
-		
-		$current = self::$secondnavi[self::getSecondpageName()];
-		
-		// isset gibts bei null false aus
-		if(isset($current['callback']) && is_callable($current['callback'])) {
-			return $current['callback']();
-		}
-		
-		if(!$addon) {
-			return dir::page($page.'.'.$subpage.'.'.$secondpage.'.php');
-		} else {
-			return dir::addon($addon, 'page/'.$page.'.'.$subpage.'.'.$secondpage.'.php');
-		}
-		 
-	 }
 	
 	/*
 	 * Zusätzliche Funktionen
@@ -251,9 +206,8 @@ class backend {
 		
 		$page = type::super('page', 'string');
 		$subpage = type::super('subpage', 'string');
-		$secondpage = type::super('secondpage', 'string');
 		
-		self::$getVars = [$page, $subpage, $secondpage];
+		self::$getVars = [$page, $subpage];
 
 	}
 	
@@ -266,7 +220,6 @@ class backend {
 		
 		$page = self::$getVars[0];
 		$subpage = self::$getVars[1];
-		$secondpage = self::$getVars[2];
 		
 		if(is_null($page) && reset(self::$navi)) {
 			$navi = current(self::$navi);
@@ -282,16 +235,9 @@ class backend {
 			self::$getVars[1] = $output[1];
 		}
 		
-		if(is_null($secondpage) && reset(self::$secondnavi)) {
-			$secondnavi = current(self::$secondnavi);
-			self::setSecondpageName($secondnavi['name']);
-			preg_match("/secondpage=(\w*)/", $secondnavi['link'], $output);
-			self::$getVars[2] = $output[1];
-		}
-		
 	}
 	
-	public static function generateNavi($naviArray, $name, $Ulclass = '', $extras = '') {
+	public static function generateNavi($naviArray, $name, $Ulclass = '') {
 	
 		$return = [];
 		
@@ -317,7 +263,7 @@ class backend {
 		}
 			
 		
-		return '<ul'.$Ulclass.'>'.implode(PHP_EOL, $return).$extras.'</ul>';
+		return '<ul'.$Ulclass.'>'.implode(PHP_EOL, $return).'</ul>';
 		
 	}
 	

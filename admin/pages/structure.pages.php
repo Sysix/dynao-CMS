@@ -120,9 +120,9 @@ if($structure_id && dyn::get('user')->hasPerm('page[content]')) {
 			  <div class="panel-heading">
 				<h3 class="panel-title pull-left"><?php echo $sql->get('name'); ?></h3>
 				<div class="pull-right btn-group">
-					<a href="<?php echo url::backend('structure', ['structure_id'=>$structure_id, 'action'=>'online', 'id'=>$sql->get('id')]); ?>" class="btn btn-sm dyn-<?php echo $class; ?>"><?php echo $statusText; ?></a>
-					<a href="<?php echo url::backend('structure', ['structure_id'=>$structure_id, 'action'=>'edit', 'id'=>$sql->get('id')]); ?>" class="btn btn-default btn-sm fa fa-edit"></a>
-					<a href="<?php echo url::backend('structure', ['structure_id'=>$structure_id, 'action'=>'delete', 'id'=>$sql->get('id')]); ?>" class="btn btn-danger btn-sm fa fa-trash-o delete"></a>
+					<a href="<?php echo url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'action'=>'online', 'id'=>$sql->get('id')]); ?>" class="btn btn-sm dyn-<?php echo $class; ?>"><?php echo $statusText; ?></a>
+					<a href="<?php echo url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'action'=>'edit', 'id'=>$sql->get('id')]); ?>" class="btn btn-default btn-sm fa fa-edit"></a>
+					<a href="<?php echo url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'action'=>'delete', 'id'=>$sql->get('id')]); ?>" class="btn btn-danger btn-sm fa fa-trash-o delete"></a>
 				</div>
 				<div class="clearfix"></div>
 			  </div>
@@ -367,7 +367,7 @@ if($structure_id && dyn::get('user')->hasPerm('page[content]')) {
 					if(dyn::get('user')->hasPerm('page[edit]')) {
 					?>
 					<div class="btn-group pull-right">
-						<a class="btn btn-sm btn-default" href="<?php echo url::backend('structure', ['action'=>'add']); ?>"><?php echo lang::get('add'); ?></a>
+						<a class="btn btn-sm btn-default" href="<?php echo url::backend('structure', ['subpage'=>'pages', 'action'=>'add']); ?>"><?php echo lang::get('add'); ?></a>
 					</div>
                     <?php
 					}
