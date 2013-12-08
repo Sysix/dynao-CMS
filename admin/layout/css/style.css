@@ -82,7 +82,7 @@ fieldset[disabled] .btn-default.active {
 #wrap { 
 	background:url(../img/bg/noise_side.png) repeat-y top left;
 	left:130px;
-	right:110px;
+	right:140px;
 	position:absolute;
 	margin:30px 0;
 	border-radius:4px;
@@ -120,7 +120,8 @@ fieldset[disabled] .btn-default.active {
 	padding:10px 0;
 }
 
-#user-mobil {
+#user-mobil,
+#addon-mobil {
 	display:none;
 }
 
@@ -180,6 +181,12 @@ fieldset[disabled] .btn-default.active {
 	width:100px;
 	text-align:center;
 	font-family:'Open Sans';
+}
+
+#navi #addonMobile {
+	float:right;
+	display:none;
+	cursor:pointer;
 }
 
 #subnavi {
@@ -369,8 +376,36 @@ fieldset[disabled] .btn-default.active {
 	right:0;
 	position:absolute;
 	top:0;
-	margin:30px 30px 30px 0;
+	margin:30px 45px 45px 0;
 	bottom:0;
+}
+
+#tools ul {
+	padding:0;
+	margin:40px -35px 0 -35px;
+	list-style:none;
+}
+
+#tools ul li a {
+	display:block;
+	height:40px;
+	line-height:40px;
+	color:#fff;
+	padding:0 10px;
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	-o-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
+}
+
+#tools ul li.active a {
+	background:url(../img/bg/noise.png) repeat;
+	color:#5c5c5c;
+	border-radius:0 3px 3px 0;
+}
+
+#tools ul li.active a:hover {
+	color:#000;
 }
 
 #tools a#trash {

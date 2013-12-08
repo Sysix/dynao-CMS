@@ -53,11 +53,21 @@ $(document).ready(function () {
 		 window.history.go(-1);
 	});
 	
+	$("#addonMobile").click(function() {
+		$(this).toggleClass('active');
+		$("#tools ul").toggleClass("display");	
+	});
+	
 	$('#trash').tooltip();
 	
 	$("#mobil").click(function() {
 		$("#subnavi ul.subnav").toggleClass("display");	
 		$("#subnavi").toggleClass("round");	
+	});
+	
+	$("#addon-mobil").click(function() {
+		$("#tools ul").toggleClass("display");	
+		$("#tools ul").toggleClass("round");	
 	});
 	
 	$("#user-mobil").click(function () {

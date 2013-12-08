@@ -43,7 +43,7 @@ class backend {
 	
 	public static function getNavi() {
 		
-		return self::generateNavi(self::$navi, self::getPageName());
+		return self::generateNavi(self::$navi, self::getPageName(), '', true);
 		
 	}
 	
@@ -237,9 +237,12 @@ class backend {
 		
 	}
 	
-	public static function generateNavi($naviArray, $name, $Ulclass = '') {
+	public static function generateNavi($naviArray, $name, $Ulclass = '', $main = false) {
 	
 		$return = [];
+		
+		if($main)
+			$return[] = '<li id="addonMobile"><a class="fa fa-chevron-down"> <span>Addon Navi</span></a>';
 		
 		foreach($naviArray as $navi) {
 			

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta content="charset=UTF-8" />
+    <meta charset="utf-8">
     <title>Default Template</title>
     
     <?php echo template::getCSS(); ?>

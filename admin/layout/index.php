@@ -14,7 +14,7 @@
     
     <div id="user-mobil">
         <span class="fa fa-chevron-down"></span>
-        <h4><?php echo dyn::get('user')->get('firstname')." ".dyn::get('user')->get('name'); ?></h4>
+        <h4>CP</h4>
     </div>
 	
     <div id="wrap">
@@ -33,7 +33,7 @@
             
             <h1><?php echo backend::getPageName(); ?></h1>
             
-            <div id="mobil">Navigation</div>
+            <div id="mobil"><?php echo backend::getPageName(); ?></div>
             <?php echo backend::getSubnavi(); ?>
             
         </div><!--end #subnavi-->
@@ -48,6 +48,7 @@
 	<div id="tools">
 	
 		<a id="trash" data-toggle="tooltip" data-placement="bottom" data-original-title="Nicht in der Beta verfügbar!" href=""></a>
+        <div id="addon-mobil"><?php echo lang::get('addon_navi'); ?></div>
         <?php echo backend::getAddonNavi(); ?>
 		
 	</div><!--end #tools-->

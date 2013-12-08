@@ -36,9 +36,13 @@
 
 @media (max-width: 979px) {
 	
-	#tools, #user img {
+	#tools a#trash, #user img {
 		display:none;
 	}
+	
+	 #navi #addonMobile {
+		 display:block;
+	 }
 	
 	#navi {
 		position:absolute;
@@ -68,6 +72,40 @@
 	
 	#navi ul li {
 		float:left;
+	}
+	
+	#tools {
+		width:auto;
+		margin:0;
+	}
+	
+	#tools ul {
+		position:absolute;
+		top:110px;
+		right:30px;
+		margin:0;
+		width:210px;
+		background:#252525;
+		float:right;
+		display:none;
+		border-radius:0 0 0 3px;
+	}
+	
+	#tools ul.display {
+		display:block;
+	}
+	
+	#tools ul li.active a {
+		background:none;
+		color:#fff;
+	}
+	
+	#tools ul li a {
+		color:#5c5c5c;
+	}
+	
+	#tools ul li a:hover, #tools ul li.active a:hover {
+		color:#fff;
 	}
 	
 	#wrap {
@@ -130,7 +168,7 @@
 		padding-right:5px;
 	}
 	
-	#subnavi #user, #subnavi h1 {
+	#subnavi #user, #subnavi h1, #navi #addonMobile {
 		display:none;
 	}
 	
@@ -140,11 +178,45 @@
 		background:#202020;
 		position:relative;
 		z-index:1;
-		width:100%;
+		width:50%;
 	}
 	
 	#subnavi.round {
 		border-radius:0 0 3px 3px;
+	}
+	
+	#tools {
+		position:static;
+	}
+	
+	#tools ul {
+		margin:100px 10px 0 0;
+		padding:0;
+		right:auto;
+		top:auto;
+		background:#202020;
+		position:relative;
+		z-index:1;
+		border-radius:0;
+		width:50%;
+		display:none;
+	}
+	
+	#tools ul.round {
+		border-radius:0 0 3px 3px;
+	}
+	
+	#tools #addon-mobil {
+		display:block;
+		position:absolute;
+		line-height:40px;
+		right:10px;
+		margin:60px 0 0 0;
+		color:#fff;
+		padding-left:10px;
+		background:#202020;
+		cursor:pointer;
+		width:50%;
 	}
 	
 	#subnavi #mobil {
@@ -185,6 +257,7 @@
 		left:0;
 		background:url(../img/bg/noise.png) repeat;
 		padding:10px;
+		min-height:0;
 	}
 	
 	#navi {
