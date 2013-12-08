@@ -61,6 +61,10 @@ if($action == 'add' || $action == 'edit') {
 		$form->addHiddenField('id', $id);
 	}
 	
+	if($form->isSubmit()) {
+		pageCache::clearAll();
+	}
+	
 	?>
 <div class="row">
 	<div class="col-lg-12">
@@ -87,9 +91,10 @@ if($action == '') {
 
 	$table = table::factory(['class'=>['js-sort']]);
 	
-	$table->addCollsLayout('*,110');
+	$table->addCollsLayout('20,*,110');
 	
 	$table->addRow()
+	->addCell()
 	->addCell('Name')
 	->addCell('Aktion');
 	
@@ -107,6 +112,7 @@ if($action == '') {
 			$delete = '<a href="'.url::backend('structure', ['subpage'=>'module','action'=>'delete', 'id'=>$id]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
 			
 			$table->addRow(['data-id'=>$id])
+			->addCell('<i class="fa fa-sort"></i>')
 			->addCell($table->get('name'))
 			->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
 			

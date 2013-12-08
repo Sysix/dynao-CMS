@@ -5,8 +5,22 @@ class pageCache extends cache {
 	const FOLDER = 'page';
 	
 	public static function clearAll() {
-				
-		parent::clear(self::FOLDER);	
+		
+		if($dir =  opendir(dir::cache(self::FOLDER))) {
+			
+			while (($file = readdir($dir)) !== false) {
+		
+				if($file != "." && $file != "..") {
+					
+					self::deleteFile($file);
+					
+				}
+			
+			}
+			
+			closedir($dir);
+			
+		}	
 			
 	}
 	
@@ -50,6 +64,9 @@ class pageCache extends cache {
 		
 		$return = [];
 		
+		$backend = dyn::get('backend');
+		dyn::add('backend', false);
+		
 		$page = new page($id);
 		$blocks = $page->getBlocks();
 		
@@ -57,7 +74,10 @@ class pageCache extends cache {
 			$return[] =  $block->getContent();
 		}	
 		
+		self::deleteFile($id);
 		self::write(implode(PHP_EOL, $return), $id);
+		
+		dyn::add('backend', $backend);
 		
 	}
 	

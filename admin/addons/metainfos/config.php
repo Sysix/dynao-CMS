@@ -14,7 +14,7 @@ $page = type::super('page', 'string');
 $subpage = type::super('subpage', 'string');
 $action = type::super('action', 'string');
 
-if($page == 'structure' && $action == 'edit') {
+if($page == 'structure' && $subpage == 'pages' && $action == 'edit') {
 	
 	extension::add('FORM_BEFORE_ACTION', function($form) {
 		$form = metainfos::getMetaInfos($form, 'structure');

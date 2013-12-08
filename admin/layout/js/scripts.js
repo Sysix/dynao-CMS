@@ -12,7 +12,7 @@
 		var settings = $.extend({
 			helper: true,
 			children: 'tr',
-			handle: '.icon-sort',
+			handle: '.fa-sort',
 			prependTo : '#content'
 		}, options);
 		
