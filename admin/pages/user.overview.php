@@ -38,10 +38,10 @@ if($action == 'add' || $action == 'edit') {
 	$field->addValidator('notEmpty', lang::get('user_email_empty'));
 	$field->addValidator('email', lang::get('user_wrong_email'));
 	
-	if($form->get('password') != $form->sql->getResult('password')) {
+	if($form->get('password') != $form->sql->getValue('password')) {
 		$password = userLogin::hash($form->get('password'));
 	} else {
-		$password = $form->sql->getResult('password');
+		$password = $form->sql->getValue('password');
 	}
 	
 	$field = $form->addTextField('password', $password);

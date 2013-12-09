@@ -134,7 +134,7 @@ class sql {
 			
 		}
 		
-		return $this->getResult($row, $default);
+		return $this->getValue($row, $default);
 		
 	}
 	
@@ -156,7 +156,7 @@ class sql {
 		
 	}
 	
-	public function getResult($row, $default = null) {
+	public function getValue($row, $default = null) {
 		
 		if(isset($this->result[$row])) {
 			

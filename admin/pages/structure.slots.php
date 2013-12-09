@@ -188,7 +188,7 @@ if(!is_null($secondpage) && dyn::get('user')->hasPerm('page[content]')) {
 					if(dyn::get('user')->hasPerm('page[edit]')) { 
 					?>
 					<span class="btn-group pull-right">
-						<a href="<?php echo url::backend('structure', ['subpage'=>'slots', 'action'=>'add']); ?>" class="btn btn-default"><?php echo lang::get('add'); ?></a>
+						<a href="<?php echo url::backend('structure', ['subpage'=>'slots', 'action'=>'add']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('add'); ?></a>
 					</span>
                    	<?php
 					}

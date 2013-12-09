@@ -9,10 +9,10 @@ class pageCache extends cache {
 		if($dir =  opendir(dir::cache(self::FOLDER))) {
 			
 			while (($file = readdir($dir)) !== false) {
-		
+				
 				if($file != "." && $file != "..") {
-					
-					self::deleteFile($file);
+					// parent da mit der pageCache::deleteFile() eine $id benötigt wird
+					parent::deleteFile(self::FOLDER.DIRECTORY_SEPARATOR.$file);
 					
 				}
 			
@@ -74,7 +74,10 @@ class pageCache extends cache {
 			$return[] =  $block->getContent();
 		}	
 		
-		self::deleteFile($id);
+		if(self::exist($id)) {
+			self::deleteFile($id);
+		}
+		
 		self::write(implode(PHP_EOL, $return), $id);
 		
 		dyn::add('backend', $backend);

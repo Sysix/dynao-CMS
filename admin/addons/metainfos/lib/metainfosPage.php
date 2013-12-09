@@ -12,23 +12,26 @@ class metainfosPage {
 	
 	static public function Backend($name, $pagename, $tablename, $action, $id) {
 		
-		if(
-			dyn::get('user')->hasPerm('metainfos[edit]') ||
-			dyn::get('user')->hasPerm('metainfos[delete]')
-		) {
+		if($action == 'delete' && dyn::get('user')->hasPerm('metainfos[delete]')) {
+			self::delete($tablename, $id);
+			echo message::success(lang::get('entry_deleted'));
+			$action = '';
+		}
+		
+		if(dyn::get('user')->hasPerm('metainfos[edit]')) {
 			
 			if(ajax::is()) {
 				self::BackendAjax();	
-			}		
+			}	
 			
 			if($action == 'add' || $action == 'edit' || $action == 'delete') {
 				self::BackendFormular($name, $pagename, $tablename, $action, $id);
 			}
-			
-			if($action == '') {
-				self::BackendShow($name, $pagename);	
-			}
 		
+		}
+		
+		if($action == '') {
+			self::BackendShow($name, $pagename);	
 		}
 		
 		
@@ -52,17 +55,9 @@ class metainfosPage {
 	
 	static protected function BackendFormular($name, $pagename, $tablename, $action, $id) {
 		
-		print_r($_POST);
 		$prefix = substr($tablename, 0, 3).'_';
 		
 		$form = form::factory('metainfos', 'id='.$id, 'index.php');
-		
-		if($action == 'delete' && dyn::get('user')->hasPerm('metainfos[delete]')) {
-			self::delete($tablename, $id, $form->get('name'));
-			$form->setSuccessMessage(lang::get('entry_deleted'));
-			$form->redirect();
-			return;
-		}
 		
 		$field = $form->addRawField($prefix);
 		$field->fieldName(lang::get('prefix'));
@@ -71,13 +66,7 @@ class metainfosPage {
 		$field->fieldName(lang::get('description'));
 		$field->autofocus();
 		
-		if($form->isSubmit()) {
-			$name = $form->get('name');	
-		} else {
-			$name = substr($form->get('name'), 4);
-		}
-		
-		$field = $form->addTextField('name', $name);
+		$field = $form->addTextField('name', $form->get('name'));
 		$field->fieldName(lang::get('name'));
 		
 		$field = $form->addSelectField('formtype', $form->get('formtype'));
@@ -89,7 +78,7 @@ class metainfosPage {
 		
 		$field = $form->addTextField('default', $form->get('default'));
 		$field->fieldName(lang::get('default_value'));
-		$field->setSuffix(lang::get('meta_pre_selection'));
+		$field->setSuffix('<small>'.lang::get('meta_pre_selection').'</small>');
 		
 		$style = (in_array($form->get('formtype'), ['select', 'radio', 'checkbox'])) ? 'block' : 'none' ;
 		
@@ -109,8 +98,7 @@ class metainfosPage {
 		}
 		
 		if($form->isSubmit()) {
-		
-			$sql = sql::factory();
+			
 			switch($form->get('formtype')) {
 				case 'textarea':
 					$type = 'text';
@@ -120,24 +108,37 @@ class metainfosPage {
 					break;	
 			}
 			
-			$form->addPost('name', $prefix.$form->get('name'));
-			
 			$colum = sql::showColums($tablename, $prefix.$form->get('name'), false);
 			$colum->result();
-			// Wenn beim Hinzufügen schon vorhanden
-			// Oder bei Editieren vorhanden, jedoch der nicht das 
-			if($colum->num() && $action == 'add' || $action == 'edit' && $colum->num() && $form->sql->getResult('name') != $prefix.$form->get('name')) {
+			
+			$isRight = function() use($action, $colum, $form, $prefix) {
 				
-				$form->setErrorMessage(sprintf(lang::get('col_name_exists'), $prefix.$form->get('name')));
-				$form->setSave(false);
+				if($action == 'add' && $colum->num()) {
+					return false;
+				}				
 
-			} else {
+				if($action == 'edit' && $form->sql->getValue('name') != $form->get('name')) {
+					$sql = sql::factory();
+					return (bool)!$sql->num('SELECT id FROM '.sql::table('metainfos').' WHERE `name` = "'.$form->get('name').'" AND `type` = "'.$form->get('type').'"');
+				}
 				
+				return true;
+			
+			};
+			
+			if($isRight()) {
+				
+				$sql = sql::factory();
 				if($action == 'add') {
 					$sql->query('ALTER TABLE '.$tablename.' ADD `'.$prefix.$form->get('name').'` '.$type.' DEFAULT "'.$form->get('default').'" ');
 				} else {
-					$sql->query('ALTER TABLE '.$tablename.' CHANGE `'.$form->sql->getResult('name').'` `'.$prefix.$form->get('name').'` '.$type.' DEFAULT "'.$form->get('default').'" ');
-				} 
+					$sql->query('ALTER TABLE '.$tablename.' CHANGE `'.$prefix.$form->sql->getValue('name').'` `'.$prefix.$form->get('name').'` '.$type.' DEFAULT "'.$form->get('default').'" ');
+				}
+
+			} else {
+				
+				$form->setErrorMessage(sprintf(lang::get('col_name_exists'), $prefix.$form->get('name')));
+				$form->setSave(false);
 				
 			}
 			
@@ -219,14 +220,16 @@ class metainfosPage {
 		
 	}
 	
-	static protected function delete($tablename, $id, $name) {
+	static protected function delete($tablename, $id) {
+		
+		$prefix = substr($tablename, 0, 3).'_';
 		
 		$sql = sql::factory();
-		$sql->setTable('metainfos');
-		$sql->setWhere('`id`='.$id);
-		$sql->delete();
+		$sql->setTable('metainfos')->setWhere('`id`='.$id)->select('`name`')->result();
+			
+		$sql->query('ALTER TABLE '.$tablename.' DROP `'.$prefix.$sql->get('name').'`');
 		
-		$sql->query('ALTER TABLE '.$tablename.' DROP `'.$name.'`');
+		$sql->delete();
 		
 	}
 	

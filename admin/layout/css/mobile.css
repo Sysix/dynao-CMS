@@ -10,6 +10,12 @@
 	
 }
 
+@media (min-width: 768px) {
+
+	
+	
+}
+
 @media (min-width: 978px) {
 	
 	body {
@@ -32,20 +38,25 @@
 		float:left;
 	}
 	
+	.form-horizontal .form-submit-area {
+		margin:0px 0px 0px 16.6667%;
+		padding:0px 15px;
+	}
+	
  
 }
 
 @media (max-width: 979px) {
 	
-	#tools a#trash, #user img {
+	#trash, #user img {
 		display:none;
 	}
 	
-	 #navi #addonMobile {
-		 display:block;
-	 }
+	#addonMobile {
+		display:block;
+	}
 	
-	#tools #addon-mobil {
+	#addon-mobil {
 		display:none;
 	}
 	
@@ -66,18 +77,18 @@
 		margin:0;
 	}
 	
-	#navi ul li a {
+	#navi a {
 		border-radius:4px 4px 0 0;
 		width:80px;
 	}
 	
-	#navi ul li a span {
-		width:80px;
-	}
-	
-	#navi ul li {
+	#navi li {
 		float:left;
 	}
+	
+	#navi span {
+		width:80px;
+	}	
 	
 	#tools {
 		width:auto;
@@ -126,7 +137,7 @@
 		padding-left:240px;
 	}
 	
-	#subnavi, #subnavi #user {
+	#subnavi {
 		width:210px;
 	}
 }

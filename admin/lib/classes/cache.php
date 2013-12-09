@@ -40,9 +40,7 @@ class cache {
 	 */
 	static public function deleteFile($file) {
 		
-		if(file_exists(dir::cache($file))) {
-			return unlink(dir::cache($file));
-		}
+		return unlink(dir::cache($file));
 		
 		return true;
 	}

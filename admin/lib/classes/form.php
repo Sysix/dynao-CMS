@@ -18,8 +18,6 @@ class form {
 	
 	var $formAttributes = [];
 	
-	var $isSubmit;
-	
 	// Formular wirklich speichern
 	var $toSave = true;
 	
@@ -488,11 +486,6 @@ class form {
 	 */
 	public function isSubmit() {
 		
-		// Wurde schon isSubmit ausgeführt? dann schnelles Return
-		if(!is_null($this->isSubmit)) {
-			return $this->isSubmit;
-		}
-		
 		$save = type::post('save');
 		$save_edit = type::post('save-back');
 		
@@ -500,16 +493,12 @@ class form {
 		
 			$this->setPostsVar();
 			
-			$this->isSubmit = true;
+			return true;
 				
-		} else {
-			
-			$this->isSubmit = false;
-			
 		}
-				
-		return $this->isSubmit;	
 			
+		return false;	
+				
 	}
 	
 	/**
@@ -805,7 +794,7 @@ class form {
 		
 		$return[] = implode(PHP_EOL, $hidden);
 		$return[] = '<div class="form-group">';
-		$return[] = '<div class="col-sm-offset-2 col-sm-10 btn-group">'.implode(PHP_EOL, $buttons).'</div>';
+		$return[] = '<div class="form-submit-area col-sm-10 btn-group">'.implode(PHP_EOL, $buttons).'</div>';
 		$return[] = '</div>';
 			
 		$return[] = '</form>';
