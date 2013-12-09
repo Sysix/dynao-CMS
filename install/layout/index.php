@@ -14,11 +14,9 @@ $navi = array(
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Installation - dynaoCMS</title>
 	
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" media="screen">
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700" media="screen">
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" media="screen">
-    <link rel="stylesheet" href="../../admin/layout/css/bootstrap.css" media="screen">
-    <link rel="stylesheet" href="../../admin/layout/css/bootstrap-responsive.css" media="screen">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700|Open+Sans+Condensed:300,700" media="screen">
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css" media="screen">
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" media="screen">
     <link rel="stylesheet" href="../../admin/layout/css/style.css" media="screen">
     <link rel="stylesheet" href="../../admin/layout/css/mobile.css" media="screen">
     <link rel="stylesheet" href="layout/css/style.css" media="screen">
@@ -75,8 +73,7 @@ $navi = array(
 	</div>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-    <script src="../../admin/layout/js/bootstrap.js"></script>
-    <script src="../../admin/layout/js/scripts.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script>$(document).ready(function() {});</script>
 </body>
 </html>

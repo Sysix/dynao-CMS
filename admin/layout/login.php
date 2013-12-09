@@ -9,6 +9,7 @@
 <body>
 	<div id="center"></div>
 	<div id="login" class="panel panel-default">
+    	<img src="/admin/layout/img/logo-login.png" alt="dynaoCMS Logo" />
 		<form action="index.php?page=dashboard" method="post">
 			<div class="panel-body">
 				<?php echo dyn::get('content'); ?>
