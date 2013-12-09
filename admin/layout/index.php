@@ -26,6 +26,7 @@
                 </a>
                     
                 <h3><?php echo dyn::get('user')->get('firstname')." ".dyn::get('user')->get('name'); ?></h3>
+                <a href="/" target="_blank"><?php echo lang::get('visit_site'); ?></a>
                 
                 <a href="index.php?logout=1" class="fa fa-lock logout"> <span>Logout</span></a>
             

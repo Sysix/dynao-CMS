@@ -9,7 +9,9 @@
 <body>
 	<div id="center"></div>
 	<div id="login" class="panel panel-default">
-    	<img src="/admin/layout/img/logo-login.png" alt="dynaoCMS Logo" />
+    	<a href="http://dynao.de" target="_blank">
+    		<img src="/admin/layout/img/logo-login.png" alt="dynaoCMS Logo" />
+        </a>
 		<form action="index.php?page=dashboard" method="post">
 			<div class="panel-body">
 				<?php echo dyn::get('content'); ?>
@@ -29,7 +31,7 @@
 				</div>				
 				<div class="clearfix"></div>   				
 			</div>			
-			<a href=""><?php echo lang::get("login_pwd_forget"); ?></a>
+			<a class="pwd_forget" href=""><?php echo lang::get("login_pwd_forget"); ?></a>
 		</form>
 	</div>	
 	<?php echo layout::getJS(); ?>	

@@ -112,7 +112,7 @@ fieldset[disabled] .btn-default.active {
 	font-size:11px;
 }
 
-#login a {
+#login a.pwd_forget {
 	position:absolute;
 	bottom:-30px;
 	color:#fff;
@@ -233,17 +233,20 @@ fieldset[disabled] .btn-default.active {
 	left:-90px;
 }
 
-#user a.settings {
+#user a {
 	color:#5c5c5c;
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	-o-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
+}
+
+#user a.settings {
 	font-size:18px;
 	position:absolute;
 	top:20px;
 	right:20px;
 	display:block;
-	-webkit-transition: all 0.5s ease-in-out;
-	-moz-transition: all 0.5s ease-in-out;
-	-o-transition: all 0.5s ease-in-out;
-	transition: all 0.5s ease-in-out;
 }
 
 #user a.messages {
@@ -253,10 +256,6 @@ fieldset[disabled] .btn-default.active {
 	bottom:20px;
 	right:20px;
 	display:block;
-	-webkit-transition: all 0.5s ease-in-out;
-	-moz-transition: all 0.5s ease-in-out;
-	-o-transition: all 0.5s ease-in-out;
-	transition: all 0.5s ease-in-out;
 }
 
 #user a.messages span {
@@ -277,15 +276,10 @@ fieldset[disabled] .btn-default.active {
 }
 
 #user a.logout {
-	color:#5c5c5c;
 	position:absolute;
 	bottom:20px;
 	left:20px;
 	display:block;
-	-webkit-transition: all 0.5s ease-in-out;
-	-moz-transition: all 0.5s ease-in-out;
-	-o-transition: all 0.5s ease-in-out;
-	transition: all 0.5s ease-in-out;
 }
 
 #user a.logout span {
