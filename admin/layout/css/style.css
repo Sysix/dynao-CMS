@@ -122,8 +122,7 @@ fieldset[disabled] .btn-default.active {
 	padding:10px 0;
 }
 
-#user-mobil,
-#addon-mobil {
+#user-mobil {
 	display:none;
 }
 
@@ -382,9 +381,18 @@ fieldset[disabled] .btn-default.active {
 	bottom:0;
 }
 
+#addon-mobil {
+	margin:40px -35px 0 -35px;
+	line-height:40px;
+	background:#252525;
+	border-radius:0 3px 3px 0;
+	color:#fff;
+	padding-left:10px;
+}
+
 #tools ul {
 	padding:0;
-	margin:40px -35px 0 -35px;
+	margin:10px -35px 0 -35px;
 	list-style:none;
 }
 

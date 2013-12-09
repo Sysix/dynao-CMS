@@ -31,6 +31,7 @@
 		width:16.6667%;
 		float:left;
 	}
+	
  
 }
 
@@ -43,6 +44,10 @@
 	 #navi #addonMobile {
 		 display:block;
 	 }
+	
+	#tools #addon-mobil {
+		display:none;
+	}
 	
 	#navi {
 		position:absolute;
@@ -137,7 +142,6 @@
 		cursor:pointer;
 		border-radius:4px 4px 0 0;
 	}
-	
 	#user-mobil.active {
 		background:#202020;
 		border-bottom:10px solid #202020;
@@ -209,9 +213,9 @@
 	#tools #addon-mobil {
 		display:block;
 		position:absolute;
-		line-height:40px;
 		right:10px;
 		margin:60px 0 0 0;
+		border-radius:0;
 		color:#fff;
 		padding-left:10px;
 		background:#202020;

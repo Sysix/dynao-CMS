@@ -170,7 +170,7 @@ class metainfosPage {
 		
 		$table->addRow()->addCell()->addCell('Name')->addCell('Aktion');
 		
-		$table->addCollsLayout('25,*,250');
+		$table->addCollsLayout('25,*,110');
 		
 		$table->addSection('tbody');
 		while($table->isNext()) {
@@ -179,11 +179,11 @@ class metainfosPage {
 			$delete = '';
 			
 			if(dyn::get('user')->hasPerm('metainfos[edit]')) {
-				$edit = '<a href="'.url::backend('meta', ['subpage'=>$pagename, 'action'=>'edit', 'id'=>$table->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
+				$edit = '<a href="'.url::backend('meta', ['subpage'=>$pagename, 'action'=>'edit', 'id'=>$table->get('id')]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';
 			}
 			
 			if(dyn::get('user')->hasPerm('metainfos[delete]')) {
-				$delete = '<a href="'.url::backend('meta', ['subpage'=>$pagename, 'action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger delete">'.lang::get('delete').'</a>';
+				$delete = '<a href="'.url::backend('meta', ['subpage'=>$pagename, 'action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger delete fa fa-trash-o"></a>';
 			}
 			
 			$table->addRow(['data-id'=>$table->get('id')])
