@@ -101,10 +101,11 @@ class media {
 	// return	string
 	public function getPath() {
 		
-		// Abfrage ob Backend oder Frontend
-		// Immoment für Backend angepasst
-		return '../media/'.$this->get('filename');
-
+		if(dyn::get('backend')) {
+			return '../media/'.$this->get('filename');
+		} else {
+			return 'media/'.$this->get('filename');
+		}
 	}
 	
 	
