@@ -17,19 +17,8 @@ if(page::isValid($page)) {
 	$page = new page(dyn::get('error_page'));	
 }
 
-if(!pageCache::exist($page->get('id'))) {
-	echo 'Cache Content';
-	pageCache::generateArticle($page->get('id'));
-}
-	
-echo pageCache::read($page->get('id'));
-
-$content = extension::get('FRONTEND_OUTPUT', ob_get_contents());
-
-dyn::add('content', $content);
-
 ob_end_clean();
 
-include(dir::template(dyn::get('template'), 'template.php'));
+echo $page->getTemplate();
 
 ?>

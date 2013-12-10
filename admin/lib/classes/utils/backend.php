@@ -144,9 +144,8 @@ class backend {
 	}
 	
 	/*
-	 * Include der Subnavigation
+	 * Include der Hauptnavigation
 	 */
-	 /*
 	 public static function getNaviInclude($addon = false) {
 		
 		self::setCurrents();
@@ -166,7 +165,6 @@ class backend {
 		}
 		 
 	 }
-	 */
 	
 	/*
 	 * Include der Subnavigation

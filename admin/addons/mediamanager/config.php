@@ -13,7 +13,9 @@ if(
 	dyn::get('user')->hasPerm('media[category][edit]') ||
 	dyn::get('user')->hasPerm('media[category][delete]')
 ) {
-	backend::addNavi(lang::get('media'), url::backend('media'), 'picture-o', 2);
+	backend::addNavi(lang::get('media'), url::backend('media'), 'picture-o', 2, function() {
+		return dir::addon('mediamanager', 'page'.DIRECTORY_SEPARATOR.'media.php');
+	});
 }
 
 form::addClassMethod('addMediaField', function($name, $value) {

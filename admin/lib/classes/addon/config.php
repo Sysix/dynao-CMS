@@ -111,33 +111,6 @@ class addonConfig {
 		
 	}
 	
-	public static function includePage() {
-		
-		$page = type::super('page', 'string');
-		
-		foreach(self::getAllConfig() as $name=>$config) {
-			
-			if(!array_key_exists($page, $config['page'])) {
-				continue;
-			}
-			
-			foreach($config['need'] as $Needname=>$Needvalue) {
-				$message = addonNeed::check($Needname, $Needvalue);
-				if(is_string($message)) {
-					echo message::warning(sprintf(lang::get('addon_errors'), $config['name'], $message), true);
-					continue 2;
-				}
-				
-			}
-			
-			return dir::addon($name, $config['page'][$page]);
-			
-		}
-		
-		return false;
-		
-	}
-	
 	public static function isActive($name) {
 		
 		return in_array($name, self::$all);

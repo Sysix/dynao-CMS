@@ -59,19 +59,7 @@ if(!is_null($errorMsg)) {
 }
 
 if(userLogin::isLogged()) {
-	if(file_exists(dir::page($page.'.php'))) {
-		
-		include(dir::page($page.'.php'));
-		
-	} else {
-		
-		$file = addonConfig::includePage();
-		
-		if(file_exists($file)) {
-			include($file);	
-		}
-	}
-	
+	include(backend::getNaviInclude());	
 }
 
 $content = extension::get('BACKEND_OUTPUT', ob_get_contents());

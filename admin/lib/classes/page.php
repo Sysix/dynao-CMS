@@ -42,6 +42,28 @@ class page {
 		return module::getByStructureId($this->get('id'));
 	}
 	
+	public function getTemplate() {
+		
+		ob_start();
+		ob_implicit_flush(0);
+		
+		if(!pageCache::exist($this->get('id'))) {
+			pageCache::generateArticle($this->get('id'));
+		}
+			
+		$content = pageCache::read($this->get('id'));
+		dyn::add('content', $content);
+		
+		include(dir::template(dyn::get('template'), 'template.php'));
+		
+		$content = extension::get('FRONTEND_OUTPUT', ob_get_contents());
+		
+		ob_end_clean();
+		
+		return $content;
+		
+	}
+	
 	public static function getChildPages($parentId, $offlinePages = true) {
 		
 		$return = [];

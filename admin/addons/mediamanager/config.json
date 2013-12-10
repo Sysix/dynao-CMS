@@ -5,9 +5,5 @@
 	"supportlink" : "http://dynao.de/",
 	"need": {
 		"version": 0.1
-	},
-	"page": {
-		"media": "page/media.php"
 	}
-	
 }

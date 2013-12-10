@@ -47,8 +47,6 @@ cache::setCache(dyn::get('cache'));
 addonConfig::includeAllLangFiles();
 addonConfig::includeAllLibs();
 
-extension::get('BEFORE_INCLUDE', '');
-
 if(dyn::get('backend')) {
 	
 	include(dir::backend('backend.php'));
