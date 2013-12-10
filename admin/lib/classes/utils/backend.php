@@ -150,13 +150,17 @@ class backend {
 		
 		self::setCurrents();
 		
-		$page = self::$getVars[0];
-		
-		$current = self::$navi[self::getPageName()];
+		if(isset(self::$navi[self::getPageName()])) {
+			$current = self::$navi[self::getPageName()];
+		} else {
+			$current = self::$addonNavi[self::getPageName()];
+		}
 		// isset gibts bei null false aus
 		if(isset($current['callback']) && is_callable($current['callback'])) {
 			return $current['callback']();
 		}
+		
+		$page = self::$getVars[0];
 		
 		if(!$addon) {
 			return dir::page($page.'.php');

@@ -7,7 +7,9 @@ if(
 	dyn::get('user')->hasPerm('metainfos[edit]') ||
 	dyn::get('user')->hasPerm('metainfos[delete]')
 ) {
-	backend::addAddonNavi(lang::get('metainfos'), url::backend('meta'));
+	backend::addAddonNavi(lang::get('metainfos'), url::backend('meta'), -1, function() {
+		return dir::addon('metainfos', 'page'.DIRECTORY_SEPARATOR.'meta.php');
+	});
 }
 
 $page = type::super('page', 'string');
