@@ -4,52 +4,50 @@ Medienmanager
 Der Medienmanager verwaltet die Medien in selbsterstellen Kategorien
 
 
-#### Aufruf der Klasse
+### Überprüfen ob Addon installiert & aktiviert
+`addonConfig::isActive('medienmanager')`
 
-```
-$media = new media($id)
-$media = media::getMediaByName($filename)
-$media = media::getMediaByExtension($extension)
-```
+### Aufruf der Klasse
 
-###### Überprüfen ob $media ein valides Media ist
+`$media = new media($id)`
 
-```
-media::isValid($media);
-```
+`$media = media::getMediaByName($filename)`
 
-###### Weitere Methoden
+`$media = media::getMediaByExtension($extension)`
 
-```
-$media->get($sqlName);
-$media->getExtension();
-$media->getPath();
-```
+#### Überprüfen ob $media ein valides Media ist
+
+`media::isValid($media)`
+
+#### Weitere Methoden
+
+`$media->get($sqlName)`
+
+`$media->getExtension()`
+
+`$media->getPath()`
 
 ### Mediamanger in Formular benutzen
 
-```
-     if(addonConfig::isActive('medienmanager')) {
-       $form->addMediaField($name, $value);
-       $form->addMediaListField($name, $value);
-     }
-```
+`$form->addMediaField($name, $value)`
+
+`$form->addMediaListField($name, $value)`
 ### Medienmanager in Modulen 
 
-##### Name 
-```
-DYN_MEDIA[1-10]
-DYN_MEDIALIST[1-10]
-```
+#### Name
 
-##### Value
-```
-OUT_MEDIA[1-10]
-OUT_MEDIALIST[1-10]
-```
+`DYN_MEDIA[1-10]`
+
+`DYN_MEDIALIST[1-10]`
+
+#### Value
+
+`OUT_MEDIA[1-10]`
+
+`OUT_MEDIALIST[1-10]`
 
 
-###### Rechte
+### Rechte
 - media[edit]
 - media[delete]
 - media[category][edit]

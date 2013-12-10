@@ -25,7 +25,7 @@ class metainfosPage {
 			}	
 			
 			if($action == 'add' || $action == 'edit' || $action == 'delete') {
-				self::BackendFormular($name, $pagename, $tablename, $action, $id);
+				self::BackendFormular($name, $tablename, $action, $id);
 			}
 		
 		}
@@ -53,7 +53,7 @@ class metainfosPage {
 		
 	}
 	
-	static protected function BackendFormular($name, $pagename, $tablename, $action, $id) {
+	static protected function BackendFormular($name, $tablename, $action, $id) {
 		
 		$prefix = substr($tablename, 0, 3).'_';
 		
