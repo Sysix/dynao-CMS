@@ -101,6 +101,8 @@
 	"value":					"Value",
 	"start_page":				"startpage",
 	"error_page":				"errorpage",
+	"delete_cache":				"delete cache",
+	"delete_cache_success":		"cache completely deleted",
 	
 	#Structure
 	"structure_content_save":	"Content successfully saved",

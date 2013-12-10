@@ -120,7 +120,7 @@ class cache {
 			
 			while (($file = readdir($dir)) !== false) {
 		
-				if($file != "." && $file != "..") {
+				if($file != "." && $file != ".." && is_file($file)) {
 					
 					self::deleteFile($file);
 					

@@ -1,9 +1,20 @@
-<div class="row">
-	
+<?php
+if($action == 'deleteCache') {
+	cache::clear();
+	pageCache::clearAll();
+	extension::get('SETTINGS_DELETE_CACHE');
+	echo message::success(lang::get('delete_cache_success'), true);	
+}
+?>
+<div class="row">	
     <div class="col-lg-8">
         <div class="panel panel-default">
             <div class="panel-heading">
-            	<h3 class="panel-title"><?php echo lang::get('general'); ?></h3>
+            	<h3 class="panel-title pull-left"><?php echo lang::get('general'); ?></h3>
+                <div class="btn-group pull-right">
+                	<a href="<?php echo url::backend('settings', ['subpage'=>'main', 'action'=>'deleteCache']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('delete_cache'); ?></a>
+                </div>
+                <div class="clearfix"></div>
             </div>
             <div class="panel-body">
             	<?php

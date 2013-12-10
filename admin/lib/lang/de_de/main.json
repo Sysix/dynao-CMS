@@ -101,6 +101,8 @@
 	"value":					"Wert",
 	"start_page":				"Startseite",
 	"error_page":				"Fehlerseite",
+	"delete_cache":				"Cache löschen",
+	"delete_cache_success":		"Cache komplett gelöscht",
 	
 	#Structure
 	"structure_content_save":	"Inhalt erfolgreich übernommen",
