@@ -1,6 +1,7 @@
 <?php
 
 $pid = type::super('pid', 'int', 0);
+$id = type::super('id', 'int', 0);
 
 $while_id = $pid;
 
@@ -9,7 +10,7 @@ if(ajax::is()) {
 	$sort = type::post('array', 'array');
 	
 	$sql = sql::factory();
-	$sql->setTable('media_cat');
+	$sql->setTable('wiki_cat');
 	foreach($sort as $s=>$id) {
 		$sql->setWhere('id='.$id);
 		$sql->addPost('sort', $s+1);
@@ -23,11 +24,11 @@ if(ajax::is()) {
 while($while_id) {
 		
 	$sql = sql::factory();
-	$sql->query('SELECT name, pid FROM '.sql::table('media_cat').' WHERE id='.$while_id)->result();
+	$sql->query('SELECT name, pid FROM '.sql::table('wiki_cat').' WHERE id='.$while_id)->result();
 	
 	if($pid != $while_id) {
 		
-		$breadcrumb[] = '<li><a href="'.url::backend('media', ['pid'=>$while_id, 'subpage'=>'category']).'">'.$sql->get('name').'</a></li>';
+		$breadcrumb[] = '<li><a href="'.url::backend('wiki', ['pid'=>$while_id, 'subpage'=>'category']).'">'.$sql->get('name').'</a></li>';
 		
 	} else {
 		
@@ -39,23 +40,23 @@ while($while_id) {
 	
 }
 
-$breadcrumb[] = '<li><a href="'.url::backend('media', ['subpage'=>'category']).'">'.lang::get('media_all_cat').'</a></li>';
+$breadcrumb[] = '<li><a href="'.url::backend('wiki', ['subpage'=>'category']).'">'.lang::get('wiki_all_cat').'</a></li>';
 
 echo '<ul class="breadcrumb">'.implode('', array_reverse($breadcrumb)).'</ul>';
 
-if($action == 'delete' && dyn::get('user')->hasPerm('media[category][delete]')) {
+if($action == 'delete' && dyn::get('user')->hasPerm('wiki[delete]')) {
 	
 	$error = [];
 	
 	$sql = sql::factory();
-	$sql->query('SELECT id FROM '.sql::table('media_cat').' WHERE `pid` = '.$id)->result();
+	$sql->query('SELECT id FROM '.sql::table('wiki_cat').' WHERE `pid` = '.$id)->result();
 	if($sql->num()) {
-			$error[] = lang::get('media_underfile_exist');
+			$error[] = lang::get('wiki_article_exist');
 	}
 	
-	$sql->query('SELECT id FROM '.sql::table('media').' WHERE `category` = '.$id)->result();
+	$sql->query('SELECT id FROM '.sql::table('wiki').' WHERE `category` = '.$id)->result();
 	if($sql->num()) {
-			$error[] = lang::get('media_underfile_exist2');
+			$error[] = lang::get('wiki_article_exist2');
 	}
 	
 	if(count($error)) {
@@ -65,14 +66,14 @@ if($action == 'delete' && dyn::get('user')->hasPerm('media[category][delete]')) 
 	} else {
 	
 		$sql = sql::factory();		
-		$sql->query('SELECT `sort`, `pid` FROM '.sql::table('media_cat').' WHERE id='.$id)->result();
+		$sql->query('SELECT `sort`, `pid` FROM '.sql::table('wiki_cat').' WHERE id='.$id)->result();
 		
 		$delete = sql::factory();
-		$delete->setTable('media_cat');
+		$delete->setTable('wiki_cat');
 		$delete->setWhere('id='.$id);
 		$delete->delete();
 		
-		sql::sortTable('media_cat', 0, '`pid` = '.$sql->get('pid'));
+		sql::sortTable('wiki_cat', 0, '`pid` = '.$sql->get('pid'));
 		
 		echo message::success(lang::get('file_deleted'));
 		
@@ -80,10 +81,10 @@ if($action == 'delete' && dyn::get('user')->hasPerm('media[category][delete]')) 
 		
 }
 
-if(in_array($action, ['save-add', 'save-edit']) && dyn::get('user')->hasPerm('media[category][edit]')) {
+if(in_array($action, ['save-add', 'save-edit']) && dyn::get('user')->hasPerm('wiki[edit]')) {
 	
 	$sql = sql::factory();
-	$sql->setTable('media_cat');
+	$sql->setTable('wiki_cat');
 	$sql->setWhere('id='.$id);
 	$sql->getPosts([
 		'name'=>'string',
@@ -100,7 +101,7 @@ if(in_array($action, ['save-add', 'save-edit']) && dyn::get('user')->hasPerm('me
 	$sort = type::post('sort', 'int');
 	$parent_id = type::post('pid', 'int');
 	
-	sql::sortTable('media_cat', $sort, '`pid` = '.$parent_id.' AND id != '.$id);
+	sql::sortTable('wiki_cat', $sort, '`pid` = '.$parent_id.' AND id != '.$id);
 	
 	
 }
@@ -118,9 +119,9 @@ $table->addRow()
 
 $table->addSection('tbody');
 	
-$table->setSql('SELECT * FROM '.sql::table('media_cat').' WHERE pid = '.$pid.' ORDER BY sort ASC');
+$table->setSql('SELECT * FROM '.sql::table('wiki_cat').' WHERE pid = '.$pid.' ORDER BY sort ASC');
 	
-if(in_array($action, ['edit', 'add']) && dyn::get('user')->hasPerm('media[category][edit]')) {
+if(in_array($action, ['edit', 'add']) && dyn::get('user')->hasPerm('wiki[edit]')) {
 		
 	echo '<form method="post" action="index.php">';
 		
@@ -128,7 +129,7 @@ if(in_array($action, ['edit', 'add']) && dyn::get('user')->hasPerm('media[catego
 	$inputHidden->addAttribute('type', 'hidden');
 	echo $inputHidden->get();
 	
-	$inputHidden = formInput::factory('page', 'media');
+	$inputHidden = formInput::factory('page', 'wiki');
 	$inputHidden->addAttribute('type', 'hidden');
 	echo $inputHidden->get();
 	
@@ -147,7 +148,7 @@ if(in_array($action, ['edit', 'add']) && dyn::get('user')->hasPerm('media[catego
 	
 }
 
-if($action == 'add' && dyn::get('user')->hasPerm('media[category][edit]')) {
+if($action == 'add' && dyn::get('user')->hasPerm('wiki[edit]')) {
 	
 	$inputName = formInput::factory('name', '');
 	$inputName->addAttribute('type', 'text');
@@ -169,7 +170,7 @@ if($table->numSql()) {
 
 	while($table->isNext()) {
 		
-		if($action == 'edit' && $table->get('id') == $id && dyn::get('user')->hasPerm('media[category][edit]')) {
+		if($action == 'edit' && $table->get('id') == $id && dyn::get('user')->hasPerm('wiki[edit]')) {
 				
 			$inputName = formInput::factory('name', $table->get('name'));
 			$inputName->addAttribute('type', 'text');
@@ -193,17 +194,17 @@ if($table->numSql()) {
 			$edit = '';
 			$delete = '';
 			
-			if(dyn::get('user')->hasPerm('media[category][edit]')) {
-				$edit = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'edit', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';
+			if(dyn::get('user')->hasPerm('wiki[edit]')) {
+				$edit = '<a href="'.url::backend('wiki', ['subpage'=>'category', 'action'=>'edit', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';
 			}
 			
-			if(dyn::get('user')->hasPerm('media[category][delete]')) {
-				$delete = '<a href="'.url::backend('media', ['subpage'=>'category', 'action'=>'delete', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
+			if(dyn::get('user')->hasPerm('wiki[delete]')) {
+				$delete = '<a href="'.url::backend('wiki', ['subpage'=>'category', 'action'=>'delete', 'id'=>$table->get('id'),'pid'=>$pid]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
 			}
 		
 			$table->addRow(array('data-id'=>$table->get('id')))
 			->addCell('<i class="fa fa-sort"></i>')
-			->addCell('<a href="'.url::backend('media', ['subpage'=>'category', 'pid'=>$table->get('id')]).'">'.$table->get('name').'</a>')
+			->addCell('<a href="'.url::backend('wiki', ['subpage'=>'category', 'pid'=>$table->get('id')]).'">'.$table->get('name').'</a>')
 			->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
 			
 		}
@@ -224,12 +225,12 @@ if($table->numSql()) {
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title pull-left"><?php echo lang::get('media'); ?></h3>
+				<h3 class="panel-title pull-left"><?php echo lang::get('wiki'); ?></h3>
                 <?php
-				if(dyn::get('user')->hasPerm('media[category][edit]')) {
+				if(dyn::get('user')->hasPerm('wiki[edit]')) {
 				?>
 				<div class="btn-group pull-right">
-					<a href="<?php echo url::backend('media', ['subpage'=>'category', 'action'=>'add', 'pid'=>$pid]); ?>" class="btn btn-sm btn-default"><?php echo lang::get('add'); ?></a>
+					<a href="<?php echo url::backend('wiki', ['subpage'=>'category', 'action'=>'add', 'pid'=>$pid]); ?>" class="btn btn-sm btn-default"><?php echo lang::get('add'); ?></a>
 				</div>
                 <?php
 				}
@@ -243,7 +244,7 @@ if($table->numSql()) {
 <?php
 
 
-if(in_array($action, ['edit', 'add']) && dyn::get('user')->hasPerm('media[category][edit]')) {
+if(in_array($action, ['edit', 'add']) && dyn::get('user')->hasPerm('wiki[edit]')) {
 	echo '</form>';
 }
 

@@ -184,8 +184,8 @@ fieldset[disabled] .btn-default.active {
 	font-family:'Open Sans';
 }
 
-#navi #addonMobile {
-	float:right;
+#addonMobile {
+	float:right!important;
 	display:none;
 	cursor:pointer;
 }
