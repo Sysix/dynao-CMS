@@ -1,0 +1,17 @@
+{
+	"name": "Default template",
+	"version": 0.1,
+	"author": "Dynao CMS",
+	"supportlink" : "http://dynao.de/",
+	"need": {
+		"version": 0.1,
+		"addon": {
+			"metainfos": 0.1
+		}
+	},
+	"slots": {
+		"contentslider" : "Der Contentslider",
+		"navigation" : "Die Hauptnavigation"
+	}
+	
+}

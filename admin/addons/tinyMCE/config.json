@@ -4,11 +4,7 @@
 	"author": "Dynao CMS",
 	"supportlink" : "http://dynao.de/",
 	"need": {
-		"version": 0.1,
-		"perm": "admin[page]"
-	},
-	"page": {
-		"title": "TinyMCE"
+		"version": 0.2
 	}
 	
 }

@@ -13,27 +13,34 @@ if($action == 'delete') {
 
 if($action == 'install') {
 
-	$addonClass= new addon($addon, false);	
-	$install = ($addonClass->isInstall()) ? 0 : 1;
+	$addonClass= new addon($addon);	
 	
-	$sql = sql::factory();
-	$sql->setTable('addons');
-	$sql->setWhere('`name` = "'.$addon.'"');
-	$sql->addPost('install', $install);
-	
-	if(!$install)
-		$sql->addPost('active', 0);
-	
-	$sql->update();
-	
+	$success = true;
 	
 	if(!$addonClass->isInstall()) {
-		$addonClass->install();
+		if(!$addonClass->install()) {
+			$success = false;
+		}
 	} else {
 		$addonClass->uninstall();	
 	}
 	
-	echo message::success(lang::get('addon_save_success'));
+	if($success) {
+		
+		$install = ($addonClass->isInstall()) ? 0 : 1;
+	
+		$sql = sql::factory();
+		$sql->setTable('addons');
+		$sql->setWhere('`name` = "'.$addon.'"');
+		$sql->addPost('install', $install);
+		
+		if(!$install)
+			$sql->addPost('active', 0);
+		
+		$sql->update();
+		
+		echo message::success(lang::get('addon_save_success'));
+	}
 	
 }
 

@@ -1,10 +1,20 @@
+<?php
+
+$keywords = $this->get('keywords');
+$description = $this->get('description');
+$title = $this->get('name');
+
+?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Default Template</title>
-    
-    <?php echo template::getCSS(); ?>
+    <title><?= $title; ?> - <?= dyn::get('hp_name'); ?></title>
+    <meta name="description" content="<?= $description ?>">
+	<meta name="keywords" content="<?= $keywords ?>">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/templates/default/css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -13,7 +23,8 @@
     	<div class="container">
     		<div class="row">
             	<div class="col-sm-2">
-                	Logo
+                	<img src="templates/default/images/logo.png" alt="logo">
+                    <?= dyn::get('hp_name'); ?>
                 </div>
             	<div class="col-sm-10">
                 	<nav>
@@ -50,7 +61,5 @@
             </div>
         </div>
     </div>
-    
-<?php echo template::getJS(); ?>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
 
-class addonNeed {
+class templateNeed {
 	use traitMeta;
 	
 	public static function check($name, $value) {
@@ -8,7 +8,7 @@ class addonNeed {
 		$method = 'check'.ucfirst($name);
 		
 		if(!method_exists(get_called_class(), $method)) {
-			throw new Exception(sprintf(lang::get('addon_check_error'), __CLASS__, $name));
+			throw new Exception(sprintf(lang::get('temnplate_check_error'), __CLASS__, $name));
 		}
 		
 		return self::$method($value);	
@@ -21,7 +21,7 @@ class addonNeed {
 			return true;
 		}
 		
-		return sprintf(lang::get('addon_wrong_version'), dyn::get('version'), $version);
+		return sprintf(lang::get('template_wrong_version'), dyn::get('version'), $version);
 		
 	}
 	

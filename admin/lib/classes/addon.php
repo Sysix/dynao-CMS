@@ -34,9 +34,13 @@ class addon {
 		
 	}
 	
-	public function get($name) {
-	
-		return $this->config[$name];
+	public function get($name, $default = null) {
+		
+		if(isset($this->config[$name])) {
+			return $this->config[$name];
+		}
+		
+		return $default;
 		
 	}
 	
@@ -74,14 +78,40 @@ class addon {
 		
 	}
 	
+	public function checkNeed() {
+		
+		$errors = [];
+		foreach($this->get('need', []) as $key=>$value) {
+			
+			$check = addonNeed::check($key, $value);
+			// Typcheck, because $check can be a string
+			if($check !== true) {
+				$errors[] = $check;
+			}
+				
+		}
+		
+		if(!empty($errors)) {
+			echo message::danger(implode('<br />', $errors));
+			return false;	
+		}
+		
+		return true;
+			
+	}
+	
 	public function install() {
+		
+		if(!$this->checkNeed()) {
+			return false;	
+		}
 		
 		$file = dir::addon($this->name, self::INSTALL_FILE);
 		if(file_exists($file)) {
 			include $file;	
 		}
 		
-		return $this;
+		return true;
 				
 	}
 	

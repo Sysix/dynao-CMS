@@ -4,11 +4,6 @@
 	"author": "Dynao CMS",
 	"supportlink" : "http://dynao.de/",
 	"need": {
-		"version": 0.1,
-		"perm": "admin[page]"
-	},
-	"page": {
-		"meta": "page/meta.php"
+		"version": 0.1
 	}
-	
 }

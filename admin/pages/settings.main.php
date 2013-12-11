@@ -35,10 +35,18 @@ if($action == 'deleteCache') {
 						$url .= '/';	
 					}
 					
+					if(dyn::get('template') != $form->get('template')) {
+						$template = new template($form->get('template'));
+						if($template->install() !== true) {
+							$form->setSuccessMessage(null);
+						} else {
+							dyn::add('template', $form->get('template'), true);
+						}
+					}
+					
 					dyn::add('hp_name', $form->get('hp_name'), true);
 					dyn::add('hp_url', $url, true);
 					dyn::add('lang', $form->get('lang'), true);
-					dyn::add('template', $form->get('template'), true);
 					dyn::add('start_page', $form->get('start_page_id'), true);
 					dyn::add('error_page', $form->get('error_page_id'), true);
 					dyn::save();
