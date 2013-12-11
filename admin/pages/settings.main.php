@@ -130,6 +130,42 @@ if($action == 'deleteCache') {
 			?>
         </div>
     </div>
+    
+    <div class="col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            	<h3 class="panel-title"><?php echo lang::get('template'); ?></h3>
+            </div>
+			<?php
+			
+			$sql = sql::factory();
+			$sql->query('SELECT VERSION()')->result();
+			
+			$template = new template(dyn::get('template'));
+			
+			$table = table::factory(['class'=> ['table', 'table-spriped', 'table-hover']]);			
+			$table->addSection('tbody');
+			
+			$table->addRow()
+			->addCell(lang::get('name'))
+			->addCell($template->get('name'));
+			
+			$table->addRow()
+			->addCell('Author')
+			->addCell($template->get('author'));
+			
+			$table->addRow()
+			->addCell('Version')
+			->addCell($template->get('version'));
+			
+			$table->addRow()
+			->addCell('<a href="'.$template->get('supportlink').'" class="btn btn-sm btn-default btn-block" target="_blank">Support besuchen</a>', ['colspan'=>2]);	
+			
+			echo $table->show();
+			
+			?>
+        </div>
+    </div>
         
     <div class="clearfix"></div>
 
