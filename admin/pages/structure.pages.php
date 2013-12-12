@@ -267,6 +267,8 @@ if($structure_id && dyn::get('user')->hasPerm('page[content]')) {
 			return $return;
 		}
 		
+		ajax::addReturn(message::success(lang::get('save_sorting'), true));
+		
 		sortStructure($sort);
 		
 	}

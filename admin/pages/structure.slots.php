@@ -98,7 +98,7 @@ if(!is_null($secondpage) && dyn::get('user')->hasPerm('page[content]')) {
 		$select = pageMisc::getTreeStructure(true, $form->get('structure'));
 		
 		if($form->get('is-structure') == 1)
-			$field->addAttribute('style', 'display:none;');
+			$select->addAttribute('style', 'display:none;');
 		
 		$select->setMultiple();
 		$select->setSize(10);
