@@ -144,9 +144,9 @@ class sql {
 		
 	}
 	
-	public function getArray($row, $delimer = '|') {
+	public function getArray($row, $delimiter= '|') {
 	
-		return explode($this->get($row), $delimer);
+		return explode($delimiter, $this->get($row));
 		
 	}
 	

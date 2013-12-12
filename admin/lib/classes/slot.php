@@ -51,7 +51,7 @@ class slot {
 			return '';	
 		}
 		
-		$pageArea = new pagArea($sql);
+		$pageArea = new pageArea($sql);
 		
 		return $pageArea->OutputFilter($sql->get('output'), $sql);	
 	}
@@ -63,12 +63,12 @@ class slot {
 	 * @param	array	$structure		Die Kategorien, wo der Slot angezeigt wird
 	 * @return	bool
 	 */
-	public static function isInCategory($is_structure,array $structure) {
+	public static function isInCategory($is_structure, $structure) {
 		
 		if($is_structure == 1)
 			return true;
 			
-		return in_array(dyn::get('page'), $structure);
+		return in_array(dyn::get('page'), (array)$structure);
 			
 	}
 	
@@ -105,7 +105,8 @@ class slot {
 					ON m.id = s.modul
 			')->result();
 			while($sql->isNext()) {
-				self::$slots[$sql->get('name')] = $sql;
+				$sql2 = clone $sql;
+				self::$slots[$sql->get('name')] = $sql2;
 				
 				$sql->next();
 			}

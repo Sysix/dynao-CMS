@@ -10,7 +10,8 @@
 		}
 	},
 	"templates": {
-		"Default Template": "template.php"
+		"Default Template": "template.php",
+		"2 Spalten": "2cols.php"
 	},
 	"slots": {
 		"contentslider" : {
