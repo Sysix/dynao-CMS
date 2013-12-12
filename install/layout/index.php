@@ -1,9 +1,9 @@
 ﻿<?php
 
 $navi = array(
-	'step1' => array('Step 1', ''),
-	'step2' => array('Step 2', 'disable'),
-	'step3' => array('Step 3', 'disable')
+	'overview' => array(lang::get('overview'), ''),
+	'database' => array(lang::get('db'), 'disable'),
+	'finish' => array(lang::get('finish'), 'disable')
 	);
 
 ?>
