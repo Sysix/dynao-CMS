@@ -30,6 +30,14 @@ h1, h2, h3, h4, h5, h6 {
 
 a, a:visited {
 	color:#bf1e2e;
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	-o-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
+}
+
+a:hover {
+	color:#000;
 }
 
 a.btn {
@@ -156,10 +164,6 @@ fieldset[disabled] .btn-default.active {
 	position:relative;
 	color:#000;
 	opacity:0.4;
-	-webkit-transition: all 0.5s ease-in-out;
-	-moz-transition: all 0.5s ease-in-out;
-	-o-transition: all 0.5s ease-in-out;
-	transition: all 0.5s ease-in-out;
 }
 
 #navi li.active a {
@@ -234,10 +238,6 @@ fieldset[disabled] .btn-default.active {
 
 #user a {
 	color:#5c5c5c;
-	-webkit-transition: all 0.5s ease-in-out;
-	-moz-transition: all 0.5s ease-in-out;
-	-o-transition: all 0.5s ease-in-out;
-	transition: all 0.5s ease-in-out;
 }
 
 
@@ -274,10 +274,6 @@ fieldset[disabled] .btn-default.active {
 	color:#5c5c5c;
 	border-top:1px solid #3c3c3c;
 	margin-right:20px;
-	-webkit-transition: all 0.5s ease-in-out;
-	-moz-transition: all 0.5s ease-in-out;
-	-o-transition: all 0.5s ease-in-out;
-	transition: all 0.5s ease-in-out;
 }
 
 #subnavi ul.subnav li a span {
@@ -365,10 +361,6 @@ fieldset[disabled] .btn-default.active {
 	line-height:40px;
 	color:#fff;
 	padding:0 10px;
-	-webkit-transition: all 0.5s ease-in-out;
-	-moz-transition: all 0.5s ease-in-out;
-	-o-transition: all 0.5s ease-in-out;
-	transition: all 0.5s ease-in-out;
 }
 
 #tools ul li.active a {
