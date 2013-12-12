@@ -37,6 +37,9 @@
 	"dashboard":				"Dashboard",
 	"addon_navi":				"Addon Navi",
 	"visit_site":				"Seite besuchen",
+	"read_more":				"Weiterlesen",
+	"download":					"Download",
+	"vote":						"Vote",
 	
 	#Kategorien
 	"category_save":			"Kategorie speichern",
@@ -71,6 +74,7 @@
 	
 	#Addon
 	"addons":					"Addons",
+	"all_addons":				"Alle Addons",
 	"addon_save_success":		"Addon erfolgreich gespeichert",
 	"addon_install_first":		"Bitte installieren Sie das Addon \"%s\" zuerst",
 	"addon_installed":			"Installiert",
