@@ -88,7 +88,7 @@ if(!is_null($secondpage) && dyn::get('user')->hasPerm('page[content]')) {
 		$field = $form->addTextField('description', $form->get('description'));
 		$field->fieldName(lang::get('description'));
 		
-		$field = $form->addRawField('<select name="modul" class="form-control">'.pageAreaHtml::moduleList($form->get('modul_id')).'</select>');
+		$field = $form->addRawField('<select name="modul" class="form-control">'.pageAreaHtml::moduleList($form->get('modul')).'</select>');
 		$field->fieldName(lang::get('modul'));
 		
 		$field = $form->addCheckboxField('is-structure', $form->get('is-structure'));

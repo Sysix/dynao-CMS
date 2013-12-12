@@ -49,19 +49,30 @@ class template {
 	
 	public function installSlots() {
 		
-		$sql = sql::factory();
-		$sql->setTable('slots');
+		$slots = sql::factory();
+		$slots->setTable('slots');
+		
+		$modul = sql::factory();
+		$modul->setTable('module');
 	
-		foreach($this->get('slots', []) as $slots=>$description) {
+		foreach($this->get('slots', []) as $name=>$slot) {
 			
-			if($sql->num('SELECT id FROM '.sql::table('slots').' WHERE `name` = "'.$slots.'" AND `template` = "'.$this->name.'"')) {
+			if($slots->num('SELECT id FROM '.sql::table('slots').' WHERE `name` = "'.$name.'" AND `template` = "'.$this->name.'"')) {
 				continue;
 			}
 			
-			$sql->addPost('name', $slots);
-			$sql->addPost('description', $description);
-			$sql->addPost('template', $this->name);
-			$sql->save();
+			$modul->addPost('name', $name);
+			$modul->addPost('input', $slot['input']);
+			$modul->addPost('output', $slot['output']);
+			$modul->save();
+			
+			$modul_id = $modul->insertId();
+			
+			$slots->addPost('name', $name);
+			$slots->addPost('description', $slot['description']);
+			$slots->addPost('template', $this->name);
+			$slots->addPost('modul', $modul_id);
+			$slots->save();
 			
 		}
 		
@@ -83,7 +94,7 @@ class template {
 		
 		$select = formSelect::factory($name, $selected);
 		
-		foreach($this->get('templates', []) as $name=>$file) {
+		foreach($this->get('templates', ['Default'=>'index.php']) as $name=>$file) {
 		
 			$select->add($file, $name);
 			

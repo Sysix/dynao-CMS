@@ -13,8 +13,16 @@
 		"Default Template": "template.php"
 	},
 	"slots": {
-		"contentslider" : "Der Contentslider",
-		"navigation" : "Die Hauptnavigation"
+		"contentslider" : {
+			"description": "Der Contentslider",
+			"input": "<input type=\"text\" name=\"DYN_VALUE[1]\" value=\"OUT_VALUE[1]\">",
+			"output": "<p>OUT_VALUE[1]</p>"
+		},
+		"navigation": {
+			"description": "Die Hauptnavigation",
+			"input": "Die Navigation Input",
+			"output": "Navigation Output"
+		}
 	}
 	
 }

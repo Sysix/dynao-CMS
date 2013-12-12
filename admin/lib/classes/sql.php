@@ -125,6 +125,12 @@ class sql {
 	
 	}
 	
+	public function insertId() {
+		
+		return self::$sql->insert_id;
+		
+	}
+	
 	// Ausgabe der Spalte 
 	public function get($row, $default = null) {
 		
