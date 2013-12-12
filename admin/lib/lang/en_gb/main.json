@@ -40,6 +40,8 @@
 	"read_more":				"Read more",
 	"download":					"Download",
 	"vote":						"Vote",
+	"author":					"author",
+	"version":					"version",
 	
 	#Kategorien
 	"category_save":			"Save category",

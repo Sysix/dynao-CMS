@@ -138,9 +138,6 @@ if($action == 'deleteCache') {
             </div>
 			<?php
 			
-			$sql = sql::factory();
-			$sql->query('SELECT VERSION()')->result();
-			
 			$template = new template(dyn::get('template'));
 			
 			$table = table::factory(['class'=> ['table', 'table-spriped', 'table-hover']]);			
@@ -151,11 +148,11 @@ if($action == 'deleteCache') {
 			->addCell($template->get('name'));
 			
 			$table->addRow()
-			->addCell('Author')
+			->addCell(lang::get('author'))
 			->addCell($template->get('author'));
 			
 			$table->addRow()
-			->addCell('Version')
+			->addCell(lang::get('version'))
 			->addCell($template->get('version'));
 			
 			$table->addRow()
