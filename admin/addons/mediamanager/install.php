@@ -16,6 +16,10 @@ if(!dyn::has('extensions')) {
 	
 }
 
+if(!file_exists(dir::base('media'))) {
+	mkdir(dir::base('media'), 755);
+}
+
 $sql = sql::factory();
 $sql->query('CREATE TABLE IF NOT EXISTS '.sql::table('media').' (
 `id` 			int(16)		unsigned 	NOT NULL 	auto_increment,

@@ -46,34 +46,6 @@ class pageMisc {
 	
 	public static function getTreeStructurePage($parentId = 0, $lvl = 0) {
 		
-		$id = type::super('id', 'int', 0);
-		$action = type::super('action', 'string');
-		
-		if($action == 'add' || $action == 'edit' && dyn::get('user')->hasPerm('page[edit]')) {
-			
-			$buttonSubmit = formButton::factory('save', lang::get('article_save'));
-			$buttonSubmit->addAttribute('type', 'submit');
-			$buttonSubmit->addClass('btn-sm');
-			$buttonSubmit->addClass('btn-default');	
-			
-		}
-		
-		if(!$lvl && $action == 'add' && dyn::get('user')->hasPerm('page[edit]')) {
-			
-			$inputName = formInput::factory('name', '');
-			$inputName->addAttribute('type', 'text');
-			$inputName->addClass('input-sm');
-			$inputName->autofocus();
-			
-			$sql = sql::factory();
-			$inputSort = formInput::factory('sort', $sql->num('SELECT 1 FROM '.sql::table('structure').' WHERE `parent_id`= '.$parentId)+1);
-			$inputSort->addAttribute('type', 'text');
-			$inputSort->addClass('input-sm');
-			
-			echo '<ul class="list"><li>'.$inputSort->get().$inputName->get().$buttonSubmit->get().'</li></ul>';
-			
-		}
-		
 		$select = '';
 		
 		$id = (!$lvl) ? 'id="structure-tree"' : '';
@@ -85,59 +57,33 @@ class pageMisc {
 			$select .= '<ul '.$id.'>';
 				
 			while($sql->isNext()) {
+					
+				$edit = '';
+				$online = '';
+				$offline = '';
+				$delete = '';					
+				$name = $sql->get('name');
 				
-				if($action == 'edit' && $sql->get('id') == $id && dyn::get('user')->hasPerm('page[edit]')) {
-					
-					$inputName = formInput::factory('name', $sql->get('name'));
-					$inputName->addAttribute('type', 'text');
-					$inputName->addClass('input-sm');
-					$inputName->addClass('structure-name');
-					$inputName->autofocus();
-					
-					
-					$inputSort = formInput::factory('sort', $sql->get('sort'));
-					$inputSort->addAttribute('type', 'hidden');
-					echo $inputSort->get();
-					
-					$inputHidden = formInput::factory('id', $sql->get('id'));
-					$inputHidden->addAttribute('type', 'hidden');
-					echo $inputHidden->get();
-					
-					$select .= '<li class="input-group structure-edit">
-						'.$inputName->get().'
-						<span class="input-group-addon">'.$buttonSubmit->get().'<span>
-					</li>';
-					
-				} else {
-					
-					$module = '';
-					$edit = '';
-					$online = '';
-					$offline = '';
-					$delete = '';
-						
-					if(dyn::get('user')->hasPerm('page[content]')) {
-						$module = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('modules').'</a>';
-					}
-					
-					if(dyn::get('user')->hasPerm('page[edit]')) {
-						$edit = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'action'=>'edit', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';
-						$online = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-online fa fa-check" title="'.lang::get('online').'"></a>';	
-						$offline = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-offline fa fa-times" title="'.lang::get('offline').'"></a>';	
-					}
-					
-					if(dyn::get('user')->hasPerm('page[delete]')) {
-						$delete = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'action'=>'delete', 'id'=>$sql->get('id')]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
-					}
-
-					$online = ($sql->get('online')) ? $online : $offline;
-				
-					$select .= '<li data-id="'.$sql->get('id').'">'.PHP_EOL.'
-						<div class="handle"><i class="fa fa-sort"></i> '.$sql->get('name').PHP_EOL.'
-							<span class="btn-group">'.$module.$online.$edit.$delete.'</span>'.PHP_EOL.'
-						</div>'.PHP_EOL;
-				
+				if(dyn::get('user')->hasPerm('page[content]')) {
+					$name = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$sql->get('id')]).'">'.$sql->get('name').'</a>';
 				}
+				
+				if(dyn::get('user')->hasPerm('page[edit]')) {
+					$edit = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'action'=>'edit', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';
+					$online = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-online fa fa-check" title="'.lang::get('online').'"></a>';	
+					$offline = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-offline fa fa-times" title="'.lang::get('offline').'"></a>';	
+				}
+				
+				if(dyn::get('user')->hasPerm('page[delete]')) {
+					$delete = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'action'=>'delete', 'id'=>$sql->get('id')]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
+				}
+
+				$online = ($sql->get('online')) ? $online : $offline;
+				
+				$select .= '<li data-id="'.$sql->get('id').'">'.PHP_EOL.'
+					<div class="handle"><i class="fa fa-sort"></i> '.$name.PHP_EOL.'
+						<span class="btn-group">'.$online.$edit.$delete.'</span>'.PHP_EOL.'
+					</div>'.PHP_EOL;
 				
 				$select .= self::getTreeStructurePage($sql->get('id'), $lvl+1);			
 				

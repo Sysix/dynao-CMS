@@ -1,6 +1,7 @@
 <?php
 
 class template {
+	use traitFactory;
 	
 	public $name;
 	public $config = [];
@@ -76,6 +77,21 @@ class template {
 		
 		return true;
 				
+	}
+	
+	public function getTemplates($name, $selected = null) {
+		
+		$select = formSelect::factory($name, $selected);
+		
+		foreach($this->get('templates', []) as $name=>$file) {
+		
+			$select->add($file, $name);
+			
+		}
+			
+		return $select;
+			
+			
 	}
 	
 }

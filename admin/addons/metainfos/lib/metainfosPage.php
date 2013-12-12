@@ -55,7 +55,7 @@ class metainfosPage {
 	
 	static protected function BackendFormular($name, $tablename, $action, $id) {
 		
-		$prefix = substr($tablename, 0, 3).'_';
+		$prefix = substr($name, 0, 3).'_';
 		
 		$form = form::factory('metainfos', 'id='.$id, 'index.php');
 		

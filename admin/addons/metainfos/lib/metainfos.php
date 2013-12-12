@@ -10,8 +10,13 @@ class metainfos {
 		$sql->query('SELECT * FROM '.sql::table('metainfos').' WHERE `type` = "'.$type.'" ORDER BY `sort`')->result();
 		while($sql->isNext()) {
 			
-			$element = self::getElement($sql->getRow(), $form->get($sql->get('name')));
-			$form->addElement($sql->get('name'), $element);
+			$prefix = substr($type, 0, 3).'_';
+			
+			$attributes = $sql->getRow();
+			$attributes['name'] = $prefix.$attributes['name'];
+			
+			$element = self::getElement($attributes, $form->get($sql->get('name')));
+			$form->addElement($prefix.$sql->get('name'), $element);
 			
 			$sql->next();	
 		}

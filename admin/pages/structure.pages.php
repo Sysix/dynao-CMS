@@ -1,7 +1,7 @@
 <?php
 
-if($structure_id && dyn::get('user')->hasPerm('page[content]')) {	
-
+if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
+	
 	$sort = type::super('sort', 'int');
 	
 	// Bugfix, das neu erstelle Blöcke nicht einzgezeigt werden
@@ -162,82 +162,6 @@ if($structure_id && dyn::get('user')->hasPerm('page[content]')) {
 	}
 
 //Wenn action
-} elseif($action == 'edit' && dyn::get('user')->hasPerm('page[edit]')) {
-	
-	$form = form::factory('structure', 'id='.$id, 'index.php');
-	
-	$field = $form->addTextField('name', $form->get('name'));
-	$field->fieldName(lang::get('name'));
-	$field->autofocus();
-	
-	$field = $form->addRadioField('online', $form->get('online'));
-	$field->fieldName(lang::get('status'));
-	$field->add(1, lang::get('online'));
-	$field->add(0, lang::get('offline'));
-	
-	$form->addParam('id', $id);
-	$field = $form->addHiddenField('subpage', $subpage);
-	$field->setSave(false);
-	
-?>
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title pull-left"><?php echo $form->get('name'); ?></h3>
-                    <div class="btn-group pull-right">
-						<a class="btn btn-sm btn-default" href="<?php echo url::backend('structure'); ?>"><?php echo lang::get('back'); ?></a>
-					</div>
-					<div class="clearfix"></div>
-				</div>
-				<div class="panel-body">
-				<?php
-					echo $form->show();
-				?>
-				</div>
-			</div>
-		</div>
-	</div>
-<?php	
-
-} elseif($action == 'add' && dyn::get('user')->hasPerm('page[edit]')) {
-	
-	$form = form::factory('structure', 'id='.$id, 'index.php');
-	
-	$field = $form->addTextField('name', $form->get('name'));
-	$field->fieldName(lang::get('name'));
-	$field->autofocus();
-	
-	$field = $form->addRadioField('online', $form->get('online'));
-	$field->fieldName(lang::get('status'));
-	$field->add(1, lang::get('online'));
-	$field->add(0, lang::get('offline'));
-	
-	$form->addParam('id', $id);
-	$field = $form->addHiddenField('subpage', $subpage);
-	$field->setSave(false);
-	
-?>
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title pull-left"><?php echo lang::get('add'); ?></h3>
-                    <div class="btn-group pull-right">
-						<a class="btn btn-sm btn-default" href="<?php echo url::backend('structure'); ?>"><?php echo lang::get('back'); ?></a>
-					</div>
-					<div class="clearfix"></div>
-				</div>
-				<div class="panel-body">
-				<?php
-					echo $form->show();
-				?>
-				</div>
-			</div>
-		</div>
-	</div>
-<?php	
-
 } else {
 	
 	if(ajax::is() && dyn::get('user')->hasPerm('page[edit]')) {
@@ -269,9 +193,54 @@ if($structure_id && dyn::get('user')->hasPerm('page[content]')) {
 		
 		ajax::addReturn(message::success(lang::get('save_sorting'), true));
 		
-		sortStructure($sort);
+		//sortStructure($sort);
 		
 	}
+	
+	if(in_array($action, ['edit', 'add']) && dyn::get('user')->hasPerm('page[edit]')) {
+	
+		$form = form::factory('structure', 'id='.$id, 'index.php');
+		
+		$field = $form->addTextField('name', $form->get('name'));
+		$field->fieldName(lang::get('name'));
+		$field->autofocus();
+		
+		$template = template::factory(dyn::get('template'));
+		
+		$field = $form->addElement('template', $template->getTemplates('template', $form->get('templates')));
+		$field->fieldName('Template');
+		
+		$field = $form->addRadioField('online', $form->get('online'));
+		$field->fieldName(lang::get('status'));
+		$field->add(1, lang::get('online'));
+		$field->add(0, lang::get('offline'));
+		
+		if($action == 'edit') {
+			$form->addHiddenField('id', $id);
+		}
+		
+?>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title pull-left"><?php echo $form->get('name'); ?></h3>
+                    <div class="btn-group pull-right">
+						<a class="btn btn-sm btn-default" href="<?php echo url::backend('structure'); ?>"><?php echo lang::get('back'); ?></a>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="panel-body">
+				<?php
+					echo $form->show();
+				?>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php
+
+	} 
 	
 	if($action == 'delete'  && dyn::get('user')->hasPerm('page[delete]')) {
 		
@@ -327,44 +296,8 @@ if($structure_id && dyn::get('user')->hasPerm('page[content]')) {
 		
 	}
 	
-	if(in_array($action, ['save-add', 'save-edit']) && dyn::get('user')->hasPerm('page[edit]')) {
-		
-		$sql = sql::factory();
-		$sql->setTable('structure');
-		$sql->setWhere('id='.$id);
-		$sql->getPosts([
-			'name'=>'string',
-			'sort'=>'int',
-		]);
-		
-		if($action == 'save-edit') {
-			$sql->update();	
-		} else {
-			$sql->save();
-		}
-		
-		$sort = type::post('sort', 'int');
-		$parent_id = type::post('parent_id', 'int');
-		
-		//sql::sortTable('structure', $sort, '`parent_id` = '.$parent_id.' AND id != '.$id);
-		
-	}
-		
-	if(in_array($action, ['edit', 'add']) && dyn::get('user')->hasPerm('page[edit]')) {
-			
-		echo '<form method="post" action="index.php">';
-			
-		$inputHidden = formInput::factory('action', 'save-'.$action);
-		$inputHidden->addAttribute('type', 'hidden');
-		echo $inputHidden->get();
-		
-		$inputHidden = formInput::factory('page', 'structure');
-		$inputHidden->addAttribute('type', 'hidden');
-		echo $inputHidden->get();
-		
-	}
+	if($action == '') {
 	
-	//echo $table->show();
 	?>
 	<div class="row">
 		<div class="col-lg-12">
@@ -393,13 +326,12 @@ if($structure_id && dyn::get('user')->hasPerm('page[content]')) {
 	
 	<?php
 	
-	if(dyn::get('user')->hasPerm('page[edit]')) {
-		
-		if(in_array($action, ['edit', 'add'])) {
-			echo '</form>';
+		if(dyn::get('user')->hasPerm('page[edit]')) {
+			
+			layout::addJs("layout/js/structureSort.js");
 		}
-		
-		layout::addJs("layout/js/structureSort.js");
+	
 	}
+
 }
 ?>

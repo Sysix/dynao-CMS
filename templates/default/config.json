@@ -9,6 +9,9 @@
 			"metainfos": 0.1
 		}
 	},
+	"templates": {
+		"Default Template": "template.php"
+	},
 	"slots": {
 		"contentslider" : "Der Contentslider",
 		"navigation" : "Die Hauptnavigation"

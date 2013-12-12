@@ -18,6 +18,7 @@ $sql->query('INSERT INTO `module`
 $sql->query('CREATE TABLE IF NOT EXISTS `structure` (
   `id` 			int(16)		unsigned	NOT NULL 	auto_increment,
   `name`		varchar(255) 			NOT NULL,
+  `template`	varchar(255) 			NOT NULL,
   `sort`		int(16)		unsigned	NOT NULL,
   `parent_id`	int(16)		unsigned	NOT NULL,
   `lang`		int(2)		unsigned	NOT NULL,

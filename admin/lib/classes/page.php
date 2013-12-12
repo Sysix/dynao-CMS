@@ -54,7 +54,7 @@ class page {
 		$content = pageCache::read($this->get('id'));
 		dyn::add('content', $content);
 		
-		include(dir::template(dyn::get('template'), 'template.php'));
+		include(dir::template(dyn::get('template'), $this->get('template')));
 		
 		$content = extension::get('FRONTEND_OUTPUT', ob_get_contents());
 		
