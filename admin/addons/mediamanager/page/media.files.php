@@ -49,6 +49,13 @@ if($action == 'delete' && dyn::get('user')->hasPerm('media[delete]')) {
 
 if(in_array($action, ['add', 'edit']) && dyn::get('user')->hasPerm('media[edit]')) {
 	
+	$sql = sql::factory();
+	$cats = $sql->num('SELECT id FROM '.sql::table('media_cat').' LIMIT 1');
+	if(!$cats) {
+		echo message::warning('Please add at first a Category');
+		return;	
+	}
+	
 	$form = form::factory('media', 'id='.$id, 'index.php');
 	$form->addFormAttribute('enctype', 'multipart/form-data');
 	
@@ -56,7 +63,10 @@ if(in_array($action, ['add', 'edit']) && dyn::get('user')->hasPerm('media[edit]'
 	$field->fieldName(lang::get('title'));
 	$field->autofocus();
 	
-	$field = $form->addRawField('<select class="form-control" name="category">'.mediaUtils::getTreeStructure(0, 0,' &nbsp;', $form->get('category')).'</select>');
+	$category = type::session('media_cat', 'int', $form->get('category'));
+	type::addSession('media_cat', $category);
+	
+	$field = $form->addRawField('<select class="form-control" name="category">'.mediaUtils::getTreeStructure(0, 0,' &nbsp;', $category).'</select>');
 	$field->fieldName(lang::get('category'));
 	
 	$field = $form->addRawField('<input type="file" name="file" />');
@@ -104,6 +114,13 @@ if(in_array($action, ['add', 'edit']) && dyn::get('user')->hasPerm('media[edit]'
 
 if($action == '') {
 	
+	if(!$catId) {
+		$catId = type::session('media_cat', 'int', $catId);		
+	}
+	
+	type::addSession('media_cat', $catId);
+	
+	print_r($_SESSION);
 
 	$table = table::factory();
 	$table->setSql('SELECT * FROM '.sql::table('media').' WHERE `category` = '.$catId);

@@ -79,6 +79,12 @@ class type {
 		
 	}
 	
+	static public function addSession($name, $value) {
+		
+		$_SESSION[$name] = $value;
+		
+	}
+	
 	static private function checkVar($global, $var, $type = '', $default = null) {
 		
 		if(isset($global[$var]) || array_key_exists($var, $global)) {

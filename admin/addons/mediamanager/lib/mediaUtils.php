@@ -47,7 +47,7 @@ class mediaUtils {
 		
 		// Wenn Datei nicht Existiert
 		// Oder man möchte sie überspeichern
-		if(($form->isEditMode() && $media->get('filename') != $fileName && file_exists($fileDir)) || file_exists($fileDir)) {
+		if(($form->isEditMode() && $media->get('filename') != $fileName) || (!$form->isEditMode() &&file_exists($fileDir))) {
 			
 			$form->setSave(false);
 			$form->setErrorMessage(sprintf(lang::get('media_error_already_exist'), $file['name']));
