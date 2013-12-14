@@ -7,15 +7,14 @@ $subaction = type::super('subaction', 'string');
 if($action == 'delete' && dyn::get('user')->hasPerm('media[delete]')) {
 	
 	$values = [];
+	
 	for($i = 1; $i <= 10; $i++) {
 		$values[] = '`media'.$i.'` = '.$id;
 	}
 	
-	/*
 	for($i = 1; $i <= 10; $i++) {
 		$values[] = '`medialist'.$i.'` LIKE "%|'.$id.'|%"';
 	}
-	*/
 	
 	$sql = sql::factory();
 	$sql->query('SELECT id FROM '.sql::table('structure_area').' WHERE '.implode(' OR ', $values))->result();
@@ -63,8 +62,7 @@ if(in_array($action, ['add', 'edit']) && dyn::get('user')->hasPerm('media[edit]'
 	$field->fieldName(lang::get('title'));
 	$field->autofocus();
 	
-	$category = type::session('media_cat', 'int', $form->get('category'));
-	type::addSession('media_cat', $category);
+	$category = type::session('media_cat', 'int', $form->get('category'));	
 	
 	$field = $form->addRawField('<select class="form-control" name="category">'.mediaUtils::getTreeStructure(0, 0,' &nbsp;', $category).'</select>');
 	$field->fieldName(lang::get('category'));
@@ -77,6 +75,8 @@ if(in_array($action, ['add', 'edit']) && dyn::get('user')->hasPerm('media[edit]'
 	}
 	
 	if($form->isSubmit()) {
+		
+		type::addSession('media_cat', $form->get('category'));
 		
 		$file = type::files('file');
 		if(!is_uploaded_file($file['tmp_name']) && !$form->isEditMode()) {
@@ -118,9 +118,13 @@ if($action == '') {
 		$catId = type::session('media_cat', 'int', $catId);		
 	}
 	
-	type::addSession('media_cat', $catId);
+	if(!$catId) {
+		$sql = sql::factory();
+		$sql->query('SELECT id FROM '.sql::table('media_cat').' ORDER BY id LIMIT 1')->result();
+		$catId = $sql->get('id');
+	}
 	
-	print_r($_SESSION);
+	type::addSession('media_cat', $catId);
 
 	$table = table::factory();
 	$table->setSql('SELECT * FROM '.sql::table('media').' WHERE `category` = '.$catId);
@@ -188,7 +192,6 @@ if($action == '') {
 						<input type="hidden" name="page" value="media" />
 						<input type="hidden" name="subpage" value="files" />
 						<select class="form-control" id="media-select-category" name="catId">
-							<option value="0"><?php echo lang::get('no_category'); ?></option>
 							<?php echo mediaUtils::getTreeStructure(0, 0,' &nbsp;', $catId); ?>
 						</select>
 					</form>

@@ -1,6 +1,18 @@
 <?php
 
 $catId = type::super('catId', 'int', 0);
+
+if(!$catId) {
+	$catId = type::session('media_cat', 'int', $catId);		
+}
+
+if(!$catId) {
+	$sql = sql::factory();
+	$sql->query('SELECT id FROM '.sql::table('media_cat').' ORDER BY id LIMIT 1')->result();
+	$catId = $sql->get('id');
+}
+	
+type::addSession('media_cat', $catId);
 	
 
 $table = table::factory();

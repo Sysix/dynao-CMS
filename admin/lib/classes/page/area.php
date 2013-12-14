@@ -136,16 +136,8 @@ class pageArea {
 		
 		$sql = sql::factory();
 		$sql->query('SELECT sort FROM '.sql::table('structure_area').' WHERE structure_id = '.$this->getStructureId());
-		
-		if($this->isNew) {
 			
-			return $sql->num()+1 == $this->getSort(); // +1 weil Eintrag noch nicht gespeichert ist
-			
-		} else {
-			
-			return $sql->num() == $this->getSort();
-			
-		}
+		return $sql->num() == $this->getSort();
 		
 		
 	}	
