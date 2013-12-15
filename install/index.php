@@ -12,6 +12,9 @@ autoload::register();
 autoload::addDir(dir::classes('utils'));
 autoload::addDir('lib'.DIRECTORY_SEPARATOR.'classes');
 
+include(dir::functions('html_stuff.php'));
+include(dir::functions('url_stuff.php'));
+
 new dyn();
 			
 lang::setDefault();

@@ -11,7 +11,15 @@
                 
                     <?php
 						
-						$form = form::factory();
+						$form = form_install::factory('', '', 'index.php');
+						
+						$field = $form->addTextField('name', $form->get('name'));
+						$field->fieldName('Seitenname');
+						
+						$field = $form->addTextField('url', $form->get('url'));
+						$field->fieldName('URL der Seite');
+						
+						echo $form->show();
 					
 					?>
                 
