@@ -6,19 +6,14 @@ class pageArea {
 	public $isNew;
 	public $sql;
 	
-	const dyn_rex = 'DYN_(\w*)\[(\d+)\]';
-	const out_rex = 'OUT_(\w*)\[(\d+)\]';
-	
-	static $types = [
-		'VALUE' => 15, 
-		'LINK' => 10,
-		'LINK_LIST' => 10,
-		'PHP' => 2
-	]; #typen
-	
-	var $values = [];
-	var $out = [];
-	
+	public static $types = [
+		'varsValue',
+		'varsLink',
+		'varsLinklist',
+		'varsPhp',
+	];
+		
+
 	public function __construct($id) {
 		
 		if(is_object($id) && is_a($id, 'sql')) {
@@ -35,9 +30,12 @@ class pageArea {
 		$this->setNew($this->sql->num() == 0);
 	}
 	
-	public static function addType($name, $count) {
-			
-		self::$types[$name] = $count;
+	public static function addType($class) {
+		
+		if(!class_exists($class, false)) {
+			//throw new Exception(PageArea-Typ muss eine Klasse sein	
+		}
+		self::$types[] = $class;
 			
 	}
 	
@@ -144,24 +142,6 @@ class pageArea {
 	
 	////////////////////// Eingabe/Ausgabe Dynamisch machen
 	
-	public function convertValues($content) {
-		
-		preg_match_all('/'.self::dyn_rex.'/', $content, $values);
-		$this->values = $values;
-		
-		return $this;
-		
-	}
-	
-	public function convertOut($content) {
-		
-		preg_match_all('/'.self::out_rex.'/', $content, $out);
-		$this->out = $out;
-		
-		return $this;
-		
-	}
-	
 	protected function getEval($content) {
 		
 		ob_start();
@@ -181,68 +161,15 @@ class pageArea {
 		return $output;
 	}
 	
-	public function convertSpecialVars($content) {
-		
-		preg_match_all('/'.self::dyn_rex.'/', $content, $match);
-		
-		list($content) = extension::get('PAGE_AREA_BEFORE_OUTPUTFILTER', [$content, $match, $this]);
-		
-		return $this->convertLinkVars($content, $match);
-		
-	}
-	
-	public function convertLinkVars($content, $match) {
-		
-		foreach($match[1] as $key=>$type) {
-			
-			if(!in_array($type, ['LINK', 'LINK_LIST'])) {
-				continue;
-			}
-			
-			if($type == 'LINK') {
-				$class = 'formLink';
-			} else {
-				$class = 'formLinklist';
-			}
-			
-			$num = $match[2][$key]; // Zahl in der Klammer z.B. [1]
-			$sqlEntry = strtolower($type).$num; //link1
-
-			$class = new $class($match[0][$key], $this->get($sqlEntry));
-						
-			$content = str_replace(
-			$match[0][$key], // DYN_LINK[1]
-			$class->get(),
-			$content);
-			
-		}
-		
-		return $content;
-	}
-	
 	public function OutputFilter($content, $sql) {
 		
 		if(!is_object($sql)) // SQL Muss Objekt sein
 			return $content;
-	
-		$this->convertOut($content);
 		
-		$content = $this->convertSpecialVars($content);
-		
-		$allowTypes = array_keys(self::$types);
-		
-		foreach($this->out[1] as  $key=>$type) {
-			
-			if(!in_array($type, $allowTypes) || $this->out[2][$key] >  self::$types[$type])
-				continue;
-				
-			$value = strtolower($type).$this->out[2][$key]; # value1
-			
-			$content = str_replace(
-			$this->out[0][$key], # OUT_VALUE[1]
-			$sql->get($value),
-			$content);
-					
+		foreach(self::$types as $class) {
+			$class = new $class($content);
+			$class->getOutValue($sql);
+			$content = $class->getContent();
 		}
 		
 		$content = $this->getEval($content);

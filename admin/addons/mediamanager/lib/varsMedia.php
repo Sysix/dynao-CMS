@@ -1,9 +1,9 @@
 <?php
 
-class varsLink extends vars {
+class varsMedia extends vars {
 	
 	public $counts = 10;
-	public $DynType = 'LINK';
+	public $DynType = 'MEDIA';
 	
 	public function getDynValue($sql) {
 	
@@ -15,9 +15,9 @@ class varsLink extends vars {
 				continue;	
 			}
 			
-			$sqlEntry = strtolower($type).$num; //link1
+			$sqlEntry = strtolower($type).$num; //media1
 			
-			$class = formLink::factory($this->dynVars[0][$key], $sql->get($sqlEntry));
+			$class = formMedia::factory($this->dynVars[0][$key], $sql->get($sqlEntry));
 			
 			$this->content = str_replace(
 				$this->dynVars[0][$key],
@@ -42,11 +42,12 @@ class varsLink extends vars {
 			$sqlEntry = strtolower($this->DynType).$this->outVars[2][$key];	
 			$sqlEntry = $sql->get($sqlEntry);
 			
-			//DYN_LINK_ID bleibt unberührt
+			//DYN_MEDIA_ID bleibt unberührt
 			if($type == $this->DynType.'_ID') {
 				//nothing
 			} else {
-				$sqlEntry = url::fe($sqlEntry);
+				$class = new media($sqlEntry);
+				$sqlEntry = $class->get('filename');
 			}
 			
 			$this->content = str_replace(
@@ -60,7 +61,6 @@ class varsLink extends vars {
 		return $this;
 		
 	}
-	
 	
 }
 

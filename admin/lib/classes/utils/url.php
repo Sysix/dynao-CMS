@@ -32,7 +32,7 @@ class url {
 		
 		$url = extension::get('URL_REWRITE', ['id'=>$id, 'params'=>$params]);
 		
-		if($url == '' && !extension::has('URL_REWRITE')) {
+		if(!extension::has('URL_REWRITE')) {
 			
 			$url = 'index.php?page_id='.$id;
 			foreach($params as $name=>$value) {

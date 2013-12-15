@@ -16,13 +16,9 @@ class pageAreaAction {
 			'sort'=>'int'
 		]);
 		
-		foreach(array_keys(pageArea::$types) as $types) {
-			
-			$array = type::post('DYN_'.$types, 'array', []);
-			foreach($array as $key=>$value) {
-				$sql->addPost(strtolower($types).$key, $value);			
-			}
-						
+		foreach(pageArea::$types as $class) {
+			$class = new $class();
+			$sql = $class->addSaveValues($sql);
 		}
 		
 		if($id) {

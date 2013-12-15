@@ -2,27 +2,69 @@
 
 abstract class vars {
 
-	const dyn_rex = 'DYN_([A-Z]*)\[(\d+)\]';
-	const out_rex = 'OUT_([A-Z]*)\[(\d+)\]';
-	abstract public $counts;
-	abstract public $DynType;
+	const dyn_rex = 'DYN_([A-Z_]*)\[(\d+)\]';
+	const out_rex = 'OUT_([A-Z_]*)\[(\d+)\]';
+	public $counts;
+	public $DynType;
 	
 	public $content;
 	public $dynVars = [];
 	public $outVars = [];
 	
-	public function __construct($content) {
+	public function __construct($content = '') {
+		
+		$this->content = $content;
 	
-		$this->setMatches($content);
+		$this->setMatches();
 		
 	}
 	
 	abstract public function getOutValue($sql);
 	
-	public function addToSql($sql) {
+	public function addSaveValues($sql) {
 		
+		$saveArray = type::post('DYN_'.$this->DynType, 'array', []);
+		
+		foreach($saveArray as $num=>$value) {
 			
-		$array = type::post($this->getTypeValue('DYN'), 'array', []);
+			if(!$this->isType($this->DynType, $num)) {
+				continue;	
+			}
+			
+			if(is_array($value)) {
+				$value = '|'.implode('|', $value).'|';	
+			}		
+			
+			$sqlEntry = strtolower($this->DynType).$num;	
+			
+			$sql->addPost($sqlEntry, $value);
+			
+		}
+		
+		return $sql;
+		
+	}
+	
+	public function isType($type, $count) {
+		
+		// Exploden da man mehre Out-Varianten machen kann (HTML, IS, ID, ..)
+		$type = explode('_', $type);
+		
+		if(!in_array($this->DynType, $type)) {
+			return false;
+		}
+		
+		if($count > $this->counts) {
+			return false;
+		}
+		
+		return true;
+		
+	}
+	
+	public function addToSql($sql) {		
+			
+		$array = type::post('DYN_'.$this->DynType, 'array', []);
 		
 		foreach($array as $key=>$count) {
 		
@@ -52,18 +94,12 @@ abstract class vars {
 		
 	}
 	
-	protected function getTypeValue($prefix) {
-		
-		return $prefix.'_'.$this->DynType;
-		
-	}
+	public function setMatches() {
 	
-	public function setMatches($content) {
-	
-		preg_match_all('/'.self::dyn_rex.'/', $content, $matches);
+		preg_match_all('/'.self::dyn_rex.'/', $this->content, $matches);
 		$this->dynVars = $matches;
 		
-		preg_match_all('/'.self::out_rex.'/', $content, $matches);
+		preg_match_all('/'.self::out_rex.'/', $this->content, $matches);
 		$this->outVars = $matches;
 		
 	}

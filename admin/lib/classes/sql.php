@@ -35,8 +35,8 @@ class sql {
 		
 		$sql = sql::factory();
 		$sql->query('SET SQL_MODE=""');
-        $sql->query('SET NAMES utf8');
-        $sql->query('SET CHARACTER SET utf8');
+		
+		self::$sql->set_charset('utf8');
 		
 		if(self::$sql->connect_error) {
 				// new Exception();

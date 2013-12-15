@@ -12,8 +12,8 @@ class formLinklist extends formField {
 	
 	public function setSelected() {
 		
-		if(!is_array($this->value) && strpos($this->value, ',') !== false) {
-			$this->value = explode(',', $this->value);
+		if(!is_array($this->value) && strpos($this->value, '|') !== false) {
+			$this->value = explode('|', trim($this->value, '|'));
 		}
 				
 		return $this;
@@ -29,7 +29,7 @@ class formLinklist extends formField {
 			return '';	
 		}
 		
-		return implode(',', $value);
+		return implode('|', $value);
 		
 	}
 	

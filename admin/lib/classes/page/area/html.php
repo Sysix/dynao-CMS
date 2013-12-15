@@ -59,20 +59,25 @@ class pageAreaHtml {
 		
 		$form->addRawField($input);
 		$form->addHiddenField('structure_id', $module->getStructureId());
-		$form->addHiddenField('modul', $form->get('id'));
+		
+		
 		
 		if($module->getId()) {
 			
 			$form->setMode('edit');
 			$online = $module->get('online');
 			
+			
 		} else {
 			
 			$form->setMode('add');	
-			$online = 1;
+			$online = 1;			
+			
 			$form->delButton('save-back');
 						
 		}
+		
+		$form->addHiddenField('modul', $module->getModulId());
 		
 		$form->addHiddenField('sort', $module->getSort());
 		

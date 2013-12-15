@@ -1,9 +1,9 @@
 <?php
 
-class varsValue extends vars {
+class varsPhp extends vars {
 	
-	public $counts = 15;
-	public $DynType = 'VALUE';
+	public $counts = 2;
+	public $DynType = 'PHP';
 	
 	public function getOutValue($sql) {
 		
@@ -18,11 +18,11 @@ class varsValue extends vars {
 			$sqlEntry = strtolower($this->DynType).$num;	
 			$sqlEntry = $sql->get($sqlEntry);
 			
-			// DYN_HTML_VALUE bleibt unberührt
+			// DYN_HTML_PHP bleibt unberührt
 			if($type == 'HTML_'.$this->DynType) {
 				//nothing
 			} else {				
-				$sqlEntry = htmlspecialchars($sqlEntry);
+				$sqlEntry = $this->convertEval($sqlEntry);
 			}
 			
 			
@@ -35,6 +35,21 @@ class varsValue extends vars {
 		}
 		
 		return $this;
+		
+	}
+	
+	public function convertEval($content) {
+		
+		ob_start();
+		ob_implicit_flush(0);
+		
+		// PHP-Startzeichen  im Code verwenden können
+		$content = eval(' ?>'.$content.' <?php ');
+		
+		$output = ob_get_contents();
+		ob_end_clean();
+		
+		return $output;
 		
 	}
 	

@@ -107,34 +107,6 @@ class mediaUtils {
 		
 	}
 	
-	public static function convertMediaVars($content, $match, $sql) {
-		foreach($match[1] as $key=>$type) {
-			
-			if(!in_array($type, ['MEDIA', 'MEDIA_LIST'])) {
-				continue;
-			}
-			
-			if($type == 'MEDIA') {
-				$class = 'formMedia';
-			} else {
-				$class = 'formMedialist';
-			}
-			
-			$num = $match[2][$key]; // Zahl in der Klammer z.B. [1]
-			$sqlEntry = strtolower($type).$num; //link1
-			
-			$class = new $class($match[0][$key], $sql->get($sqlEntry));	
-			$content = str_replace(
-				$match[0][$key], // DYN_LINK[1]
-				$class->get(),
-				$content
-			);
-					
-		}
-		
-		return [$content, $match, $sql];
-	}
-	
 }
 
 ?>
