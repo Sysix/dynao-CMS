@@ -2,8 +2,8 @@
 
 $navi = array(
 	'overview' => array(lang::get('overview'), ''),
-	'database' => array(lang::get('db'), 'disable'),
-	'finish' => array(lang::get('finish'), 'disable')
+	'database' => array(lang::get('db')),
+	'finish' => array(lang::get('finish'))
 	);
 
 ?>
@@ -33,7 +33,7 @@ $navi = array(
 						
 							$class = ($href == $page) ? 'active ' : '';
 							
-							echo '<li class="'.$class.'"><a href="index.php?page='.$href.'">'.$options[0].'</a></li>';
+							echo '<li class="'.$class.'">'.$options[0].'</li>';
 							
 						}
 					
@@ -43,7 +43,7 @@ $navi = array(
             <div id="wrap">
                 <div id="subnavi">
                     
-                    <h1>Installation</h1>
+                    <h1><?php echo lang::get('installation'); ?></h1>
                     
                     <ul class="subnav">
                         <?php
@@ -52,7 +52,7 @@ $navi = array(
 							
 								$class = ($href == $page) ? ' class="active"' : '';
 								
-								echo '<li'.$class.'><a href="index.php?page='.$href.'"><span>'.$options[0].'</span></a></li>';
+								echo '<li'.$class.'>'.$options[0].'</li>';
 								
 							}
 						
@@ -74,6 +74,5 @@ $navi = array(
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-    <script>$(document).ready(function() {});</script>
 </body>
 </html>

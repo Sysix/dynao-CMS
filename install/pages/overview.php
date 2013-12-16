@@ -26,10 +26,12 @@
 						$form = form_install::factory('', '', 'index.php');
 						$form->setSave(false);
 						
-						$field = $form->addTextField('name', $form->get('name'));
+						$form->delButton('back');
+						
+						$field = $form->addTextField('name', dyn::get('hp_name'));
 						$field->fieldName(lang::get('settings_name_of_site'));
 						
-						$field = $form->addTextField('url', $form->get('url'));
+						$field = $form->addTextField('url', dyn::get('hp_url'));
 						$field->fieldName(lang::get('settings_url_of_site'));
 						
 						$field = $form->addSelectField('lang', dyn::get('lang'));
@@ -43,16 +45,50 @@
 								
 								$field->add($file, $file);
 						}
+				
+						$field = $form->addSelectField('template', dyn::get('template'));
+						$field->fieldName(lang::get('template'));
+									
+						$handle = opendir(dir::template());
+						while($file = readdir($handle)) {
+								
+								if(in_array($file, ['.', '..']))
+									continue;
+								
+								$field->add($file, $file);
+						}
 						
 						if($form->isSubmit()) {
+								
+							$url = 'http://'.str_replace('http://', '', $form->get('hp_url'));
+							$endSlash = substr($url, -1, 1);
+							
+							if($endSlash != '/') {
+								$url .= '/';	
+							}
+				
+							if(dyn::get('template') != $form->get('template')) {
+								$template = new template($form->get('template'));
+								if($template->install() !== true) {
+									$form->setSuccessMessage(null);
+								} else {
+									dyn::add('template', $form->get('template'), true);
+								}
+							}
+							
+							dyn::add('hp_name', $form->get('hp_name'), true);
+							dyn::add('hp_url', $url, true);
+							dyn::add('lang', $form->get('lang'), true);
+							dyn::save();
+							
 							if($error)
 								echo message::danger('error');
-							else {
-								dyn::add('hp_name', $form->get('hp_name'), true);
-								dyn::add('hp_url', $url, true);
-								dyn::add('lang', $form->get('lang'), true);
-								header('Location: index.php?page=database');
-							}
+							else
+								$form->addParam('page', 'database');
+							
+							$form->delParam('subpage');
+							$form->delParam('success_msg');
+						
 						}
 						
 						echo $form->show();

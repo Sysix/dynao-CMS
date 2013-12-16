@@ -6,5 +6,11 @@
 	"php_version":			"PHP Version",
 	"php_version_54":		"PHP Version 5.4 is required",
 	"chmod_755":			"Chmod 0755 is required",
-	"php_ext": 				"Cannot load PHP Extension %s"
+	"php_ext": 				"Cannot load PHP Extension %s",
+	"installation":			"Installation",
+	"db_host":				"Host",
+	"db_user":				"User",
+	"db_password":			"Password",
+	"db_database":			"Database",
+	"db_connect":			"Database connection"
 }
