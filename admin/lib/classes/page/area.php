@@ -172,6 +172,19 @@ class pageArea {
 			$content = $class->getContent();
 		}
 		
+		preg_match_all('/\/\/DYN-NOT-EVAL(.*)\/\/DYN-NOT-EVAL-END/us', $content, $matches);
+		
+		if(is_array($matches)) {
+			
+			foreach($matches[1] as $match) {
+				$matchNew = str_replace(['<?php', '?>', '//DYN-NOT-EVAL-END', '//DYN-NOT-EVAL'], ['&lt;?php', '?&gt;', '', ''], $match);
+				$content = str_replace($match, $matchNew, $content);
+			}
+			
+		}
+		
+		$content = str_replace(['//DYN-NOT-EVAL-END', '//DYN-NOT-EVAL'], '', $content);
+		
 		$content = $this->getEval($content);
 		
 		return $content;

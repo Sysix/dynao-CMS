@@ -20,7 +20,7 @@ class varsPhp extends vars {
 			
 			// DYN_HTML_PHP bleibt unberührt
 			if($type == 'HTML_'.$this->DynType) {
-				//nothing
+				$sqlEntry = '//DYN-NOT-EVAL'.$sqlEntry.'//DYN-NOT-EVAL-END';
 			} else {				
 				$sqlEntry = $this->convertEval($sqlEntry);
 			}
