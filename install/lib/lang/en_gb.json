@@ -1,4 +1,10 @@
 {
-	"db":				"Database",
-	"finish":				"Finish"
+	"db":					"Database",
+	"finish":				"Finish",
+	"ok":					"Ok",
+	"status":				"Status",
+	"php_version":			"PHP Version",
+	"php_version_54":		"PHP Version 5.4 is required",
+	"chmod_755":			"Chmod 0755 is required",
+	"php_ext": 				"Cannot load PHP Extension %s"
 }
