@@ -33,7 +33,7 @@ $navi = array(
 						
 							$class = ($href == $page) ? 'active ' : '';
 							
-							echo '<li class="'.$class.'">'.$options[0].'</li>';
+							echo '<li class="'.$class.'"><a>'.$options[0].'</a></li>';
 							
 						}
 					

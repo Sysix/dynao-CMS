@@ -1,6 +1,6 @@
 {
     "author": "Dynao",
-    "hp_name": "Dynao CMS",
+    "hp_name": null,
     "hp_url": "http:\/\/",
     "version": "0.1.0 Beta",
     "setup": false,
@@ -16,7 +16,12 @@
     "not_found_page": 1,
     "table_prefix": "",
     "logincookie": 86400,
-    "lang": "de_de",
+    "lang": null,
     "backend": true,
-    "template": "default"
+    "template": null,
+    "user": [
+
+    ],
+    "start_page": "18",
+    "error_page": "25"
 }
