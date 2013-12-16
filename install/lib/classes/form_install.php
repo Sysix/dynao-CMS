@@ -17,6 +17,8 @@ class form_install extends form {
 		
 		$this->setButtons();
 		
+		$this->delButton('save-back');
+		
 		$this->setSuccessMessage(lang::get('form_saved'));
 		$this->addParam('action', $this->mode);
 		
@@ -28,6 +30,14 @@ class form_install extends form {
 		return type::post($value);
 		
 		
+	}
+	
+	public function saveForm() {
+		return $this;	
+	}
+	
+	protected function setPostsVar() {
+		return $this;	
 	}
 	
 }
