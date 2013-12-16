@@ -22,9 +22,6 @@ lang::setLang(dyn::get('lang'));
 
 lang::loadLang('lib'.DIRECTORY_SEPARATOR.'lang'.DIRECTORY_SEPARATOR.lang::getLang().'.json');
 
-$DB = dyn::get('DB');
-sql::connect($DB['host'], $DB['user'], $DB['password'], $DB['database']);
-
 $page = (isset($_GET["page"]) == '') ? 'overview' : $_GET["page"];
 
 include "layout/index.php";

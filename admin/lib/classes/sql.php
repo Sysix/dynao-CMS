@@ -38,9 +38,7 @@ class sql {
 		
 		self::$sql->set_charset('utf8');
 		
-		if(self::$sql->connect_error) {
-				// new Exception();
-		}
+		return self::$sql->connect_error;
 		
 		// Zukünftige Abfrage falls was falsch geloffen ist		
 	
