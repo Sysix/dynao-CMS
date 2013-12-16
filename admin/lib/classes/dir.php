@@ -70,12 +70,6 @@ class dir {
 
 	}
 
-	public static function logs($file = '') {
-
-		return self::backend('generated'.DIRECTORY_SEPARATOR.'logs'.DIRECTORY_SEPARATOR.$file);
-
-	}
-
 	public static function lang($lang, $file = '') {
 
 		return self::backend('lib'.DIRECTORY_SEPARATOR.'lang'.DIRECTORY_SEPARATOR.$lang.DIRECTORY_SEPARATOR.$file);
