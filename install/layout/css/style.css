@@ -71,19 +71,17 @@
 		margin:0;
 	}
 	
-	#navi li {
+	#navi ul li {
 		border-radius:4px 4px 0 0;
+		width:65px;
 		height:50px;
 		padding:0;
 		line-height:50px;
-		float:left;
-		width:auto;
+		font-size:14px;
 	}
 	
-	#navi a {
-		width:auto!important;
-		padding:0 10px!important;
-		font-size:13px!important;
+	#navi ul li {
+		float:left;
 	}
 	
 	#subnavi {

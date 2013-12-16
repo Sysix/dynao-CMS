@@ -1,9 +1,9 @@
 <?php
 class install {
 	
-	public static function installSql() {
+	public static function newInstall() {
 		
-		$sql = sql::factory();
+		$sql = new sql();
 		$sql = $sql->query('CREATE TABLE IF NOT EXISTS `module` (
 		  `id` 			int(16)		unsigned 	NOT NULL 	auto_increment,
 		  `name`		varchar(255) 			NOT NULL,
@@ -12,7 +12,7 @@ class install {
 		  `sort`		int(16)		unsigned 	NOT NULL,
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
-		
+								
 		$sql->query('CREATE TABLE IF NOT EXISTS `structure` (
 		  `id` 			int(16)		unsigned	NOT NULL 	auto_increment,
 		  `name`		varchar(255) 			NOT NULL,
@@ -23,19 +23,26 @@ class install {
 		  `online`		int(1)		unsigned	NOT NULL,
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
-		
-		
+								
+								
 		$sql->query('CREATE TABLE IF NOT EXISTS `user` (
 		  `id` 			int(11) 	unsigned	NOT NULL	auto_increment,
-		  `firstname` 		varchar(255)			NOT NULL,
+		  `firstname` 	varchar(255)			NOT NULL,
 		  `name` 		varchar(255)			NOT NULL,
 		  `email` 		varchar(255)			NOT NULL,
 		  `password`	varchar(255)			NOT NULL,
 		  `perms`		varchar(255)			NOT NULL,
 		  `admin`		int(1) 		unsigned	NOT NULL,
 		  PRIMARY KEY  (`id`)
-		) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;');
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
+								
 		
+		$sql->setTable('user');
+		$sql->addPost('email', type::post('email'));
+		$sql->addPost('password', userLogin::hash(type::post('password')));
+		$sql->addPost('admin', 1);
+		$sql->save();
+								
 		$sql->query('CREATE TABLE IF NOT EXISTS `structure_area` (
 		  `id`			int(16)		unsigned	NOT NULL		auto_increment,
 		  `structure_id`int(16) 	unsigned	NOT NULL,
@@ -57,16 +64,16 @@ class install {
 		  `value13` 	text 					NOT NULL,
 		  `value14` 	text 					NOT NULL,
 		  `value15` 	text 					NOT NULL,
-		  `link1` 		varchar(255)			NOT NULL,
-		  `link2` 		varchar(255)			NOT NULL,
-		  `link3` 		varchar(255) 			NOT NULL,
-		  `link4` 		varchar(255)			NOT NULL,
-		  `link5` 		varchar(255)			NOT NULL,
-		  `link6` 		varchar(255)			NOT NULL,
-		  `link7`		varchar(255)			NOT NULL,
-		  `link8` 		varchar(255)			NOT NULL,
-		  `link9` 		varchar(255) 			NOT NULL,
-		  `link10` 		varchar(255) 			NOT NULL,
+		  `link1` 		int(11)					NOT NULL,
+		  `link2` 		int(11)					NOT NULL,
+		  `link3` 		int(11)					NOT NULL,
+		  `link4` 		int(11)					NOT NULL,
+		  `link5` 		int(11)					NOT NULL,
+		  `link6` 		int(11)					NOT NULL,
+		  `link7`		int(11)					NOT NULL,
+		  `link8` 		int(11)					NOT NULL,
+		  `link9` 		int(11)					NOT NULL,
+		  `link10` 		int(11)					NOT NULL,
 		  `linklist1`	varchar(255)			NOT NULL,
 		  `linklist2` 	varchar(255)			NOT NULL,
 		  `linklist3` 	varchar(255) 			NOT NULL,
@@ -81,7 +88,7 @@ class install {
 		  `php2` 		text 					NOT NULL,
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
-		
+								
 		$sql->query('CREATE TABLE IF NOT EXISTS `addons` (
 		  `id` 			int(11) 	unsigned	NOT NULL	auto_increment,
 		  `name` 		varchar(255)			NOT NULL,
@@ -89,7 +96,7 @@ class install {
 		  `install`		int(1)					NOT NULL,
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
-		
+								
 		$sql->query('CREATE TABLE IF NOT EXISTS `slots` (
 		  `id` 			int(11) 	unsigned	NOT NULL	auto_increment,
 		  `name` 		varchar(255)			NOT NULL,
@@ -113,21 +120,31 @@ class install {
 		  `value13` 	text 					NOT NULL,
 		  `value14` 	text 					NOT NULL,
 		  `value15` 	text 					NOT NULL,
-		  `link1` 		varchar(255)			NOT NULL,
-		  `link2` 		varchar(255)			NOT NULL,
-		  `link3` 		varchar(255) 			NOT NULL,
-		  `link4` 		varchar(255)			NOT NULL,
-		  `link5` 		varchar(255)			NOT NULL,
-		  `link6` 		varchar(255)			NOT NULL,
-		  `link7`		varchar(255)			NOT NULL,
-		  `link8` 		varchar(255)			NOT NULL,
-		  `link9` 		varchar(255) 			NOT NULL,
-		  `link10` 		varchar(255) 			NOT NULL,
+		   `link1` 		int(11)					NOT NULL,
+		  `link2` 		int(11)					NOT NULL,
+		  `link3` 		int(11)					NOT NULL,
+		  `link4` 		int(11)					NOT NULL,
+		  `link5` 		int(11)					NOT NULL,
+		  `link6` 		int(11)					NOT NULL,
+		  `link7`		int(11)					NOT NULL,
+		  `link8` 		int(11)					NOT NULL,
+		  `link9` 		int(11)					NOT NULL,
+		  `link10` 		int(11)					NOT NULL,
+		  `linklist1`	varchar(255)			NOT NULL,
+		  `linklist2` 	varchar(255)			NOT NULL,
+		  `linklist3` 	varchar(255) 			NOT NULL,
+		  `linklist4` 	varchar(255)			NOT NULL,
+		  `linklist5` 	varchar(255)			NOT NULL,
+		  `linklist6` 	varchar(255)			NOT NULL,
+		  `linklist7`	varchar(255)			NOT NULL,
+		  `linklist8` 	varchar(255)			NOT NULL,
+		  `linklist9` 	varchar(255) 			NOT NULL,
+		  `linklist10`	varchar(255) 			NOT NULL,
 		  `php1` 		text 					NOT NULL,
 		  `php2` 		text 					NOT NULL,
-			PRIMARY KEY  (`id`)
+		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
-    	
+		
 	}
 	
 }

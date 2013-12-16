@@ -21,21 +21,30 @@
 						$field = $form->addRawField('<h4>Datenbank</h4>');
 						
 						$field = $form->addTextField('db_host', $DB['host']);
+						$field->addValidator('notEmpty', 'Feld darf nicht leer sein');
 						$field->fieldName(lang::get('db_host'));
 						
 						$field = $form->addTextField('db_user', $DB['user']);
+						$field->addValidator('notEmpty', 'Feld darf nicht leer sein');
 						$field->fieldName(lang::get('db_user'));
 						
 						$field = $form->addTextField('db_password', $DB['password']);
+						$field->addValidator('notEmpty', 'Feld darf nicht leer sein');
 						$field->fieldName(lang::get('db_password'));
 						
 						$field = $form->addTextField('db_database', $DB['database']);
+						$field->addValidator('notEmpty', 'Feld darf nicht leer sein');
 						$field->fieldName(lang::get('db_database'));
+						
+						$field = $form->addTextField('prefix', $DB['prefix']);
+						$field->fieldName(lang::get('db_prefix'));
 						
 						$field = $form->addRawField('<h4>Admin</h4>');
 						
 						$field = $form->addTextField('email', '');
 						$field->fieldName(lang::get('email'));
+						$field->addValidator('notEmpty', 'Feld darf nicht leer sein');
+						$field->addValidator('email', lang::get('user_wrong_email'));
 						
 						$field = $form->addTextField('password', '');
 						$field->fieldName(lang::get('password'));
@@ -44,30 +53,28 @@
 							
 							$sql = sql::connect($form->get('db_host'), $form->get('db_user'), $form->get('db_password'), $form->get('db_database'));
 							
-							if($sql) {
+							if(is_null($sql)) {
 								
 								$DB = [
 									'host' => $form->get('db_host'),
 									'user' => $form->get('db_user'),
 									'password' => $form->get('db_password'),
-									'database' => $form->get('db_database')
-									];
+									'database' => $form->get('db_database'),
+									'prefix' => $form->get('db_prefix')
+								];
 								
-								dyn::add('DB', json_encode($DB), true);
+								dyn::add('DB', $DB, true);
 								dyn::save();
 								
-								install::installSql();
-								
-								$user = sql::factory();
-								$user->query('INSERT INTO `user` 
-								(`id`, 	`email`, 					`password`, 								`admin`) VALUES
-								(1, 	"'.type::post('email').'", 	"'.userLogin::hash(type::post('password')).'", 	1);');
+								install::newInstall();
 								
 								$form->addParam('page', 'finish');
-							} else
-								echo message::danger('sql error');
+								
+							} else {
+								echo message::danger($sql);
+							}
 							
-							$form->delParam('subpage');
+							
 							$form->delParam('success_msg');
 						
 						}

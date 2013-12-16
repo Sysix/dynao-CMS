@@ -8,19 +8,16 @@ class form_install extends form {
 		
 		$this->setSave(false);
 		
-		if(dyn::get('backend')) {
-			$this->loadBackend();
-		}
+		$this->loadBackend();
 		
 		$this->addFormAttribute('action', $this->action);
 		$this->addFormAttribute('method', $this->method);
 		
 		$this->setButtons();
-		
+		$this->delParam('subpage');
 		$this->delButton('save-back');
 		
 		$this->setSuccessMessage(lang::get('form_saved'));
-		$this->addParam('action', $this->mode);
 		
 	}
 	
