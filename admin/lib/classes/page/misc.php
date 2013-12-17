@@ -52,6 +52,7 @@ class pageMisc {
 		
 		$sql = sql::factory();
 		$sql->query('SELECT * FROM '.sql::table('structure').' WHERE parent_id = '.$parentId.' ORDER BY sort')->result();
+		
 		if($sql->num()) {
 			
 			$select .= '<ul '.$id.'>';
@@ -93,10 +94,10 @@ class pageMisc {
 			}
 			
 			$select .= '</ul>';
-		
-		} else
+			
+		} elseif(!$select && $lvl == 0)
 			$select = lang::get('no_entries');
-				
+			
 		return $select;
 		
 	}

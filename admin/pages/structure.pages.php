@@ -296,7 +296,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		
 	}
 	
-	if($action == '') {
+	if(!in_array($action, ['edit', 'add'])) {
 	
 	?>
 	<div class="row">
