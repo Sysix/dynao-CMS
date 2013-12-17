@@ -79,7 +79,7 @@ class dyn {
 		// jeden Tag
 		if(cache::exist($cacheFile, 86400)) {
 			
-			$content = json_decode($curl, true);
+			$content = json_decode(cache::read($cacheFile), true);
 				
 		} else {
 		
@@ -120,6 +120,50 @@ class dyn {
 		}
 		
 		return true;
+		
+	}
+	
+	static public function getNews() {
+		
+		$cacheFile = cache::getFileName(0, 'dynaoNews');
+		
+		// jeden halben Tag
+		if(cache::exist($cacheFile, 43200)) {
+			
+			$content = json_decode(cache::read($cacheFile), true);
+				
+		} else {
+		
+			$server = 'http://api.dynao.de/news.json';
+			
+			$ch = curl_init($server);
+			curl_setopt($ch, CURLOPT_PORT, 80);
+			curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla (Statuscheck-Script)');
+			curl_setopt($ch, CURLOPT_TIMEOUT, 0);
+			curl_setopt($ch, CURLOPT_DNS_CACHE_TIMEOUT, 300);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			$curl = curl_exec($ch);
+			curl_close($ch);
+			
+			$content = json_decode($curl, true);
+			
+			cache::write($content, $cacheFile);
+			
+		}
+			
+		$return = [];
+		foreach($content as $news) {
+			
+			$return[] = '
+					<li>
+        				<h5 data-toggle="tooltip" data-placement="left" data-original-title="'.date(lang::get('dateformat'), strtotime($news['time'])).'">
+							<a href="'.$news['link'].'">'.$news['title'].'</a>
+						</h5>						
+        				<p>'.$news['content'].'</p>						
+        			</li>';			
+		}
+		
+		return implode(PHP_EOL, $return);
 		
 	}
 	

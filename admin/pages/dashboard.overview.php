@@ -94,27 +94,7 @@
         	</div>
         	<div class="panel-body">
         		<ul class="news">
-        			<li>
-        				<h4 class="pull-left">dynao CMS v1.0 released</h4>
-        
-        				<a class="btn btn-xs btn-default pull-right"><?php echo lang::get('read_more'); ?></a>
-        				<div class="clearfix"></div>
-        				<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores.</p>
-        			</li>
-                    <li>
-        				<h4 class="pull-left">dynao CMS v1.0 released</h4>
-        
-        				<a class="btn btn-xs btn-default pull-right"><?php echo lang::get('read_more'); ?></a>
-        				<div class="clearfix"></div>
-        				<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores.</p>
-        			</li>
-                    <li>
-        				<h4 class="pull-left">dynao CMS v1.0 released</h4>
-        
-        				<a class="btn btn-xs btn-default pull-right"><?php echo lang::get('read_more'); ?></a>
-        				<div class="clearfix"></div>
-        				<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores.</p>
-        			</li>
+                	<?php echo dyn::getNews(); ?>        			
         		</ul>
         	</div>
         </div>

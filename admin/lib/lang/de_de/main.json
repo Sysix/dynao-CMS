@@ -1,7 +1,7 @@
 {
 	#Einstellungen
 	"lang": 					"Deutsch",
-	"dateformat":				"%d.%m.%Y",
+	"dateformat":				"d.m.Y",
 	
 	"yes":						"Ja",
 	"no":						"Nein",

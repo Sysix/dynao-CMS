@@ -58,7 +58,7 @@ $(document).ready(function () {
 		$("#tools ul").toggleClass("display");	
 	});
 	
-	$('#trash').tooltip();
+	$('#trash, .news h5').tooltip();
 	
 	$("#mobil").click(function() {
 		$("#subnavi ul.subnav").toggleClass("display");	
