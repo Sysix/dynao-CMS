@@ -24,6 +24,13 @@ lang::loadLang('lib'.DIRECTORY_SEPARATOR.'lang'.DIRECTORY_SEPARATOR.lang::getLan
 
 $page = type::super('page', 'string', 'licence');
 
+ob_start();
+
 include "layout/index.php";
+
+$out = ob_get_contents();
+ob_get_clean();
+
+echo $out;
 
 ?>
