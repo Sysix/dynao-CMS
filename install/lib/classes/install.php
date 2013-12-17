@@ -4,7 +4,7 @@ class install {
 	public static function newInstall() {
 		
 		$sql = new sql();
-		$sql = $sql->query('CREATE TABLE IF NOT EXISTS `'.$sql->table("module").'` (
+		$sql = $sql->query('CREATE TABLE IF NOT EXISTS `'.sql::table("module").'` (
 		  `id` 			int(16)		unsigned 	NOT NULL 	auto_increment,
 		  `name`		varchar(255) 			NOT NULL,
 		  `input` 		text 					NOT NULL,
@@ -13,7 +13,7 @@ class install {
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 								
-		$sql->query('CREATE TABLE IF NOT EXISTS `'.$sql->table("structure").'` (
+		$sql->query('CREATE TABLE IF NOT EXISTS `'.sql::table("structure").'` (
 		  `id` 			int(16)		unsigned	NOT NULL 	auto_increment,
 		  `name`		varchar(255) 			NOT NULL,
 		  `template`	varchar(255) 			NOT NULL,
@@ -25,7 +25,7 @@ class install {
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 								
 								
-		$sql->query('CREATE TABLE IF NOT EXISTS `'.$sql->table("user").'` (
+		$sql->query('CREATE TABLE IF NOT EXISTS `'.sql::table("user").'` (
 		  `id` 			int(11) 	unsigned	NOT NULL	auto_increment,
 		  `firstname` 	varchar(255)			NOT NULL,
 		  `name` 		varchar(255)			NOT NULL,
@@ -45,7 +45,7 @@ class install {
 		$sql->addPost('admin', 1);
 		$sql->save();
 								
-		$sql->query('CREATE TABLE IF NOT EXISTS `'.$sql->table("structure_area").'` (
+		$sql->query('CREATE TABLE IF NOT EXISTS `'.sql::table("structure_area").'` (
 		  `id`			int(16)		unsigned	NOT NULL		auto_increment,
 		  `structure_id`int(16) 	unsigned	NOT NULL,
 		  `sort`		int(16)		unsigned	NOT NULL,
@@ -91,7 +91,7 @@ class install {
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 								
-		$sql->query('CREATE TABLE IF NOT EXISTS `'.$sql->table("addons").'` (
+		$sql->query('CREATE TABLE IF NOT EXISTS `'.sql::table("addons").'` (
 		  `id` 			int(11) 	unsigned	NOT NULL	auto_increment,
 		  `name` 		varchar(255)			NOT NULL,
 		  `active`		int(1)					NOT NULL,
@@ -99,7 +99,7 @@ class install {
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 								
-		$sql->query('CREATE TABLE IF NOT EXISTS `'.$sql->table("slots").'` (
+		$sql->query('CREATE TABLE IF NOT EXISTS `'.sql::table("slots").'` (
 		  `id` 			int(11) 	unsigned	NOT NULL	auto_increment,
 		  `name` 		varchar(255)			NOT NULL,
 		  `description`	varchar(255)			NOT NULL,
