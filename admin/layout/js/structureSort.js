@@ -56,13 +56,14 @@ $('#structure-tree li').prepend('<div class="dropzone"></div>');
 				data = JSON.stringify(step(object, depth));
 				return data;
 			};
-						
-			var getString = document.location.search.substr(1,document.location.search.length);
-				
-			$.post('index.php?'+getString, {array: returnArray() }, function(data) {
-				$('#content').prepend(data);
-			});
 			
+			var getString = document.location.search.substr(1,document.location.search.length);
+			
+			setTimeout(function() {
+				$.post('index.php?'+getString, {array: returnArray() }, function(data) {
+					$('#content').prepend(data);
+				});
+			}, 0);
 			
         },
         over: function() {
