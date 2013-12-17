@@ -157,6 +157,7 @@
 	#Validator
 	"validator_method_exists":	"%s::%s expected as $type an existing method",
 	"validator_wrong_type":		"%s::%s expected int/float/string as $type",
+	"validator_not_empty":		"Field must not be empty",
 	
 	#traitMeta
 	"traitmeta_callable_func":	"%s::%s expected as 2 Parameter a callable function",

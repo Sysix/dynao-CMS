@@ -8,9 +8,12 @@
 	"chmod_755":			"Chmod 0755 is required",
 	"php_ext": 				"Cannot load PHP Extension %s",
 	"installation":			"Installation",
+	"db_prefix":			"Prefix",
 	"db_host":				"Host",
 	"db_user":				"User",
 	"db_password":			"Password",
 	"db_database":			"Database",
-	"db_connect":			"Database connection"
+	"db_connect":			"Database connection",
+	"licence":				"Licence",
+	"accept":				"Accept"
 }

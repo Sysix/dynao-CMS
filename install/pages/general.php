@@ -5,6 +5,7 @@ $table = table::factory();
                 
 $table->addRow()
 ->addCell(lang::get('type'))
+->addCell(lang::get('value'))
 ->addCell(lang::get('status'));
 
 $table->addSection('tbody');
@@ -12,10 +13,12 @@ $table->addSection('tbody');
 if (version_compare(phpversion(), '5.4', '<')) {		
 	$table->addRow()
 	->addCell(lang::get('php_version'))
+	->addCell('>5.4')
 	->addCell('<span class="label label-danger">'.lang::get('php_version_54').'</span>');				
 } else {
 	$table->addRow()
 	->addCell(lang::get('php_version'))
+	->addCell('>5.4')
 	->addCell('<span class="label label-success">'.lang::get('ok').'</span>');	
 }
                 
@@ -35,7 +38,8 @@ function stripPath($file) {
 foreach($writeable as $file) {
 					
 	$table->addRow()
-	->addCell(stripPath($file));
+	->addCell(stripPath($file))
+	->addCell('0755');
 
 	if(is_file($file)) {
 

@@ -18,32 +18,32 @@
 						
 						$DB = dyn::get('DB');
 						
-						$field = $form->addRawField('<h4>Datenbank</h4>');
+						$field = $form->addRawField('<h4>'.lang::get('db_database').'</h4>');
 						
 						$field = $form->addTextField('db_host', $DB['host']);
-						$field->addValidator('notEmpty', 'Feld darf nicht leer sein');
+						$field->addValidator('notEmpty', lang::get('validator_not_empty'));
 						$field->fieldName(lang::get('db_host'));
 						
 						$field = $form->addTextField('db_user', $DB['user']);
-						$field->addValidator('notEmpty', 'Feld darf nicht leer sein');
+						$field->addValidator('notEmpty', lang::get('validator_not_empty'));
 						$field->fieldName(lang::get('db_user'));
 						
 						$field = $form->addTextField('db_password', $DB['password']);
-						$field->addValidator('notEmpty', 'Feld darf nicht leer sein');
+						$field->addValidator('notEmpty', lang::get('validator_not_empty'));
 						$field->fieldName(lang::get('db_password'));
 						
 						$field = $form->addTextField('db_database', $DB['database']);
-						$field->addValidator('notEmpty', 'Feld darf nicht leer sein');
+						$field->addValidator('notEmpty', lang::get('validator_not_empty'));
 						$field->fieldName(lang::get('db_database'));
 						
-						$field = $form->addTextField('prefix', $DB['prefix']);
+						$field = $form->addTextField('db_prefix', $DB['prefix']);
 						$field->fieldName(lang::get('db_prefix'));
 						
-						$field = $form->addRawField('<h4>Admin</h4>');
+						$field = $form->addRawField('<h4>'.lang::get('user').'</h4>');
 						
 						$field = $form->addTextField('email', '');
 						$field->fieldName(lang::get('email'));
-						$field->addValidator('notEmpty', 'Feld darf nicht leer sein');
+						$field->addValidator('notEmpty', lang::get('validator_not_empty'));
 						$field->addValidator('email', lang::get('user_wrong_email'));
 						
 						$field = $form->addTextField('password', '');

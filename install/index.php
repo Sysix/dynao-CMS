@@ -22,7 +22,7 @@ lang::setLang(dyn::get('lang'));
 
 lang::loadLang('lib'.DIRECTORY_SEPARATOR.'lang'.DIRECTORY_SEPARATOR.lang::getLang().'.json');
 
-$page = type::super('page', 'string', 'overview');
+$page = type::super('page', 'string', 'licence');
 
 include "layout/index.php";
 
