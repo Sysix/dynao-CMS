@@ -30,10 +30,24 @@ $title = $this->get('name');
             	<div class="col-sm-10">
                 	<nav>
                     	<ul>
-                        	<li><a href="">Navipunkt</a></li>
-                        	<li><a href="">Navipunkt</a></li>
-                        	<li><a href="">Navipunkt</a></li>
-                        	<li><a href="">Navipunkt</a></li>
+                        	<?php
+                            foreach(navigation::getCategoryById(0) as $navi) {
+								echo '<li><a href="'.$navi->getUrl().'">'.$navi->get('name').'</a>';
+								if($navi->hasChild()) {
+									
+									echo '<ul>';
+									
+									foreach(navigation::getCategoryById($navi->get('id')) as $subnavi) {
+										echo '<li><a href="'.$subnavi->getUrl().'">'.$subnavi->get('name').'</a>';
+									}
+									
+									echo '</ul>';
+									
+								}
+								echo '</li>';
+								
+							}
+							?>
                         </ul>
                         <div class="clearfix"></div>
                     </nav>

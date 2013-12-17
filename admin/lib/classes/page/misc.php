@@ -4,8 +4,7 @@ class pageMisc {
 	
 	public static function getTreeStructure($offlinePages = true, $selected, $spacer = '&nbsp; &nbsp;', $parentId = 0, $lvl = 0, $select = false) {
 		
-		$extraWhere = '';
-		
+		$extraWhere = '';		
 		
 		if(!$offlinePages) {				
 			$extraWhere =  ' AND online = 1';				
@@ -140,7 +139,7 @@ class pageMisc {
 		
 	}
 	
-	public static function function sortStructure($sort, $pid = 0) {
+	public static function sortStructure($sort, $pid = 0) {
 			
 			$sql = sql::factory();
 			$sql->setTable('structure');
