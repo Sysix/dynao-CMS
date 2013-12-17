@@ -49,8 +49,14 @@
 	<div id="tools">
 	
 		<a id="trash" data-toggle="tooltip" data-placement="bottom" data-original-title="Nicht in der Beta verfügbar!" href=""></a>
-        <div id="addon-mobil"><?php echo lang::get('addon_navi'); ?></div>
-        <?php echo backend::getAddonNavi(); ?>
+        
+        <?php 
+		if(backend::getAddonNavi()) {
+        	echo '<div id="addon-mobil">'.lang::get('addon_navi').'</div>';
+        	echo backend::getAddonNavi(); 
+		}
+		?>
+        
 		
 	</div><!--end #tools-->
 

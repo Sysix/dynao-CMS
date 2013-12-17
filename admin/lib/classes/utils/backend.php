@@ -267,8 +267,9 @@ class backend {
 			$Ulclass = ' class="'.$Ulclass.'"';	
 		}
 			
-		
-		return '<ul'.$Ulclass.'>'.implode(PHP_EOL, $return).'</ul>';
+		if($naviArray) {
+			return '<ul'.$Ulclass.'>'.implode(PHP_EOL, $return).'</ul>';
+		}
 		
 	}
 	
