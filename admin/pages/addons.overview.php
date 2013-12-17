@@ -104,6 +104,8 @@ if($action == 'help') {
 	
 	$addons = scandir(dir::backend('addons/'));
 	
+	if(count($addons)) {
+	
 	foreach($addons as $dir) {
 		
 		if(in_array($dir, ['.', '..', '.htaccess'])) 
@@ -135,6 +137,13 @@ if($action == 'help') {
 		->addCell($curAddon->get('name').' <small>'.$curAddon->get('version').'</small>')
 		->addCell('<span class="btn-group">'.$install.$active.$delete.'</span>');
 			
+	}
+	
+	} else {
+	
+		$table->addRow()
+		->addCell(lang::get('no_entries'), ['colspan'=>3]);
+		
 	}
 	
 	?>

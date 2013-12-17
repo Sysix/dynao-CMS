@@ -142,6 +142,9 @@
 	"password_info":			"<small>You can see the encrypted password! To assign a new password, simply enter!</small>",
 	"email":					"E-Mail",
 	"user":						"User",
+	"firstname":				"Firstname",
+	"user_email_empty":			"E-Mail field must not be empty",
+	"user_password_empty":		"Password field must not be empty",
 	
 	#SQL
 	"sql_query_error":			"Query could not be executed<pre>%s</pre>Error: %s",

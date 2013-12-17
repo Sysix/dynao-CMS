@@ -27,11 +27,11 @@ if($action == 'add' || $action == 'edit') {
 	$form = form::factory('user','id='.$id,'index.php');
 	
 	$field = $form->addTextField('firstname', $form->get('firstname'));
-	$field->fieldName("Vorname");
+	$field->fieldName(lang::get('firstname'));
 	$field->autofocus();
 	
 	$field = $form->addTextField('name', $form->get('name'));
-	$field->fieldName("Nachname");
+	$field->fieldName(lang::get('name'));
 	
 	$field = $form->addTextField('email', $form->get('email'));
 	$field->fieldName(lang::get('email_adress'));

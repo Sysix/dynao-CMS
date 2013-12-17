@@ -94,7 +94,8 @@ class pageMisc {
 			
 			$select .= '</ul>';
 		
-		}
+		} else
+			$select = lang::get('no_entries');
 				
 		return $select;
 		

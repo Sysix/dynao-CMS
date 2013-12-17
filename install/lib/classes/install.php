@@ -38,6 +38,8 @@ class install {
 								
 		
 		$sql->setTable('user');
+		$sql->addPost('firstname', type::post('firstname'));
+		$sql->addPost('name', type::post('name'));
 		$sql->addPost('email', type::post('email'));
 		$sql->addPost('password', userLogin::hash(type::post('password')));
 		$sql->addPost('admin', 1);

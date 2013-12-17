@@ -42,7 +42,7 @@ class userLogin {
 		$session = explode('||', $session);	
 		
 		$sql = sql::factory();
-		$sql->result('SELECT id FROM user WHERE `id` = '.$session[0].' AND `password` = "'.$session[1].'"');	
+		$sql->result('SELECT id FROM '.$sql->table('user').' WHERE `id` = '.$session[0].' AND `password` = "'.$session[1].'"');	
 			
 		if(!$sql->num()) {
 			
@@ -72,7 +72,7 @@ class userLogin {
 		}
 		
 		$sql = sql::factory();
-		$sql->query('SELECT password, id FROM user WHERE `email` = "'.$email.'"');
+		$sql->query('SELECT password, id FROM '.$sql->table('user').' WHERE `email` = "'.$email.'"');
 		
 		// Username mit E-Mail vorhanden?
 		if(!$sql->num()) {

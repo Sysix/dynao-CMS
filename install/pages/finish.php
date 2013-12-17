@@ -16,7 +16,7 @@
                 	<a href="http://dynao.de/forum" target="_blank"><?php echo lang::get('dynao_forum'); ?></a>
                 </p>
                 
-                <a class="btn btn-default btn-sm" href="<?php echo dyn::get('hp_url'); ?>"><?php echo lang::get('visit_site'); ?></a>
+                <a class="btn btn-default btn-sm" href="<?php echo dyn::get('hp_url').'/admin'; ?>"><?php echo lang::get('visit_admin'); ?></a>
             </div>
         </div>
         

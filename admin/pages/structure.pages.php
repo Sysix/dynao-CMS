@@ -224,7 +224,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title pull-left"><?php echo $form->get('name'); ?></h3>
+					<h3 class="panel-title pull-left"><?php echo ($form->get('name')) ? $form->get('name') : lang::get('add'); ?></h3>
                     <div class="btn-group pull-right">
 						<a class="btn btn-sm btn-default" href="<?php echo url::backend('structure'); ?>"><?php echo lang::get('back'); ?></a>
 					</div>

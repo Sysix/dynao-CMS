@@ -144,6 +144,7 @@
 	"password_info":			"<small>Sie sehen das verschlüsselte Passwort! Um ein neues Passwort zu vergeben, einfach eingeben!</small>",
 	"email":					"E-Mail",
 	"user":						"Benutzer",
+	"firstname":				"Vorname",
 	"user_email_empty":			"Das E-Mail-Feld darf nicht leer sein",
 	"user_password_empty":		"Das Passwort-Feld darf nicht leer sein",
 	

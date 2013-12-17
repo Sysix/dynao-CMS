@@ -45,8 +45,10 @@ class sql {
 	}
 	
 	static public function table($table) {
-	
-		return dyn::get('table_prefix').$table;
+		
+		$DB = dyn::get('DB');
+		
+		return $DB['prefix'].$table;
 		
 	}
 	

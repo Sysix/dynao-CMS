@@ -41,12 +41,21 @@
 						
 						$field = $form->addRawField('<h4>'.lang::get('user').'</h4>');
 						
+						$field = $form->addTextField('firstname', '');
+						$field->addValidator('notEmpty', lang::get('validator_not_empty'));
+						$field->fieldName(lang::get('firstname'));
+						
+						$field = $form->addTextField('name', '');
+						$field->addValidator('notEmpty', lang::get('validator_not_empty'));
+						$field->fieldName(lang::get('name'));
+						
 						$field = $form->addTextField('email', '');
 						$field->fieldName(lang::get('email'));
 						$field->addValidator('notEmpty', lang::get('validator_not_empty'));
 						$field->addValidator('email', lang::get('user_wrong_email'));
 						
 						$field = $form->addTextField('password', '');
+						$field->addValidator('notEmpty', lang::get('validator_not_empty'));
 						$field->fieldName(lang::get('password'));
 						
 						if($form->isSubmit()) {
