@@ -23,8 +23,9 @@ $title = $this->get('name');
     	<div class="container">
     		<div class="row">
             	<div class="col-sm-2">
-                	<img src="templates/default/images/logo.png" alt="logo">
-                    <?= dyn::get('hp_name'); ?>
+                	<a href="<?= dyn::get('hp_url'); ?>" class="logo">
+                    	<?= dyn::get('hp_name'); ?>
+                    </a>
                 </div>
             	<div class="col-sm-10">
                 	<nav>
@@ -33,24 +34,17 @@ $title = $this->get('name');
                         	<li><a href="">Navipunkt</a></li>
                         	<li><a href="">Navipunkt</a></li>
                         	<li><a href="">Navipunkt</a></li>
-                        	<li><a href="">Navipunkt</a></li>
-                        	<li><a href="">Navipunkt</a></li>
-                        	<li><a href="">Navipunkt</a></li>
                         </ul>
-                        <select>
-                        	<option>Navipunkt</option>
-                        	<option>Navipunkt</option>
-                        	<option>Navipunkt</option>
-                        	<option>Navipunkt</option>
-                        	<option>Navipunkt</option>
-                        	<option>Navipunkt</option>
-                        	<option>Navipunkt</option>
-                        </select>
+                        <div class="clearfix"></div>
                     </nav>
                 </div>
             </div>
         </div>
     </header>
+    
+    <section id="top">
+    
+    </section>
     
     <div class="container">
     	<div class="row">

@@ -6,7 +6,7 @@
 	"need": {
 		"version": 0.1,
 		"addon": {
-			"metainfos": 0.1
+			
 		}
 	},
 	"templates": {
@@ -14,15 +14,15 @@
 		"2 Spalten": "2cols.php"
 	},
 	"slots": {
-		"contentslider" : {
-			"description": "Der Contentslider",
-			"input": "<input type=\"text\" name=\"DYN_VALUE[1]\" value=\"OUT_VALUE[1]\">",
+		"boxen" : {
+			"description": "Die 3 Boxen (Startseite)",
+			"input": "Box 1: <input type=\"text\" name=\"DYN_VALUE[1]\" value=\"OUT_VALUE[1]\"><br><textarea name=\"DYN_VALUE[2]\">OUT_VALUE[2]</textarea><br><br>Box 2: <input type=\"text\" name=\"DYN_VALUE[3]\" value=\"OUT_VALUE[3]\"><br><textarea name=\"DYN_VALUE[4]\">OUT_VALUE[4]</textarea><br><br>Box 3: <input type=\"text\" name=\"DYN_VALUE[5]\" value=\"OUT_VALUE[5]\"><br><textarea name=\"DYN_VALUE[6]\">OUT_VALUE[6]</textarea><br><br>",
 			"output": "<p>OUT_VALUE[1]</p>"
 		},
-		"navigation": {
-			"description": "Die Hauptnavigation",
-			"input": "Die Navigation Input",
-			"output": "Navigation Output"
+		"welcome": {
+			"description": "Startseite Top",
+			"input": "Große Schrift: <input type=\"text\" name=\"DYN_VALUE[1]\" value=\"OUT_VALUE[1]\"><br>Kleine Schrift: <input type=\"text\" name=\"DYN_VALUE[2]\" value=\"OUT_VALUE[2]\">",
+			"output": "OUT_VALUE[1]<span>OUT_VALUE[2]</span>"
 		}
 	}
 	
