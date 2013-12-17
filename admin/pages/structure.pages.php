@@ -254,6 +254,8 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		sql::sortTable('structure', 0, '`parent_id` = '.$sql->get('parent_id'));
 		
 		echo message::success(lang::get('structure_delete'));
+		
+		$action = '';
 			
 	}
 	
@@ -271,9 +273,11 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		
 		echo message::success(lang::get('save_status'));
 		
+		$action = '';
+		
 	}
 	
-	if(!in_array($action, ['edit', 'add'])) {
+	if($action == '') {
 	
 	?>
 	<div class="row">

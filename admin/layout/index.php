@@ -51,9 +51,9 @@
 		<a id="trash" data-toggle="tooltip" data-placement="bottom" data-original-title="Nicht in der Beta verfügbar!" href=""></a>
         
         <?php 
-		if(backend::getAddonNavi()) {
+		if($addonNavi = backend::getAddonNavi()) {
         	echo '<div id="addon-mobil">'.lang::get('addon_navi').'</div>';
-        	echo backend::getAddonNavi(); 
+        	echo $addonNavi; 
 		}
 		?>
         
