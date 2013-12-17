@@ -11,12 +11,12 @@
         "user": "",
         "password": "",
         "database": "",
-		"prefix": ""
+        "prefix": null
     },
     "timezone": "Europe\/Berlin",
     "logincookie": 86400,
     "lang": "de_de",
-    "template": null,
+    "template": "default",
     "start_page": null,
     "error_page": null
 }

@@ -15,6 +15,10 @@
 	"db_database":			"Datenbank",
 	"db_connect":			"Datenbank Verbindung",
 	"licence":				"Lizenz",
-	"accept":				"Akzeptieren"
+	"accept":				"Akzeptieren",
+	"install_success":		"dynaoCMS wurde erfolgreich installiert und kann nun verwendet werden.",
+	"install_delete":		"Bitte <strong>löschen</strong> Sie den Installations-Ordner \"/install\"!",
+	"dynao_site":			"dynaoCMS Webseite",
+	"dynao_forum":			"dynaoCMS Forum"
 
 }

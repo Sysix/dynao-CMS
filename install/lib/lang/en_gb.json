@@ -15,5 +15,9 @@
 	"db_database":			"Database",
 	"db_connect":			"Database connection",
 	"licence":				"Licence",
-	"accept":				"Accept"
+	"accept":				"Accept",
+	"install_success":		"dynaoCMS was successfully installed and is ready to use.",
+	"install_delete":		"Please <strong>delete</strong> the install-folder \"/install\"!",
+	"dynao_site":			"dynaoCMS Website",
+	"dynao_forum":			"dynaoCMS Forum"
 }
