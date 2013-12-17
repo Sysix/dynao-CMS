@@ -9,17 +9,19 @@ $table->addRow()
 ->addCell(lang::get('status'));
 
 $table->addSection('tbody');
+
+$table->addRow()
+->addCell(lang::get('php_version'))
+->addCell('>5.4');
 				
-if (version_compare(phpversion(), '5.4', '<')) {		
-	$table->addRow()
-	->addCell(lang::get('php_version'))
-	->addCell('>5.4')
-	->addCell('<span class="label label-danger">'.lang::get('php_version_54').'</span>');				
+if(version_compare(phpversion(), '5.4', '<')) {		
+
+	$table->addCell('<span class="label label-danger">'.lang::get('php_version_54').'</span>');			
+		
 } else {
-	$table->addRow()
-	->addCell(lang::get('php_version'))
-	->addCell('>5.4')
-	->addCell('<span class="label label-success">'.lang::get('ok').'</span>');	
+	
+	$table->addCell('<span class="label label-success">'.lang::get('ok').'</span>');
+		
 }
                 
 $writeable = [
@@ -93,10 +95,7 @@ foreach($writeable as $file) {
                     <?php
 						
 						$form = form_install::factory('', '', 'index.php');
-						$form->setSave(false);
 						$form->addParam('page', $page);
-						
-						$form->delButton('back');
 						
 						$field = $form->addTextField('hp_name', dyn::get('hp_name'));
 						$field->fieldName(lang::get('settings_name_of_site'));
@@ -130,12 +129,12 @@ foreach($writeable as $file) {
 							dyn::add('lang', $form->get('lang'), true);
 							dyn::save();
 							
+						
+							
 							if($error)
 								echo message::danger('error');
 							else
 								$form->addParam('page', 'database');
-								
-							$form->delParam('success_msg');
 						
 						}
 						

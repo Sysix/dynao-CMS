@@ -12,9 +12,6 @@
                     <?php
 						
 						$form = form_install::factory('', '', 'index.php');
-						$form->setSave(false);
-						
-						$form->delButton('back');
 						
 						$DB = dyn::get('DB');
 						
@@ -75,6 +72,12 @@
 								dyn::add('DB', $DB, true);
 								dyn::save();
 								
+								$template = new template(dyn::get('template'));
+								if($template->install() !== true) {
+									$form->setSuccessMessage(null);
+									$error = true;
+								}
+								
 								install::newInstall();
 								
 								$form->addParam('page', 'finish');
@@ -82,10 +85,7 @@
 							} else {
 								echo message::danger($sql);
 							}
-							
-							
-							$form->delParam('success_msg');
-						
+													
 						}
 						
 						echo $form->show();

@@ -140,6 +140,28 @@ class pageMisc {
 		
 	}
 	
+	public static function function sortStructure($sort, $pid = 0) {
+			
+			$sql = sql::factory();
+			$sql->setTable('structure');
+			$i = 1;
+			foreach($sort as $name=>$value) {
+				
+				$sql->addPost('sort', $i);
+				$sql->addPost('parent_id', $pid);
+				$sql->setWhere('id='.$value['id']);
+				$sql->update();				
+				
+				if(isset($value['children']) && count($value['children'])) {
+					
+					self::sortStructure($value['children'], $value['id']);	
+				}
+				
+				$i++;
+			}
+			
+		}
+	
 }
 
 ?>

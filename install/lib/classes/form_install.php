@@ -16,6 +16,7 @@ class form_install extends form {
 		$this->setButtons();
 		$this->delParam('subpage');
 		$this->delButton('save-back');
+		$this->delButton('back');
 		
 		$this->setSuccessMessage(lang::get('form_saved'));
 		

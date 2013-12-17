@@ -167,33 +167,10 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	if(ajax::is() && dyn::get('user')->hasPerm('page[edit]')) {
 		$post = type::super('array');
 		$sort = json_decode($post, true);
-		function sortStructure($sort, $pid = 0) {
-			
-			$sql = sql::factory();
-			$sql->setTable('structure');
-			$return = '';
-			$i = 1;
-			foreach($sort as $name=>$value) {
-				
-				$sql->addPost('sort', $i);
-				$sql->addPost('parent_id', $pid);
-				$sql->setWhere('id='.$value['id']);
-				$sql->update();				
-				
-				if(isset($value['children'])) {
-					
-					$return .= sortStructure($value['children'], $value['id']);	
-				}
-				
-				$i++;
-			}
-			
-			return $return;
-		}
+		
+		pageMisc::sortStructure($sort, 0);
 		
 		ajax::addReturn(message::success(lang::get('save_sorting'), true));
-		
-		//sortStructure($sort);
 		
 	}
 	
