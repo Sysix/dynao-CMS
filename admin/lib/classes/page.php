@@ -100,6 +100,12 @@ class page {
 		return (bool)$sql->num('SELECT id FROM '.sql::table('structure').' WHERE id = '.$id);
 	}
 	
+	public function isStart() {
+		
+		return (dyn::get('start_page') == $this->get('id'));
+			
+	}
+	
 }
 
 ?>

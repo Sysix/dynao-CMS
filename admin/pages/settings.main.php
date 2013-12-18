@@ -5,6 +5,14 @@ if($action == 'deleteCache') {
 	extension::get('SETTINGS_DELETE_CACHE');
 	echo message::success(lang::get('delete_cache_success'), true);	
 }
+if($action == 'loadTemplate') {
+	$template = new template(dyn::get('template'));
+	if($template->install() !== true) {
+		echo message::danger(lang::get('load_template_failed'), true);
+	} else {
+		echo message::success(lang::get('load_template_success'), true);
+	}	
+}
 ?>
 <div class="row">	
     <div class="col-lg-8">
@@ -13,6 +21,7 @@ if($action == 'deleteCache') {
             	<h3 class="panel-title pull-left"><?php echo lang::get('general'); ?></h3>
                 <div class="btn-group pull-right">
                 	<a href="<?php echo url::backend('settings', ['subpage'=>'main', 'action'=>'deleteCache']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('delete_cache'); ?></a>
+                    <a href="<?php echo url::backend('settings', ['subpage'=>'main', 'action'=>'loadTemplate']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('load_template'); ?></a>
                 </div>
                 <div class="clearfix"></div>
             </div>

@@ -17,7 +17,7 @@
 		"boxen" : {
 			"description": "Die 3 Boxen (Startseite)",
 			"input": "<label>Box 1</label>\n<input type=\"text\" name=\"DYN_VALUE[1]\" value=\"OUT_VALUE[1]\" class=\"form-control\">\n<textarea name=\"DYN_VALUE[2]\" class=\"form-control\">OUT_VALUE[2]</textarea>\n<label>Box 2</label>\n<input type=\"text\" name=\"DYN_VALUE[3]\" value=\"OUT_VALUE[3]\" class=\"form-control\">\n<textarea name=\"DYN_VALUE[4]\" class=\"form-control\">OUT_VALUE[4]</textarea>\n\n<label>Box 3</label>\n<input type=\"text\" name=\"DYN_VALUE[5]\" value=\"OUT_VALUE[5]\" class=\"form-control\">\n<textarea name=\"DYN_VALUE[6]\" class=\"form-control\">OUT_VALUE[6]</textarea>",
-			"output": "<p>OUT_VALUE[1]</p>"
+			"output": "<ul class=\"boxen\"><li><h2>OUT_VALUE[1]</h2>OUT_VALUE[2]</li><li><h2>OUT_VALUE[3]</h2>OUT_VALUE[4]</li><li><h2>OUT_VALUE[5]</h2>OUT_VALUE[6]</li></ul>"
 		},
 		"welcome": {
 			"description": "Startseite Top",

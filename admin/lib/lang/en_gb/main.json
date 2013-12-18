@@ -105,10 +105,13 @@
 	"settings":					"Settings",
 	"type":						"Type",
 	"value":					"Value",
-	"start_page":				"startpage",
-	"error_page":				"errorpage",
-	"delete_cache":				"delete cache",
-	"delete_cache_success":		"cache completely deleted",
+	"start_page":				"Startpage",
+	"error_page":				"Errorpage",
+	"delete_cache":				"Delete cache",
+	"load_template":			"Load template config",
+	"delete_cache_success":		"Cache completely deleted",
+	"load_template_success":	"Template config loaded",
+	"load_template_failed":		"Cant load template config",
 	
 	#Structure
 	"structure_content_save":	"Content successfully saved",

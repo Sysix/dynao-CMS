@@ -1,17 +1,10 @@
-<?php
-
-$keywords = $this->get('keywords');
-$description = $this->get('description');
-$title = $this->get('name');
-
-?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title><?= $title; ?> - <?= dyn::get('hp_name'); ?></title>
-    <meta name="description" content="<?= $description ?>">
-	<meta name="keywords" content="<?= $keywords ?>">
+    <title><?= $this->get('name'); ?> - <?= dyn::get('hp_name'); ?></title>
+    <meta name="description" content="<?= $this->get('description') ?>">
+	<meta name="keywords" content="<?= $this->get('keywords') ?>">
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="/templates/default/css/style.css" rel="stylesheet">
@@ -32,7 +25,10 @@ $title = $this->get('name');
                     	<ul>
                         	<?php
                             foreach(navigation::getCategoryById(0) as $navi) {
-								echo '<li><a href="'.$navi->getUrl().'">'.$navi->get('name').'</a>';
+								
+								$class = ($navi->get('id') == $this->get('id')) ? 'class="active"' : '';
+								
+								echo '<li '.$class.'><a href="'.$navi->getUrl().'">'.$navi->get('name').'</a>';
 								if($navi->hasChild()) {
 									
 									echo '<ul>';
@@ -57,14 +53,36 @@ $title = $this->get('name');
     </header>
     
     <section id="top">
-    
+    	<div class="container">
+    		<div class="row">
+        		<div class="col-lg-12">
+				<?php
+                
+                if($this->isStart())
+                    echo slot::getSlot('welcome');
+                else
+                    echo '<h1>'.$this->get('name').'</h1>';
+                
+                ?>
+        		</div>
+        	</div>
+        </div>
     </section>
     
     <div class="container">
     	<div class="row">
         	<div class="col-lg-12">
                 <section id="content">
+                	<?php echo slot::getSlot('boxen'); ?>
+                    
                		<?php echo dyn::get('content'); ?> 
+                </section>
+            </div>
+        </div>
+    	<div class="row">
+        	<div class="col-lg-12">
+                <section id="footer">
+               		&copy; Copyright 2013
                 </section>
             </div>
         </div>
