@@ -68,7 +68,7 @@ class slot {
 		if($is_structure == 1)
 			return true;
 			
-		return in_array(dyn::get('page'), (array)$structure);
+		return in_array(dyn::get('page_id'), (array)$structure);
 			
 	}
 	

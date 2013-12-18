@@ -39,6 +39,8 @@ sql::connect($DB['host'], $DB['user'], $DB['password'], $DB['database']);
 
 ob_start();
 
+date_default_timezone_set(dyn::get('timezone', 'Europe/Berlin'));
+
 new userLogin();
 dyn::add('user', new user(userLogin::getUser()));
 

@@ -59,9 +59,10 @@ $('#structure-tree li').prepend('<div class="dropzone"></div>');
 			
 			var getString = document.location.search.substr(1,document.location.search.length);
 			
+			$('#ajax-content').fadeOut(200);
 			setTimeout(function() {
 				$.post('index.php?'+getString, {array: returnArray() }, function(data) {
-					$('#content').prepend(data);
+					$('#ajax-content').html(data).fadeIn(200);
 				});
 			}, 0);
 			

@@ -47,7 +47,7 @@ class template {
 			
 	}
 	
-	public function installSlots() {
+	public function installSlots($update = false) {
 		
 		$slots = sql::factory();
 		$slots->setTable('slots');
@@ -57,14 +57,22 @@ class template {
 	
 		foreach($this->get('slots', []) as $name=>$slot) {
 			
-			if($slots->num('SELECT id FROM '.sql::table('slots').' WHERE `name` = "'.$name.'" AND `template` = "'.$this->name.'"')) {
+			$slotExists = $slots->num('SELECT id FROM '.sql::table('slots').' WHERE `name` = "'.$name.'" AND `template` = "'.$this->name.'"');
+			
+			if(!$update && $slotExists) {
 				continue;
 			}
 			
 			$modul->addPost('name', $name);
 			$modul->addPost('input', $slot['input']);
 			$modul->addPost('output', $slot['output']);
-			$modul->save();
+			
+			if(!$slotExists) {
+				$modul->save();				
+			} else {
+				$modul->setWhere('name="'.$name.'"');
+				$modul->update();
+			}
 			
 			$modul_id = $modul->insertId();
 			
@@ -72,19 +80,25 @@ class template {
 			$slots->addPost('description', $slot['description']);
 			$slots->addPost('template', $this->name);
 			$slots->addPost('modul', $modul_id);
-			$slots->save();
+				
+			if(!$slotExists) {
+				$slots->save();
+			} else {
+				$slots->setWhere('name="'.$name.'" AND template="'.$this->name.'"');
+				$slots->update();
+			}
 			
 		}
 		
 	}
 	
-	public function install() {
+	public function install($update = false) {
 		
 		if(!$this->checkNeed()) {
 			return false;	
 		}
 		
-		$this->installSlots();
+		$this->installSlots($update);
 		
 		return true;
 				

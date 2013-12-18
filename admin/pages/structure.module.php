@@ -130,6 +130,7 @@ if($action == '') {
     
     <div class="row">
         <div class="col-lg-12">
+        	<div id="ajax-content"></div>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title pull-left"><?php echo lang::get('modules'); ?></h3>

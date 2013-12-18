@@ -13,7 +13,7 @@
 			helper: true,
 			children: 'tr',
 			handle: '.fa-sort',
-			prependTo : '#content'
+			htmlTo : '#ajax-content'
 		}, options);
 		
 		if(settings.helper == false)
@@ -35,9 +35,9 @@
 				}
 				
 				var getString = document.location.search.substr(1,document.location.search.length);
-				
+				$(settings.htmlTo).fadeOut(200);
 				$.post('index.php?'+getString, {array: results }, function(data) {
-					$(settings.prependTo).prepend(data);
+					$(settings.htmlTo).html(data).fadeIn(200);
 				});
 			}
 			

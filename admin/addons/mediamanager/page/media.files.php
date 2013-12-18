@@ -48,13 +48,6 @@ if($action == 'delete' && dyn::get('user')->hasPerm('media[delete]')) {
 
 if(in_array($action, ['add', 'edit']) && dyn::get('user')->hasPerm('media[edit]')) {
 	
-	$sql = sql::factory();
-	$cats = $sql->num('SELECT id FROM '.sql::table('media_cat').' LIMIT 1');
-	if(!$cats) {
-		echo message::warning('Please add at first a Category');
-		return;	
-	}
-	
 	$form = form::factory('media', 'id='.$id, 'index.php');
 	$form->addFormAttribute('enctype', 'multipart/form-data');
 	
@@ -113,6 +106,13 @@ if(in_array($action, ['add', 'edit']) && dyn::get('user')->hasPerm('media[edit]'
 }
 
 if($action == '') {
+	
+	$sql = sql::factory();
+	$cats = $sql->num('SELECT id FROM '.sql::table('media_cat').' LIMIT 1');
+	if(!$cats) {
+		echo message::warning('Please add at first a Category');
+		return;	
+	}
 	
 	if(!$catId) {
 		$catId = type::session('media_cat', 'int', $catId);		

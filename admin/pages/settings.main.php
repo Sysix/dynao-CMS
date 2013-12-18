@@ -7,7 +7,7 @@ if($action == 'deleteCache') {
 }
 if($action == 'loadTemplate') {
 	$template = new template(dyn::get('template'));
-	if($template->install() !== true) {
+	if($template->install(true) !== true) {
 		echo message::danger(lang::get('load_template_failed'), true);
 	} else {
 		echo message::success(lang::get('load_template_success'), true);
