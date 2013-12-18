@@ -549,3 +549,7 @@ ul.news li .btn {
 .form-horizontal .form-submit-area {
 	padding:0px 15px;
 }
+
+.panel form .table {
+	margin-bottom:0px;
+}

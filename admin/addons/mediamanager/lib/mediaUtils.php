@@ -72,6 +72,48 @@ class mediaUtils {
 	
 	}
 	
+	public static function deleteFile($id) {
+		
+		$values = [];
+	
+		for($i = 1; $i <= 10; $i++) {
+			$values[] = '`media'.$i.'` = '.$id;
+		}
+		
+		for($i = 1; $i <= 10; $i++) {
+			$values[] = '`medialist'.$i.'` LIKE "%|'.$id.'|%"';
+		}
+		
+		$sql = sql::factory();
+		$sql->query('SELECT id FROM '.sql::table('structure_area').' WHERE '.implode(' OR ', $values))->result();
+		if($sql->num()) {
+			
+			echo message::warning(lang::get('file_in_use'));
+			
+		} else {
+			
+			$sql = sql::factory();
+			$sql->setTable('media');
+			$sql->setWhere('id='.$id);
+			$sql->select('filename');
+			$sql->result();
+		
+			if(unlink(dir::media($sql->get('filename')))) {
+				
+				$sql->delete();
+				
+				return message::success(lang::get('file_deleted'), true);
+				
+			} else {
+				
+				return message::warning(sprintf(lang::get('file_not_deleted'), dyn::get('hp_url'), $sql->get('filename')), true);
+				
+			}
+			
+		}
+		
+	}
+	
 	public static function getTreeStructure($parentId = 0, $lvl = 0, $spacer = ' &nbsp;', $active = 0) {
 		
 		$select = '';

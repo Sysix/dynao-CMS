@@ -6,44 +6,22 @@ $subaction = type::super('subaction', 'string');
 
 if($action == 'delete' && dyn::get('user')->hasPerm('media[delete]')) {
 	
-	$values = [];
+	echo mediaUtils::deleteFile($id);
 	
-	for($i = 1; $i <= 10; $i++) {
-		$values[] = '`media'.$i.'` = '.$id;
+	$action = '';
+	
+}
+
+if($action == 'deleteFiles') {
+	
+	$files = type::post('file', '', []);
+	
+	foreach($files as $id) {
+		echo mediaUtils::deleteFile($id);
 	}
 	
-	for($i = 1; $i <= 10; $i++) {
-		$values[] = '`medialist'.$i.'` LIKE "%|'.$id.'|%"';
-	}
+	$action = '';
 	
-	$sql = sql::factory();
-	$sql->query('SELECT id FROM '.sql::table('structure_area').' WHERE '.implode(' OR ', $values))->result();
-	if($sql->num()) {
-		
-		echo message::warning(lang::get('file_in_use'));
-		
-	} else {
-		
-		$sql = sql::factory();
-		$sql->setTable('media');
-		$sql->setWhere('id='.$id);
-		$sql->select('filename');
-		$sql->result();
-	
-		if(unlink(dir::media($sql->get('filename')))) {
-			
-			echo message::success(lang::get('file_deleted'));
-			
-		} else {
-			
-			echo message::warning(sprintf(lang::get('file_not_deleted'), dyn::get('hp_url'), $sql->get('filename')));
-			
-		}
-		
-		$sql->delete();
-		
-	}
-		
 }
 
 if(in_array($action, ['add', 'edit']) && dyn::get('user')->hasPerm('media[edit]')) {
@@ -130,11 +108,12 @@ if($action == '') {
 	$table->setSql('SELECT * FROM '.sql::table('media').' WHERE `category` = '.$catId);
 	$table->addRow()
 	->addCell()
+	->addCell()
 	->addCell(lang::get('title'))
 	->addCell(lang::get('file_type'))
 	->addCell(lang::get('action'));
 	
-	$table->addCollsLayout('50,*,100,250');
+	$table->addCollsLayout('20, 50,*,100,110');
 	
 	$table->addSection('tbody');
 	
@@ -145,14 +124,18 @@ if($action == '') {
 			$media = new media($table->getSql());			
 			
 			if(dyn::get('user')->hasPerm('media[edit]')) {
-				$edit = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'edit', 'id'=>$table->get('id')]).'" class="btn btn-sm  btn-default">'.lang::get('edit').'</a>';
+				$edit = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'edit', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-default fa fa-pencil-square-o"></a>';
 			}
 			
 			if(dyn::get('user')->hasPerm('media[delete]')) {
-				$delete = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger">'.lang::get('delete').'</a>';
+				$delete = '<a href="'.url::backend('media', ['subpage'=>'files', 'action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
 			}
 			
+			$checkbox = formCheckbox::factory('file[]', 0);
+			$checkbox->add($media->get('id'), '');
+			
 			$table->addRow()
+			->addCell($checkbox->get())
 			->addCell('<img src="'.$media->getPath().'" style="max-width:50px; max-height:50px" />')
 			->addCell($media->get('title'))
 			->addCell($media->getExtension())
@@ -161,11 +144,20 @@ if($action == '') {
 			$table->next();	
 			
 		}
+		
+		$button = formButton::factory('submit', lang::get('delete'));
+		$button->addClass('btn');
+		$button->addClass('btn-sm');
+		$button->addClass('btn-default');
+
+		$table->addRow(['class'=>'active'])
+		->addCell('', ['colspan'=>4])
+		->addCell($button->get());
 	
 	} else {
 		
 		$table->addRow()
-		->addCell(lang::get('no_entries'), ['colspan'=>4]);
+		->addCell(lang::get('no_entries'), ['colspan'=>5]);
 		
 	}
 	
@@ -196,7 +188,12 @@ if($action == '') {
 						</select>
 					</form>
 				</div>
-                <?php echo $table->show(); ?>
+                <form action="index.php" method="post">
+                	<input type="hidden" name="page" value="media" />
+                    <input type="hidden" name="subpage" value="files" />
+                    <input type="hidden" name="action" value="deleteFiles" />
+                	<?php echo $table->show(); ?>
+                </form>
             </div>
         </div>
     </div>
