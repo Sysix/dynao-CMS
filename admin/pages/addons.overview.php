@@ -74,7 +74,14 @@ if($action == 'help') {
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title"><?php echo $curAddon->get('name'); ?></h3>
+                    <h3 class="panel-title pull-left"><?php echo $curAddon->get('name'); ?></h3>
+                    <div class="pull-right">
+                    	<?php if($curAddon->get('supportlink')) { ?>
+						<a href="<?php echo $curAddon->get('supportlink'); ?>" class="btn btn-sm btn-warning" target="_blank"><?php echo lang::get('visit_site'); ?></a>
+                        <?php } ?>
+						<a href="<?php echo url::backend('addons', ['subpage'=>'overview']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('back'); ?></a>
+					</div>
+					<div class="clearfix"></div>
 				</div>
                 <div class="panel-body">              
 					<?php
