@@ -149,6 +149,23 @@ class install {
 		
 	}
 	
+	public static function insertDemoContent() {
+		
+		$sql = new sql;
+		
+		$sql->query("INSERT INTO `".sql::table("module")."` (`id`, `name`, `input`, `output`, `sort`) VALUES
+(3, 'Überschrift', '<label>Überschrift:</label>\r\n<input type=\"text\" name=\"DYN_VALUE[1]\" value=\"OUT_VALUE[1]\" class=\"form-control\" /><br />\r\n<label>Größe:</label>\r\n<select name=\"DYN_VALUE[2]\" class=\"form-control\">\r\n	<?php\r\n	foreach([1,2,3,4,5,6] as $size) {\r\n		$selected = '''';\r\n		if($size == ''OUT_VALUE[2]'') {\r\n			$selected = '' selected=\"selected\"'';\r\n		}\r\n		echo ''<option value=\"h''.$size.''\"''.$selected.''>H''.$size.''</option>''.PHP_EOL;	\r\n	}\r\n	?>\r\n</select>', '<OUT_VALUE[2]>OUT_VALUE[1]</OUT_VALUE[2]>\r\n<?php\r\nif(dyn::get(''backend'')) {\r\n	echo ''<br />Größe ''.''OUT_VALUE[2]'';	\r\n}\r\n?>', 1),
+(4, 'Editor', '<textarea class=\"tinyMCE\" name=\"DYN_VALUE[1]\">OUT_VALUE[1]</textarea>', 'OUT_VALUE[1]', 2);");
+
+		$sql->query("INSERT INTO `".sql::table("structure")."` (`id`, `name`, `template`, `sort`, `parent_id`, `lang`, `online`) VALUES
+			(1, 'Home', 'template.php', 1, 0, 0, 1),
+			(2, '404 Error', 'template.php', 2, 0, 0, 0);");
+			
+		dyn::add('start_page', 1, true);
+		dyn::add('error_page', 2, true);
+		
+	}
+	
 }
 
 ?>

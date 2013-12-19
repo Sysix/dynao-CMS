@@ -79,6 +79,7 @@
 								}
 								
 								install::newInstall();
+								install::insertDemoContent();
 								
 								$form->addParam('page', 'finish');
 								
