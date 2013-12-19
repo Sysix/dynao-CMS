@@ -73,30 +73,8 @@
                 	<?php echo slot::getSlot('boxen'); ?>
                     
                     <div class="row">
-        				<div class="col-md-8">
+        				<div class="col-md-12">
                				<?php echo dyn::get('content'); ?> 
-                    	</div>
-        				<div class="col-md-4">
-                        	<?php
-								
-								if(navigation::getCategoryById($this->get('id'))) {
-									
-									echo '<h2>Navigation</h2>';
-									
-									echo '<ul class="subnav">';
-										
-									foreach(navigation::getCategoryById($this->get('id')) as $subnavi) {
-										echo '<li><a href="'.$subnavi->getUrl().'">'.$subnavi->get('name').'</a></li>';
-									}
-										
-									echo '</ul>';
-								
-								}
-								
-							?>
-                        	<h2>Sidebar</h2>
-                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-                            <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
                     	</div>
                     </div>
                 </section>

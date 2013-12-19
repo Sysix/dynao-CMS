@@ -12,6 +12,14 @@ a:visited {
 	color:#222e3e;
 }
 
+h2 {
+	margin:0 0 15px 0;
+	font-family:'Lato';
+	font-size:18px;
+	color:#222e3e;
+}
+	
+
 a:hover {
 	color:#000;
 	text-decoration:none;
@@ -28,14 +36,15 @@ header .logo {
 	font-size:18px;
 }
 
-header ul {
+header nav ul {
 	float:right;
 	list-style:none;
 	padding:0;
 	margin:0;
+	overflow:hidden;
 }
 
-header li {
+header nav li {
 	float:left;
 	margin-left:30px;
 }
@@ -48,6 +57,12 @@ header li a:visited {
 header li a:hover,
 header li.active a {
 	color:#222e3e;
+}
+
+header .btn-group {
+	float:right;
+	display:none;
+	margin:27px 0 0 0;
 }
 
 #top {
@@ -83,7 +98,14 @@ header li.active a {
 	margin-top:150px;
 	background:#fff;
 	padding:30px;
-	box-shadow:0 0 25px rgba(0,0,0,0.4);
+	box-shadow:0 0 35px rgba(0,0,0,0.1);
+}
+
+hr {
+	padding:0 0 30px 0;
+	border:0;
+	border-bottom:1px solid #d2d2d2;
+	margin:0 0 30px 0;
 }
 
 #footer {
@@ -91,11 +113,20 @@ header li.active a {
 	font-size:11px;
 }
 
-@media (max-width: 991px) {
-		
+ul.subnav {
+	padding:0 0 20px 16px;
+	margin:0;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 700px) {
 	
+	header .btn-group {
+		display:block;
+	}
+	
+	header nav {
+		display:none;
+	}
+		
 }
 	
