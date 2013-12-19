@@ -72,14 +72,14 @@
 								dyn::add('DB', $DB, true);
 								dyn::save();
 								
+								install::newInstall();
+								install::insertDemoContent();
+								
 								$template = new template(dyn::get('template'));
 								if($template->install() !== true) {
 									$form->setSuccessMessage(null);
 									$error = true;
 								}
-								
-								install::newInstall();
-								install::insertDemoContent();
 								
 								$form->addParam('page', 'finish');
 								

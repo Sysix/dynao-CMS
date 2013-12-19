@@ -1,0 +1,6 @@
+<OUT_VALUE[2]>OUT_VALUE[1]</OUT_VALUE[2]>
+<?php
+	if(dyn::get('backend')) {
+		echo '<br />Größe '.'OUT_VALUE[2]';
+	}
+?>

@@ -4,7 +4,8 @@ class install {
 	public static function newInstall() {
 		
 		$sql = new sql();
-		$sql = $sql->query('CREATE TABLE IF NOT EXISTS `'.sql::table("module").'` (
+		$sql->query('DROP TABLE `'.sql::table('module').'`');
+		$sql->query('CREATE TABLE `'.sql::table("module").'` (
 		  `id` 			int(16)		unsigned 	NOT NULL 	auto_increment,
 		  `name`		varchar(255) 			NOT NULL,
 		  `input` 		text 					NOT NULL,
@@ -12,20 +13,20 @@ class install {
 		  `sort`		int(16)		unsigned 	NOT NULL,
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
-								
-		$sql->query('CREATE TABLE IF NOT EXISTS `'.sql::table("structure").'` (
+		
+		$sql->query('DROP TABLE `'.sql::table('structure').'`');				
+		$sql->query('CREATE TABLE `'.sql::table("structure").'` (
 		  `id` 			int(16)		unsigned	NOT NULL 	auto_increment,
 		  `name`		varchar(255) 			NOT NULL,
 		  `template`	varchar(255) 			NOT NULL,
 		  `sort`		int(16)		unsigned	NOT NULL,
 		  `parent_id`	int(16)		unsigned	NOT NULL,
-		  `lang`		int(2)		unsigned	NOT NULL,
 		  `online`		int(1)		unsigned	NOT NULL,
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 								
-								
-		$sql->query('CREATE TABLE IF NOT EXISTS `'.sql::table("user").'` (
+		$sql->query('DROP TABLE `'.sql::table('user').'`');
+		$sql->query('CREATE TABLE `'.sql::table("user").'` (
 		  `id` 			int(11) 	unsigned	NOT NULL	auto_increment,
 		  `firstname` 	varchar(255)			NOT NULL,
 		  `name` 		varchar(255)			NOT NULL,
@@ -44,8 +45,9 @@ class install {
 		$sql->addPost('password', userLogin::hash(type::post('password')));
 		$sql->addPost('admin', 1);
 		$sql->save();
-								
-		$sql->query('CREATE TABLE IF NOT EXISTS `'.sql::table("structure_area").'` (
+		
+		$sql->query('DROP TABLE `'.sql::table('structure_area').'`');				
+		$sql->query('CREATE TABLE `'.sql::table("structure_area").'` (
 		  `id`			int(16)		unsigned	NOT NULL		auto_increment,
 		  `structure_id`int(16) 	unsigned	NOT NULL,
 		  `sort`		int(16)		unsigned	NOT NULL,
@@ -90,16 +92,18 @@ class install {
 		  `php2` 		text 					NOT NULL,
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
-								
-		$sql->query('CREATE TABLE IF NOT EXISTS `'.sql::table("addons").'` (
+		
+		$sql->query('DROP TABLE `'.sql::table('addons').'`');				
+		$sql->query('CREATE TABLE `'.sql::table("addons").'` (
 		  `id` 			int(11) 	unsigned	NOT NULL	auto_increment,
 		  `name` 		varchar(255)			NOT NULL,
 		  `active`		int(1)					NOT NULL,
 		  `install`		int(1)					NOT NULL,
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
-								
-		$sql->query('CREATE TABLE IF NOT EXISTS `'.sql::table("slots").'` (
+		
+		$sql->query('DROP TABLE `'.sql::table('slots').'`');				
+		$sql->query('CREATE TABLE `'.sql::table("slots").'` (
 		  `id` 			int(11) 	unsigned	NOT NULL	auto_increment,
 		  `name` 		varchar(255)			NOT NULL,
 		  `description`	varchar(255)			NOT NULL,
@@ -122,7 +126,7 @@ class install {
 		  `value13` 	text 					NOT NULL,
 		  `value14` 	text 					NOT NULL,
 		  `value15` 	text 					NOT NULL,
-		   `link1` 		int(11)					NOT NULL,
+		  `link1` 		int(11)					NOT NULL,
 		  `link2` 		int(11)					NOT NULL,
 		  `link3` 		int(11)					NOT NULL,
 		  `link4` 		int(11)					NOT NULL,
@@ -149,17 +153,49 @@ class install {
 		
 	}
 	
+	public static function getModulCode($file) {
+		
+		return dir::base('install'.DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'modules'.DIRECTORY_SEPARATOR.$file);
+		
+	}
+	
 	public static function insertDemoContent() {
 		
-		$sql = new sql;
+		$sql = sql::factory();
 		
-		$sql->query("INSERT INTO `".sql::table("module")."` (`id`, `name`, `input`, `output`, `sort`) VALUES
-(3, 'Überschrift', '<label>Überschrift:</label>\r\n<input type=\"text\" name=\"DYN_VALUE[1]\" value=\"OUT_VALUE[1]\" class=\"form-control\" /><br />\r\n<label>Größe:</label>\r\n<select name=\"DYN_VALUE[2]\" class=\"form-control\">\r\n	<?php\r\n	foreach([1,2,3,4,5,6] as $size) {\r\n		$selected = '''';\r\n		if($size == ''OUT_VALUE[2]'') {\r\n			$selected = '' selected=\"selected\"'';\r\n		}\r\n		echo ''<option value=\"h''.$size.''\"''.$selected.''>H''.$size.''</option>''.PHP_EOL;	\r\n	}\r\n	?>\r\n</select>', '<OUT_VALUE[2]>OUT_VALUE[1]</OUT_VALUE[2]>\r\n<?php\r\nif(dyn::get(''backend'')) {\r\n	echo ''<br />Größe ''.''OUT_VALUE[2]'';	\r\n}\r\n?>', 1),
-(4, 'Editor', '<textarea class=\"tinyMCE\" name=\"DYN_VALUE[1]\">OUT_HTML_VALUE[1]</textarea>', 'OUT_HTML_VALUE[1]', 2);");
-
-		$sql->query("INSERT INTO `".sql::table("structure")."` (`id`, `name`, `template`, `sort`, `parent_id`, `lang`, `online`) VALUES
-			(1, 'Home', 'template.php', 1, 0, 0, 1),
-			(2, '404 Error', 'template.php', 2, 0, 0, 0);");
+		$input = file_get_contents(self::getModulCode('1_input.txt'));
+		$output = file_get_contents(self::getModulCode('1_output.txt'));
+		
+		$sql->setTable('module');
+		
+		$sql->addPost('name', 'Überschrift');
+		$sql->addPost('sort', 1);
+		$sql->addPost('input', $input);
+		$sql->addPost('output', $output);
+		$sql->save();
+		
+		$input = file_get_contents(self::getModulCode('2_input.txt'));
+		$output = file_get_contents(self::getModulCode('2_output.txt'));
+		
+		$sql->addPost('name', 'Editor');
+		$sql->addPost('sort', 2);
+		$sql->addPost('input', $input);
+		$sql->addPost('output', $output);
+		$sql->save();
+		
+		$sql = sql::factory();
+		$sql->setTable('structure');
+		
+		$sql->addPost('name', 'Home');
+		$sql->addPost('template', 'template.php');
+		$sql->addPost('sort', 1);
+		$sql->addPost('online', 1);
+		$sql->save();
+		
+		$sql->addPost('name', '404 Error');
+		$sql->addPost('sort', 2);
+		$sql->addPost('online', 0);
+		$sql->save();
 			
 		dyn::add('start_page', 1, true);
 		dyn::add('error_page', 2, true);

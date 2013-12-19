@@ -1,0 +1,14 @@
+<label>Überschrift:</label>
+<input type="text" name="DYN_VALUE[1]" value="OUT_VALUE[1]" class="form-control" />
+<label>Größe:</label>
+<select name="DYN_VALUE[2]" class="form-control">
+<?php 
+foreach([1,2,3,4,5,6] as $size) {
+	$selected = '';
+	if($size == 'OUT_VALUE[2]') {	
+		$selected = ' selected="selected"';
+	}
+	echo '<option value="h'.$size.'"'.$selected.'>H'.$size.'</option>';
+}
+?>
+</select>
