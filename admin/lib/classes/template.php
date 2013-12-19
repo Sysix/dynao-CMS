@@ -68,13 +68,15 @@ class template {
 			$modul->addPost('output', $slot['output']);
 			
 			if(!$slotExists) {
-				$modul->save();				
+				$modul->save();
+				$modul_id = $modul->insertId();			
 			} else {
 				$modul->setWhere('name="'.$name.'"');
 				$modul->update();
+				
+				$modul->result('SELECT id FROM '.sql::table('module').' WHERE name = "'.$name.'"');
+				$modul_id = $modul->get('id');
 			}
-			
-			$modul_id = $modul->insertId();
 			
 			$slots->addPost('name', $name);
 			$slots->addPost('description', $slot['description']);
