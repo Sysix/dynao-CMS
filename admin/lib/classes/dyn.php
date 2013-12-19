@@ -156,8 +156,8 @@ class dyn {
 			
 			$return[] = '
 					<li>
-        				<h5 data-toggle="tooltip" data-placement="left" data-original-title="'.date(lang::get('dateformat'), strtotime($news['time'])).'">
-							<a href="'.$news['link'].'">'.$news['title'].'</a>
+        				<h5>
+							<a data-toggle="tooltip" data-placement="right" data-original-title="'.date(lang::get('dateformat'), strtotime($news['time'])).'" href="'.$news['link'].'">'.$news['title'].'</a>
 						</h5>						
         				<p>'.$news['content'].'</p>						
         			</li>';			

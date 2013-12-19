@@ -163,6 +163,7 @@ class install {
 			
 		dyn::add('start_page', 1, true);
 		dyn::add('error_page', 2, true);
+		dyn::save();
 		
 	}
 	
