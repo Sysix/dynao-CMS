@@ -26,24 +26,9 @@
 	<div class="col-lg-6">
         <div class="panel panel-default">
         	<div class="panel-heading">
-        		<h3 class="panel-title pull-left"><?php echo lang::get('addons'); ?></h3>
-        		<div class="btn-group pull-right">
-        			<a href="" target="_blank" class="btn btn-sm btn-default"><?php echo lang::get('all_addons'); ?></a>
-        		</div>
-        		<div class="clearfix"></div>
-        	</div>
-            <div class="table-responsive">
-        	<?php echo dyn::getAddons(); ?>  
-            </div>
-        </div>
-    </div>
-
-	<div class="col-lg-6">
-        <div class="panel panel-default">
-        	<div class="panel-heading">
         		<h3 class="panel-title pull-left">dynaoCMS</h3>
         		<div class="btn-group pull-right">
-        			<a href="" target="_blank" class="btn btn-sm btn-default"><?php echo lang::get('visit_site'); ?></a>
+        			<a href="http://dynao.de" target="_blank" class="btn btn-sm btn-default"><?php echo lang::get('visit_site'); ?></a>
         		</div>
         		<div class="clearfix"></div>
         	</div>
@@ -52,6 +37,21 @@
                 	<?php echo dyn::getNews(); ?>        			
         		</ul>
         	</div>
+        </div>
+    </div>
+    
+	<div class="col-lg-6">
+        <div class="panel panel-default">
+        	<div class="panel-heading">
+        		<h3 class="panel-title pull-left"><?php echo lang::get('addons'); ?></h3>
+        		<div class="btn-group pull-right">
+        			<a href="http://dynao.de" target="_blank" class="btn btn-sm btn-default"><?php echo lang::get('all_addons'); ?></a>
+        		</div>
+        		<div class="clearfix"></div>
+        	</div>
+            <div class="table-responsive">
+        	<?php echo dyn::getAddons(); ?>  
+            </div>
         </div>
     </div>
 

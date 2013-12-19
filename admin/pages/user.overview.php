@@ -8,6 +8,8 @@ if($action == 'delete') {
 		
 		$action = '';
 		
+		echo message::success(lang::get('user_deleted'));
+		
 }
 
 if($action == 'add' || $action == 'edit') {
@@ -74,7 +76,7 @@ if($action == 'add' || $action == 'edit') {
 	
 	if($form->isSubmit()) {
 		
-		if($form->get('password') != $form->sql->getResult('password')) {
+		if($form->get('password') != $form->sql->getValue('password')) {
 			
 			$form->addPost('password', userLogin::hash($form->get('password')));
 			

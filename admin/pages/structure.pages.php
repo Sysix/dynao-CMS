@@ -55,113 +55,131 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		
 	}
 	
+	$pageSql = sql::factory();
+	$pageSql->result('SELECT name FROM '.sql::table('structure').' WHERE id = '.$structure_id);
 	
 	?>
-    <div id="ajax-content"></div>
-	<ul id="structure-content">
-	<?php
-	
-	$sql = sql::factory();
-	$sql->result('SELECT s.*, m.name, m.output, m.input
-	FROM '.sql::table('structure_area').' as s
-	LEFT JOIN 
-		'.sql::table('module').' as m
-			ON m.id = s.modul
-	WHERE structure_id = '.$structure_id.'
-	ORDER BY `sort`');
-	$i = 1;
-	while($sql->isNext()) {
-		
-		$sqlId = ($action == 'add') ? 0 : $sql->get('id');
-		$module = new pageArea($sql);
-		if(in_array($action, ['add', 'edit'])) {
-			
-			if($action == 'add') {
-				$module->setNew(true);	
-			}
-			
-			$form = pageAreaHtml::formBlock($module);
-		
-		}
-	?>
-			<li data-id="<?php echo $sql->get('id'); ?>">
-	<?php
-		// Wenn Aktion == add
-		// UND Wenn Sortierung von SQL gleich der $_GET['sort']
-		// UND Wenn Formular noch nicht abgeschickt worden
-		if($action == 'add' && $sort == $i && !$form->isSubmit()) {
-			
-			echo pageAreaHtml::formOut($form);
-	
-		} else {
-			
-			echo pageAreaHtml::selectBlock($module->getStructureId());
-			
-		}
-		
-		// Wenn Aktion == edit
-		// UND Wenn ID von SQL gleich der $_GET['id']
-		// UND
-		// Wenn Formular noch nicht abgeschickt worden
-		// ODER Abgeschickt worden ist und ein Übernehmen geklickt worden ist
-		if($action == 'edit' && $id == $sql->get('id') && 
-		(!$form->isSubmit() || ($form->isSubmit() && !is_null(type::post('save-back'))))
-		) {
-	
-			echo pageAreaHtml::formOut($form);
-	
-		} else {
-			
-			if($sql->get('online')) {
-				$statusText = 'ON';
-				$status = lang::get('online');
-				$class = 'online';
-			} else {
-				$statusText = 'OFF';
-				$status =  lang::get('offline');
-				$class = 'offline';
-			}
-			
-			?>
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-				<h3 class="panel-title pull-left"><?php echo $sql->get('name'); ?></h3>
-				<div class="pull-right btn-group">
-					<a href="<?php echo url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'action'=>'online', 'id'=>$sql->get('id')]); ?>" class="btn btn-sm dyn-<?php echo $class; ?>"><?php echo $statusText; ?></a>
-					<a href="<?php echo url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'action'=>'edit', 'id'=>$sql->get('id')]); ?>" class="btn btn-default btn-sm fa fa-edit"></a>
-					<a href="<?php echo url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'action'=>'delete', 'id'=>$sql->get('id')]); ?>" class="btn btn-danger btn-sm fa fa-trash-o delete"></a>
-				</div>
-				<div class="clearfix"></div>
-			  </div>
-			  <div class="panel-body">
-				<?php echo $module->OutputFilter($sql->get('output'), $sql); ?>
-			  </div>
-			</div>
-			<?php
-		}
-		?>
-		</li>
-		<?php
-		$sql->next();
-		$i++;
-		
-	}
-	?>	
-	</ul>
-	<?php
-	if((!$sql->num() || ($i == $sort)) && $action == 'add') {
-		
-		$form_id = type::super('modul', 'int');
-		
-		$form = pageAreaHtml::formBlock(new pageArea(0));
-		echo pageAreaHtml::formOut($form);
-		
-	} else {
-		
-		echo pageAreaHtml::selectBlock($structure_id,  $sql->num()+1);
-		
-	}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title pull-left"><?php echo $pageSql->get('name'); ?></h3>
+                    <div class="btn-group pull-right">
+						<a href="<?php echo url::backend('structure', ['subpage'=>'pages']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('back'); ?></a>
+					</div>
+					<div class="clearfix"></div>
+                </div>
+            	<div class="panel-body">
+    
+                    <div id="ajax-content"></div>
+                    <ul id="structure-content">
+                    <?php
+                    
+                    $sql = sql::factory();
+                    $sql->result('SELECT s.*, m.name, m.output, m.input
+                    FROM '.sql::table('structure_area').' as s
+                    LEFT JOIN 
+                        '.sql::table('module').' as m
+                            ON m.id = s.modul
+                    WHERE structure_id = '.$structure_id.'
+                    ORDER BY `sort`');
+                    $i = 1;
+                    while($sql->isNext()) {
+                        
+                        $sqlId = ($action == 'add') ? 0 : $sql->get('id');
+                        $module = new pageArea($sql);
+                        if(in_array($action, ['add', 'edit'])) {
+                            
+                            if($action == 'add') {
+                                $module->setNew(true);	
+                            }
+                            
+                            $form = pageAreaHtml::formBlock($module);
+                        
+                        }
+                    ?>
+                            <li data-id="<?php echo $sql->get('id'); ?>">
+                    <?php
+                        // Wenn Aktion == add
+                        // UND Wenn Sortierung von SQL gleich der $_GET['sort']
+                        // UND Wenn Formular noch nicht abgeschickt worden
+                        if($action == 'add' && $sort == $i && !$form->isSubmit()) {
+                            
+                            echo pageAreaHtml::formOut($form);
+                    
+                        } else {
+                            
+                            echo pageAreaHtml::selectBlock($module->getStructureId());
+                            
+                        }
+                        
+                        // Wenn Aktion == edit
+                        // UND Wenn ID von SQL gleich der $_GET['id']
+                        // UND
+                        // Wenn Formular noch nicht abgeschickt worden
+                        // ODER Abgeschickt worden ist und ein Übernehmen geklickt worden ist
+                        if($action == 'edit' && $id == $sql->get('id') && 
+                        (!$form->isSubmit() || ($form->isSubmit() && !is_null(type::post('save-back'))))
+                        ) {
+                    
+                            echo pageAreaHtml::formOut($form);
+                    
+                        } else {
+                            
+                            if($sql->get('online')) {
+                                $class = 'online fa fa-check';
+                            } else {
+                                $class = 'offline fa fa-times';
+                            }
+                            
+                            ?>
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h3 class="panel-title pull-left"><?php echo $sql->get('name'); ?></h3>
+                                <div class="pull-right btn-group">
+                                    <a href="<?php echo url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'action'=>'online', 'id'=>$sql->get('id')]); ?>" class="btn btn-sm dyn-<?php echo $class; ?>"></a>
+                                    <a href="<?php echo url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'action'=>'edit', 'id'=>$sql->get('id')]); ?>" class="btn btn-default btn-sm fa fa-edit"></a>
+                                    <a href="<?php echo url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'action'=>'delete', 'id'=>$sql->get('id')]); ?>" class="btn btn-danger btn-sm fa fa-trash-o delete"></a>
+                                </div>
+                                <div class="clearfix"></div>
+                              </div>
+                              <div class="panel-body">
+                                <?php echo $module->OutputFilter($sql->get('output'), $sql); ?>
+                              </div>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                        </li>
+                        <?php
+                        $sql->next();
+                        $i++;
+                        
+                    }
+                    ?>	
+                    </ul>
+                    
+                    <?php
+					if((!$sql->num() || ($i == $sort)) && $action == 'add') {
+						
+						$form_id = type::super('modul', 'int');
+						
+						$form = pageAreaHtml::formBlock(new pageArea(0));
+						echo pageAreaHtml::formOut($form);
+						
+					} else {
+						
+						echo pageAreaHtml::selectBlock($structure_id,  $sql->num()+1);
+						
+					}
+					?>
+                    
+    			</div>
+            </div>
+        </div>
+    </div>
 
+<?php
 //Wenn action
 } else {
 	

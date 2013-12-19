@@ -150,6 +150,7 @@
 	"firstname":				"Vorname",
 	"user_email_empty":			"Das E-Mail-Feld darf nicht leer sein",
 	"user_password_empty":		"Das Passwort-Feld darf nicht leer sein",
+	"user_deleted":				"Benutzer erfolgreich gelöscht",
 	
 	#SQL
 	"sql_query_error":			"Query konnte nicht ausgeführt werden<pre>%s</pre>Error: %s",

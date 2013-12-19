@@ -148,6 +148,7 @@
 	"firstname":				"Firstname",
 	"user_email_empty":			"E-Mail field must not be empty",
 	"user_password_empty":		"Password field must not be empty",
+	"user_deleted":			"User successfully deleted",
 	
 	#SQL
 	"sql_query_error":			"Query could not be executed<pre>%s</pre>Error: %s",

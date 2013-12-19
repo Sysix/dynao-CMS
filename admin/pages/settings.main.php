@@ -19,7 +19,7 @@ if($action == 'loadTemplate') {
         <div class="panel panel-default">
             <div class="panel-heading">
             	<h3 class="panel-title pull-left"><?php echo lang::get('general'); ?></h3>
-                <div class="btn-group pull-right">
+                <div class="pull-right">
                 	<a href="<?php echo url::backend('settings', ['subpage'=>'main', 'action'=>'deleteCache']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('delete_cache'); ?></a>
                     <a href="<?php echo url::backend('settings', ['subpage'=>'main', 'action'=>'loadTemplate']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('load_template'); ?></a>
                 </div>
