@@ -70,6 +70,7 @@
 								];
 								
 								dyn::add('DB', $DB, true);
+								dyn::add('setup', false, true);
 								dyn::save();
 								
 								install::newInstall();

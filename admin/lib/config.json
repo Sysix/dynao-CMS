@@ -3,7 +3,7 @@
     "hp_name": "Dynao CMS",
     "hp_url": "http:\/\/",
     "version": "0.1.0 Beta",
-    "setup": false,
+    "setup": true,
     "debug": true,
     "cache": false,
     "DB": {

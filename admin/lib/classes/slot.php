@@ -43,17 +43,19 @@ class slot {
 	 */
 	public static function getSlot($name) {
 		
-		self::generateAll();
+		$class = __CLASS__;
 		
-		$sql = self::getSql($name);
+		try {
 		
-		if(!self::isInCategory($sql->get('is-structure'), $sql->getArray('structure'))) {
-			return '';	
+			$slot = new $class($name);
+			
+			return $slot->getContent();
+			
+		} catch(Exception $e) {
+			
+			return $e->getMessage();
+				
 		}
-		
-		$pageArea = new pageArea($sql);
-		
-		return $pageArea->OutputFilter($sql->get('output'), $sql);	
 	}
 	
 	/*
