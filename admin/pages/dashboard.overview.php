@@ -33,52 +33,7 @@
         		<div class="clearfix"></div>
         	</div>
             <div class="table-responsive">
-        	<?php
-				$addons = table::factory(['class'=> ['table', 'table-spriped', 'table-hover']]);
-				
-				$addons->addCollsLayout('60, 140, *, 110');
-				
-				$addons->addRow()
-				->addCell(lang::get('vote'))
-				->addCell(lang::get('name'))
-				->addCell(lang::get('description'))
-				->addCell();
-				
-				$addons->addSection('tbody');
-				
-				$addons->addRow()
-				->addCell('<span class="label label-danger">15%</span>')
-				->addCell('TinyMCE')
-				->addCell('Textares mit dem TinyMCE versehen')
-				->addCell('<a href="" class="btn btn-sm btn-default">'.lang::get('download').'</a>');
-				
-				$addons->addRow()
-				->addCell('<span class="label label-success">90%</span>')
-				->addCell('Mediamanager')
-				->addCell('Median verwalten')
-				->addCell('<a href="" class="btn btn-sm btn-default">'.lang::get('download').'</a>');
-				
-				$addons->addRow()
-				->addCell('<span class="label label-warning">55%</span>')
-				->addCell('Wiki')
-				->addCell('Artikel und Kategorien einfach verwalten')
-				->addCell('<a href="" class="btn btn-sm btn-default">'.lang::get('download').'</a>');
-				
-				$addons->addRow()
-				->addCell('<span class="label label-success">80%</span>')
-				->addCell("Meta Info's")
-				->addCell('')
-				->addCell('<a href="" class="btn btn-sm btn-default">'.lang::get('download').'</a>');
-				
-				$addons->addRow()
-				->addCell('<span class="label label-warning">60%</span>')
-				->addCell('Community')
-				->addCell('Frontend Login')
-				->addCell('<a href="" class="btn btn-sm btn-default">'.lang::get('download').'</a>');
-				
-				echo $addons->show();
-				
-			?>
+        	<?php echo dyn::getAddons(); ?>  
             </div>
         </div>
     </div>
