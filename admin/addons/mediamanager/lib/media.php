@@ -97,6 +97,12 @@ class media {
 		
 	}
 	
+	public function isImage() {
+	
+		return in_array($this->getExtension(), dyn::get('extensions')['image']);
+		
+	}
+	
 	// Den Pfad der Datei ausgeben
 	// return	string
 	public function getPath() {

@@ -15,6 +15,7 @@
 	"media_edit":					"Medium bearbeiten",
 	"file_type":					"Dateityp",
 	"select_media":					"Medium auswählen",
+	"creat_first_cat":				"Bitte erstellen Sie zuerst eine Kategorie",
 	
 	"media[edit]":					"Medien bearbeiten/hochladen",
 	"media[delete]":				"Medien löschen",

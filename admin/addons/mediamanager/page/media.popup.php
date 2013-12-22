@@ -15,7 +15,7 @@ if(!$catId) {
 type::addSession('media_cat', $catId);
 	
 
-$table = table::factory();
+$table = table::factory(['class'=>['media-table']]);
 
 $table->setSql('SELECT * FROM '.sql::table('media').' WHERE `category` = '.$catId);
 	
@@ -37,8 +37,14 @@ while($table->isNext()) {
 	
 	$select = '<button data-id="'.$table->get('id').'" data-name="'.$table->get('filename').'" data-loading-text="'.lang::get('selected').'" class="btn btn-sm btn-warning dyn-media-select">'.lang::get('select').'</button>';
 	
+	if($media->isImage()) {
+		$icon = '<img src="'.$media->getPath().'" />';	
+	} else {
+		$icon = '<i class="fa fa-file"></i>';	
+	}
+	
 	$table->addRow()
-	->addCell('<img src="'.$media->getPath().'" style="max-width:50px; max-height:50px" />')
+	->addCell($icon)
 	->addCell($media->get('title'))
 	->addCell($media->getExtension())
 	->addCell('<span class="btn-group">'.$select.'</span>');
@@ -63,3 +69,6 @@ while($table->isNext()) {
 <div id="load">
 	<?php echo $table->show(); ?>
 </div>
+<?php
+exit();
+?>

@@ -42,6 +42,7 @@
 	"vote":						"Vote",
 	"author":					"Ersteller",
 	"version":					"Version",
+	"start":					"Start",
 	
 	#Kategorien
 	"category_save":			"Kategorie speichern",

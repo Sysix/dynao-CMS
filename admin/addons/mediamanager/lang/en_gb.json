@@ -15,6 +15,7 @@
 	"media_edit":					"Edit media",
 	"file_type":					"File type",
 	"select_media":					"Select media",
+	"creat_first_cat":				"please create a category first",
 	
 	"media[edit]":					"Media edit/upload",
 	"media[delete]":				"Media delete",

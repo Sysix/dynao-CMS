@@ -39,7 +39,7 @@ while($while_id) {
 	
 }
 
-$breadcrumb[] = '<li><a href="'.url::backend('media', ['subpage'=>'category']).'">'.lang::get('media_all_cat').'</a></li>';
+$breadcrumb[] = '<li><a href="'.url::backend('media', ['subpage'=>'category']).'">'.lang::get('start').'</a></li>';
 
 echo '<ul class="breadcrumb">'.implode('', array_reverse($breadcrumb)).'</ul>';
 

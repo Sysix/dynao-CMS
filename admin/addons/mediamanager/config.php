@@ -29,15 +29,10 @@ form::addClassMethod('addMediaListField', function($name, $value) {
 	return $this->addField($name, $value, 'formMediaList');
 	
 });
+
 $page = type::super('page', 'string');
 $subpage = type::super('subpage', 'string');
 $action = type::super('action', 'string');
-
-if($page == "media" && $subpage == "popup") {
-
-	dyn::add('ajaxContinue', true);
-
-}
 
 pageArea::addType('varsMedia');
 pageArea::addType('varsMedialist');

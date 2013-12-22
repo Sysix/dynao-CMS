@@ -104,7 +104,7 @@ if($action == '') {
 	
 	type::addSession('media_cat', $catId);
 
-	$table = table::factory();
+	$table = table::factory(['class'=>['media-table']]);
 	$table->setSql('SELECT * FROM '.sql::table('media').' WHERE `category` = '.$catId);
 	$table->addRow()
 	->addCell()
@@ -134,9 +134,15 @@ if($action == '') {
 			$checkbox = formCheckbox::factory('file[]', 0);
 			$checkbox->add($media->get('id'), '');
 			
+			if($media->isImage()) {
+				$icon = '<img src="'.$media->getPath().'" />';	
+			} else {
+				$icon = '<i class="fa fa-file"></i>';	
+			}
+			
 			$table->addRow()
 			->addCell($checkbox->get())
-			->addCell('<img src="'.$media->getPath().'" style="max-width:50px; max-height:50px" />')
+			->addCell($icon)
 			->addCell($media->get('title'))
 			->addCell($media->getExtension())
 			->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
