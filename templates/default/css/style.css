@@ -3,7 +3,7 @@ body {
 	font-size:13px;
 	line-height:21px;
 	color:#838383;
-	background:url(../images/bg-repeat.png) repeat;
+	background:url(../images/bg-repeat.jpg) repeat;
 }
 
 a,
@@ -36,37 +36,23 @@ header .logo {
 	font-size:18px;
 }
 
-header nav ul {
-	float:right;
-	list-style:none;
-	padding:0;
-	margin:0;
-	overflow:hidden;
-}
-
-header nav li {
-	float:left;
-	margin-left:30px;
-}
-
-header li a,
-header li a:visited {
-	color:#838383;
-}
-
-header li a:hover,
-header li.active a {
-	color:#222e3e;
-}
-
 header .btn-group {
 	float:right;
+	margin:28px 0px 0px 0px;
+}
+
+header .dropdown-menu {
+	right:15px;
+	left:auto;
+	top:63px;
+}
+	
+header ul {
 	display:none;
-	margin:27px 0 0 0;
 }
 
 #top {
-	background:url(../images/bg.png) center top;
+	background:url(../images/bg-sm.jpg) center top;
 	background-size:cover;
 	width:100%;
 	position:absolute;
@@ -118,15 +104,49 @@ ul.subnav {
 	margin:0;
 }
 
-@media (max-width: 700px) {
+@media (min-width: 700px) {
+	
+	#top {
+		background:url(../images/bg-md.jpg) center top;
+		background-size:cover;
+	}
 	
 	header .btn-group {
+		float:right;
+		display:none;
+		margin:27px 0 0 0;
+	}
+	
+	header ul {
+		float:right;
+		list-style:none;
+		padding:0;
+		margin:0;
+		overflow:hidden;
 		display:block;
 	}
 	
-	header nav {
-		display:none;
+	header nav li {
+		float:left;
+		margin-left:30px;
+	}
+	
+	header li a,
+	header li a:visited {
+		color:#838383;
+	}
+	
+	header li a:hover,
+	header li.active a {
+		color:#222e3e;
 	}
 		
 }
+
+@media (min-width: 992px) {
 	
+	#top {
+		background:url(../images/bg.jpg) center top;
+		background-size:cover;
+	}
+}

@@ -6,6 +6,11 @@ ob_implicit_flush(0);
 mb_internal_encoding('UTF-8');
 session_start();
 
+
+if(version_compare(PHP_VERSION, 5.4) < 0) {
+    throw new Exception('PHP version 5.4 or higher needed!');
+}
+
 include('lib'.DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'dir.php');
 
 if(isset($DYN['root'])) {
@@ -19,6 +24,10 @@ autoload::register();
 autoload::addDir(dir::classes('utils'));
 
 new dyn();
+
+if(dyn::get('setup') == true) {
+	header('Location: install/');	
+}
 
 if(isset($DYN['backend'])) {
 	dyn::add('backend', $DYN['backend']);

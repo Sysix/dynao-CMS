@@ -26,12 +26,14 @@
 			</div>			
 			<div class="panel-footer">			
 				<button type="submit" class="btn btn-default pull-right" name="login">Login</button>				
-				<div id="remember">
+				<!--
+                <div id="remember">
 					<input type="checkbox" name="" /> <label><?php echo lang::get("login_remember"); ?></label>
-				</div>				
+				</div>
+                -->
 				<div class="clearfix"></div>   				
 			</div>			
-			<a class="pwd_forget" href=""><?php echo lang::get("login_pwd_forget"); ?></a>
+			<!-- <a class="pwd_forget" href=""><?php echo lang::get("login_pwd_forget"); ?></a> -->
 		</form>
 	</div>	
 	<?php echo layout::getJS(); ?>	
