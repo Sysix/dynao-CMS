@@ -11,10 +11,20 @@ class module {
 		} else {
 			$this->sql = sql::factory();
 			$this->sql->query('
-			SELECT a.*, m.output FROM '.sql::table('structure_area').' a
-			LEFT JOIN '.sql::table('module').' as m ON m.id = a.modul
-			ORDER BY a.sort
-			 WHERE id='.$id);
+			SELECT
+			  a.*, m.output
+			FROM
+			  '.sql::table('structure_area').' AS a
+			  LEFT JOIN
+			    '.sql::table('module').' AS m
+				ON
+				  m.id = a.modul
+			WHERE
+			  a.id='.$id.'
+			  AND 
+			  a.status = 1
+			ORDER BY
+			  a.sort');
 		}
 		
 	}
@@ -30,10 +40,21 @@ class module {
 		$return = [];
 		$classname = __CLASS__;
 		$sql = sql::factory();
-		$sql->query('SELECT a.*, m.output FROM '.sql::table('structure_area').' a
-			LEFT JOIN '.sql::table('module').' as m ON m.id = a.modul
-			 WHERE structure_id='.$id.'
-			 ORDER BY a.sort')->result();
+		$sql->query('
+		SELECT
+		  a.*, m.output
+		FROM
+		  '.sql::table('structure_area').' AS a
+		  LEFT JOIN
+		    '.sql::table('module').' AS m
+			ON
+			  m.id = a.modul
+		WHERE
+		  a.structure_id='.$id.'
+		  AND
+		  a.online = 1
+		ORDER BY
+		  a.sort')->result();
 		while($sql->isNext()) {
 			$sql2 = clone $sql;
 			$return[] = new $classname($sql2);

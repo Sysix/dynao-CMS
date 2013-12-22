@@ -6,8 +6,16 @@ class navigation {
 
 	public function __construct($id) {
 		
-		$this->sql = sql::factory();
-		$this->sql->query('SELECT * FROM '.sql::table('structure').' WHERE id = '.$id)->result();
+		if(is_object($id) && is_a($id, 'sql')) {
+			
+			$this->sql = $id;
+			
+		} else {
+		
+			$this->sql = sql::factory();
+			$this->sql->query('SELECT * FROM '.sql::table('structure').' WHERE id = '.$id)->result();
+			
+		}
 				
 	}
 	
@@ -57,7 +65,8 @@ class navigation {
 		
 		$sql->query('SELECT * FROM '.sql::table('structure').' WHERE parent_id = '.$parentId.$extraWhere.' ORDER BY sort')->result();
 		while($sql->isNext()) {
-			$return[] =  new $class($sql->get('id'));
+			$sql2 = clone $sql;
+			$return[] =  new $class($sql2);
 			
 			$sql->next();
 		}

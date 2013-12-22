@@ -24,6 +24,8 @@ class form {
 	var $successMessage;
 	var $errorMessage;
 	
+	var $isSubmit;
+	
 	/**
 	 * Das Formular erstellen
 	 *
@@ -484,14 +486,18 @@ class form {
 	 * @return	bool
 	 *
 	 */
-	public function isSubmit() {
+	public function isSubmit($ignoreSaves = false) {
 		
 		$save = type::post('save');
 		$save_edit = type::post('save-back');
 		
 		if(!is_null($save) || !is_null($save_edit)) {
-		
-			$this->setPostsVar();
+			
+			if(is_null($this->isSubmit) || !$ignoreSaves) {
+				$this->setPostsVar();
+			}
+			
+			$this->isSubmit = true;
 			
 			return true;
 				
@@ -614,7 +620,7 @@ class form {
 	
 		if(!$this->toSave)
 			return $this;
-	
+		
 		if($this->isEditMode()) {
 			$this->sql->update();
 		} else {
@@ -741,7 +747,7 @@ class form {
 			$param->setSave(false);
 		}
 		
-		if($this->isSubmit()) {
+		if($this->isSubmit(true)) {
 			
 			$this->saveForm();
 			
