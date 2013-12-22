@@ -177,7 +177,7 @@
 		padding-right:5px;
 	}
 	
-	#subnavi #user, #subnavi h1, #navi #addonMobile {
+	#subnavi #user, #subnavi h1, #addonMobile {
 		display:none;
 	}
 	
@@ -187,7 +187,7 @@
 		background:#202020;
 		position:relative;
 		z-index:1;
-		width:50%;
+		width:100%;
 	}
 	
 	#subnavi.round {
@@ -215,7 +215,7 @@
 		border-radius:0 0 3px 3px;
 	}
 	
-	#tools #addon-mobil {
+	#addon-mobil {
 		display:block;
 		position:absolute;
 		right:10px;
@@ -226,9 +226,10 @@
 		background:#202020;
 		cursor:pointer;
 		width:50%;
+		z-index:2;
 	}
 	
-	#subnavi #mobil {
+	#mobil {
 		display:block;
 		position:absolute;
 		line-height:40px;

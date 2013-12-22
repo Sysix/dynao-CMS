@@ -67,7 +67,7 @@ class formLinklist extends formField {
 			'.$this->getOptions().'
 			</select>
 			<span class="input-group-addon">
-				<i class="fa dyn-linklist-add" title="'.lang::get('select_page').'">=</i>
+				<i class="fa fa-bars dyn-linklist-add" title="'.lang::get('select_page').'"></i>
 				<i class="fa fa-minus-square-o dyn-linklist-del" title="'.lang::get('element_delete').'"></i>
 				<i class="fa fa-angle-double-up dyn-linklist-top" title="'.lang::get('element_to_top').'"></i>
 				<i class="fa fa-angle-up dyn-linklist-up" title="'.lang::get('element_to_up').'"></i>

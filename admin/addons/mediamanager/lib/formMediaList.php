@@ -67,7 +67,7 @@ class formMediaList extends formField {
 			'.$this->getOptions().'
 			</select>
 			<span class="input-group-addon">
-				<i class="fa dyn-medialist-add" title="'.lang::get('select_media').'">=</i>
+				<i class="fa fa-bars dyn-medialist-add" title="'.lang::get('select_media').'"></i>
 				<i class="fa fa-minus-square-o dyn-medialist-del" title="'.lang::get('element_delete').'"></i>
 				<i class="fa fa-angle-double-up dyn-medialist-top" title="'.lang::get('element_to_top').'"></i>
 				<i class="fa fa-angle-up dyn-medialist-up" title="'.lang::get('element_to_up').'"></i>

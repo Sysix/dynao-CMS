@@ -34,7 +34,7 @@ class formMedia extends formField {
 		
 		return '
 		<div class="input-group dyn-media">
-			<span class="input-group-addon"><i class="fa dyn-media-add" title="'.lang::get('select_media').'">=</i></span>
+			<span class="input-group-addon"><i class="fa fa-bars dyn-media-add" title="'.lang::get('select_media').'"></i></span>
 			<input type="hidden" name="'.$this->name.'_id" value="'.$this->value.'">
 			<input'.$this->convertAttr().'>
 			<span class="input-group-addon"><i class="fa fa-minus-square-o  dyn-media-del" title="'.lang::get('field_set_empty').'"></i></span>

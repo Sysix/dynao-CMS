@@ -34,7 +34,7 @@ class formLink extends formField {
 		
 		return '
 		<div class="input-group dyn-link">
-			<span class="input-group-addon"><i class="fa dyn-link-add" title="'.lang::get('select_page').'">=</i></span>
+			<span class="input-group-addon"><i class="fa fa-bars dyn-link-add" title="'.lang::get('select_page').'"></i></span>
 			<input type="hidden" name="'.$this->name.'_id" value="'.$this->value.'">
 			<input'.$this->convertAttr().'>
 			<span class="input-group-addon"><i class="fa fa-minus-square-o  dyn-link-del" title="'.lang::get('field_set_empty').'"></i></span>

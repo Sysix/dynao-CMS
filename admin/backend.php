@@ -1,7 +1,7 @@
 <?php
 
 layout::addCSS('http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700|Open+Sans+Condensed:300,700');
-layout::addCSS('http://netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css');
+layout::addCSS('http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css');
 layout::addCSS('http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css');
 
 layout::addCSS('layout/css/style.css');
