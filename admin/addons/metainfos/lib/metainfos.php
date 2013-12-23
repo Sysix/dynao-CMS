@@ -15,7 +15,7 @@ class metainfos {
 			$attributes = $sql->getRow();
 			$attributes['name'] = $prefix.$attributes['name'];
 			
-			$element = self::getElement($attributes, $form->get($sql->get('name')));
+			$element = self::getElement($attributes, $form->get($prefix.$sql->get('name')));
 			$form->addElement($prefix.$sql->get('name'), $element);
 			
 			$sql->next();	
