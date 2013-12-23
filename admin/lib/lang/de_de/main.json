@@ -43,6 +43,8 @@
 	"author":					"Ersteller",
 	"version":					"Version",
 	"start":					"Start",
+	"close":					"schließen",
+	"really_delete":			"Wirklich löschen?",
 	
 	#Kategorien
 	"category_save":			"Kategorie speichern",

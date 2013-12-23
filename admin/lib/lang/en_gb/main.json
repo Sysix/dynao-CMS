@@ -43,6 +43,8 @@
 	"author":					"author",
 	"version":					"version",
 	"start":					"start",
+	"close":					"close",
+	"really_delete":			"really delete?",
 	
 	#Kategorien
 	"category_save":			"Save category",

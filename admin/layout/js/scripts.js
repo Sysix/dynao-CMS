@@ -61,17 +61,15 @@ $(document).ready(function () {
 	$('#trash, .news h5 a').tooltip();
 	
 	$("#mobil").click(function() {
-		$("#subnavi ul.subnav").toggleClass("display");	
-		$("#subnavi").toggleClass("round");	
+		$("#subnavi").toggleClass("round").children('u.subnavi').toggleClass("display");	
 	});
 	
 	$("#addon-mobil").click(function() {
-		$("#tools ul").toggleClass("display");	
-		$("#tools ul").toggleClass("round");	
+		$("#tools ul").toggleClass("display").toggleClass("round");		
 	});
 	
 	$("#user-mobil").click(function () {
-		$("#subnavi #user").toggleClass("display");
+		$("#user").toggleClass("display");
 		$(this).toggleClass("active");
 	});
 	
@@ -98,10 +96,23 @@ $(document).ready(function () {
 	
 	$('.delete').on('click', function(e) {
 		e.preventDefault();
+		var _this = $(this),
+			title = _this.data('title');
+			message = _this.data('message'),
+			url = _this.attr('href');
+			
+		$.get('index.php', {'deleteAction': true, 'title': title, 'message': message}, function(data) {
+			$('body').append(data);
+			$('#delete_modal').modal('show');
+		});		
 		
-		$("body").append('<div class="modal fade" id="delete_modal" tabindex="-1" role="dialog" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title">Really deleted?</h4></div><div class="modal-body"></div><div class="modal-footer"><button type="button" class="btn btn-warning">Löschen</button><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>');
+		$(document.body).on('click', '#delete_modal .confirm', function() {
+			window.location.href = url;
+		});
 		
-		$('#delete_modal').modal('show').find('.modal-body').html('Wollen Sie wirklich den Punkt löschen?');
+		$(document.body).on('hidden.bs.modal', '#delete_modal', function () {
+			$(this).remove();	
+		})
 		
 		return false;
 		

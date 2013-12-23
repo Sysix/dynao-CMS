@@ -69,6 +69,14 @@ dyn::add('content', $content);
 ob_end_clean();
 
 if(ajax::is()) {
+	$deleteAction = type::get('deleteAction', 'bool', false);
+	
+	if($deleteAction) {
+		$title = type::get('title', 'string');
+		$message = type::get('message', 'string');
+		getDeleteModal($title, $message);
+	}
+	
 	echo ajax::getReturn();
 	die;
 }
