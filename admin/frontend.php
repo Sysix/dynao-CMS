@@ -5,8 +5,6 @@ foreach(addonConfig::includeAllConfig() as $file) {
 	include($file);	
 }
 
-include(dir::template(dyn::get('template'), 'config.php'));
-
 $page = type::super('page_id', 'int', dyn::get('start_page'));
 $page = extension::get('SET_PAGE_ID', $page);
 dyn::add('page_id', $page);

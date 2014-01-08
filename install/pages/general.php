@@ -26,7 +26,6 @@ if(version_compare(phpversion(), '5.4', '<')) {
                 
 $writeable = [
 	dir::cache(),
-	dir::cache('page'.DIRECTORY_SEPARATOR),
 	dir::backend('addons'.DIRECTORY_SEPARATOR),
 	dir::backend('lib'.DIRECTORY_SEPARATOR.'config.json')
 	];
