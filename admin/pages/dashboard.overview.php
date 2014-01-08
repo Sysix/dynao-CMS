@@ -7,9 +7,9 @@
  }
   
   
-  $versionCheck = dyn::checkVersion();
+	$versionCheck = dyn::checkVersion();
   
-    if($versionCheck == lang::get('version_fail_connect')) {
+    if($versionCheck === lang::get('version_fail_connect')) {
 		
         $message = lang::get('version_fail_connect');
         $message .= '<br /><a href="'.url::backend('dashboard', ['subpage'=>'overview', 'checkversion'=>1]).'">'.lang::get('try_again').'</a>';
