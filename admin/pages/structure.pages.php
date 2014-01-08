@@ -7,7 +7,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	// Bugfix, das neu erstelle Blöcke nicht einzgezeigt werden
 	if(!is_null(type::post('save-back')) || !is_null(type::post('save'))) {
 		pageAreaAction::saveBlock();
-		pageCache::generateArticle($structure_id);
+		page::generateArticle($structure_id);
 		echo message::success(lang::get('structure_content_save'), true);
 	}
 	
@@ -23,7 +23,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		$sql->addPost('online', $online);
 		$sql->update();
 		
-		pageCache::generateArticle($structure_id);
+		page::generateArticle($structure_id);
 		
 		echo message::success(lang::get('save_status'));
 		
@@ -40,7 +40,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 			$sql->update();
 		}
 		
-		pageCache::generateArticle($structure_id);
+		page::generateArticle($structure_id);
 		
 		ajax::addReturn(message::success(lang::get('save_sorting'), true));
 		
@@ -50,7 +50,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	if($action == 'delete') {
 	
 		$id = pageAreaAction::delete($id);
-		pageCache::deleteFile($id);
+		page::deleteFile($id);
 		echo message::success(lang::get('structure_content_delete'));
 		
 	}

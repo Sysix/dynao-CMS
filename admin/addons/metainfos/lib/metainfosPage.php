@@ -174,26 +174,36 @@ class metainfosPage {
 		$table->addCollsLayout('25,*,110');
 		
 		$table->addSection('tbody');
-		while($table->isNext()) {
-			
-			$edit = '';
-			$delete = '';
-			
-			if(dyn::get('user')->hasPerm('metainfos[edit]')) {
-				$edit = '<a href="'.url::backend('meta', ['subpage'=>$pagename, 'action'=>'edit', 'id'=>$table->get('id')]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';
+		
+		if($table->numSql()) {
+		
+			while($table->isNext()) {
+				
+				$edit = '';
+				$delete = '';
+				
+				if(dyn::get('user')->hasPerm('metainfos[edit]')) {
+					$edit = '<a href="'.url::backend('meta', ['subpage'=>$pagename, 'action'=>'edit', 'id'=>$table->get('id')]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';
+				}
+				
+				if(dyn::get('user')->hasPerm('metainfos[delete]')) {
+					$delete = '<a href="'.url::backend('meta', ['subpage'=>$pagename, 'action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger delete fa fa-trash-o"></a>';
+				}
+				
+				$table->addRow(['data-id'=>$table->get('id')])
+				->addCell('<i class="fa fa-sort"></i>')
+				->addCell($table->get('name'))
+				->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
+				
+				$table->next();	
+				
 			}
-			
-			if(dyn::get('user')->hasPerm('metainfos[delete]')) {
-				$delete = '<a href="'.url::backend('meta', ['subpage'=>$pagename, 'action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger delete fa fa-trash-o"></a>';
-			}
-			
-			$table->addRow(['data-id'=>$table->get('id')])
-			->addCell('<i class="fa fa-sort"></i>')
-			->addCell($table->get('name'))
-			->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
-			
-			$table->next();	
-			
+		
+		} else {
+		
+			$table->addRow()
+			->addCell(lang::get('no_entries'), ['colspan'=>3]);
+		
 		}
 		?>
 <div class="row">

@@ -98,7 +98,7 @@ class dyn {
 			
 			cache::write($content, $cacheFile);
 			
-		}		
+		}
 		
 		if(is_null($content)) {
 			return lang::get('version_fail_connect');
@@ -108,7 +108,7 @@ class dyn {
 		$cversion = explode('.', dyn::get('version'));
 		
 		if($version[0] != $cversion[0]) {		
-			return lang::get('version_fail_version1');	
+			return lang::get('version_fail_version1');
 		}
 		
 		if($version[1] != $cversion[1]) {
@@ -116,7 +116,7 @@ class dyn {
 		}
 		
 		if($version[2] != $cversion[2]) {
-			return lang::get('version_fail_version3');
+			return lang::get('version_fail_version3');	
 		}
 		
 		return true;
@@ -207,23 +207,32 @@ class dyn {
 		
 		$table->addSection('tbody');
 		
-		foreach($content as $addon) {
-			
-			$perc = round($addon['rate_sum'] / $addon['rate_ppl'] * 10);
-			
-			if($perc < 33)
-				$class = 'danger';
-			elseif($perc < 66)
-				$class = 'warning';
-			else
-				$class = 'success';
+		if(is_null($content)) {
 			
 			$table->addRow()
-			->addCell('<span class="label label-'.$class.'">'.$perc.'%</span>')
-			->addCell($addon['title'])
-			->addCell($addon['description'])
-			->addCell('<a href="'.$addon['link'].'" target="_blank" class="btn btn-sm btn-default">'.lang::get('download').'</a>');
-					
+			->addCell(lang::get('no_entries'), ['colspan'=>4]);
+			
+		} else {
+		
+			foreach($content as $addon) {
+				
+				$perc = round($addon['rate_sum'] / $addon['rate_ppl'] * 10);
+				
+				if($perc < 33)
+					$class = 'danger';
+				elseif($perc < 66)
+					$class = 'warning';
+				else
+					$class = 'success';
+				
+				$table->addRow()
+				->addCell('<span class="label label-'.$class.'">'.$perc.'%</span>')
+				->addCell($addon['title'])
+				->addCell($addon['description'])
+				->addCell('<a href="'.$addon['link'].'" target="_blank" class="btn btn-sm btn-default">'.lang::get('download').'</a>');
+						
+			}
+		
 		}
 		
 		return $table->show();
