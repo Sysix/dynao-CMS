@@ -10,7 +10,7 @@
 	<div id="center"></div>
 	<div id="login" class="panel panel-default">
     	<a href="http://dynao.de" target="_blank">
-    		<img src="/admin/layout/img/logo-login.png" alt="dynaoCMS Logo" />
+    		<img src="admin/layout/img/logo-login.png" alt="dynaoCMS Logo" />
         </a>
 		<form action="index.php?page=dashboard" method="post">
 			<div class="panel-body">

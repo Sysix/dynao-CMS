@@ -7,7 +7,7 @@
 	<meta name="keywords" content="<?= $this->get('keywords') ?>">
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/templates/default/css/style.css" rel="stylesheet">
+    <link href="templates/default/css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -106,6 +106,6 @@
     </div>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-    <script src="/templates/default/js/template.js"></script>
+    <script src="templates/default/js/template.js"></script>
 </body>
 </html>
