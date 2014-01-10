@@ -1,7 +1,6 @@
 <?php
 if($action == 'deleteCache') {
 	cache::clear();
-	pageCache::clearAll();
 	extension::get('SETTINGS_DELETE_CACHE');
 	echo message::success(lang::get('delete_cache_success'), true);	
 }
