@@ -61,7 +61,8 @@ $(document).ready(function () {
 	$('#trash, .news h5 a').tooltip();
 	
 	$("#mobil").click(function() {
-		$("#subnavi").toggleClass("round").children('u.subnavi').toggleClass("display");	
+		$("#subnavi ul.subnav").toggleClass("display");  
+		$("#subnavi").toggleClass("round");  
 	});
 	
 	$("#addon-mobil").click(function() {
