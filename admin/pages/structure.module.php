@@ -61,10 +61,6 @@ if($action == 'add' || $action == 'edit') {
 		$form->addHiddenField('id', $id);
 	}
 	
-	if($form->isSubmit()) {
-		pageCache::clearAll();
-	}
-	
 	?>
 <div class="row">
 	<div class="col-lg-12">
