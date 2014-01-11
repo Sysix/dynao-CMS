@@ -244,7 +244,7 @@ class backend {
 		$return = [];
 		
 		if($main)
-			$return[] = '<li id="addonMobile"><a class="fa fa-chevron-down"> <span>Addon Navi</span></a>';
+			$return[] = '<li id="addonMobile"><a class="fa fa-chevron-down"> <span>Addon Navi</span></a></li>';
 		
 		foreach($naviArray as $navi) {
 			
@@ -259,7 +259,7 @@ class backend {
 				$a_class = ' class="fa fa-'.$navi['icon'].'"';
 			}
 			
-			$return[] = '<li'.$class.'><a'.$a_class.' href="'.$navi['link'].'" title="'.htmlspecialchars($navi['name']).'"> <span>'.$navi['name'].'</span></a>';
+			$return[] = '<li'.$class.'><a'.$a_class.' href="'.$navi['link'].'" title="'.htmlspecialchars($navi['name']).'"> <span>'.$navi['name'].'</span></a></li>';
 			
 		}
 		
