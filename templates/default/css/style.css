@@ -1,5 +1,5 @@
 body {
-	font-family:'Lato';
+	font-family:'Lato', Arial;
 	font-size:13px;
 	line-height:21px;
 	color:#838383;
@@ -14,7 +14,7 @@ a:visited {
 
 h2 {
 	margin:0 0 15px 0;
-	font-family:'Lato';
+	font-family:'Lato', Arial;
 	font-size:18px;
 	color:#222e3e;
 }

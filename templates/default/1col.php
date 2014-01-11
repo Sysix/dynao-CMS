@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta charset="utf-8">
     <title><?= $this->get('name'); ?> - <?= dyn::get('hp_name'); ?></title>
     <meta name="description" content="<?= $this->get('description') ?>">
 	<meta name="keywords" content="<?= $this->get('keywords') ?>">
@@ -65,11 +65,11 @@
     	<div class="row">
         	<div class="col-lg-12">
                 <section id="content">
-                	<?php echo slot::getSlot('boxen'); ?>
+                	<?= slot::getSlot('boxen'); ?>
                     
                     <div class="row">
         				<div class="col-md-12">
-               				<?php echo dyn::get('content'); ?> 
+               				<?= dyn::get('content'); ?> 
                     	</div>
                     </div>
                 </section>
