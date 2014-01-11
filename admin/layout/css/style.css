@@ -87,6 +87,12 @@ fieldset[disabled] .btn-default.active {
 	line-height:30px;
 }
 
+#wrapper {
+	margin:0 auto;
+	max-width:2200px;
+	position:relative;
+}
+
 #wrap { 
 	background:url(../img/bg/noise_side.png) repeat-y top left;
 	left:130px;

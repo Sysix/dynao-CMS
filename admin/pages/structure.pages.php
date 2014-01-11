@@ -202,7 +202,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		
 		$template = template::factory(dyn::get('template'));
 		
-		$field = $form->addElement('template', $template->getTemplates('template', $form->get('templates')));
+		$field = $form->addElement('template', $template->getTemplates('template', $form->get('template')));
 		$field->fieldName(lang::get('template'));
 		
 		$field = $form->addRadioField('online', $form->get('online'));

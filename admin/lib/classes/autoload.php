@@ -171,6 +171,9 @@ class autoload {
 			
 			if(in_array($file, ['.', '..']))
 				continue;
+				
+			if(strrchr($file, '.') != '.php')
+				continue;
 			
 			// Ausgedachter Klassennamen
 			self::addClass($dir.'_'.$file, $dir.DIRECTORY_SEPARATOR.$file);

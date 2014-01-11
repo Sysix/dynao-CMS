@@ -8,6 +8,7 @@
 </head>
 
 <body>
+<div id="wrapper">
 	<div id="navi">
 		<?php echo backend::getNavi(); ?>
 	</div><!--end #navi-->
@@ -26,7 +27,7 @@
                 </a>
                     
                 <h3><?php echo dyn::get('user')->get('firstname')." ".dyn::get('user')->get('name'); ?></h3>
-                <a href="/" target="_blank"><?php echo lang::get('visit_site'); ?></a>
+                <a href="<?php echo dyn::get('hp_url'); ?>" target="_blank"><?php echo lang::get('visit_site'); ?></a>
                 
                 <a href="index.php?logout=1" class="fa fa-lock logout"> <span>Logout</span></a>
             
@@ -59,7 +60,7 @@
         
 		
 	</div><!--end #tools-->
-
+</div>
 <?php echo layout::getJS(); ?>
 </body>
 </html>
