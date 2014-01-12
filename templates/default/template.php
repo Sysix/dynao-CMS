@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8">
     <title><?= $this->get('name'); ?> - <?= dyn::get('hp_name'); ?></title>
+    <base href="<?= dyn::get('hp_url'); ?>">
     <meta name="description" content="<?= $this->get('description') ?>">
 	<meta name="keywords" content="<?= $this->get('keywords') ?>">
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">

@@ -64,15 +64,16 @@ class page {
 	public function getTemplate() {
 		
 		ob_start();
-		ob_implicit_flush(0);
 		
 		$content = self::generateArticle($this->get('id'));
+		
+		$content = extension::get('FRONTEND_OUTPUT', $content);
 		
 		dyn::add('content', $content);
 		
 		include(dir::template(dyn::get('template'), $this->get('template')));
 		
-		$content = extension::get('FRONTEND_OUTPUT', ob_get_contents());
+		$content = ob_get_contents();	
 		
 		ob_end_clean();
 		

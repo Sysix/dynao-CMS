@@ -1,5 +1,6 @@
 <?php
 
+ob_end_clean();
 
 foreach(addonConfig::includeAllConfig() as $file) {
 	include($file);	
@@ -15,8 +16,6 @@ if(page::isValid($page)) {
 	header('HTTP/1.0 404 Not Found');
 	$page = new page(dyn::get('error_page'));	
 }
-
-ob_end_clean();
 
 echo $page->getTemplate();
 

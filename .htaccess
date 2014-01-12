@@ -1,0 +1,21 @@
+<IfModule mod_autoindex.c>
+        Options -Indexes
+</IfModule>
+
+# REWRITING
+<IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteBase /
+
+        #RewriteCond %{HTTP_HOST} ^[^.]+\.[^.]+$
+        #RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [L,R=301]
+
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteCond %{REQUEST_FILENAME} !-l
+
+        RewriteCond %{REQUEST_URI} !/media/
+        RewriteCond %{REQUEST_URI} !/admin/
+		
+        RewriteRule ^(.*)$ index.php?%{QUERY_STRING} [L]
+</IfModule>

@@ -63,7 +63,8 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title pull-left"><?php echo $pageSql->get('name'); ?></h3>
-                    <div class="btn-group pull-right">
+                    <div class="pull-right">
+                    	<a href="<?php echo url::backend('structure', ['subpage'=>'pages', 'action'=>'edit', 'id'=>$structure_id]); ?>" class="btn btn-sm btn-warning"><?php echo lang::get('edit'); ?></a>
 						<a href="<?php echo url::backend('structure', ['subpage'=>'pages']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('back'); ?></a>
 					</div>
 					<div class="clearfix"></div>
