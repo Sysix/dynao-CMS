@@ -620,12 +620,14 @@ class form {
 	
 		if(!$this->toSave)
 			return $this;
-		
+			
 		if($this->isEditMode()) {
 			$this->sql->update();
 		} else {
 			$this->sql->save();
 		}
+		
+		extension::get('FORM_AFTER_SAVE', $this->sql);
 
 		return $this;
 		

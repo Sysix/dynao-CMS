@@ -54,10 +54,10 @@ class seoPage {
 			
 			$costum_url = seo::makeSEOName($costum_url);
 			
-			if($costum_url) {
+			if($costum_url && $costum_url != '.html') {
 				$form->addPost('seo_costum_url', $costum_url);
 			} else {
-				$form->delPost('seo_costum_url');
+				$form->addPost('seo_costum_url', '');
 			}
 				
 		}

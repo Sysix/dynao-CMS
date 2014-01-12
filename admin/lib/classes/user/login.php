@@ -72,7 +72,7 @@ class userLogin {
 		}
 		
 		$sql = sql::factory();
-		$sql->query('SELECT password, id FROM '.sql::table('user').' WHERE `email` = "'.$email.'"');
+		$sql->query('SELECT password, id FROM '.sql::table('user').' WHERE `email` = "'.$sql->escape($email).'"');
 		
 		// Username mit E-Mail vorhanden?
 		if(!$sql->num()) {

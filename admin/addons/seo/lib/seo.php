@@ -47,8 +47,8 @@ class seo {
 		
 		$return = [];
 		
-		$sql = new sql();
-		$sql->query('SELECT name, id, seo_costum_url FROM '.sql::table('structure'))->result();
+		$sql = sql::factory();
+		$sql->query('SELECT name, id, seo_costum_url, parent_id FROM '.sql::table('structure'))->result();
 		while($sql->isNext()) {
 			
 			if($sql->get('seo_costum_url')) {
@@ -57,19 +57,39 @@ class seo {
 				$name = self::makeSEOName($sql->get('name'));
 			}
 			
+			if($sql->get('parent_id')) {
+				$name = self::getParentsName($sql->get('parent_id')).'/'.$name;
+			}
+			
 			$return[$name] = $sql->get('id');
 			
 			$sql->next();
 		}
 		
-		
-		
-		return file_put_contents(dir::addon('seo', 'pathlist.json'), json_encode($return, JSON_PRETTY_PRINT));
-		
+		return file_put_contents(dir::addon('seo', 'pathlist.json'), json_encode($return, JSON_PRETTY_PRINT));	
 		
 	}
 	
-	public static function makeSEOName($name) {
+	public static function getParentsName($id) {
+		
+		$sql = sql::factory();
+		$sql->query('SELECT name, id, seo_costum_url, parent_id FROM '.sql::table('structure').' WHERE id = '.$id)->result();
+			
+		if($sql->get('seo_costum_url')) {
+			$name = $sql->get('seo_costum_url');
+			$name = str_replace('.html', '', $name); 
+		} else {			
+			$name = self::makeSEOName($sql->get('name'), false);
+		}
+		
+		if($sql->get('parent_id')) {			
+			$name = self::getParentsName($sql->get('parent_id')).'/'.$name;			
+		}	
+		
+		return $name;
+			
+	}	
+	public static function makeSEOName($name, $html = true) {
 		
 		$name = mb_strtolower($name);
 	
@@ -82,7 +102,11 @@ class seo {
 		
 		$name = preg_replace('/-{2,}/', '-', $name);
 		
-		return $name.'.html';
+		if($html) {
+			$name .= '.html';
+		}
+		
+		return $name;
 	
 	}
 	

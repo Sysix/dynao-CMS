@@ -17,6 +17,17 @@ if(!dyn::get('backend')) {
 	$structure_id = type::super('structure_id', 'int', 0);
 	$id = type::super('id', 'int', 0);
 	
+	// Falls was an der Page geändert worden ist
+	if($page == 'structure' && $subpage == 'pages' && in_array($action, ['add', 'edit', 'seo']) && !$structure_id) {
+			
+		extension::add('FORM_AFTER_SAVE', function($form) {
+			seo::generatePathlist();
+			return $form;
+		});	
+		
+	}
+	
+	// Wenn SEO Button geklickt worden ist
 	if($page == 'structure' && $subpage == 'pages' && $action == 'seo') {
 		
 		seoPage::generateForm($id);
@@ -46,19 +57,23 @@ if(!dyn::get('backend')) {
 		
 	}
 	
-	if($page == 'structure' && $subpage == 'pages' && in_array($action, ['add', 'edit', 'delete', 'seo']) && !$structure_id) {
-		print_r($_POST);
-		extension::add('FORM_BEFORE_SHOW', function($form) {
+	// Wenn Sortiert worden ist
+	if($page == 'structure' && $subpage == 'pages' && (ajax::is() || ($action == 'delete' && !$structure_id))) {
+		
+		extension::add('BACKEND_OUTPUT', function($output) {
 			seo::generatePathlist();
-			return $form;
+			return $output;
 		});
 		
 	}
 	
-	if($page == 'structure' && $subpage == 'pages' && $structure_id) {
+	// Inhaltsseite der page
+	if($page == 'structure' && $subpage == 'pages' && ($structure_id || ($action == 'edit' && $id))) {
 		
-		extension::add('BACKEND_OUTPUT', function($output) use ($structure_id) {			
-			return seoPage::generateButton($output, $structure_id);			
+		$id = ($structure_id) ? $structure_id : $id;
+		
+		extension::add('BACKEND_OUTPUT', function($output) use ($id) {			
+			return seoPage::generateButton($output, $id);			
 		});		
 		
 	}
