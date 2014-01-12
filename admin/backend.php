@@ -62,11 +62,13 @@ if(userLogin::isLogged()) {
 	include(backend::getNaviInclude());	
 }
 
-$content = extension::get('BACKEND_OUTPUT', ob_get_contents());
-
-dyn::add('content', $content);
+$content = ob_get_contents();
 
 ob_end_clean();
+
+$content = extension::get('BACKEND_OUTPUT', $content);
+
+dyn::add('content', $content);
 
 if(ajax::is()) {
 	$deleteAction = type::get('deleteAction', 'bool', false);

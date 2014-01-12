@@ -48,10 +48,15 @@ class seo {
 		$return = [];
 		
 		$sql = new sql();
-		$sql->query('SELECT name, id FROM '.sql::table('structure'))->result();
+		$sql->query('SELECT name, id, seo_costum_url FROM '.sql::table('structure'))->result();
 		while($sql->isNext()) {
 			
-			$name = self::makeSEOName($sql->get('name'));
+			if($sql->get('seo_costum_url')) {
+				$name = $sql->get('seo_costum_url');
+			} else {			
+				$name = self::makeSEOName($sql->get('name'));
+			}
+			
 			$return[$name] = $sql->get('id');
 			
 			$sql->next();
@@ -66,7 +71,7 @@ class seo {
 	
 	public static function makeSEOName($name) {
 		
-		$name = strtolower($name);
+		$name = mb_strtolower($name);
 	
 		$search = ['ä', 'ü', 'ö', 'ß', '&'];
 		$replace = ['ae', 'ue', 'oe', 'ss', 'und'];
@@ -77,7 +82,7 @@ class seo {
 		
 		$name = preg_replace('/-{2,}/', '-', $name);
 		
-		return $name;
+		return $name.'.html';
 	
 	}
 	
