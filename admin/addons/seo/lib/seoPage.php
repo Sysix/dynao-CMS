@@ -34,7 +34,7 @@ class seoPage {
 		if($form->get('seo_costum_url')) {
 			$url = $form->get('seo_costum_url');
 		} else {
-			$url = seo::makeSEOName($form->get('name'));
+			$url = seo_rewrite::makeSEOName($form->get('name'));
 		}
 		
 		$field = $form->addTextField('seo_costum_url', $form->get('seo_costum_url'));
@@ -52,7 +52,7 @@ class seoPage {
 			
 			$costum_url = trim($costum_url, '/');
 			
-			$costum_url = seo::makeSEOName($costum_url);
+			$costum_url = seo_rewrite::makeSEOName($costum_url);
 			
 			if($costum_url && $costum_url != '.html') {
 				$form->addPost('seo_costum_url', $costum_url);

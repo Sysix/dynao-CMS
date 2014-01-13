@@ -20,6 +20,7 @@ class media {
 			
 		}
 		
+		
 	}
 	
 	// Media nach den Namen finden.
@@ -98,8 +99,10 @@ class media {
 	}
 	
 	public function isImage() {
-	
-		return in_array($this->getExtension(), dyn::get('extensions')['image']);
+		
+		$media = json_decode(file_get_contents(dir::addon('mediamanager', 'config.json')), true);
+		
+		return in_array($this->getExtension(), $media['extensions']['image']);
 		
 	}
 	

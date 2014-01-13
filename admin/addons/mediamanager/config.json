@@ -5,5 +5,19 @@
 	"supportlink" : "http://dynao.de/",
 	"need": {
 		"version": 0.1
-	}
+	},
+	"extensions": {
+        "image": [
+            "gif", "jpeg", "jpg", "png", "bmp"
+        ],
+        "video": [
+			"3gp", "avi", "flv", "m4v", "mov", "mp4", "mpg", "wmv", "mkv", "mpeg"
+        ],
+        "audio": [
+            "mp3", "wma", "m4a"
+        ]
+    },
+    "badExtensions": [
+        "php", "php3", "php4", "php5", "htaccess", "htpasswd"
+    ]
 }

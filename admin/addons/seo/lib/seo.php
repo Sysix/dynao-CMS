@@ -2,112 +2,68 @@
 
 class seo {
 	
-	public static $pathlist;
+	public static $currentPage;
+	public static $pageId;
 	
-	public function __construct() {
-	
-		$pathlist = dir::addon('seo', 'pathlist.json');
+	public static function getTitle() {
 		
-		if(is_file($pathlist)) {
-			self::$pathlist = json_decode(file_get_contents($pathlist), true);
+		self::setCurrentPage();
+		
+		if(self::$currentPage->get('seo_title')) {
+			
+			$title = self::$currentPage->get('seo_title');
+				
+		} else {
+		
+			$title = self::$currentPage->get('name');
+			
 		}
+		
+		return $title.' | '.dyn::get('hp_name');		
+			
+	}
+	
+	public static function getKeywords() {
+		
+		self::setCurrentPage();
+		
+		return self::$currentPage->get('seo_keywords');
 		
 	}
 	
-	public function parseUrl($url) {
+	public static function getDescription() {
 		
-		$url = str_replace(dyn::get('hp_url'), '', $url); 
+		self::setCurrentPage();
 		
-		$url = trim($url, '/');
-		
-		if(isset(self::$pathlist[$url])) {
-			
-			$id = self::$pathlist[$url];
-			extension::add('SET_PAGE_ID', function() use ($id) {
-				return $id;
-			});
-			
-		}
+		return self::$currentPage->get('seo_description');
 		
 	}
 	
-	public static function rewriteId($id) {
+	public static function getHTML() {
+	
+		return '<title>'.self::getTitle().'</title>
+		<meta name="description" content="'.self::getDescription().'">
+		<meta name="keywords" content="'.self::getKeywords().'">
+		<base href="'.dyn::get('hp_url').'">'.PHP_EOL;
 		
-		$pathlist = array_flip(self::$pathlist);
-		
-		if(isset($pathlist[$id])) {
-			return $pathlist[$id];
-		}
-		
-		return 'index.php?page_id='.$id;
+		print_r(self::$currrentPage);
 		
 	}
 	
-	public static function generatePathlist() {
-		
-		$return = [];
-		
-		$sql = sql::factory();
-		$sql->query('SELECT name, id, seo_costum_url, parent_id FROM '.sql::table('structure'))->result();
-		while($sql->isNext()) {
-			
-			if($sql->get('seo_costum_url')) {
-				$name = $sql->get('seo_costum_url');
-			} else {			
-				$name = self::makeSEOName($sql->get('name'));
-			}
-			
-			if($sql->get('parent_id')) {
-				$name = self::getParentsName($sql->get('parent_id')).'/'.$name;
-			}
-			
-			$return[$name] = $sql->get('id');
-			
-			$sql->next();
-		}
-		
-		return file_put_contents(dir::addon('seo', 'pathlist.json'), json_encode($return, JSON_PRETTY_PRINT));	
+	public static function setPageId($id) {
+	
+		self::$pageId = $id;
 		
 	}
 	
-	public static function getParentsName($id) {
+	public static function setCurrentPage() {
 		
-		$sql = sql::factory();
-		$sql->query('SELECT name, id, seo_costum_url, parent_id FROM '.sql::table('structure').' WHERE id = '.$id)->result();
-			
-		if($sql->get('seo_costum_url')) {
-			$name = $sql->get('seo_costum_url');
-			$name = str_replace('.html', '', $name); 
-		} else {			
-			$name = self::makeSEOName($sql->get('name'), false);
+		if(is_null(self::$currentPage)) {
+					
+			self::$currentPage = page::factory(self::$pageId);	
+		
 		}
 		
-		if($sql->get('parent_id')) {			
-			$name = self::getParentsName($sql->get('parent_id')).'/'.$name;			
-		}	
-		
-		return $name;
-			
-	}	
-	public static function makeSEOName($name, $html = true) {
-		
-		$name = mb_strtolower($name);
-	
-		$search = ['ä', 'ü', 'ö', 'ß', '&'];
-		$replace = ['ae', 'ue', 'oe', 'ss', 'und'];
-		
-		$name = str_replace($search, $replace, $name);
-		
-		$name = preg_replace('/[^a-z0-9]/', '-',  $name);
-		
-		$name = preg_replace('/-{2,}/', '-', $name);
-		
-		if($html) {
-			$name .= '.html';
-		}
-		
-		return $name;
-	
 	}
 	
 }

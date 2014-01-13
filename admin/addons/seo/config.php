@@ -2,12 +2,15 @@
 
 if(!dyn::get('backend')) {
 	
-	$seo = new seo();
-	$seo->parseUrl($_SERVER['REQUEST_URI']);
-	
 	extension::add('URL_REWRITE', function($return) {
-		return seo::rewriteId($return['id']);
+		return seo_rewrite::rewriteId($return['id']);
 	});
+	
+	$seo = new seo_rewrite();
+	$id = $seo->parseUrl($_SERVER['REQUEST_URI']);
+	seo::setPageId($id);
+	
+	
 	
 } else {
 
@@ -21,7 +24,7 @@ if(!dyn::get('backend')) {
 	if($page == 'structure' && $subpage == 'pages' && in_array($action, ['add', 'edit', 'seo']) && !$structure_id) {
 			
 		extension::add('FORM_AFTER_SAVE', function($form) {
-			seo::generatePathlist();
+			seo_rewrite::generatePathlist();
 			return $form;
 		});	
 		
@@ -61,7 +64,7 @@ if(!dyn::get('backend')) {
 	if($page == 'structure' && $subpage == 'pages' && (ajax::is() || ($action == 'delete' && !$structure_id))) {
 		
 		extension::add('BACKEND_OUTPUT', function($output) {
-			seo::generatePathlist();
+			seo_rewrite::generatePathlist();
 			return $output;
 		});
 		

@@ -1,21 +1,5 @@
 <?php
 
-if(!dyn::has('extensions')) {
-	
-	$imageExtensions = ["gif", "jpeg", "jpg", "png", "bmp"];
-	$videoExtensions = ["3gp", "avi", "flv", "m4v", "mov", "mp4", "mpg", "wmv", "mkv", "mpeg"];
-	$audioExtensions = ["mp3", "wma", "m4a"];
-	
-	dyn::add('extensions', [
-		'image'=>$imageExtensions, 
-		'video'=>$videoExtensions, 
-		'audio'=>$audioExtensions
-	], true);
-	dyn::add('badExtensions', ['php', 'htaccess', 'htpasswd'], true);
-	dyn::save();
-	
-}
-
 if(!file_exists(dir::base('media'))) {
 	mkdir(dir::base('media'), 755);
 }

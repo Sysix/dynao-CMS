@@ -31,8 +31,10 @@ class mediaUtils {
 		$fileDir = dir::media($fileName);
 		$extension = substr(strrchr($fileName, '.'), 1); // z.B. jpg
 		
+		$media = json_decode(file_get_contents(dir::addon('mediamanager', 'config.json')), true);
+		
 		// Wenn die Datei eine "verbotene" Datei ist
-		if(in_array($extension, dyn::get('badExtensions', []))) {
+		if(in_array($extension, $media['badExtensions'])) {
 			
 			$form->setSave(false);
 			$form->setErrorMessage(sprintf(lang::get('media_error_bad_extension'), $file['name']));
