@@ -28,6 +28,10 @@ class seo_rewrite {
 			
 		}
 		
+		if($url == '') {
+			$id = dyn::get('start_page');
+		}
+		
 		return $id;
 		
 	}
