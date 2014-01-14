@@ -13,6 +13,12 @@ class seo_rewrite {
 		
 	}
 	
+	/*
+	 * URL parsen und Page_id auslesen
+	 *
+	 * @param string $url Die URL
+	 * @return int
+	 */
 	public function parseUrl($url) {
 		
 		$url = str_replace(dyn::get('hp_url'), '', $url); 
@@ -36,6 +42,12 @@ class seo_rewrite {
 		
 	}
 	
+	/*
+	 * Page_id zu einer SEO-Url generieren
+	 *
+	 * @param int $id Page_id
+	 * @return string
+	 */
 	public static function rewriteId($id) {
 		
 		$pathlist = array_flip(self::$pathlist);
@@ -48,6 +60,11 @@ class seo_rewrite {
 		
 	}
 	
+	/*
+	 * Pathliste generieren
+	 *
+	 * @return int/bool
+	 */
 	public static function generatePathlist() {
 		
 		$return = [];
@@ -75,6 +92,12 @@ class seo_rewrite {
 		
 	}
 	
+	/*
+	 * Ausgabe des Namen's von der Vater-Seite
+	 *
+	 * @param int $id structure-Id
+	 * @return string
+	 */
 	public static function getParentsName($id) {
 		
 		$sql = sql::factory();
@@ -95,6 +118,13 @@ class seo_rewrite {
 			
 	}
 	
+	/*
+	 * URL-Freundliche Namen erstellen
+	 *
+	 * @param string $name Der Name
+	 * @param bool $html .html ransetzten oder nicht
+	 * @return string
+	 */
 	public static function makeSEOName($name, $html = true) {
 		
 		$name = mb_strtolower($name);

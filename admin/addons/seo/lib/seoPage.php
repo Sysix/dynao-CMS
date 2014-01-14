@@ -2,6 +2,11 @@
 
 class seoPage {
 	
+	/*
+	 * SEO-Formular generieren
+	 *
+	 * @param int $id  Struktur-Id
+	 */
 	public static function generateForm($id) {
 		
 		$form = form::factory('structure', 'id='.$id, 'index.php');
@@ -84,6 +89,13 @@ class seoPage {
 		
 	}
 	
+	/*
+	 * SEO-Button einfügen
+	 *
+	 * @param string $output Inhalt der Seite
+	 * @param int $structure_id Struktur-Id
+	 * @return string
+	 */
 	public static function generateButton($output, $structure_id) {
 		
 		// Bugfix UTF-8
