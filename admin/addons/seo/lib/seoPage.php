@@ -15,20 +15,20 @@ class seoPage {
 		}
 		
 		$field = $form->addTextField('seo_title', $form->get('seo_title'));
-		$field->fieldName('SEO Titel');
+		$field->fieldName(lang::get('title'));
 		$field->setId('seo-title-text');
 		$field->setSuffix('<p class="help-block"><span id="seo-title">'.$title.'</span> | '.dyn::get('hp_name').'</p>');
 		
 		$field = $form->addTextareaField('seo_keywords', $form->get('seo_keywords'));
-		$field->fieldName('SEO Keywords');
+		$field->fieldName(lang::get('seo_keywords'));
 		$field->addRows(2);
 		
 		$field = $form->addTextareaField('seo_description', $form->get('seo_description'));
-		$field->fieldName('SEO Beschreibung');
+		$field->fieldName(lang::get('description'));
 		$field->addRows(2);
 		
 		$field = $form->addCheckboxField('seo_robots', $form->get('seo_robots', 1));
-		$field->fieldName('Indizierung erlauben');
+		$field->fieldName(lang::get('seo_index'));
 		$field->add(1, '');
 		
 		if($form->get('seo_costum_url')) {
@@ -38,7 +38,7 @@ class seoPage {
 		}
 		
 		$field = $form->addTextField('seo_costum_url', $form->get('seo_costum_url'));
-		$field->fieldName('Eigene URL definieren');
+		$field->fieldName(lang::get('seo_self_url'));
 		$field->setId('seo-costum-url-text');
 		$field->setSuffix('<p class="help-block">'.dyn::get('hp_url').'<span id="seo-costum-url">'.$url.'</span></p>');
 		
@@ -96,7 +96,7 @@ class seoPage {
 		$buttons = $xpath->query(".//div[@class='pull-right']")->item(0);
 		
 		// Neuen Button erstellen
-		$seobutton = $dom->createElement('a', 'SEO');
+		$seobutton = $dom->createElement('a', lang::get('seo'));
 		$seobutton->setAttribute('class', 'btn btn-sm btn-default');
 		
 		$url = url::backend('structure', ['subpage'=>'pages', 'action'=>'seo', 'id'=>$structure_id]);

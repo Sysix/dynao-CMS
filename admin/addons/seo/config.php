@@ -37,7 +37,7 @@ if(!dyn::get('backend')) {
 		
 		layout::addJsCode("
 		var default_url = $('#seo-costum-url').text();
-		console.log(default_url);
+		
 		$('#seo-costum-url-text').keyup(function() {
 			var val = $(this).val();
 			
