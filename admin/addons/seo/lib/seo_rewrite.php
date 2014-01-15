@@ -3,12 +3,23 @@
 class seo_rewrite {
 	
 	public static $pathlist;
+	
 	public function __construct() {
 	
-		$pathlist = dir::addon('seo', 'pathlist.json');
+		self::loadPathlist();
 		
-		if(is_file($pathlist)) {
-			self::$pathlist = json_decode(file_get_contents($pathlist), true);
+	}
+	
+	public static  function loadPathlist() {
+		
+		if(is_null(self::$pathlist)) {
+			
+			$pathlist = dir::addon('seo', 'pathlist.json');
+		
+			if(is_file($pathlist)) {
+				self::$pathlist = json_decode(file_get_contents($pathlist), true);
+			}
+			
 		}
 		
 	}
@@ -21,9 +32,24 @@ class seo_rewrite {
 	 */
 	public function parseUrl($url) {
 		
-		$url = str_replace(dyn::get('hp_url'), '', $url); 
+		$url = str_replace(dyn::get('hp_url'), '', $url);
 		
-		$url = trim($url, '/');
+		$url = ltrim($url, '/');
+		
+		//Redirect falls alte URL
+		preg_match('/.*?page_id=(\d)*.*/', $url, $match);
+		if(isset($match[1]) && page::isValid($match[1])) {
+			$this->redirect($match[1]);
+		}
+		
+		// Überflüssige Zeichen löschen, damit eine reine URL angezeigt wird
+		foreach(['?', '#'] as $char) {
+			
+			if(($pos = strpos($url, $char)) !== false) {
+				$url = substr($url, 0, $pos);	
+			}
+			
+		}
 		
 		if(isset(self::$pathlist[$url])) {
 			
@@ -38,7 +64,30 @@ class seo_rewrite {
 			$id = dyn::get('start_page');
 		}
 		
+		if(!isset($id)) {
+			header('HTTP/1.0 404 Not Found');
+			$id = dyn::get('error_page');	
+		}
+		
 		return $id;
+		
+	}
+	
+	/*
+	 * Weiterleitung auf einer SEO-freundliche URL
+	 *
+	 * @param int $id Page_id
+	 */
+	public function redirect($id) {
+		
+		header('HTTP/1.1 301 Moved Permanently');
+		
+		while(ob_get_level()){
+		  ob_end_clean();
+		}
+		
+		header('Location:'.self::rewriteId($id));
+   		exit();
 		
 	}
 	
@@ -49,6 +98,8 @@ class seo_rewrite {
 	 * @return string
 	 */
 	public static function rewriteId($id) {
+		
+		self::loadPathlist();
 		
 		$pathlist = array_flip(self::$pathlist);
 		

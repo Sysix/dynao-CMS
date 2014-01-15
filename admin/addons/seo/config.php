@@ -13,6 +13,12 @@ if(!dyn::get('backend')) {
 	
 	
 } else {
+	
+	userPerm::add('admin[seo]', 'SEO Administrator');
+	
+	backend::addAddonNavi(lang::get('seo'), url::backend('seo'), -1, function() {
+		return dir::addon('seo', 'page'.DIRECTORY_SEPARATOR.'seo.php');
+	});
 
 	$page = type::super('page', 'string');
 	$subpage = type::super('subpage', 'string');
