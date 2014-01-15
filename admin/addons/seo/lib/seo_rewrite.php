@@ -33,6 +33,7 @@ class seo_rewrite {
 	public function parseUrl($url) {
 		
 		$url = str_replace(dyn::get('hp_url'), '', $url);
+		$url = $this->deleteSubDir($url);
 		
 		$url = ltrim($url, '/');
 		
@@ -70,6 +71,25 @@ class seo_rewrite {
 		}
 		
 		return $id;
+		
+	}
+	
+	/*
+	 * Falls im Unterordner installiert, von $url löschen
+	 *
+	 * @param string $url Die URL
+	 * @return string
+	 */
+	public function deleteSubDir($url) {
+		
+		$urlPath = parse_url(dyn::get('hp_url'));
+		
+		if(isset($urlPath['path'])) {
+			$subdir = trim($urlPath['path'], '/');
+			$url = str_replace($subdir, '', $url);
+		}
+		
+		return $url;
 		
 	}
 	
