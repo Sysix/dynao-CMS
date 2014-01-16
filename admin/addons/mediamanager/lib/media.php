@@ -5,6 +5,7 @@ class media {
 	use traitMeta;
 	
 	public $sql;
+	public static $extension;
 
 
 	public function __construct($id) {
@@ -100,9 +101,9 @@ class media {
 	
 	public function isImage() {
 		
-		$media = json_decode(file_get_contents(dir::addon('mediamanager', 'config.json')), true);
+		self::getExtensionList();
 		
-		return in_array($this->getExtension(), $media['extensions']['image']);
+		return in_array($this->getExtension(), self::$extension['image']);
 		
 	}
 	
@@ -115,6 +116,18 @@ class media {
 		} else {
 			return 'media/'.$this->get('filename');
 		}
+	}
+	
+	public static function getExtensionList() {
+		
+		if(is_null(self::$extension)) {
+		
+			$media = json_decode(file_get_contents(dir::addon('mediamanager', 'config.json')), true);
+			
+			self::$extension = $media['extensions'];
+		
+		}
+		
 	}
 	
 	

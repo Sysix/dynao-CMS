@@ -2,5 +2,9 @@
 	"name": "SEO Addon",
 	"version": 0.1,
 	"author": "Dynao CMS",
-	"supportlink" : "http://dynao.de/"	
+	"supportlink" : "http://dynao.de/",
+	"delimiter": "|",
+	"ending": ".html",
+	"start_url": 0,
+	"robots": 1	
 }

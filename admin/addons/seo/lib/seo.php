@@ -74,10 +74,10 @@ class seo {
 	public static function getHTML() {
 	
 		return '<title>'.self::getTitle().'</title>
-		<meta name="description" content="'.self::getDescription().'">
-		<meta name="keywords" content="'.self::getKeywords().'">
-		<base href="'.dyn::get('hp_url').'">
-		<link rel="canonical" href="'.self::getCanonicalUrl().'">'.PHP_EOL;
+<meta name="description" content="'.self::getDescription().'">
+<meta name="keywords" content="'.self::getKeywords().'">
+<base href="'.dyn::get('hp_url').'">
+<link rel="canonical" href="'.self::getCanonicalUrl().'">'.PHP_EOL;
 		
 	}
 	

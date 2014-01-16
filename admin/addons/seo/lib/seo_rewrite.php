@@ -32,7 +32,6 @@ class seo_rewrite {
 	 */
 	public function parseUrl($url) {
 		
-		$url = str_replace(dyn::get('hp_url'), '', $url);
 		$url = $this->deleteSubDir($url);
 		
 		$url = ltrim($url, '/');

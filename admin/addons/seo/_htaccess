@@ -5,10 +5,9 @@
 # REWRITING
 <IfModule mod_rewrite.c>
         RewriteEngine On
-        RewriteBase /
+        RewriteBase {rewrite_base}
 
-        #RewriteCond %{HTTP_HOST} ^[^.]+\.[^.]+$
-        #RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [L,R=301]
+		{www_rewriteCond}
 
         RewriteCond %{REQUEST_FILENAME} !-f
         RewriteCond %{REQUEST_FILENAME} !-d
