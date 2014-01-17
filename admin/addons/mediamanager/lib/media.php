@@ -107,6 +107,40 @@ class media {
 		
 	}
 	
+	public function isVideo() {
+	
+		self::getExtensionList();
+		
+		return in_array($this->getExtension(), self::$extension['video']);
+		
+	}
+	
+	public function isAudio() {
+		
+		self::getExtensionList();
+		
+		return in_array($this->getExtension(), self::$extension['audio']);
+		
+	}
+	
+	public function getIcon() {
+		
+		if($this->isImage()) {
+			return '<img src="'.$this->getPath().'" alt="'.$this->get('filename').' />';	
+		}
+		
+		if($this->isVideo()) {
+			return '<i class="fa fa-youtube-play"></i>';	
+		}
+		
+		if($this->isAudio()) {
+			return '<i class="fa fa-volume-down"></i>';	
+		}
+		
+		return '<i class="fa fa-file"></i>';
+		
+	}
+	
 	// Den Pfad der Datei ausgeben
 	// return	string
 	public function getPath() {

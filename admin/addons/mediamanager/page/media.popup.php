@@ -37,14 +37,8 @@ while($table->isNext()) {
 	
 	$select = '<button data-id="'.$table->get('id').'" data-name="'.$table->get('filename').'" data-loading-text="'.lang::get('selected').'" class="btn btn-sm btn-warning dyn-media-select">'.lang::get('select').'</button>';
 	
-	if($media->isImage()) {
-		$icon = '<img src="'.$media->getPath().'" />';	
-	} else {
-		$icon = '<i class="fa fa-file"></i>';	
-	}
-	
 	$table->addRow()
-	->addCell($icon)
+	->addCell($media->getIcon())
 	->addCell($media->get('title'))
 	->addCell($media->getExtension())
 	->addCell('<span class="btn-group">'.$select.'</span>');

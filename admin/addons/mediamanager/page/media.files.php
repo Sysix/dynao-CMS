@@ -134,15 +134,9 @@ if($action == '') {
 			$checkbox = formCheckbox::factory('file[]', 0);
 			$checkbox->add($media->get('id'), '');
 			
-			if($media->isImage()) {
-				$icon = '<img src="'.$media->getPath().'" />';	
-			} else {
-				$icon = '<i class="fa fa-file"></i>';	
-			}
-			
 			$table->addRow()
 			->addCell($checkbox->get())
-			->addCell($icon)
+			->addCell($media->getIcon())
 			->addCell($media->get('title'))
 			->addCell($media->getExtension())
 			->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
