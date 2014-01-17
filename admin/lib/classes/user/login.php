@@ -3,7 +3,10 @@
 class userLogin {
 
 	static protected $isLogin = false;
-	static protected $userID;
+	static protected $userID = null;
+	
+	const SALT_LENGTH = 6;
+	const HASH_TYPE = 'sha256';
 	
 	public function __construct() {
 	
@@ -23,48 +26,44 @@ class userLogin {
 	
 	}
 	
-	//wenn Session stimmt, status auf true
+	/*
+	 * Login auf true setzten
+	 */
 	protected static function loginSession() {
 	
 		self::$isLogin = true;
 	
 	}
 	
-	// Überprüfen ob Session richtig gesetzt 
+	/*
+	 * Überprüfen ob eine Session vorhanden
+	 *
+	 * @return bool;
+	 */
 	protected static function checkLogin() {
 	
-		$session = type::session('login', 'string', false);
+		$session = type::session('login', 'int', 0);
 		
 		if(!$session)
 			return false;
 		
-		// Session[0] = ID; session[1} PW in sha1	
-		$session = explode('||', $session);	
-		
-		$sql = sql::factory();
-		$sql->result('SELECT id FROM '.sql::table('user').' WHERE `id` = '.$session[0].' AND `password` = "'.$session[1].'"');	
-			
-		if(!$sql->num()) {
-			
-			return false;
-		
-		}
-		
 		self::loginSession();
-		self::$userID = $session[0];
+		self::$userID = $session;
 		
 		return true;		
 		
 	}
 	
-	//Einloggen
+	/*
+	 * Login-Formular überprüfen ob in der Datenbank was vorhanden ist
+	 */
 	protected static function loginPost() {
 		
 		$email = type::post('email', 'string');
 		$password = type::post('password', 'string');
 		
 		// Formular ganz abgesendet?
-		if(is_null($email) || is_null($password) || $email == '' || $password == '') {
+		if(empty($mail) || empty($password)) {
 			
 			echo message::info(lang::get('login_form_notfull'), true);
 			return;
@@ -72,7 +71,7 @@ class userLogin {
 		}
 		
 		$sql = sql::factory();
-		$sql->query('SELECT password, id FROM '.sql::table('user').' WHERE `email` = "'.$sql->escape($email).'"');
+		$sql->query('SELECT password, salt id FROM '.sql::table('user').' WHERE `email` = "'.$sql->escape($email).'"');
 		
 		// Username mit E-Mail vorhanden?
 		if(!$sql->num()) {
@@ -85,7 +84,7 @@ class userLogin {
 		$sql->result();
 		
 		// Password nicht gleich?
-		if(!self::checkPassword($password, $sql->get('password'))) {
+		if(!self::checkPassword($password, $sql->get('salt'), $sql->get('password'))) {
 			
 			echo message::danger(lang::get('login_pwd_false'), true);
 			return;
@@ -95,25 +94,74 @@ class userLogin {
 		self::loginSession();
 		self::$userID = $sql->get('id');
 		
-		$_SESSION['login'] = $sql->get('id').'||'.self::hash($password);
-	
-	}
-	
-	//hashen mit sha1
-	public static function hash($password) {
+		$_SESSION['login'] = $sql->get('id');
 		
-		return sha1($password);
+		// Falls alte Methode (sha1) neuen Salt generieren und salt updaten
+		// sha1 deprecated 0.2 Beta
+		if(empty($sql->get('salt'))) {			
+			
+			$salt = self::generateSalt();
+			
+			$sql->setTable('user');
+			$sql->setWhere('`email` = "'.$email.'"');
+			$sql->addPost('salt', $salt);
+			$sql->addPost('password', self::hash($password, $salt));
+			$sql->update();
+			
+		}
+	
+	}
+	
+	/*
+	 * Passworten hashen mit sha256, falls vorhanden, ansonsten sha1
+	 *
+	 * @param string $password Das Passwort
+	 * @param string $salt Der Salt
+	 * @return string
+	 */
+	public static function hash($password, $salt) {
+		
+		if(empty($salt)) {
+			return sha1($password);	
+		}
+		
+		return hash(self::HASH_TYPE, $salt.$password.$salt);
 		
 	}
 	
-	//password mit hast vergleichen
-	public static function checkPassword($password, $hash) {
+	/*
+	 * Überprüfen ob Password gleich den Hash entspricht
+	 *
+	 * @param string $password Das Passwort
+	 * @param string $salt Der Salt
+	 * @param string $hash Das bereits gehashte Passwort
+	 * @return bool
+	 */
+	public static function checkPassword($password, $salt, $hash) {
 	
-		return self::hash($password) == $hash;
+		return self::hash($password, $salt) == $hash;
 	
 	}
 	
-	//session löschen und status auf false
+	/*
+	 * einen Salt generieren
+	 *
+	 * @return string
+	 */
+	public static function generateSalt() {
+		
+		$str = '';
+		for($i = 0; $i < self::SALT_LENGTH; $i++) {
+				$str .= chr(rand(33, 255));
+		}
+		
+		return utf8_encode($str);
+		
+	}
+	
+	/*
+	 * Ausloggen
+	 */
 	public static function logout() {   
 	
 		unset($_SESSION['login']);
@@ -122,16 +170,25 @@ class userLogin {
 		
 	}
 	
-	//status wiedergeben
+	/*
+	 * Abfragen ob man eingeloggt ist
+	 *
+	 * @return bool
+	 */
 	public static function isLogged() {
 		
 		return self::$isLogin;
 		
 	}
 	
+	/*
+	 * Rückgabe der userID
+	 *
+	 * @return int/null
+	 */
 	public static function getUser() {
 		
-		return (int)self::$userID;
+		return self::$userID;
 		
 	}
 	

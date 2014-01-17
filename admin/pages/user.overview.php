@@ -78,7 +78,7 @@ if($action == 'add' || $action == 'edit') {
 		
 		if($form->get('password') != $form->sql->getValue('password')) {
 			
-			$form->addPost('password', userLogin::hash($form->get('password')));
+			$form->addPost('password', userLogin::hash($form->get('password', $form->sql->getValue('salt'))));
 			
 		}
 		

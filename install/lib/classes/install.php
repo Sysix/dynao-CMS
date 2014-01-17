@@ -4,7 +4,8 @@ class install {
 	public static function update0_1to0_2() {
 		
 		$sql = sql::factory();
-		$sql->query('ALTER TABLE '.sql::table('module').' ADD `slots` int(1) unsigned NOT NULL');		
+		$sql->query('ALTER TABLE '.sql::table('module').' ADD `slots` int(1) unsigned NOT NULL');
+		$sql->query('ALTER TABLE '.sql::table('user').' ADD `salt` VARCHAR(255) NOT NULL');		
 		
 	}
 	
@@ -40,17 +41,19 @@ class install {
 		  `name` 		varchar(255)			NOT NULL,
 		  `email` 		varchar(255)			NOT NULL,
 		  `password`	varchar(255)			NOT NULL,
+		  `salt` 		varchar(255)			NOT NULL
 		  `perms`		varchar(255)			NOT NULL,
 		  `admin`		int(1) 		unsigned	NOT NULL,
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 								
-		
+		$salt = userLogin::generateSalt();
 		$sql->setTable('user');
 		$sql->addPost('firstname', type::post('firstname'));
 		$sql->addPost('name', type::post('name'));
 		$sql->addPost('email', type::post('email'));
-		$sql->addPost('password', userLogin::hash(type::post('password')));
+		$sql->addPost('password', userLogin::hash(type::post('password'), $salt));
+		$sql->addPost('salt', $salt);
 		$sql->addPost('admin', 1);
 		$sql->save();
 		
