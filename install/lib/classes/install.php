@@ -1,6 +1,13 @@
 <?php
 class install {
 	
+	public static function update0_1to0_2() {
+		
+		$sql = sql::factory();
+		$sql->query('ALTER TABLE '.sql::table('module').' ADD `slots` int(1) unsigned NOT NULL');		
+		
+	}
+	
 	public static function newInstall() {
 		
 		$sql = new sql();
@@ -10,6 +17,7 @@ class install {
 		  `name`		varchar(255) 			NOT NULL,
 		  `input` 		text 					NOT NULL,
 		  `output`		text 					NOT NULL,
+		  `slots`		int(1)		unsigned 	NOT NULL,
 		  `sort`		int(16)		unsigned 	NOT NULL,
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');

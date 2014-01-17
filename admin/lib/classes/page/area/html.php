@@ -3,6 +3,7 @@
 class pageAreaHtml {
 	
 	public static $modulList = [];
+	public static $modulListAll = [];
 
 	public static function selectBlock($structureID, $sort = false)  {
 	
@@ -27,24 +28,32 @@ class pageAreaHtml {
 		
 	}
 	
-	public static function moduleList($active = false) {
+	public static function moduleList($active = false, $onlySlots = false) {
+		
+		if($onlySlots) {
+			$where = ' WHERE `slots` != 1';
+			$mlist = &self::$modulList;
+		} else {
+			$where = '';
+			$mlist = &self::$modulListAll;
+		}
 	
-		if(empty(self::$modulList)) {
+		if(empty($mlist)) {
 	
 			$sql = sql::factory();				
-			$sql->result('SELECT id, name FROM '.sql::table('module').' ORDER BY `sort`');
+			$sql->result('SELECT id, name FROM '.sql::table('module').$where.' ORDER BY `sort`');
 			while($sql->isNext()) {
 				
 				$selected = ($active && $active == $sql->get('id')) ? 'selected="selected"' : '' ;
 			
-				self::$modulList[] = '<option value="'.$sql->get('id').'" '.$selected.'>'.$sql->get('name').'</option>';
+				$mlist[] = '<option value="'.$sql->get('id').'" '.$selected.'>'.$sql->get('name').'</option>';
 			
 				$sql->next();
 			}
 			
 		}
 		
-		return implode(PHP_EOL, self::$modulList);
+		return implode(PHP_EOL, $mlist);
 		
 	}
 	

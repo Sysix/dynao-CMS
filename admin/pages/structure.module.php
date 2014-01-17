@@ -57,6 +57,10 @@ if($action == 'add' || $action == 'edit') {
 	$field = $form->addTextareaField('output', $form->get('output'));
 	$field->fieldName(lang::get('output'));
 	
+	$field = $form->addCheckboxField('slots', $form->get('slots'));
+	$field->fieldName(lang::get('only_slots'));
+	$field->add(1, '');
+	
 	if($action == 'edit') {
 		$form->addHiddenField('id', $id);
 	}
