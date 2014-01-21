@@ -71,7 +71,7 @@ class userLogin {
 		}
 		
 		$sql = sql::factory();
-		$sql->query('SELECT password, salt id FROM '.sql::table('user').' WHERE `email` = "'.$sql->escape($email).'"');
+		$sql->query('SELECT password, salt, id FROM '.sql::table('user').' WHERE `email` = "'.$sql->escape($email).'"');
 		
 		// Username mit E-Mail vorhanden?
 		if(!$sql->num()) {
@@ -98,7 +98,8 @@ class userLogin {
 		
 		// Falls alte Methode (sha1) neuen Salt generieren und salt updaten
 		// sha1 deprecated 0.2 Beta
-		if(empty($sql->get('salt'))) {			
+		$salt = $sql->get('salt');
+		if(empty($salt)) {			
 			
 			$salt = self::generateSalt();
 			
