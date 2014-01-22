@@ -7,11 +7,15 @@ class user {
 
 	public function __construct($id) {		
 		
-		$sql = sql::factory();
-		$sql->query('SELECT * FROM '.sql::table('user').' WHERE id='.$id)->result();
-		
-		$this->entrys = $sql->result;
-		$this->entrys['perms'] = explode('|', $this->get('perms'));
+		if($id) {
+			
+			$sql = sql::factory();
+			$sql->query('SELECT * FROM '.sql::table('user').' WHERE id='.$id)->result();
+			
+			$this->entrys = $sql->result;
+			$this->entrys['perms'] = explode('|', $this->get('perms'));
+			
+		}
 		
 	}
 	

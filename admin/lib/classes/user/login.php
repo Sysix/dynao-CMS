@@ -63,7 +63,7 @@ class userLogin {
 		$password = type::post('password', 'string');
 		
 		// Formular ganz abgesendet?
-		if(empty($mail) || empty($password)) {
+		if(is_null($email) || is_null($password) || $email == '' || $password == '') {
 			
 			echo message::info(lang::get('login_form_notfull'), true);
 			return;
