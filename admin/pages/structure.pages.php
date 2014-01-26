@@ -35,7 +35,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		$sql = sql::factory();
 		$sql->setTable('structure_area');
 		foreach($sort as $s=>$s_id) {
-			$sql->setWhere('id='.$s_id);
+			$sql->setWhere('id='.$s_id.' AND slot = 0');
 			$sql->addPost('sort', $s+1);
 			$sql->update();
 		}
@@ -82,7 +82,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                     LEFT JOIN 
                         '.sql::table('module').' as m
                             ON m.id = s.modul
-                    WHERE structure_id = '.$structure_id.'
+                    WHERE structure_id = '.$structure_id.' AND slot = 0
                     ORDER BY `sort`');
                     $i = 1;
                     while($sql->isNext()) {
