@@ -345,6 +345,21 @@ class form {
 	}
 	
 	/**
+	 * Ein Dateifeld erstellen
+	 *
+	 * @param	string	$name			Der Name
+	 * @param	string	$value			Der Value
+	 * @param	array	$attributes		Die HTML Attribute
+	 * @return	class
+	 *
+	 */
+	public function addFileField($name, $value, $attributes = []) {
+		
+		return $this->addField($name, $value, 'formFile', $attributes);
+		
+	}
+	
+	/**
 	 * Ein Freies Feld erstellen
 	 *
 	 * @param	string	$value			Der Inhalt
