@@ -148,6 +148,24 @@ abstract class formField {
 		
 	}
 	
+	public function setRequired($required) {
+		
+		if(!is_bool($required)) {
+			//new Exception();				
+		}
+		
+		if($required) {
+			$this->addAttribute('required', 'required');	
+		} else {
+			$this->delAttribute('required');	
+		}
+		
+		$this->addValidator('notEmpty', 'Das Feld "'.$this->name.'" muss befüllt werden');
+		
+		return $this;
+		
+	}
+	
 	protected function convertAttr($attr = false) {
 		
 		if(!$attr) {
