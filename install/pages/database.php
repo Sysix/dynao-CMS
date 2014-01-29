@@ -18,19 +18,19 @@
 						$field = $form->addRawField('<h4>'.lang::get('db_database').'</h4>');
 						
 						$field = $form->addTextField('db_host', $DB['host']);
-						$field->addValidator('notEmpty', lang::get('validator_not_empty'));
+						$field->setRequired(true);
 						$field->fieldName(lang::get('db_host'));
 						
 						$field = $form->addTextField('db_user', $DB['user']);
-						$field->addValidator('notEmpty', lang::get('validator_not_empty'));
+						$field->setRequired(true);
 						$field->fieldName(lang::get('db_user'));
 						
-						$field = $form->addTextField('db_password', $DB['password']);
-						$field->addValidator('notEmpty', lang::get('validator_not_empty'));
+						$field = $form->addPasswordField('db_password', $DB['password']);
+						$field->setRequired(true);
 						$field->fieldName(lang::get('db_password'));
 						
 						$field = $form->addTextField('db_database', $DB['database']);
-						$field->addValidator('notEmpty', lang::get('validator_not_empty'));
+						$field->setRequired(true);
 						$field->fieldName(lang::get('db_database'));
 						
 						$field = $form->addTextField('db_prefix', $DB['prefix']);
@@ -39,20 +39,20 @@
 						$field = $form->addRawField('<h4>'.lang::get('user').'</h4>');
 						
 						$field = $form->addTextField('firstname', '');
-						$field->addValidator('notEmpty', lang::get('validator_not_empty'));
+						$field->setRequired(true);
 						$field->fieldName(lang::get('firstname'));
 						
 						$field = $form->addTextField('name', '');
-						$field->addValidator('notEmpty', lang::get('validator_not_empty'));
+						$field->setRequired(true);
 						$field->fieldName(lang::get('name'));
 						
 						$field = $form->addTextField('email', '');
 						$field->fieldName(lang::get('email'));
-						$field->addValidator('notEmpty', lang::get('validator_not_empty'));
+						$field->setRequired(true);
 						$field->addValidator('email', lang::get('user_wrong_email'));
 						
-						$field = $form->addTextField('password', '');
-						$field->addValidator('notEmpty', lang::get('validator_not_empty'));
+						$field = $form->addPasswordField('password', '');
+						$field->setRequired(true);
 						$field->fieldName(lang::get('password'));
 						
 						if($form->isSubmit()) {
