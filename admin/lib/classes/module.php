@@ -3,6 +3,7 @@
 class module {
 	
 	public $sql;
+	public $eval = true;
 	
 	public function __construct($id) {
 	
@@ -29,8 +30,18 @@ class module {
 		
 	}
 	
+	public function setEval($bool) {
+		
+		$this->eval = $bool;
+		
+		return $this;
+			
+	}
+	
 	public function getContent() {
 		$pageArea = new pageArea($this->sql);
+		
+		$pageArea->setEval($this->eval);
 		
 		return $pageArea->OutputFilter($this->sql->get('output'), $this->sql);
 	}
