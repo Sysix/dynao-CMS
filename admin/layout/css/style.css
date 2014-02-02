@@ -479,28 +479,32 @@ ul.news li .btn {
 	width:83.3333%;
 }
 
+#structure-body {
+	padding:0px;
+}
+
+#structure-body .alert {
+	margin:15px;
+}
+
 #structure-tree, #structure-tree ul {
 	padding:0px;
 	margin:0px;
 	list-style:none;
 }
-#structure-tree li {
-	margin:5px 0px;
-}
 
 #structure-tree div.handle {
 	background:#fff;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border-radius:5px;
-	border:1px solid #ddd;
 	padding:0px 10px;
-	height:41px;
-	line-height:41px;
+	height:38px;
+	line-height:38px;
+	border-bottom:1px solid #DDDDDD;
+	border-top:1px solid #DDDDDD;
 }
 
-#structure-tree div.dropzone {
-	height:6px;
+#structure-tree .dropzone {
+	height:4px;
+	background:#fff;
 }
 
 #structure-tree li.structure-edit  {
@@ -514,11 +518,12 @@ ul.news li .btn {
 
 #structure-tree span.btn-group {
 	float:right;
-	margin:5px 0px 0px 0px;
+	margin:3px 0px 0px 0px;
 }
 
-#structure-tree ul {
-	margin-left:20px;
+#structure-tree ul > li  {
+	margin-left:10px;
+	border-left:1px solid #ddd;
 }
 
 #structure-tree .ui-sortable-placeholder {
@@ -558,4 +563,24 @@ ul.news li .btn {
 
 .panel form .table {
 	margin-bottom:0px;
+}
+
+#loading-body {
+	position:absolute;
+	width:100%;
+	height:100%;
+	overflow:hidden;
+	z-index:998;
+	background:#fff;
+	background:rgba(255,255,255,0.8);
+}
+
+#loading-spin {
+	position:absolute;
+	left:50%;
+	top:50%;
+	font-size:120px;
+	color:#000;
+	margin:-60px 0px 0px -60px;	
+	z-index:999;
 }

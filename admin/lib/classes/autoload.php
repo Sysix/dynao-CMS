@@ -28,8 +28,7 @@ class autoload {
 			//throw new Exception();
 		}
 		
-		self::loadCache();
-		
+		self::loadCache();		
 		
         register_shutdown_function([__CLASS__, 'saveCache']);
 		
@@ -143,7 +142,7 @@ class autoload {
 		
 		self::$classes[$class] = $path;
 		
-		include_once($path);
+		include($path);
 		
 	}
 	
@@ -167,10 +166,7 @@ class autoload {
 		
 		$files = scandir($dir);
 		
-		foreach($files as $file) {			
-			
-			if(in_array($file, ['.', '..']))
-				continue;
+		foreach($files as $file) {
 				
 			if(strrchr($file, '.') != '.php')
 				continue;

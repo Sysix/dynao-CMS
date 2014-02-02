@@ -10,8 +10,10 @@ class sql {
 	static $DB_password;
 	static $DB_datenbank;
 	
-	var $query;
-	var $result;
+	static $QUERY_TYPE = [MYSQLI_NUM, MYSQLI_ASSOC, MYSQLI_BOTH];
+	
+	public $query;
+	public $result;
 	
 	var $counter = 0;
 	
@@ -19,9 +21,9 @@ class sql {
 	static $sql;
 	
 	// Zur Speicherung der Einträge
-	var $values = [];
-	var $table;
-	var $where;
+	public $values = [];
+	public $table;
+	public $where;
 	
 	// Verbindung zur Datenbank
 	static public function connect($host, $user, $pw, $db) {
@@ -84,7 +86,7 @@ class sql {
 				$this->query($query);
 			}
 			
-			if(!in_array($type, [MYSQLI_NUM, MYSQLI_ASSOC, MYSQLI_BOTH])) {
+			if(!in_array($type, self::$QUERY_TYPE)) {
 				
 				throw new Exception(sprintf(lang::get('sql_result_invalid_type'), __CLASS__));
 				
@@ -116,7 +118,7 @@ class sql {
 	public function num($query = false) {
 		
 		if(!$query) {
-			return ($this->query && is_object($this->query)) ? $this->query->num_rows : 0;			
+			return ($this->query) ? $this->query->num_rows : 0;			
 		}
 			
 		$sql = sql::factory();

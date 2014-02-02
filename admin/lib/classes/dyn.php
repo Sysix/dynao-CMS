@@ -17,7 +17,7 @@ class dyn {
 	
 	public static function has($name) {
 		
-		return array_key_exists($name, self::$params);
+		return isset(self::$params[$name]) || array_key_exists($name, self::$params);
 		
 	}
 	

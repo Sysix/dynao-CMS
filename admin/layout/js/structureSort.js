@@ -1,5 +1,6 @@
-$('#structure-tree li').prepend('<div class="dropzone"></div>');
+$('#structure-tree li div.handle').parent().prepend('<div class="dropzone"></div>');
 
+function makeDroppable() {
     $('#structure-tree .handle, #structure-tree .dropzone').droppable({
         accept: '#structure-tree li',
         tolerance: 'pointer',
@@ -58,11 +59,13 @@ $('#structure-tree li').prepend('<div class="dropzone"></div>');
 			};
 			
 			var getString = document.location.search.substr(1,document.location.search.length);
-			
-			$('#ajax-content').fadeOut(200);
 			setTimeout(function() {
+				getAjaxLoad();
 				$.post('index.php?'+getString, {array: returnArray() }, function(data) {
-					$('#ajax-content').html(data).fadeIn(200);
+					$('#structure-body').html(data);
+					$('#structure-tree li div.handle').parent().prepend('<div class="dropzone"></div>');
+					makeDroppable();
+					removeAjaxLoad();
 				});
 			}, 0);
 			
@@ -82,3 +85,7 @@ $('#structure-tree li').prepend('<div class="dropzone"></div>');
         helper: 'clone',
         zIndex: 100,
     });
+	
+}
+
+makeDroppable();

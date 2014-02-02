@@ -85,12 +85,17 @@ class pageMisc {
 						<span class="btn-group">'.$online.$edit.$delete.'</span>'.PHP_EOL.'
 					</div>'.PHP_EOL;
 				
-				$select .= self::getTreeStructurePage($sql->get('id'), $lvl+1);			
+				$select .= self::getTreeStructurePage($sql->get('id'), $lvl+1);
 				
+				if($sql->counter+1 == $sql->num()) {
+					$select .= '<div class="dropzone"></div>';
+				}
 				$select .= '</li>'.PHP_EOL;
 				
 				$sql->next();
 			}
+			
+			
 			
 			$select .= '</ul>';
 			

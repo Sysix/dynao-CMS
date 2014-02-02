@@ -47,6 +47,18 @@
 	
 } (jQuery));
 
+function getAjaxLoad() {
+	
+	$('<div>').attr('id', 'loading-body').attr('hidden', true).appendTo('body').fadeIn(200);
+	$('<div>').attr('id', 'loading-spin').addClass('fa fa-spin fa-spinner').attr('hidden', true).appendTo('body').fadeIn(200);
+	
+}
+
+function removeAjaxLoad() {
+	$('#loading-body').remove();
+	$('#loading-spin').remove();	
+}
+
 $(document).ready(function () {
 	
 	$('.form-back').click(function() {

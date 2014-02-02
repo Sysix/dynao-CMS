@@ -19,7 +19,7 @@ class pageAreaHtml {
 		
 		$return .= '		<select name="modul" class="form-control">';
 		$return .= '		<option>'.lang::get('module_add').'</option>';
-		$return .= self::moduleList();
+		$return .= self::moduleList(false, true);
 		$return .= '		</select>';
 		$return .= '	</form>';
 		$return .= '</div>';

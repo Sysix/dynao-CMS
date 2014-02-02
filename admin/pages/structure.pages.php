@@ -190,7 +190,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		
 		pageMisc::sortStructure($sort, 0);
 		
-		ajax::addReturn(message::success(lang::get('save_sorting'), true));
+		echo message::success(lang::get('save_sorting'), true);
 		
 	}
 	
@@ -299,11 +299,15 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	}
 	
 	if($action == '') {
+		
+		if(ajax::is()) {
+			echo pageMisc::getTreeStructurePage();
+			exit();
+		}
 	
 	?>
 	<div class="row">
 		<div class="col-lg-12">
-        	<div id="ajax-content"></div>
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title pull-left"><?php echo lang::get('pages'); ?></h3>
@@ -318,7 +322,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 					?>
 					<div class="clearfix"></div>
 				</div>
-				<div class="panel-body">
+				<div class="panel-body" id="structure-body">
 				<?php
 					echo pageMisc::getTreeStructurePage();
 				?>

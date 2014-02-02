@@ -40,7 +40,12 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 			$sql->update();
 		}
 		
+<<<<<<< HEAD
 		page::generateArticle($structure_id);
+=======
+		$field = $form->addRawField('<select name="modul" class="form-control">'.pageAreaHtml::moduleList($form->get('modul')).'</select>');
+		$field->fieldName(lang::get('module'));
+>>>>>>> sortStructure css+js update, slots bugfix
 		
 		ajax::addReturn(message::success(lang::get('save_sorting'), true));
 		
