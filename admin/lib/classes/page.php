@@ -42,30 +42,17 @@ class page {
 		return module::getByStructureId($this->get('id'));
 	}
 	
-	public static function generateArticle($id) {
-		
-		$return = [];
-		
-		$backend = dyn::get('backend');
-		dyn::add('backend', false);
-		
-		$page = new page($id);
-		$blocks = $page->getBlocks();
-		
-		foreach($blocks as $block) {
-			$return[] =  $block->getContent();
-		}
-		
-		dyn::add('backend', $backend);
-		
-		return implode(PHP_EOL, $return);
-	}
-	
 	public function getTemplate() {
 		
 		ob_start();
 		
-		$content = self::generateArticle($this->get('id'));
+		if(!pageCache::exist($this->get('id'))) {
+			pageCache::generateArticle($this->get('id'));
+		}
+				
+		$content = pageCache::read($this->get('id'));
+		
+		$content = pageArea::getEval($content);
 		
 		$content = extension::get('FRONTEND_OUTPUT', $content);
 		

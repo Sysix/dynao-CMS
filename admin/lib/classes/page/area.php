@@ -147,7 +147,7 @@ class pageArea {
 	
 	////////////////////// Eingabe/Ausgabe Dynamisch machen
 	
-	protected function getEval($content) {
+	public static function getEval($content) {
 		
 		ob_start();
 		ob_implicit_flush(0);
@@ -199,7 +199,7 @@ class pageArea {
 		$content = str_replace(['//DYN-NOT-EVAL-END', '//DYN-NOT-EVAL'], '', $content);
 		
 		if($this->eval) {
-			$content = $this->getEval($content);
+			$content = self::getEval($content);
 		}
 		
 		return $content;

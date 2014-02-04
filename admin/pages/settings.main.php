@@ -1,16 +1,19 @@
 <?php
 if($action == 'deleteCache') {
 	cache::clear();
+	pageCache::clearAll();
 	extension::get('SETTINGS_DELETE_CACHE');
 	echo message::success(lang::get('delete_cache_success'), true);	
 }
 if($action == 'loadTemplate') {
+	
 	$template = new template(dyn::get('template'));
 	if($template->install(true) !== true) {
 		echo message::danger(lang::get('load_template_failed'), true);
 	} else {
 		echo message::success(lang::get('load_template_success'), true);
-	}	
+	}
+	
 }
 ?>
 <div class="row">	
