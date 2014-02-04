@@ -35,17 +35,13 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		$sql = sql::factory();
 		$sql->setTable('structure_area');
 		foreach($sort as $s=>$s_id) {
-			$sql->setWhere('id='.$s_id.' AND slot = 1');
+			$sql->setWhere('id='.$s_id.' AND block = 1');
 			$sql->addPost('sort', $s+1);
 			$sql->update();
 		}
 		
-<<<<<<< HEAD
-		page::generateArticle($structure_id);
-=======
 		$field = $form->addRawField('<select name="modul" class="form-control">'.pageAreaHtml::moduleList($form->get('modul')).'</select>');
 		$field->fieldName(lang::get('module'));
->>>>>>> sortStructure css+js update, slots bugfix
 		
 		ajax::addReturn(message::success(lang::get('save_sorting'), true));
 		
@@ -59,18 +55,18 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		
 	}
 	
-	$slotSql = sql::factory();
-	$slotSql->result('SELECT name FROM '.sql::table('slots').' WHERE id = '.$structure_id);
+	$blockSql = sql::factory();
+	$blockSql->result('SELECT name FROM '.sql::table('block').' WHERE id = '.$structure_id);
 	
 	?>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title pull-left"><?php echo $slotSql->get('name'); ?></h3>
+                    <h3 class="panel-title pull-left"><?php echo $blockSql->get('name'); ?></h3>
                     <div class="pull-right">
-                    	<a href="<?php echo url::backend('structure', ['subpage'=>'slots', 'action'=>'edit', 'id'=>$structure_id]); ?>" class="btn btn-sm btn-warning"><?php echo lang::get('edit'); ?></a>
-						<a href="<?php echo url::backend('structure', ['subpage'=>'slots']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('back'); ?></a>
+                    	<a href="<?php echo url::backend('structure', ['subpage'=>'blocks', 'action'=>'edit', 'id'=>$structure_id]); ?>" class="btn btn-sm btn-warning"><?php echo lang::get('edit'); ?></a>
+						<a href="<?php echo url::backend('structure', ['subpage'=>'blocks']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('back'); ?></a>
 					</div>
 					<div class="clearfix"></div>
                 </div>
@@ -86,7 +82,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                     LEFT JOIN 
                         '.sql::table('module').' as m
                             ON m.id = s.modul
-                    WHERE structure_id = '.$structure_id.' AND slot = 1
+                    WHERE structure_id = '.$structure_id.' AND block = 1
                     ORDER BY `sort`');
                     $i = 1;
                     while($sql->isNext()) {
@@ -142,9 +138,9 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                               <div class="panel-heading">
                                 <h3 class="panel-title pull-left"><?php echo $sql->get('name'); ?></h3>
                                 <div class="pull-right btn-group">
-                                    <a href="<?php echo url::backend('structure', ['subpage'=>'slots', 'structure_id'=>$structure_id, 'action'=>'online', 'id'=>$sql->get('id')]); ?>" class="btn btn-sm dyn-<?php echo $class; ?>"></a>
-                                    <a href="<?php echo url::backend('structure', ['subpage'=>'slots', 'structure_id'=>$structure_id, 'action'=>'edit', 'id'=>$sql->get('id')]); ?>" class="btn btn-default btn-sm fa fa-edit"></a>
-                                    <a href="<?php echo url::backend('structure', ['subpage'=>'slots', 'structure_id'=>$structure_id, 'action'=>'delete', 'id'=>$sql->get('id')]); ?>" class="btn btn-danger btn-sm fa fa-trash-o delete"></a>
+                                    <a href="<?php echo url::backend('structure', ['subpage'=>'blocks', 'structure_id'=>$structure_id, 'action'=>'online', 'id'=>$sql->get('id')]); ?>" class="btn btn-sm dyn-<?php echo $class; ?>"></a>
+                                    <a href="<?php echo url::backend('structure', ['subpage'=>'blocks', 'structure_id'=>$structure_id, 'action'=>'edit', 'id'=>$sql->get('id')]); ?>" class="btn btn-default btn-sm fa fa-edit"></a>
+                                    <a href="<?php echo url::backend('structure', ['subpage'=>'blocks', 'structure_id'=>$structure_id, 'action'=>'delete', 'id'=>$sql->get('id')]); ?>" class="btn btn-danger btn-sm fa fa-trash-o delete"></a>
                                 </div>
                                 <div class="clearfix"></div>
                               </div>
@@ -193,7 +189,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	if(!is_null($secondpage) && dyn::get('user')->hasPerm('page[content]')) {
 		
 		if(!is_null(type::post('save-back')) || !is_null(type::post('save'))) {
-			slot::saveBlock();
+			block::saveBlock();
 			echo message::success(lang::get('structure_content_save'), true);
 		}
 		
@@ -202,13 +198,13 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 			$sql = sql::factory();
 			$sql->query('
 			SELECT 
-			  s.*, m.output 
+			  b.*, m.output 
 			FROM 
-			  '.sql::table('slots').' AS s
+			  '.sql::table('blocks').' AS b
 			  LEFT JOIN
 				'.sql::table('module').' AS m
 					ON m.id = s.modul
-			WHERE s.id='.$id)->result();
+			WHERE b.id='.$id)->result();
 			$pageArea = new pageArea($sql);
 			
 			$form = form::factory('module', 'id='.$sql->get('modul'), 'index.php');
@@ -244,11 +240,11 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		if($action == 'delete' && dyn::get('user')->hasPerm('page[delete]')) {
 			
 			$sql = sql::factory();
-			$sql->setTable('slots');
+			$sql->setTable('blocks');
 			$sql->setWhere('id='.$id);
 			$sql->delete();
 			
-			echo message::success(lang::get('slot_deleted'), true);
+			echo message::success(lang::get('block_deleted'), true);
 			
 			$action = '';	
 		}
@@ -267,7 +263,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 				}
 		});");
 		
-			$form = form::factory('slots', 'id='.$id, 'index.php');
+			$form = form::factory('blocks', 'id='.$id, 'index.php');
 			
 			$field = $form->addTextField('name', $form->get('name'));
 			$field->fieldName(lang::get('name'));
@@ -277,7 +273,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 			$field->fieldName(lang::get('description'));
 			
 			$field = $form->addCheckboxField('is-structure', $form->get('is-structure'));
-			$field->fieldName(lang::get('slots_show'));
+			$field->fieldName(lang::get('blocks_show'));
 			$field->add('1', lang::get('all_categories'), ['id'=>'allcat-button']);
 			
 			$select = pageMisc::getTreeStructure(true, $form->get('structure'));
@@ -328,7 +324,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 			->addCell(lang::get('action'));
 			
 			$table->addSection('tbody');
-			$table->setSql("SELECT * FROM ".sql::table('slots')." WHERE template = '".dyn::get('template')."'");
+			$table->setSql("SELECT * FROM ".sql::table('blocks')." WHERE template = '".dyn::get('template')."'");
 			if($table->numSql()) {
 				while($table->isNext()) {
 					
@@ -336,17 +332,17 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 					$deleted = '';
 					
 					if(dyn::get('user')->hasPerm('page[content]')) {
-						$name = '<a href="'.url::backend('structure', ['subpage'=>'slots', 'structure_id'=>$table->get('id')]).'">'.$table->get('name').'</a>';
+						$name = '<a href="'.url::backend('structure', ['subpage'=>'blocks', 'structure_id'=>$table->get('id')]).'">'.$table->get('name').'</a>';
 					} else {
 						$name = $table->get('name');	
 					}
 					
 					if(dyn::get('user')->hasPerm('page[edit]')) {
-						$edit = '<a href='.url::backend('structure', ['subpage'=>'slots', 'action'=>'edit', 'id'=>$table->get('id')]).' class="btn btn-sm btn-default fa fa-pencil-square-o"></a>';
+						$edit = '<a href='.url::backend('structure', ['subpage'=>'blocks', 'action'=>'edit', 'id'=>$table->get('id')]).' class="btn btn-sm btn-default fa fa-pencil-square-o"></a>';
 					}
 					
 					if(dyn::get('user')->hasPerm('page[delete]')) {
-						$delete = '<a href='.url::backend('structure', ['subpage'=>'slots', 'action'=>'delete', 'id'=>$table->get('id')]).' class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
+						$delete = '<a href='.url::backend('structure', ['subpage'=>'blocks', 'action'=>'delete', 'id'=>$table->get('id')]).' class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
 					}
 					
 					$table->addRow()
@@ -367,12 +363,12 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 			<div class="col-lg-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title pull-left"><?php echo lang::get('slots_current_page'); ?></h3>
+						<h3 class="panel-title pull-left"><?php echo lang::get('blocks_current_page'); ?></h3>
 						<?php
 						if(dyn::get('user')->hasPerm('page[edit]')) { 
 						?>
 						<span class="btn-group pull-right">
-							<a href="<?php echo url::backend('structure', ['subpage'=>'slots', 'action'=>'add']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('add'); ?></a>
+							<a href="<?php echo url::backend('structure', ['subpage'=>'blocks', 'action'=>'add']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('add'); ?></a>
 						</span>
 						<?php
 						}

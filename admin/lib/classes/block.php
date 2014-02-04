@@ -1,17 +1,17 @@
 <?php
 
-class slot {
+class block {
 	use traitFactory;
 	use traitMeta;
 	
-	static $slots = [];
+	static $blocks = [];
 	
 	public $sql;
 	
 	/*
-	 * Einen Slot aufrufen
+	 * Einen Block aufrufen
 	 *
-	 * @param	string	$name			Slotname
+	 * @param	string	$name			Blockname
 	 */
 	public function __construct($name) {
 		
@@ -20,7 +20,7 @@ class slot {
 	}
 	
 	/*
-	 * Gibt den Content des Slots aus
+	 * Gibt den Content des Block aus
 	 *
 	 * @return	string
 	 */
@@ -36,20 +36,20 @@ class slot {
 	}
 	
 	/*
-	 * Gibt den Slot direkt aus
+	 * Gibt den Block direkt aus
 	 *
-	 * @param	string	$name			Slotname
+	 * @param	string	$name			Blockname
 	 * @return	string
 	 */
-	public static function getSlot($name) {
+	public static function getBlock($name) {
 		
 		$class = __CLASS__;
 		
 		try {
 		
-			$slot = new $class($name);
+			$block = new $class($name);
 			
-			return $slot->getContent();
+			return $block->getContent();
 			
 		} catch(Exception $e) {
 			
@@ -59,10 +59,10 @@ class slot {
 	}
 	
 	/*
-	 * Überprüfen ob der Slot in der Kategorie angezeigt werden darf
+	 * Überprüfen ob der Block in der Kategorie angezeigt werden darf
 	 *
 	 * @param	int		$is-structure	Ob in allen Kategorien oder nicht
-	 * @param	array	$structure		Die Kategorien, wo der Slot angezeigt wird
+	 * @param	array	$structure		Die Kategorien, wo der Block angezeigt wird
 	 * @return	bool
 	 */
 	public static function isInCategory($is_structure, $structure) {
@@ -77,38 +77,38 @@ class slot {
 	/*
 	 * SQL Eintrag rausholen
 	 *
-	 * @param	string	$name			Name des Slots
+	 * @param	string	$name			Name des Block
 	 * @return	object
 	 */
 	public static function getSql($name) {
 	
-		if(!isset(self::$slots[$name])) {
-			throw new Exception(sprintf(lang::get('slot_name_not_exist'), $name));
+		if(!isset(self::$blocks[$name])) {
+			throw new Exception(sprintf(lang::get('block_name_not_exist'), $name));
 		}
 		
-		return self::$slots[$name];
+		return self::$blocks[$name];
 	}
 	
 	/*
-	 * Alle Slots aus der Datenbank holen und statische Variable speichern
+	 * Alle Blocks aus der Datenbank holen und statische Variable speichern
 	 */
 	protected static function generateAll() {
 		
-		if(empty(self::$slots)) {
+		if(empty(self::$blocks)) {
 			
 			$sql = sql::factory();
 			$sql->query('
 			SELECT 
 			  s.*, m.output 
 			FROM 
-			  '.sql::table('slots').' AS s
+			  '.sql::table('blocks').' AS s
 			  LEFT JOIN
 			  	'.sql::table('module').' AS m
 					ON m.id = s.modul
 			')->result();
 			while($sql->isNext()) {
 				$sql2 = clone $sql;
-				self::$slots[$sql->get('name')] = $sql2;
+				self::$blocks[$sql->get('name')] = $sql2;
 				
 				$sql->next();
 			}
@@ -118,7 +118,7 @@ class slot {
 	}
 	
 	/*
-	 * Alle Slots zurückgeben
+	 * Alle Blocks zurückgeben
 	 *
 	 * @return	array
 	 */
@@ -126,19 +126,19 @@ class slot {
 		
 		self::generateAll();
 		
-		return self::$slots;
+		return self::$blocks;
 		
 	}
 	
 	/*
-	 * Content des Slots speichern
+	 * Content des Blocks speichern
 	 */
 	public static function saveBlock() {
 		
 		$id = type::post('id', 'int');
 		
 		$sql = sql::factory();
-		$sql->setTable('slots');
+		$sql->setTable('blocks');
 		
 		foreach(pageArea::$types as $class) {
 			$class = new $class();

@@ -50,8 +50,8 @@
         		<div class="col-lg-12">
 				<?php
                 
-                if(slot::getSlot('welcome'))
-                    echo slot::getSlot('welcome');
+                if(block::getBlock('welcome'))
+                    echo block::getBlock('welcome');
                 else
                     echo '<h1>'.$this->get('name').'</h1>';
                 
@@ -65,7 +65,7 @@
     	<div class="row">
         	<div class="col-lg-12">
                 <section id="content">
-                	<?= slot::getSlot('boxen'); ?>
+                	<?= block::getBlock('boxen'); ?>
                     
                     <div class="row">
         				<div class="col-md-8">

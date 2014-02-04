@@ -16,7 +16,7 @@ if(
 	dyn::get('user')->hasPerm('page[content]')
 ) {
 	backend::addSubnavi(lang::get('pages'),		url::backend('structure', ['subpage'=>'pages']), 		'home');
-	backend::addSubnavi(lang::get('slots'),		url::backend('structure', ['subpage'=>'slots']), 		'th-large');
+	backend::addSubnavi(lang::get('blocks'),	url::backend('structure', ['subpage'=>'blocks']), 		'th-large');
 }
 
 if(dyn::get('user')->hasPerm('page[module]')) {

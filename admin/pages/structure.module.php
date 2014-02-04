@@ -24,7 +24,7 @@ if($action == 'delete') {
 	
 	$sql = sql::factory();
 	$num = $sql->num('SELECT id FROM '.sql::table('structure_area').' WHERE modul = '.$id);
-	$num2 = $sql->num('SELECT id FROM '.sql::table('slots').' WHERE modul = '.$id);
+	$num2 = $sql->num('SELECT id FROM '.sql::table('blocks').' WHERE modul = '.$id);
 	
 	if($num || $num2) {
 		
@@ -57,8 +57,8 @@ if($action == 'add' || $action == 'edit') {
 	$field = $form->addTextareaField('output', $form->get('output'));
 	$field->fieldName(lang::get('output'));
 	
-	$field = $form->addCheckboxField('slots', $form->get('slots'));
-	$field->fieldName(lang::get('only_slots'));
+	$field = $form->addCheckboxField('blocks', $form->get('blocks'));
+	$field->fieldName(lang::get('only_blocks'));
 	$field->add(1, '');
 	
 	if($action == 'edit') {

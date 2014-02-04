@@ -47,47 +47,47 @@ class template {
 			
 	}
 	
-	public function installSlots($update = false) {
+	public function installBlocks($update = false) {
 		
-		$slots = sql::factory();
-		$slots->setTable('slots');
+		$blocks = sql::factory();
+		$blocks->setTable('blocks');
 		
 		$modul = sql::factory();
 		$modul->setTable('module');
 	
-		foreach($this->get('slots', []) as $name=>$slot) {
+		foreach($this->get('blocks', []) as $name=>$block) {
 			
-			$slotExists = $slots->num('SELECT id FROM '.sql::table('slots').' WHERE `name` = "'.$name.'" AND `template` = "'.$this->name.'"');
+			$blockExists = $blocks->num('SELECT id FROM '.sql::table('blocks').' WHERE `name` = "'.$name.'" AND `template` = "'.$this->name.'"');
 			
-			if(!$update && $slotExists) {
+			if(!$update && $blockExists) {
 				continue;
 			}
 			
 			$modul->addPost('name', $name);
-			$modul->addPost('input', $slot['input']);
-			$modul->addPost('output', $slot['output']);
+			$modul->addPost('input', $block['input']);
+			$modul->addPost('output', $block['output']);
 			
-			if(!$slotExists) {
+			if(!$blockExists) {
 				$modul->save();
 				$modul_id = $modul->insertId();			
 			} else {
 				$modul->setWhere('name="'.$name.'"');
 				$modul->update();
 				
-				$modul->result('SELECT id FROM '.sql::table('module').' WHERE name = "'.$name.'"');
+				$modul->select('id')->result();
 				$modul_id = $modul->get('id');
 			}
 			
-			$slots->addPost('name', $name);
-			$slots->addPost('description', $slot['description']);
-			$slots->addPost('template', $this->name);
-			$slots->addPost('modul', $modul_id);
+			$block->addPost('name', $name);
+			$block->addPost('description', $block['description']);
+			$block->addPost('template', $this->name);
+			$block->addPost('modul', $modul_id);
 				
-			if(!$slotExists) {
-				$slots->save();
+			if(!$blockExists) {
+				$block->save();
 			} else {
-				$slots->setWhere('name="'.$name.'" AND template="'.$this->name.'"');
-				$slots->update();
+				$block->setWhere('name="'.$name.'" AND template="'.$this->name.'"');
+				$block->update();
 			}
 			
 		}
@@ -100,7 +100,7 @@ class template {
 			return false;	
 		}
 		
-		$this->installSlots($update);
+		$this->installBlocks($update);
 		
 		return true;
 				

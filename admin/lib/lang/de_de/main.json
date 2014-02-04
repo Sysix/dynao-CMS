@@ -136,12 +136,12 @@
 	"module_deleted":			"Modul erfolgreich gelöscht",
 	"module_in_use":			"Das Modul wird noch verwendet",
 	
-	#Slots
-	"slots_current_page":		"Slots im aktuellen Template",
-	"slots":					"Slots",
-	"slot_name_not_exist":		"[Der Slot \"%s\" existiert nicht]",
-	"slots_show":				"Anzeigen in",
-	"slot_deleted":				"Slot erfolgreich gelöscht",
+	#Block
+	"blocks_current_page":		"Blocks im aktuellen Template",
+	"blocks":					"Blocks",
+	"block_name_not_exist":		"[Der Block \"%s\" existiert nicht]",
+	"blocks_show":				"Anzeigen in",
+	"block_deleted":			"Block erfolgreich gelöscht",
 	
 	#User
 	"user_wrong_email":			"Bitte geben Sie eine gültige E-Mail-Adresse an",

@@ -135,11 +135,11 @@
 	"module_in_use":			"The module is still in use",
 	
 	#Slots
-	"slots_current_page":		"Slots at the current template",
-	"slots":					"slots",
-	"slot_name_not_exist":		"[The slot \"%s\" does not exist]",
-	"slots_show":				"Show in",
-	"slot_deleted":				"Slot successfully deleted",
+	"blocks_current_page":		"Blocks at the current template",
+	"blocks":					"blocks",
+	"block_name_not_exist":		"[The block \"%s\" does not exist]",
+	"blocks_show":				"Show in",
+	"block_deleted":			"Block successfully deleted",
 	
 	#User
 	"user_wrong_email":			"Please enter a valid email address",

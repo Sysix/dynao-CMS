@@ -4,7 +4,7 @@ class install {
 	public static function update0_1to0_2() {
 		
 		$sql = sql::factory();
-		$sql->query('ALTER TABLE '.sql::table('module').' ADD `slots` int(1) unsigned NOT NULL');
+		$sql->query('ALTER TABLE '.sql::table('module').' ADD `blocks` int(1) unsigned NOT NULL');
 		$sql->query('ALTER TABLE '.sql::table('user').' ADD `salt` VARCHAR(255) NOT NULL');		
 		
 	}
@@ -18,7 +18,7 @@ class install {
 		  `name`		varchar(255) 			NOT NULL,
 		  `input` 		text 					NOT NULL,
 		  `output`		text 					NOT NULL,
-		  `slots`		int(1)		unsigned 	NOT NULL,
+		  `blocks`		int(1)		unsigned 	NOT NULL,
 		  `sort`		int(16)		unsigned 	NOT NULL,
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
@@ -60,7 +60,7 @@ class install {
 		$sql->query('DROP TABLE `'.sql::table('structure_area').'`');				
 		$sql->query('CREATE TABLE `'.sql::table("structure_area").'` (
 		  `id`			int(16)		unsigned	NOT NULL		auto_increment,
-		  `slot`		int(1)		unsigned	NOT NULL,
+		  `block`		int(1)		unsigned	NOT NULL,
 		  `structure_id`int(16) 	unsigned	NOT NULL,
 		  `sort`		int(16)		unsigned	NOT NULL,
 		  `modul`		int(16)		unsigned	NOT NULL,
@@ -114,8 +114,8 @@ class install {
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 		
-		$sql->query('DROP TABLE `'.sql::table('slots').'`');				
-		$sql->query('CREATE TABLE `'.sql::table("slots").'` (
+		$sql->query('DROP TABLE `'.sql::table('blocks').'`');				
+		$sql->query('CREATE TABLE `'.sql::table("blocks").'` (
 		  `id` 			int(11) 	unsigned	NOT NULL	auto_increment,
 		  `name` 		varchar(255)			NOT NULL,
 		  `description`	varchar(255)			NOT NULL,
