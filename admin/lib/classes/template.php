@@ -78,16 +78,16 @@ class template {
 				$modul_id = $modul->get('id');
 			}
 			
-			$block->addPost('name', $name);
-			$block->addPost('description', $block['description']);
-			$block->addPost('template', $this->name);
-			$block->addPost('modul', $modul_id);
+			$blocks->addPost('name', $name);
+			$blocks->addPost('description', $block['description']);
+			$blocks->addPost('template', $this->name);
+			$blocks->addPost('modul', $modul_id);
 				
 			if(!$blockExists) {
-				$block->save();
+				$blocks->save();
 			} else {
-				$block->setWhere('name="'.$name.'" AND template="'.$this->name.'"');
-				$block->update();
+				$blocks->setWhere('name="'.$name.'" AND template="'.$this->name.'"');
+				$blocks->update();
 			}
 			
 		}

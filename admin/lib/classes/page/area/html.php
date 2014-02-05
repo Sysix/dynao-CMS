@@ -31,7 +31,7 @@ class pageAreaHtml {
 	public static function moduleList($active = false, $onlySlots = false) {
 		
 		if($onlySlots) {
-			$where = ' WHERE `slots` != 1';
+			$where = ' WHERE `blocks` != 1';
 			$mlist = &self::$modulList;
 		} else {
 			$where = '';

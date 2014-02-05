@@ -88,10 +88,12 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                             ON m.id = s.modul
                     WHERE structure_id = '.$structure_id.' AND block = 0
                     ORDER BY `sort`');
+					
                     $i = 1;
                     while($sql->isNext()) {
                         
                         $sqlId = ($action == 'add') ? 0 : $sql->get('id');
+						
                         $module = new pageArea($sql);
                         if(in_array($action, ['add', 'edit'])) {
                             
@@ -169,7 +171,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 						
 						$form_id = type::super('modul', 'int');
 						
-						$form = pageAreaHtml::formBlock(new pageArea(0));
+						$form = pageAreaHtml::formBlock(new pageArea(new sql()));
 						echo pageAreaHtml::formOut($form);
 						
 					} else {

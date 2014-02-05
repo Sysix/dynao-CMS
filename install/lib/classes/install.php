@@ -12,7 +12,7 @@ class install {
 	public static function newInstall() {
 		
 		$sql = new sql();
-		$sql->query('DROP TABLE `'.sql::table('module').'`');
+		$sql->query('DROP TABLE IF EXISTS `'.sql::table('module').'`');
 		$sql->query('CREATE TABLE `'.sql::table("module").'` (
 		  `id` 			int(16)		unsigned 	NOT NULL 	auto_increment,
 		  `name`		varchar(255) 			NOT NULL,
@@ -23,7 +23,7 @@ class install {
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 		
-		$sql->query('DROP TABLE `'.sql::table('structure').'`');				
+		$sql->query('DROP TABLE IF EXISTS `'.sql::table('structure').'`');				
 		$sql->query('CREATE TABLE `'.sql::table("structure").'` (
 		  `id` 			int(16)		unsigned	NOT NULL 	auto_increment,
 		  `name`		varchar(255) 			NOT NULL,
@@ -34,7 +34,7 @@ class install {
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 								
-		$sql->query('DROP TABLE `'.sql::table('user').'`');
+		$sql->query('DROP TABLE IF EXISTS `'.sql::table('user').'`');
 		$sql->query('CREATE TABLE `'.sql::table("user").'` (
 		  `id` 			int(11) 	unsigned	NOT NULL	auto_increment,
 		  `firstname` 	varchar(255)			NOT NULL,
@@ -57,7 +57,7 @@ class install {
 		$sql->addPost('admin', 1);
 		$sql->save();
 		
-		$sql->query('DROP TABLE `'.sql::table('structure_area').'`');				
+		$sql->query('DROP TABLE IF EXISTS `'.sql::table('structure_area').'`');				
 		$sql->query('CREATE TABLE `'.sql::table("structure_area").'` (
 		  `id`			int(16)		unsigned	NOT NULL		auto_increment,
 		  `block`		int(1)		unsigned	NOT NULL,
@@ -105,7 +105,7 @@ class install {
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 		
-		$sql->query('DROP TABLE `'.sql::table('addons').'`');				
+		$sql->query('DROP TABLE IF EXISTS `'.sql::table('addons').'`');				
 		$sql->query('CREATE TABLE `'.sql::table("addons").'` (
 		  `id` 			int(11) 	unsigned	NOT NULL	auto_increment,
 		  `name` 		varchar(255)			NOT NULL,
@@ -114,10 +114,11 @@ class install {
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 		
-		$sql->query('DROP TABLE `'.sql::table('blocks').'`');				
+		$sql->query('DROP TABLE IF EXISTS `'.sql::table('blocks').'`');				
 		$sql->query('CREATE TABLE `'.sql::table("blocks").'` (
 		  `id` 			int(11) 	unsigned	NOT NULL	auto_increment,
 		  `name` 		varchar(255)			NOT NULL,
+		  `moudl` 		int(11)		unsigned	NOT NULL,
 		  `description`	varchar(255)			NOT NULL,
 		  `template` 	varchar(255)			NOT NULL,
 		  `is-structure`int(1)		unsigned	NOT NULL	DEFAULT "1",

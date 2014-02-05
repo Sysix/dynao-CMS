@@ -99,12 +99,12 @@ class block {
 			$sql = sql::factory();
 			$sql->query('
 			SELECT 
-			  s.*, m.output 
+			  b.*, m.output 
 			FROM 
-			  '.sql::table('blocks').' AS s
+			  '.sql::table('blocks').' AS b
 			  LEFT JOIN
 			  	'.sql::table('module').' AS m
-					ON m.id = s.modul
+					ON m.id = b.modul
 			')->result();
 			while($sql->isNext()) {
 				$sql2 = clone $sql;
