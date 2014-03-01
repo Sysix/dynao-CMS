@@ -56,7 +56,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	}
 	
 	$blockSql = sql::factory();
-	$blockSql->result('SELECT name FROM '.sql::table('block').' WHERE id = '.$structure_id);
+	$blockSql->result('SELECT name FROM '.sql::table('blocks').' WHERE id = '.$structure_id);
 	
 	?>
     <div class="row">
