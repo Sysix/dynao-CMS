@@ -43,6 +43,51 @@ if($action == 'delete') {
 	
 }
 
+if($action == 'import') {
+	
+	$content = apiserver::getModuleFile();
+	
+	if($id && isset($content[$id])) {
+		
+		$sql = sql::factory();
+		$sql->addPost('name', $content[$id]['name']);
+		$sql->addPost('input', $content[$id]['install']['input']);
+		$sql->addPost('output', $content[$id]['install']['output']);
+		$sql->addPost('blocks', $content[$id]['install']['blocks']);
+		$sql->save();
+		
+		echo message::success('Modul '.$content[$id]['name'].' wurde erfolgreich installiert', true);
+		$action = '';
+		
+	} else {
+	
+		$table = table::factory();
+		
+		$table->addRow()
+		->addCell('Id')
+		->addCell('')
+		->addCell('Downloads')
+		->addCell('Aktionen');
+		
+		foreach($content as $id=>$modul) {
+			
+			$code = '<a href="'.$modul['link'].'" class="btn btn-sm btn-success">Code anzeigen</a>';
+			$import = '<a href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'import', 'id'=>$id]).'">Importieren</a>';
+			
+			$table->addRow()
+			->addCell($id)
+			->addCell('<h3>'.$modul['name'].'</h3><br />'.$modul['info'])
+			->addCell($modul['downloads'])
+			->addCell('<span class="btn-group">'.$code.$import.'</span>');
+				
+		}
+		
+		$table->show();
+	
+	}
+		
+}
+
 if($action == 'add' || $action == 'edit') {
 
 	$form = form::factory('module', 'id='.$id, 'index.php');
