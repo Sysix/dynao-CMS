@@ -83,18 +83,7 @@ class dyn {
 				
 		} else {
 		
-			$server = 'http://api.dynao.de/version.json';
-			
-			$ch = curl_init($server);
-			curl_setopt($ch, CURLOPT_PORT, 80);
-			curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla (Statuscheck-Script)');
-			curl_setopt($ch, CURLOPT_TIMEOUT, 0);
-			curl_setopt($ch, CURLOPT_DNS_CACHE_TIMEOUT, 300);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			$curl = curl_exec($ch);
-			curl_close($ch);
-			
-			$content = json_decode($curl, true);
+			$content = apiserver::getVersionFile();
 			
 			cache::write($content, $cacheFile);
 			
@@ -134,18 +123,7 @@ class dyn {
 				
 		} else {
 		
-			$server = 'http://api.dynao.de/news.json';
-			
-			$ch = curl_init($server);
-			curl_setopt($ch, CURLOPT_PORT, 80);
-			curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla (Statuscheck-Script)');
-			curl_setopt($ch, CURLOPT_TIMEOUT, 0);
-			curl_setopt($ch, CURLOPT_DNS_CACHE_TIMEOUT, 300);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			$curl = curl_exec($ch);
-			curl_close($ch);
-			
-			$content = json_decode($curl, true);
+			$content = apiserver::getNewsFile();
 			
 			cache::write($content, $cacheFile);
 			
@@ -178,18 +156,7 @@ class dyn {
 				
 		} else {
 		
-			$server = 'http://api.dynao.de/addons.json';
-			
-			$ch = curl_init($server);
-			curl_setopt($ch, CURLOPT_PORT, 80);
-			curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla (Statuscheck-Script)');
-			curl_setopt($ch, CURLOPT_TIMEOUT, 0);
-			curl_setopt($ch, CURLOPT_DNS_CACHE_TIMEOUT, 300);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			$curl = curl_exec($ch);
-			curl_close($ch);
-			
-			$content = json_decode($curl, true);
+			$content = apiserver::getAddonFile();
 			
 			cache::write($content, $cacheFile);
 			
