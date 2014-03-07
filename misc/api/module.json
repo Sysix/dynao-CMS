@@ -1,0 +1,13 @@
+{
+	1:	{
+		"name":	"Überschrift",
+		"info": "Dieses Modul generiert eine Überschrift von der Größe h1 bis h2. Der Inhalt kann beliebig geändert werden",
+		"downloads": 0,
+		"link": "http://dynao.de/module/1",
+		"install": {
+			"input": "<label>Überschrift:</label>\n<input type=\"text\" name=\"DYN_VALUE[1]\" value=\"OUT_VALUE[1]\" class=\"form-control\" />\n<label>Größe:</label>\n<select name=\"DYN_VALUE[2]\" class=\"form-control\">\n<?php\nforeach([1,2,3,4,5,6] as $size) {\n$selected = '';\nif($size == 'OUT_VALUE[2]') {\n$selected = ' selected=\"selected\"';\n}\necho '<option \nvalue=\"h'.$size.'\"'.$selected.'>H'.$size.'</option>';\n}\n?>\n</select>",
+			"output": "<OUT_VALUE[2]>OUT_VALUE[1]</OUT_VALUE[2]>\n<?php\nif(dyn::get('backend')) {\necho '<br />Größe '.'OUT_VALUE[2]';\n}\n?>",
+			"blocks": 0	
+		}
+	}
+}
