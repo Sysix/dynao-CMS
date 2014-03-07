@@ -163,10 +163,20 @@ class backend {
 		$page = self::$getVars[0];
 		
 		if(!$addon) {
-			return dir::page($page.'.php');
+			
+			if(file_exists(dir::page($page.'.php'))) {
+				return dir::page($page.'.php');
+			}
+			
 		} else {
-			return dir::addon($addon, 'page/'.$page.'.php');
+			
+			if(file_exists(dir::addon($addon, 'page/'.$page.'.php'))) {
+				return dir::addon($addon, 'page/'.$page.'.php');
+			}
+			
 		}
+		
+		echo message::danger(lang::get('page_not_found'));
 		 
 	 }
 	
