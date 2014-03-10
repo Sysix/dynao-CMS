@@ -121,7 +121,8 @@ if($action == 'add' || $action == 'edit') {
 			<div class="panel-heading">
                 <h3 class="panel-title pull-left"><?php echo ($action == 'add') ? lang::get('module_add') : '"'.$form->get('name').'" '.lang::get('edit'); ?></h3>
                 <div class="btn-group pull-right">
-                    <a class="btn btn-sm btn-default" href="<?php echo url::backend('structure', ['subpage'=>'module']); ?>"><?php echo lang::get('back'); ?></a>
+					<a class="btn btn-sm btn-warning" href="<?= url::backend('structure', ['subpage'=>'module', 'action'=>'import']) ?>"><?= lang::get('import') ?></a>
+                    <a class="btn btn-sm btn-default" href="<?= url::backend('structure', ['subpage'=>'module']) ?>"><?= lang::get('back'); ?></a>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -187,7 +188,8 @@ if($action == '') {
 					if(dyn::get('user')->hasPerm('page[edit]')) { 
 					?>
                     <div class="btn-group pull-right">
-                        <a class="btn btn-sm btn-default" href="<?php echo url::backend('structure', ['subpage'=>'module', 'action'=>'add']); ?>"><?php echo lang::get('add'); ?></a>
+						<a class="btn btn-sm btn-warning" href="<?= url::backend('structure', ['subpage'=>'module', 'action'=>'import']) ?>"><?= lang::get('import') ?></a>
+                        <a class="btn btn-sm btn-default" href="<?= url::backend('structure', ['subpage'=>'module', 'action'=>'add']) ?>"><?= lang::get('add'); ?></a>
                     </div>
                     <?php
 					}
