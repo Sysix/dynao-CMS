@@ -33,16 +33,23 @@ class sql {
 		self::$DB_password = $pw;
 		self::$DB_datenbank = $db;
 		
-		self::$sql = new MySQLi(self::$DB_host, self::$DB_user, self::$DB_password, self::$DB_datenbank);
-		
-		$sql = sql::factory();
-		$sql->query('SET SQL_MODE=""');
-		
-		self::$sql->set_charset('utf8');
+		try {
+			self::$sql = new mysqli(self::$DB_host, self::$DB_user, self::$DB_password, self::$DB_datenbank);
+			
+			$sql = sql::factory();
+			$sql->query('SET SQL_MODE=""');
+			
+			self::$sql->set_charset('utf8');
+			
+			if(self::$sql->connect_error && dyn::get('debug')) {
+				throw new MySQLi_Sql_Exception('<b>Fehler mit der Verbindung zum Server:</b><br />'.self::$sql->connect_error);
+			}
+			
+		} catch(MySQLi_Sql_Exception $e) {
+			echo message::danger($e->getMessage());	
+		}
 		
 		return self::$sql->connect_error;
-		
-		// Zukünftige Abfrage falls was falsch geloffen ist		
 	
 	}
 	
@@ -90,27 +97,17 @@ class sql {
 				
 				throw new Exception(sprintf(lang::get('sql_result_invalid_type'), __CLASS__));
 				
-			}
+			}	
 			
-			if(!$this->query) {
-				
-				throw new Exception(lang::get('sql_result_error'));
-				
-			} else {		
-			
-				$this->result = $this->query->fetch_array($type);
-			}
-				
-			return $this;
-			
-			
+			$this->result = $this->query->fetch_array($type);
 			
 		} catch(Exception $e) {
 			
 			echo message::danger($e->getMessage());
 			
-		}		
+		}
 		
+		return $this;		
 		
 	}
 	
@@ -228,8 +225,10 @@ class sql {
 	//	
 	public function getPosts($post) {
 	
-		if(!is_array($post)) {
-			//throw new Exception();	
+		if(!is_array($post) && dyn::get('debug')) {
+		
+			throw new InvalidArgumentException(__CLASS__'::'.__METHOD__.' ertwartet als 1. Parameter ein array');
+			
 		}
 		
 		foreach($post as $val=>$cast) {
