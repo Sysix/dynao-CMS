@@ -55,5 +55,43 @@ function getDeleteModal($title, $content) {
 <?php	
 }
 
+function bootstrap_panel($title, $content, $buttons = false) {
+	
+	$class = '';
+	$clearfix = '';
+	
+	try {
+	
+		if($buttons !== false) {
+			
+			if(!is_array($buttons) && dyn::get('debug')) {
+				throw new InvalidArgumentException('$buttons must be an array');
+			}
+			
+			$class = ' pull-left';
+			$clearfix = '<div class="clearfix"></div>';
+			$buttons = '<div class="btn-group pull-right">'.PHP_EOL.implode(PHP_EOL, (array)$buttons).'</div>';
+		}
+	
+	} catch(InvalidArgumentException $e) {
+		echo message::warning($e->getMessage());
+	}
+	
+	echo '<div class="row">
+        <div class="col-lg-12">
+        	<div id="ajax-content"></div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title'.$buttons.'">'.$title.'</h3>
+                   '.$buttons.'
+				   '.$clearfix.'                  
+                </div>
+                '.$content.'
+            </div>
+        </div>
+    </div>';
+	
+}
+
 
 ?>
