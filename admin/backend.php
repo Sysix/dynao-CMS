@@ -59,7 +59,9 @@ if(!is_null($errorMsg)) {
 }
 
 if(userLogin::isLogged()) {
-	include(backend::getNaviInclude());	
+	if($file = backend::getNaviInclude() !== false) {
+		include($file);	
+	}
 }
 
 $content = ob_get_contents();

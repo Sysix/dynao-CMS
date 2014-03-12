@@ -177,6 +177,8 @@ class backend {
 		}
 		
 		echo message::danger(lang::get('page_not_found'));
+		
+		return false;
 		 
 	 }
 	
