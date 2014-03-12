@@ -82,7 +82,7 @@ function bootstrap_panel($title, $content, $buttons = false) {
         	<div id="ajax-content"></div>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title'.$buttons.'">'.$title.'</h3>
+                    <h3 class="panel-title'.$class.'">'.$title.'</h3>
                    '.$buttons.'
 				   '.$clearfix.'                  
                 </div>
