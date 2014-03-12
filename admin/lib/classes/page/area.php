@@ -21,14 +21,14 @@ class pageArea {
 		try {
 			
 			if(!(is_object($sql) && is_a($sql, 'sql'))) {
-				throw new Exception(__CLASS__.'::__construct Parameter muss SQL Object sein');
+				throw new InvalidArgumentException(__CLASS__.'::__construct Parameter muss SQL Object sein');
 			}
 			
 			$this->sql = $sql;	
 			
 			$this->setNew($this->sql->num() == 0);		
 			
-		} catch(Exception $e) {
+		} catch(InvalidArgumentException $e) {
 			echo $e->getMessage();
 		}		
 		
@@ -38,7 +38,7 @@ class pageArea {
 	public static function addType($class) {
 		
 		if(!class_exists($class, false)) {
-			//throw new Exception(PageArea-Typ muss eine Klasse sein	
+			throw new InvalidArgumentException(__CLASS__.'::'.__METHOD__.' 1. Parameter erwartet eine vorhandene Klasse');
 		}
 		self::$types[] = $class;
 			
@@ -50,6 +50,12 @@ class pageArea {
 		
 		return $this;
 		
+	}
+	
+	public function isNew() {
+		
+		return $this->isNew;
+			
 	}
 	
 	public function setEval($bool) {

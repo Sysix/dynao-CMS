@@ -110,7 +110,7 @@ class template {
 		
 		$select = formSelect::factory($name, $selected);
 		
-		foreach($this->get('templates', ['Default'=>'index.php']) as $name=>$file) {
+		foreach($this->get('views', $this->get('templates', ['Default'=>'index.php'])) as $name=>$file) {
 		
 			$select->add($file, $name);
 			

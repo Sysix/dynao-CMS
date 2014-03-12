@@ -9,7 +9,7 @@
 			
 		}
 	},
-	"templates": {
+	"views": {
 		"Default Template": "template.php",
 		"1 Spalte": "1col.php"
 	},

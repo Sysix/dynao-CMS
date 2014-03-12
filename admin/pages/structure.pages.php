@@ -98,7 +98,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                         if(in_array($action, ['add', 'edit'])) {
                             
                             if($action == 'add') {
-                                $module->setNew(true);	
+                                $module->setNew(true);
                             }
                             
                             $form = pageAreaHtml::formBlock($module);

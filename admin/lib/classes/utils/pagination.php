@@ -87,7 +87,7 @@ class pagination {
 		
 		$return .= '<li><a href="index.php?'.url_addParam($this->getVar, $last_page).'">»</a></li>';
 		
-		$return .= '<ul>';
+		$return .= '</ul>';
 		
 		return $return;
 		

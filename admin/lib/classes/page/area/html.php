@@ -80,7 +80,7 @@ class pageAreaHtml {
 		} else {
 			
 			$form->setMode('add');	
-			$online = 1;			
+			$online = 1;
 			
 			$form->delButton('save-back');
 						
