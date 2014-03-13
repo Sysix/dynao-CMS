@@ -151,12 +151,14 @@ class userLogin {
 	 */
 	public static function generateSalt() {
 		
+		$allowed = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+		$lenght = strlen($allowed)-1;
 		$str = '';
 		for($i = 0; $i < self::SALT_LENGTH; $i++) {
-				$str .= chr(rand(33, 255));
+				$str .= $chars[rand(0, $lenght)];
 		}
 		
-		return utf8_encode($str);
+		return $str;
 		
 	}
 	

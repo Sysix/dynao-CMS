@@ -27,6 +27,9 @@ if($action == 'edit'  || $action == 'add') {
 		
 	}
 	
+	$field = $form->addCheckboxField('admin', $form->get('admin'));
+	$field->add(1, 'Admin');
+	
 	$form->show();
 	
 }

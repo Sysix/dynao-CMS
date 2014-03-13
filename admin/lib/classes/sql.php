@@ -247,6 +247,14 @@ class sql {
 		
 	}
 	
+	public function addDatePost($name, $val = 'now') {
+	
+		$date = new DateTime($val);
+		
+		return $this->addPost($name, $date->format('Y-m-d H:i:s'));
+		
+	}
+	
 	public function delPost($name) {
 	
 		unset($this->values[$name]);
