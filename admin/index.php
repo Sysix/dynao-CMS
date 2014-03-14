@@ -56,6 +56,7 @@ dyn::add('user', new user(userLogin::getUser()));
 
 cache::setCache(dyn::get('cache'));
 
+addonConfig::loadAllConfig();
 addonConfig::includeAllLangFiles();
 addonConfig::includeAllLibs();
 

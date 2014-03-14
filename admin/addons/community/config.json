@@ -2,5 +2,8 @@
 	"name": "Community Addon",
 	"version": 0.1,
 	"author": "Dynao CMS",
-	"supportlink" : "http://dynao.de/"
+	"supportlink" : "http://dynao.de/",
+	"need": {
+		"phpmailer": 0.1	
+	}
 }

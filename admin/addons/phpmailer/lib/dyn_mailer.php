@@ -17,16 +17,15 @@ class dyn_mailer extends PHPMailer {
 	}
 	
 	public static function loadConfig() {
-		
-		$config = json_decode(file_get_contents(dir::addon('phpmailer', 'config.json')), true);
-		
-		return $config['settings'];		
+				
+		return $config = dyn::get('addons')['phpmailer']['settings'];
 		
 	}
 	
 	public static function saveConfig($from, $fromName, $confirmReading, $bbc) {
 		
-		$config = json_decode(file_get_contents(dir::addon('phpmailer', 'config.json')), true);
+		$config = dyn::get('addons')['phpmailer'];
+		
 		$config['settings']['from'] = $from;
 		$config['settings']['fromName'] = $fromName;
 		$config['settings']['confirmReading'] = $confirmReading;

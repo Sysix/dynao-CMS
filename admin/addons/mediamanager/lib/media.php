@@ -81,10 +81,8 @@ class media {
 	// return	string
 	public function get($name, $default = null) {
 		
-		$value = $this->sql->get($name);
-		
-		return (!is_null($value)) ? $value : $default;		
-		
+		return $this->sql->get($name, $default);
+				
 	}
 	
 	// den Dateityp ausgeben
@@ -155,10 +153,8 @@ class media {
 	public static function getExtensionList() {
 		
 		if(is_null(self::$extension)) {
-		
-			$media = json_decode(file_get_contents(dir::addon('mediamanager', 'config.json')), true);
 			
-			self::$extension = $media['extensions'];
+			self::$extension = dyn::get('addons')['extensions'];
 		
 		}
 		
