@@ -1,18 +1,8 @@
 <?php
 
-if(!dyn::get('backend')) {
+if(dyn::get('backend')) {
 	
-	if(!is_null(type::post('community_login', 'string'))) {
-		community_user::checkLogin();
-	} else {
-		community_user::checkSession();
-	}
-	
-} else {
-	
-	userPerm::add('coummunity[]', 'Community Administrator');
-	
-	backend::addAddonNavi(lang::get('community'), url::backend('community'));
+	backend::addAddonNavi(lang::get('phpmailer'), url::backend('phpmailer'));
 	
 }
 
