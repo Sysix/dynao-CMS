@@ -7,7 +7,7 @@
  }
   
   
-	$versionCheck = dyn::checkVersion();
+	$versionCheck = dyn::checkDynVersion();
   
     if($versionCheck === lang::get('version_fail_connect')) {
 		

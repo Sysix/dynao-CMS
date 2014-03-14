@@ -17,8 +17,8 @@ class addonNeed {
 	
 	public static function checkVersion($version) {
 		
-		if(dyn::get('version') >= $version) {
-			return true;
+		if(dyn::checkVersion(dyn::get('version'), $version) === true) {
+			return true;	
 		}
 		
 		return sprintf(lang::get('addon_wrong_version'), dyn::get('version'), $version);
@@ -36,7 +36,7 @@ class addonNeed {
 				$version = false;
 			}
 		
-			$config = addonConfig::getConfig($name);
+			$config = dyn::get('addons')[$name];
 			
 			// Nicht installiert
 			if(!is_array($config)) {
@@ -49,7 +49,7 @@ class addonNeed {
 				continue;			
 			}
 			
-			if($version && $config['version'] < $version) {
+			if(dyn::checkVersion($config['version'], $version) === false) {
 				$return .=	sprintf(lang::get('addon_need_version'), $name, $version);
 				continue;
 			}

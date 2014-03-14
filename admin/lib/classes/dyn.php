@@ -72,7 +72,67 @@ class dyn {
 		
 	}
 	
-	static public function checkVersion() {
+	static public function checkVersion($version1, $version2) {
+		
+		$version1 = str_replace(' ', '.', $version1);
+		$version2 = str_replace(' ', '.', $version2);
+		
+		$version1 = explode('.', $version1);
+		$version2 = explode('.', $version2);
+		
+		$depth = [
+			lang::get('version_fail_version1'),
+			lang::get('version_fail_version2'),
+			lang::get('version_fail_version3'),
+			'You have a Old Version',
+		]
+		
+		
+		foreach($version1 as $i => $version) {
+			
+			if(isset($version2[$i])) {
+				
+				if(is_int($version) && is_int($version2[$i])) {
+				
+					if($version2[$i] > $version) {
+						return $depth[$i];
+					}
+					
+				} else {
+					
+					// 1.1.1 > 1.1 RC
+					if(is_int($version2[$i])) {
+						return $depth[4];	
+					}
+					
+					$versionArray = array_flip(['RC1', 'RC', 'RC2', 'RC3', 'b', 'beta', 'a', 'alpha', 'dev']);
+					
+					if(isset($versionArray[$version])) {
+						$version = $versionArray[$version];
+					}
+					
+					if(isset($versionArray[$version2[$i]])) {
+						$version2[$i] = $versionArray[$version2[$i]];
+					}
+					
+					if($version2[$i] > $version) {
+						return $depth[4];	
+					}
+					
+				}
+					
+			// 1.1.1 > 1.1
+			} else {			
+				return true;			
+			}
+						
+		}
+		
+		return true;
+		
+	}
+	
+	static public function checkDynVersion() {
 		
 		$cacheFile = cache::getFileName(0, 'dynaoVersion');
 		
@@ -93,22 +153,7 @@ class dyn {
 			return lang::get('version_fail_connect');
 		}
 		
-		$version = explode('.', $content['current']['version']);
-		$cversion = explode('.', dyn::get('version'));
-		
-		if($version[0] != $cversion[0]) {		
-			return lang::get('version_fail_version1');
-		}
-		
-		if($version[1] != $cversion[1]) {
-			return lang::get('version_fail_version2');
-		}
-		
-		if($version[2] != $cversion[2]) {
-			return lang::get('version_fail_version3');	
-		}
-		
-		return true;
+		return self::checkVersion($content['current']['version'], dyn::get('version'));
 		
 	}
 	
