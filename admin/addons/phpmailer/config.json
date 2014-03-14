@@ -1,0 +1,12 @@
+{
+	"name": "PHPMailer Addon",
+	"version": 0.1,
+	"author": "Dynao CMS",
+	"supportlink" : "http://dynao.de/",
+	"settings": {
+		"from": "",
+		"fromName": "",
+		"confirmReading": "",
+		"bbc": ""
+	}
+}
