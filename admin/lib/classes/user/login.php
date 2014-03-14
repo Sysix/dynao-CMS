@@ -76,7 +76,7 @@ class userLogin {
 		// Username mit E-Mail vorhanden?
 		if(!$sql->num()) {
 		
-			echo message::danger(sprintf(lang::get('login_no_user'), $email), true);
+			echo message::danger(sprintf(lang::get('login_no_user'), htmlspecialchars($email)), true);
 			return;
 			
 		}
