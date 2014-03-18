@@ -18,8 +18,8 @@ $navi = array(
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700|Open+Sans+Condensed:300,700" media="screen">
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css" media="screen">
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" media="screen">
-    <link rel="stylesheet" href="../../admin/layout/css/style.css" media="screen">
-    <link rel="stylesheet" href="../../admin/layout/css/mobile.css" media="screen">
+    <link rel="stylesheet" href="../admin/layout/css/style.css" media="screen">
+    <link rel="stylesheet" href="../admin/layout/css/mobile.css" media="screen">
     <link rel="stylesheet" href="layout/css/style.css" media="screen">
 </head>
 

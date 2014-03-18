@@ -85,7 +85,7 @@ class dyn {
 			lang::get('version_fail_version2'),
 			lang::get('version_fail_version3'),
 			'You have a Old Version',
-		]
+		];
 		
 		
 		foreach($version1 as $i => $version) {
