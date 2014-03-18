@@ -59,7 +59,7 @@ if(!is_null($errorMsg)) {
 }
 
 if(userLogin::isLogged()) {
-	if($file = backend::getNaviInclude() !== false) {
+	if($file = backend::getNaviInclude()) {
 		include($file);	
 	}
 }
