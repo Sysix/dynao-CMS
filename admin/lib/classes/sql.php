@@ -227,7 +227,7 @@ class sql {
 	
 		if(!is_array($post) && dyn::get('debug')) {
 		
-			throw new InvalidArgumentException(__CLASS__'::'.__METHOD__.' ertwartet als 1. Parameter ein array');
+			throw new InvalidArgumentException(__CLASS__.'::'.__METHOD__.' ertwartet als 1. Parameter ein array');
 			
 		}
 		
