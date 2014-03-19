@@ -274,7 +274,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 			
 			$field = $form->addCheckboxField('is-structure', $form->get('is-structure'));
 			$field->fieldName(lang::get('blocks_show'));
-			$field->add('1', lang::get('all_categories'), ['id'=>'allcat-button']);
+			$field->add('1', lang::get('all_pages'), ['id'=>'allcat-button']);
 			
 			$select = pageMisc::getTreeStructure(true, $form->get('structure'));
 			

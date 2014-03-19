@@ -122,7 +122,7 @@
 	"structure_delete":			"Page successfully deleted",
 	"article":					"Page",
 	"article_save":				"Save page",
-	"structure":				"Structure",
+	"content":				"Content",
 	"pages":					"Pages",
 	
 	#Modul
@@ -134,12 +134,14 @@
 	"module_deleted":			"Module successfully deleted",
 	"module_in_use":			"The module is still in use",
 	
-	#Slots
+	#Blocks
 	"blocks_current_page":		"Blocks at the current template",
-	"blocks":					"blocks",
+	"blocks":					"Blocks",
 	"block_name_not_exist":		"[The block \"%s\" does not exist]",
 	"blocks_show":				"Show in",
 	"block_deleted":			"Block successfully deleted",
+	"all_pages":			"All pages",
+	"only_blocks":		"Only blocks",
 	
 	#User
 	"user_wrong_email":			"Please enter a valid email address",

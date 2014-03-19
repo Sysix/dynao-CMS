@@ -122,7 +122,7 @@
 	"structure_delete":			"Artikel erfolgreich gelöscht",
 	"article":					"Artikel",
 	"article_save":				"Artikel speichern",
-	"structure":				"Struktur",
+	"content":				"Inhalt",
 	"pages":					"Seiten",
 	
 	#Modul
@@ -137,11 +137,13 @@
 	"module_in_use":			"Das Modul wird noch verwendet",
 	
 	#Block
-	"blocks_current_page":		"Blocks im aktuellen Template",
-	"blocks":					"Blocks",
+	"blocks_current_page":		"Blöcke im aktuellen Template",
+	"blocks":					"Blöcke",
 	"block_name_not_exist":		"[Der Block \"%s\" existiert nicht]",
 	"blocks_show":				"Anzeigen in",
 	"block_deleted":			"Block erfolgreich gelöscht",
+	"all_pages":			"Alle Seiten",
+	"only_blocks":		"Nur für Blöcke",
 	
 	#User
 	"user_wrong_email":			"Bitte geben Sie eine gültige E-Mail-Adresse an",

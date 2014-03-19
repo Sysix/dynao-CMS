@@ -27,7 +27,7 @@ if(
 	dyn::get('user')->hasPerm('page[content]') ||
 	dyn::get('user')->hasPerm('page[module]')
 ) {
-	backend::addNavi(lang::get('structure'), url::backend('structure'), 'list');
+	backend::addNavi(lang::get('content'), url::backend('structure'), 'list');
 }
 
 if(dyn::get('user')->hasPerm('admin[user]')) {
