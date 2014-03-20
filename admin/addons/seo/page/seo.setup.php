@@ -72,9 +72,7 @@
 			</div>
 			<div class="panel-body">
 				<pre>
-&lt;head&gt;
-	<?php echo htmlspecialchars(seo::getHTML()); ?>
-&lt;/head&gt;
+	<?php echo htmlspecialchars('<head>'.seo::getHTML().'</head>'); ?>
 				</pre>
 			</div>
 		</div>

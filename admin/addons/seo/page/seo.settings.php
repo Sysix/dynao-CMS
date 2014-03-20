@@ -13,7 +13,7 @@ $field->add('.html', '.html');
 $field = $form->addSelectField('start_url', $form->get('start_url', $config->get('start_url')));
 $field->fieldName('Startseite');
 $field->add('0', dyn::get('hp_url'));
-$field->add('1', dyn::get('hp_url').rewriteId(dyn::get('start_page')));
+$field->add('1', dyn::get('hp_url').seo_rewrite::rewriteId(dyn::get('start_page')));
 
 $field = $form->addCheckboxField('robots', $form->get('robots', $config->get('robots')));
 $field->fieldName('Seite indexieren?');

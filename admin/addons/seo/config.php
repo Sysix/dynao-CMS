@@ -10,7 +10,15 @@ if(!dyn::get('backend')) {
 	$id = $seo->parseUrl($_SERVER['REQUEST_URI']);
 	seo::setPageId($id);
 	
+	$seoFunc = type::get('seo_func', 'string');
 	
+	if($seoFunc == 'robots') {
+		
+		$robots = new seo_robots();
+		$robots->send();
+		die();
+		
+	}
 	
 } else {
 	

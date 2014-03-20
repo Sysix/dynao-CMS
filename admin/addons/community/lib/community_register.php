@@ -67,7 +67,7 @@ class community_register {
 		});
 		
 		if(!$validUsername) {
-			return 'Username darf nur aus Buchstaben Zahlen und Unterstrich bestehen';
+			return 'Username darf nur aus Buchstaben Zahlen und Unterstrich bestehen und muss mindestens 4 Zeichen lang sein.';
 		}
 		
 		if($sql->num('SELECT id FROM '.sql::table('community_user').' WHERE `username`= "'.$sql->escape($username).'"')) {
