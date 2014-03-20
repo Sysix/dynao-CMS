@@ -47,13 +47,53 @@ class template {
 			
 	}
 	
+	public function installModule($module, $update = false) {
+		
+		$modulSql = sql::factory();
+		$modulSql->setTable('module');
+		
+		foreach($module as $modulName=>$modul) {
+				
+			$modulExists = $modulSql->num('SELECT id FROM '.sql::table('module').' WHERE `name` = "'.$modulName.'"');
+			
+			if(!$update && $modulExists) {
+				continue;	
+			}
+			
+			$modulSql->addPost('name', $modulName);
+			$modulSql->addPost('input', $modul['input']);
+			$modulSql->addPost('output', $modul['output']);
+			
+			if(isset($modul['blocks'])) {
+				$modulSql->addPost('blocks', $modul['blocks']);
+			} else {
+				$modulSql->addPost('blocks', 1);
+			}
+			
+			if(!$modulExists) {
+				
+				$modulSql->save();
+				return $modulSql->insertId();
+				
+			} else {
+				
+				$modulSql->setWhere('name="'.$modulName.'"');
+				$modulSql->update();
+				
+				$modulSql->select('id')->result();
+				return $modulSql->get('id');
+				
+			}
+			
+				
+		}
+		
+	}
+	
 	public function installBlocks($update = false) {
 		
 		$blocks = sql::factory();
 		$blocks->setTable('blocks');
-		
-		$modul = sql::factory();
-		$modul->setTable('module');
 	
 		foreach($this->get('blocks', []) as $name=>$block) {
 			
@@ -63,20 +103,7 @@ class template {
 				continue;
 			}
 			
-			$modul->addPost('name', $name);
-			$modul->addPost('input', $block['input']);
-			$modul->addPost('output', $block['output']);
-			
-			if(!$blockExists) {
-				$modul->save();
-				$modul_id = $modul->insertId();			
-			} else {
-				$modul->setWhere('name="'.$name.'"');
-				$modul->update();
-				
-				$modul->select('id')->result();
-				$modul_id = $modul->get('id');
-			}
+			$modul_id = $this->installModule($block['module'], $update);
 			
 			$blocks->addPost('name', $name);
 			$blocks->addPost('description', $block['description']);
