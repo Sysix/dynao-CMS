@@ -255,23 +255,29 @@ class backend {
 	
 		$return = [];
 		
-		if($main)
-			$return[] = '<li id="addonMobile"><a class="fa fa-chevron-down"> <span>Addon Navi</span></a></li>';
-		
 		foreach($naviArray as $navi) {
 			
 			$class = '';
-			$a_class = '';
+			$i_class = '';
+			
+			$tmp = '';
 			
 			if($name == $navi['name']) {
 				$class = ' class="active"';
 			}
 			
 			if(isset($navi['icon'])) {
-				$a_class = ' class="fa fa-'.$navi['icon'].'"';
+				$i_class = ' class="fa fa-'.$navi['icon'].'"';
 			}
 			
-			$return[] = '<li'.$class.'><a'.$a_class.' href="'.$navi['link'].'" title="'.htmlspecialchars($navi['name']).'"> <span>'.$navi['name'].'</span></a></li>';
+			$tmp = '<li'.$class.'><a href="'.$navi['link'].'" title="'.htmlspecialchars($navi['name']).'"> <span>'.$navi['name'].'</span><i '.$i_class.'></i></a>';
+			if(self::$subnavi) {
+				//subnavi muss beim neuem layout ausgegeben werden
+			}
+			
+			$tmp .= '</li>';
+			
+			$return[] = $tmp;
 			
 		}
 		

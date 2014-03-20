@@ -1,66 +1,114 @@
 <!DOCTYPE html>
-<html lang="de">
+<html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><?php echo backend::getTitle(); ?> - Backend</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title><?php echo backend::getTitle(); ?> - Backend</title>
+    
 	<?php echo layout::getCSS(); ?>
+    
 </head>
 
 <body>
-<div id="wrapper">
-	<div id="navi">
-		<?php echo backend::getNavi(); ?>
-	</div><!--end #navi-->
+
+	<header>
     
-    <div id="user-mobil">
-        <span class="fa fa-chevron-down"></span>
-        <h4>CP</h4>
-    </div>
-	
-    <div id="wrap">
-        <div id="subnavi">
-            <div id="user">
-            	
-                <a href="http://dynao.de" target="_blank">
-                	<img src="layout/img/logo.png" alt="Logo" />
-                </a>
-                    
-                <h3><?php echo dyn::get('user')->get('firstname')." ".dyn::get('user')->get('name'); ?></h3>
-                <a href="<?php echo dyn::get('hp_url'); ?>" target="_blank"><?php echo lang::get('visit_site'); ?></a>
-                
-                <a href="index.php?logout=1" class="fa fa-lock logout"> <span>Logout</span></a>
+    	<a href="http://dynao.de" target="_blank" class="logo">
+        	<img src="layout/img/logo.png" alt="Logo" />
+        </a>
+        
+        <div id="user">
+        	<?php echo dyn::get('user')->get('firstname')." ".dyn::get('user')->get('name'); ?> <i class="fa fa-chevron-down"></i>
             
-            </div><!--end #user-->
+            <ul>
+            	<li><a href="<?php echo dyn::get('hp_url'); ?>" target="_blank"><?php echo lang::get('visit_site'); ?></a></li>
+                <li><a href="index.php?logout=1"><?php echo lang::get('logout'); ?></a></li>
+            </ul>
             
-            <h1><?php echo backend::getPageName(); ?></h1>
+        </div>
+    
+    </header>
+    
+    <nav>
+    	
+        <h3>Navigation</h3>
+        
+        <!--
+    	<ul>
+        	<li><a href=""><span>Dashboard</span><i class="fa fa-desktop"></i></a></li>
+        	<li class="active"><a href=""><span>Inhalte</span><i class="fa fa-list-ol"></i></a><i class="fa fa-chevron-down expand"></i>
+            	<ul>
+                	<li><a href="">Struktur</a></li>
+                	<li><a href="">Module</a></li>
+                	<li><a href="">Slots</a></li>
+                </ul>
+            </li>
+        	<li><a href=""><span>Addons</span><i class="fa fa-code-fork"></i></a><i class="fa fa-chevron-down expand"></i>
+            	<ul>
+                	<li><a href="">Struktur</a></li>
+                	<li><a href="">Module</a></li>
+                	<li><a href="">Slots</a></li>
+                </ul>
+           	</li>
+        	<li><a href=""><span>Benutzer</span><i class="fa fa-group"></i></a><i class="fa fa-chevron-down expand"></i>
+            	<ul>
+                	<li><a href="">Struktur</a></li>
+                	<li><a href="">Module</a></li>
+                	<li><a href="">Slots</a></li>
+                </ul>
+            </li>
+        	<li><a href=""><span>Einstellungen</span><i class="fa fa-cogs"></i></a></li>
+        </ul>
+        -->
+        
+        <?php echo backend::getNavi(); ?>
+        
+        <h3>Addons</h3>
+        
+        <hr />
+        
+        <!--
+        <ul>
+        	<li><a href=""><span>SEO Addon</span><i class="fa fa-map-marker"></i></a></li>
+        	<li><a href=""><span>Meta Infos</span><i class="fa fa-code"></i></a><i class="fa fa-chevron-down expand"></i>
+            	<ul>
+                	<li><a href="">Kategorien</a></li>
+                	<li><a href="">Artikel</a></li>
+                </ul>
+            </li>
+        </ul>
+        -->
+        
+        <?php echo backend::getAddonNavi(); ?>
+        
+    </nav>
+    
+    <section>
+    	
+        <div id="top">
+        
+        	<h1><?php echo backend::getPageName(); ?></h1>
             
-            <div id="mobil"><?php echo backend::getPageName(); ?></div>
+            <span id="nav-expand" class="fa fa-bars"></span>
+        	
+            <!--
+        	<ul class="subnav">
+        		<li class="active"><a href="">General</a></li>
+        		<li><a href="">Next Page</a></li>
+        	</ul>
+            -->
             <?php echo backend::getSubnavi(); ?>
-            
-        </div><!--end #subnavi-->
+        	
+        </div>
         
         <div id="content">
-            <?php echo dyn::get('content'); ?>		
-        </div><!--end #content-->
+        	<?php echo dyn::get('content'); ?>
+        </div>
         
-        <div class="clearfix"></div>
-    </div><!--end #wrap-->
-	
-	<div id="tools">
-	
-		<a id="trash" data-toggle="tooltip" data-placement="bottom" data-original-title="Nicht in der Beta verfügbar!" href=""></a>
-        
-        <?php 
-		if($addonNavi = backend::getAddonNavi()) {
-        	echo '<div id="addon-mobil">'.lang::get('addon_navi').'</div>';
-        	echo $addonNavi; 
-		}
-		?>
-        
-		
-	</div><!--end #tools-->
-</div>
-<?php echo layout::getJS(); ?>
+    </section>
+
+	<?php echo layout::getJS(); ?>
 </body>
 </html>
