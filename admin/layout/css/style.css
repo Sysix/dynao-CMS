@@ -1,8 +1,39 @@
-
 body {
 	font-family:'Lato', Arial;
 	background:url(../img/subnav.png) repeat-y #fff;
 	color:#777;
+}
+
+#login {
+	top:50%;
+	left:50%;
+	width:320px;
+	background:none;
+	position:absolute;
+	margin:-150px 0 0 -160px;
+}
+
+#login .input-group {
+	padding:10px 0;
+}
+
+#login .panel-heading {
+	background:#252525;
+}
+
+#login .panel-heading h3 {
+	font-size:18px;
+	color:#fff;
+}
+
+.input-group-addon {
+	background:#fff;
+}
+
+#login .panel-heading a,
+#login .panel-heading a img {
+	display:block;
+	height:30px;
 }
 
 textarea:hover, 

@@ -6,12 +6,15 @@
 	<title>Login - Backend - <?php echo dyn::get('hp_name'); ?></title>
 	<?php echo layout::getCSS(); ?>
 </head>
-<body>
-	<div id="center"></div>
+<body style="background:#fff;">
 	<div id="login" class="panel panel-default">
-    	<a href="http://dynao.de" target="_blank">
-    		<img src="layout/img/logo-login.png" alt="dynaoCMS Logo" />
-        </a>
+    	<div class="panel-heading">
+        	<h3 class="pull-left panel-title">Login</h3>
+            <a href="http://dynao.de" target="_blank" class="pull-right">
+                <img src="layout/img/logo.png" alt="dynaoCMS Logo" />
+            </a>
+            <div class="clearfix"></div>
+        </div>
 		<form action="index.php?page=dashboard" method="post">
 			<div class="panel-body">
 				<?php echo dyn::get('content'); ?>
