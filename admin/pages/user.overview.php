@@ -1,15 +1,18 @@
 <?php
 if($action == 'delete') {
-	
-		$sql = sql::factory();
-		$sql->setTable('user');
-		$sql->setWhere('id='.$id);
-		$sql->delete();
 		
+		if(dyn::get('user')->get('id') == $id)
+			echo message::danger(lang::get('user_self_deleted'));	
+		else {
+			$sql = sql::factory();
+			$sql->setTable('user');
+			$sql->setWhere('id='.$id);
+			$sql->delete();
+			
+			echo message::success(lang::get('user_deleted'));
+		}
+			
 		$action = '';
-		
-		echo message::success(lang::get('user_deleted'));
-		
 }
 
 if($action == 'add' || $action == 'edit') {
@@ -129,7 +132,7 @@ if($action == '') {
 		$id = $table->get('id');
 			
 		$edit = '<a href="'.url::backend('user', ['subpage'=>'overview', 'action'=>'edit', 'id'=>$id]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';
-		$delete = '<a href="'.url::backend('user', ['subpage'=>'overview', 'action'=>'delete', 'id'=>$id]).'" class="btn btn-sm btn-danger fa fa-trash-o"></a>';
+		$delete = '<a href="'.url::backend('user', ['subpage'=>'overview', 'action'=>'delete', 'id'=>$id]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
 		
 		$table->addRow()
 		->addCell($table->get('firstname')." ".$table->get('name'))
