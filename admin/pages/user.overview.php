@@ -132,7 +132,7 @@ if($action == '') {
 		$id = $table->get('id');
 			
 		$edit = '<a href="'.url::backend('user', ['subpage'=>'overview', 'action'=>'edit', 'id'=>$id]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';
-		$delete = '<a href="'.url::backend('user', ['subpage'=>'overview', 'action'=>'delete', 'id'=>$id]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
+		$delete = (dyn::get('user')->get('id') == $id) ? '' : '<a href="'.url::backend('user', ['subpage'=>'overview', 'action'=>'delete', 'id'=>$id]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
 		
 		$table->addRow()
 		->addCell($table->get('firstname')." ".$table->get('name'))
