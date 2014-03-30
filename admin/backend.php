@@ -5,7 +5,6 @@ layout::addCSS('http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-aweso
 layout::addCSS('http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css');
 
 layout::addCSS('layout/css/style.css');
-layout::addCSS('layout/css/mobile.css');
 
 layout::addJS('http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js');
 layout::addJS('http://code.jquery.com/ui/1.10.3/jquery-ui.js');
