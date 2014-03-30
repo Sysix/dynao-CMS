@@ -21,9 +21,9 @@ class addonConfig {
 	}
 	
 	public static function getAll() {
-		
-		if(!count(self::$all)) {	
-		
+
+		if(!count(self::$all)) {
+
 			$sql = sql::factory();		
 			$sql->query('SELECT name FROM '.sql::table('addons').' WHERE `install` = 1  AND `active` = 1')->result();
             while($sql->isNext()) {
@@ -32,6 +32,7 @@ class addonConfig {
 			}
 			
 		}
+
 		return self::$all;
 
 	}
@@ -85,7 +86,6 @@ class addonConfig {
 	public static function getConfig($name) {
 	
 		$configFile = dir::addon($name, 'config.json');
-		
 		if(file_exists($configFile)) {
 			return json_decode(file_get_contents($configFile), true);
 		}
@@ -95,11 +95,11 @@ class addonConfig {
 	}
 	
 	public static function loadAllConfig() {
-		
-		if(is_null(dyn::get('addons'))) {
-		
-			$addons = [];
-            print_r(self::getAll());
+
+       $addons = dyn::get('addons');
+		if(empty($addons)) {
+
+
 			foreach(self::getAll() as $name) {
 				$addons[$name] = self::getConfig($name);
 

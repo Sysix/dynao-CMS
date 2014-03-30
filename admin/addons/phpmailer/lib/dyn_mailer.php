@@ -1,7 +1,8 @@
 <?php
 
 class dyn_mailer extends PHPMailer {
-	
+
+
 	public function __construct($exceptions = false) {
 	
 		$config = self::loadConfig();
@@ -17,8 +18,8 @@ class dyn_mailer extends PHPMailer {
 	}
 	
 	public static function loadConfig() {
-				
-		return $config = dyn::get('addons')['phpmailer']['settings'];
+
+		return dyn::get('addons')['phpmailer']['settings'];
 		
 	}
 	
