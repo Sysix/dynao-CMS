@@ -155,7 +155,7 @@ class backend {
 		} else {
 			$current = self::$addonNavi[self::getPageName()];
 		}
-		// isset gibts bei null false aus
+		// isset gibt bei null false aus
 		if(isset($current['callback']) && is_callable($current['callback'])) {
 			return $current['callback']();
 		}

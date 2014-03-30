@@ -4,6 +4,8 @@
 	"author": "Dynao CMS",
 	"supportlink" : "http://dynao.de/",
 	"need": {
-		"phpmailer": 0.1	
+        "addon": {
+		    "phpmailer": 0.1
+        }
 	}
 }

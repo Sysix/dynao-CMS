@@ -8,7 +8,7 @@ class addonNeed {
 		$method = 'check'.ucfirst($name);
 		
 		if(!method_exists(get_called_class(), $method)) {
-			throw new Exception(sprintf(lang::get('addon_check_error'), __CLASS__, $name));
+			throw new Exception(sprintf(lang::get('addon_check_error'), __CLASS__, $method));
 		}
 		
 		return self::$method($value);	
@@ -35,11 +35,11 @@ class addonNeed {
 				$name = $version;
 				$version = false;
 			}
-		
-			$config = dyn::get('addons')[$name];
-			
+		    if(isset(dyn::get('addons')[$name])) {
+			    $config = dyn::get('addons')[$name];
+           }
 			// Nicht installiert
-			if(!is_array($config)) {
+			if(!isset($config) || !is_array($config)) {
 				$return .= sprintf(lang::get('addon_not_found'), $name);
 				continue;
 			}

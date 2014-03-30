@@ -26,13 +26,12 @@ class addonConfig {
 		
 			$sql = sql::factory();		
 			$sql->query('SELECT name FROM '.sql::table('addons').' WHERE `install` = 1  AND `active` = 1')->result();
-			while($sql->isNext()) {
+            while($sql->isNext()) {
 				self::$all[] = $sql->get('name');
 				$sql->next();		
 			}
 			
 		}
-				
 		return self::$all;
 
 	}
@@ -58,11 +57,9 @@ class addonConfig {
 	public static function includeAllConfig() {
 		
 		$return = [];
-		
 		foreach(self::getAll() as $name) {
 			$return[] = dir::addon($name, 'config.php');
 		}
-		
 		return $return;
 		
 	}
@@ -102,9 +99,10 @@ class addonConfig {
 		if(is_null(dyn::get('addons'))) {
 		
 			$addons = [];
-		
+            print_r(self::getAll());
 			foreach(self::getAll() as $name) {
 				$addons[$name] = self::getConfig($name);
+
 			}
 			
 			dyn::add('addons', $addons);

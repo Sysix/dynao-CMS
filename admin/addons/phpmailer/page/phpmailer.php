@@ -3,7 +3,7 @@
 $settings = dyn_mailer::loadConfig();
 
 $form = form::factory('user', 'id='.dyn::get('user')->getId(), 'index.php');
-$form->toSave(false);
+$form->setSave(false);
 $form->delButton('save');
 $form->delButton('back');
 
