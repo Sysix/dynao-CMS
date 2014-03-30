@@ -271,9 +271,10 @@ class backend {
 			}
 			
 			$tmp = '<li'.$class.'><a href="'.$navi['link'].'" title="'.htmlspecialchars($navi['name']).'"> <span>'.$navi['name'].'</span><i '.$i_class.'></i></a>';
-			if(self::$subnavi) {
-				//subnavi muss beim neuem layout ausgegeben werden
-			}
+
+            if($name == $navi['name'] && $main == true) {
+                $tmp .= self::getSubNavi();
+            }
 			
 			$tmp .= '</li>';
 			
