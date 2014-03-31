@@ -31,7 +31,7 @@ if($form->isSubmit()) {
 		
 }
 
-$form->show();
+echo $form->show();
 
 
 ?>

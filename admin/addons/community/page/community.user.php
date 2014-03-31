@@ -38,9 +38,14 @@ if($action == '') {
 	
 	$table = table::factory();
 	$table->setSql('SELECT * FROM '.sql::table('community_user'));
+
+    $table->addRow()
+        ->addCell('Id')
+        ->addCell(lang::get('username'))
+        ->addCell(lang::get('action'));
 	while($table->isNext()) {
 		
-		$edit = '<a href="'.url::backend('community', ['subpage'=>'user', 'action'=>'edit', 'id'=>$table->get('id')].'" class="btn btn-sm btn-default fa fa-pencil-square-o></a>';
+		$edit = '<a href="'.url::backend('community', ['subpage'=>'user', 'action'=>'edit', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-default fa fa-pencil-square-o></a>';
 		$delete = '<a href="'.url::backend('community', ['subpage'=>'user', 'action'=>'delete', 'id'=>$table->get('id')]).'" class="btn btn-sm btn-danger fa fa-trash-o"></a>';
 		
 		$table->addRow()
@@ -50,6 +55,10 @@ if($action == '') {
 		
 		$table->next();	
 	}
+
+
+
+    echo $table->show();
 }
 
 ?>

@@ -95,7 +95,7 @@ class community_register {
 		return true;
 		
 	}
-	
 
+}
 
 ?>

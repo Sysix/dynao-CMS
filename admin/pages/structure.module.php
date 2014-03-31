@@ -45,11 +45,12 @@ if($action == 'delete') {
 
 if($action == 'import') {
 	
-	$content = apiserver::getModuleFile();
+	$content = (array)apiserver::getModuleFile();
 	
 	if($id && isset($content[$id])) {
 		
 		$sql = sql::factory();
+        $sql->setTable('module');
 		$sql->addPost('name', $content[$id]['name']);
 		$sql->addPost('input', $content[$id]['install']['input']);
 		$sql->addPost('output', $content[$id]['install']['output']);
@@ -68,7 +69,7 @@ if($action == 'import') {
 		->addCell('')
 		->addCell('Downloads')
 		->addCell('Aktionen');
-		
+
 		foreach($content as $id=>$modul) {
 			
 			$code = '<a href="'.$modul['link'].'" class="btn btn-sm btn-success">Code anzeigen</a>';
@@ -81,8 +82,14 @@ if($action == 'import') {
 			->addCell('<span class="btn-group">'.$code.$import.'</span>');
 				
 		}
+
+        if(!count($content)) {
+
+            $table->addRow()->addCell('Keine Addon\'s verfügbar', ['colspan'=>4]);
+
+        }
 		
-		$table->show();
+		echo $table->show();
 	
 	}
 		

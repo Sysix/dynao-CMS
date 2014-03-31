@@ -12,7 +12,9 @@ if(!dyn::get('backend')) {
 	
 	userPerm::add('coummunity[]', 'Community Administrator');
 	
-	backend::addAddonNavi(lang::get('community'), url::backend('community'));
+	backend::addAddonNavi(lang::get('community'), url::backend('community'), -1, function() {
+        return dir::addon('community', 'page'.DIRECTORY_SEPARATOR.'community.php');
+    });
 	
 }
 

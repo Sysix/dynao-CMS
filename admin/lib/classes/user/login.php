@@ -155,7 +155,7 @@ class userLogin {
 		$lenght = strlen($allowed)-1;
 		$str = '';
 		for($i = 0; $i < self::SALT_LENGTH; $i++) {
-				$str .= $chars[rand(0, $lenght)];
+				$str .= $allowed[rand(0, $lenght)];
 		}
 		
 		return $str;
