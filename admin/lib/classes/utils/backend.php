@@ -94,7 +94,7 @@ class backend {
 	
 	public static function getSubNavi() {
 		
-		return self::generateNavi(self::$subnavi, self::getSubpageName(), 'subnav');
+		return self::generateNavi(self::$subnavi, self::getSubpageName(), 'subnav', false, false);
 		
 	}
 	
@@ -251,7 +251,7 @@ class backend {
 		
 	}
 	
-	public static function generateNavi($naviArray, $name, $Ulclass = '', $main = false) {
+	public static function generateNavi($naviArray, $name, $Ulclass = '', $main = false, $itagright = true) {
 	
 		$return = [];
 		
@@ -270,7 +270,12 @@ class backend {
 				$i_class = ' class="fa fa-'.$navi['icon'].'"';
 			}
 			
-			$tmp = '<li'.$class.'><a href="'.$navi['link'].'" title="'.htmlspecialchars($navi['name']).'"> <span>'.$navi['name'].'</span><i '.$i_class.'></i></a>';
+			if($itagright)
+				$tag = '<span>'.$navi['name'].'</span><i '.$i_class.'></i>';
+			else
+				$tag = '<i '.$i_class.'></i> <span>'.$navi['name'].'</span>';
+			
+			$tmp = '<li'.$class.'><a href="'.$navi['link'].'" title="'.htmlspecialchars($navi['name']).'">'.$tag.'</a>';
 
             if($name == $navi['name'] && $main == true) {
                 $tmp .= self::getSubNavi();

@@ -19,7 +19,6 @@ $navi = array(
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css" media="screen">
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" media="screen">
     <link rel="stylesheet" href="../admin/layout/css/style.css" media="screen">
-    <link rel="stylesheet" href="../admin/layout/css/mobile.css" media="screen">
     <link rel="stylesheet" href="layout/css/style.css" media="screen">
 </head>
 

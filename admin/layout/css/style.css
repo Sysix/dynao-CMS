@@ -213,7 +213,6 @@ nav.active {
     left:0;
 }
 
-
 nav hr {
     display:none;
 }
@@ -318,7 +317,7 @@ nav h3 {
 
 nav hr,
 .subnav {
-    display:block;
+    display:none;
 }
 
 h1 {
@@ -341,11 +340,6 @@ section {
     z-index:1;
 }
 
-
-body {
-    background:#fff;
-}
-
 #content {
     padding:15px;
 }
@@ -353,8 +347,6 @@ body {
 #subnav {
     display:none;
 }
-
-
 
 nav::-webkit-scrollbar {
     display: none;
@@ -372,7 +364,7 @@ nav::-webkit-scrollbar {
 h1 {
     margin-bottom:20px;
     padding-bottom:0;
-    padding-left:15px;
+    padding-left:30px;
 }
 
 .headroom--unpinned {
@@ -444,6 +436,39 @@ header.stay {
     nav a:hover span {
         display:inline;
     }
+	
+	.subnav {
+        margin:40px 0 0 30px;
+        padding:0;
+        list-style:none;
+		display:block;
+		float:left;
+        overflow:hidden;
+    }
+
+    .subnav a {
+        display:block;
+        padding:0 30px;
+        color:#777;
+        border-radius:3px 3px 0 0;
+        line-height:40px;
+    }
+	
+	.subnav li {
+		float:left;
+		margin-left:15px;
+	}
+
+    .subnav a:hover {
+        color:#bf1e2e;
+    }
+
+    .subnav li.active a {
+        background:#fff;
+        color:#bf1e2e;
+        border:1px solid #dfdfe2;
+        border-bottom:1px solid #fff;
+    }
 
     #top, #content {
         margin-left:70px;
@@ -491,32 +516,6 @@ header.stay {
         display: block;
     }
 
-    .subnav {
-        margin:40px 0 0 30px;
-        padding:0;
-        list-style:none;
-        overflow:hidden;
-    }
-
-    .subnav a {
-        display:block;
-        padding:0 30px;
-        color:#777;
-        border-radius:3px 3px 0 0;
-        line-height:40px;
-    }
-
-    .subnav a:hover {
-        color:#bf1e2e;
-    }
-
-    .subnav li.active a {
-        background:#fff;
-        color:#bf1e2e;
-        border:1px solid #dfdfe2;
-        border-bottom:1px solid #fff;
-    }
-
     #top, #content {
         margin-left:200px;
     }
@@ -530,25 +529,6 @@ header.stay {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .dyn-offline.fa,
 .dyn-online.fa {
