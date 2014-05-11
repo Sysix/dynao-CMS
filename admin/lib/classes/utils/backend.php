@@ -265,11 +265,9 @@ class backend {
 				$class = ' class="active"';
 			}
 			
-			if(isset($navi['icon'])) {
-				$i_class = ' class="fa fa-'.$navi['icon'].'"';
-			}
+			$i_tag = (isset($navi['icon'])) ? '<i class="fa fa-'.$navi['icon'].'"></i> ' : '';
 			
-			$tmp = '<li'.$class.'><a href="'.$navi['link'].'" title="'.htmlspecialchars($navi['name']).'"><i '.$i_class.'></i> <span>'.$navi['name'].'</span></a>';
+			$tmp = '<li'.$class.'><a href="'.$navi['link'].'" title="'.htmlspecialchars($navi['name']).'">'.$i_tag.'<span>'.$navi['name'].'</span></a>';
 
             if($name == $navi['name'] && $main == true) {
                 $tmp .= self::getSubNavi();
