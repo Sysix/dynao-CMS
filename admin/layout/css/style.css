@@ -505,7 +505,7 @@ ul.news li .btn {
 	transform: translateY(-100%)
 }
 
-#subnav {
+.subnav {
 	display:none;
 }
 
@@ -566,7 +566,7 @@ ul.news li .btn {
 		padding:0;
 	}
 	
-	#subnav {
+	.subnav {
 		display:block;
 		padding:0;
 		margin:0 0 20px 0;
@@ -574,23 +574,23 @@ ul.news li .btn {
 		overflow:hidden;
 	}
 	
-	#subnav li {
+	.subnav li {
 		float:left;
 		margin-right:30px;
 	}
 	
-	#subnav a {
+	.subnav a {
 		line-height:50px;
 		height:50px;
 		display:block;
 		color:#777;
 	}
 	
-	#subnav a:hover {
+	.subnav a:hover {
 		color:#bf1e2e;
 	}
 	
-	#subnav li.active a {
+	.subnav li.active a {
 		padding:0 20px;
 		color:#bf1e2e;
 		background:#fff;

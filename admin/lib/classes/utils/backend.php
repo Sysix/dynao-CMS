@@ -61,11 +61,10 @@ class backend {
 		
 	}
 	
-	
 	/*
 	 * Subnavigation Methoden
 	 */
-	public static function addSubNavi($name, $link, $icon = 'circle', $pos = -1, $callback = null) {
+	public static function addSubNavi($name, $link, $pos = -1, $callback = null) {
 		
 		if(empty(self::$getVars)) {
 			self::setGets();	
@@ -84,7 +83,6 @@ class backend {
 		$item = [
 			'name'=>$name,
 			'link'=>$link,
-			'icon'=>$icon,
 			'callback'=>$callback
 		];
 		
@@ -94,7 +92,7 @@ class backend {
 	
 	public static function getSubNavi() {
 		
-		return self::generateNavi(self::$subnavi, self::getSubpageName(), 'subnav', false, false);
+		return self::generateNavi(self::$subnavi, self::getSubpageName(), 'subnav', false);
 		
 	}
 	
@@ -112,7 +110,7 @@ class backend {
 		
 	}
 	
-	public static function addAddonNavi($name, $link, $pos = -1, $callback = null) {
+	public static function addAddonNavi($name, $link, $icon = 'circle', $pos = -1, $callback = null) {
 		
 		if(empty(self::$getVars)) {
 			self::setGets();	
@@ -131,6 +129,7 @@ class backend {
 		$item = [
 			'name'=>$name,
 			'link'=>$link,
+			'icon'=>$icon,
 			'callback'=>$callback
 		];
 	
@@ -251,7 +250,7 @@ class backend {
 		
 	}
 	
-	public static function generateNavi($naviArray, $name, $Ulclass = '', $main = false, $itagright = true) {
+	public static function generateNavi($naviArray, $name, $Ulclass = '', $main = false) {
 	
 		$return = [];
 		
@@ -270,12 +269,7 @@ class backend {
 				$i_class = ' class="fa fa-'.$navi['icon'].'"';
 			}
 			
-			if($itagright)
-				$tag = '<span>'.$navi['name'].'</span><i '.$i_class.'></i>';
-			else
-				$tag = '<i '.$i_class.'></i> <span>'.$navi['name'].'</span>';
-			
-			$tmp = '<li'.$class.'><a href="'.$navi['link'].'" title="'.htmlspecialchars($navi['name']).'">'.$tag.'</a>';
+			$tmp = '<li'.$class.'><a href="'.$navi['link'].'" title="'.htmlspecialchars($navi['name']).'"><i '.$i_class.'></i> <span>'.$navi['name'].'</span></a>';
 
             if($name == $navi['name'] && $main == true) {
                 $tmp .= self::getSubNavi();

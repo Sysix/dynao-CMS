@@ -15,12 +15,12 @@ if(
 	dyn::get('user')->hasPerm('page[delete]') ||
 	dyn::get('user')->hasPerm('page[content]')
 ) {
-	backend::addSubnavi(lang::get('pages'),		url::backend('structure', ['subpage'=>'pages']), 		'home');
-	backend::addSubnavi(lang::get('blocks'),	url::backend('structure', ['subpage'=>'blocks']), 		'th-large');
+	backend::addSubnavi(lang::get('pages'),		url::backend('structure', ['subpage'=>'pages']));
+	backend::addSubnavi(lang::get('blocks'),	url::backend('structure', ['subpage'=>'blocks']));
 }
 
 if(dyn::get('user')->hasPerm('page[module]')) {
-	backend::addSubnavi(lang::get('modules'),	url::backend('structure', ['subpage'=>'module']),		'list-alt');
+	backend::addSubnavi(lang::get('modules'),	url::backend('structure', ['subpage'=>'module']));
 }
 
 include_once(backend::getSubnaviInclude());

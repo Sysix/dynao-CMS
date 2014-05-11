@@ -9,7 +9,7 @@ $page = type::super('page', 'string');
 $subpage = type::super('subpage', 'string');
 $action = type::super('action', 'string');
 
-backend::addSubnavi(lang::get('general'),	url::backend('settings', ['subpage'=>'main']),	'eye');
+backend::addSubnavi(lang::get('general'),	url::backend('settings', ['subpage'=>'main']));
 	
 include_once(backend::getSubnaviInclude());
 ?>
