@@ -179,65 +179,66 @@ function removeAjaxLoad() {
 	$('#loading-spin').remove();	
 }
 
-$(document).ready(function () {
-    var body_width = window.innerHeight;
+$(document).ready(function() {
+	var body_width = window.innerHeight;
     var _window = $(window);
 
     _window.resize(function() {
         body_width = window.innerHeight;
-    })
+    });
 	
-	$('.form-back').click(function() {
-		 window.history.go(-1);
-	});
-	
-	$('.news h5 a').tooltip();
-	
-	$('nav').on('navClick', function(object,action) {
-        var _nav = $(this);
+	$('#left').on('leftClick', function(object,action) {
+        var _left = $(this);
         action = action || auto;
         console.log(action);
-        if(_nav.hasClass('active') && (action == 'auto' || action == 'close')) {
-            _nav.removeClass('active');
+        if(_left.hasClass('active') && (action == 'auto' || action == 'close')) {
+            _left.removeClass('active');
+			$('#head').removeClass('stay');
             console.log('remove')
         } else if(action == 'auto' || action == 'open') {
-            _nav.addClass('active');
+            _left.addClass('active');
+			$('#head').addClass('stay');
             console.log('add')
         }
-
-		$("header").addClass('stay');
 
 	});
 	
 	$(window).swipe({
 	    swipeRight:function(event, direction, distance, duration, fingerCount) {
             if(distance > 100 && body_width < 768) {
-                $('nav').trigger('navClick', ['open']);
+                $('#left').trigger('leftClick', ['open']);
             }
 	    },
         swipeLeft:function(event, direction, distance, duration, fingerCount) {
             if(distance > 100 && body_width < 768) {
-              $('nav').trigger('navClick', ['close']);
+              $('#left').trigger('leftClick', ['close']);
             }
         }
 	});
-
-
-	$('#nav-expand').click(function() {
-        $('nav').trigger('navClick', ['auto']);
+	
+	$(document).on('touchstart click', '#expand', function () {
+        $('#left').trigger('leftClick', ['auto']);
 	});
 	
-	$('nav .expand').click(function () {
-		$(this).next('ul').slideToggle();	
+	$(document).on('touchstart click', '#panel', function () {
+		$('#panel').children('ul').fadeToggle();	
 	});
 	
-	$('#user').click(function() {
-		$(this).children('ul').fadeToggle();	
+	$("#head").headroom({
+		tolerance: 10,
+        offset : 205,
+        classes: {
+          initial: "slide",
+          pinned: "slide--reset",
+          unpinned: "slide--up"
+        }
 	});
 	
-	$("header").headroom({
-		"tolerance": 100	
+	$('.form-back').click(function() {
+		 window.history.go(-1);
 	});
+	
+	$('.news h5 a').tooltip();
 	
     $('.js-sort tbody').DynSorting();
 	$('#structure-content').DynSorting({children: 'li', handle: '.panel-heading'});
