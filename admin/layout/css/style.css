@@ -119,6 +119,32 @@ fieldset[disabled] .btn-default.active {
 	background:#fff;
 }
 
+/* Login */
+
+#login {
+	top:50%;
+	left:50%;
+	width:320px;
+	position:absolute;
+	margin:-150px 0 0 -160px;
+}
+
+#login h3 {
+	color:#fff;
+}
+
+#login img {
+	height:30px;
+}
+ 
+#login .input-group {
+	padding:10px 0;
+}
+  
+#login .panel-heading {
+	background:#171a1e;
+}
+
 /* Left Sidebar */
 
 #left {
@@ -676,6 +702,19 @@ ul.news li .btn {
 	#left.active {
 		opacity:1;
 		left:0;
+	}
+	
+	#login {
+		position:static;
+		top:auto;
+		left:auto;
+		width:100%;
+		margin:0;
+		box-sizing:border-box;
+	}
+	
+	body.login {
+		padding:20px;
 	}
 	
 }

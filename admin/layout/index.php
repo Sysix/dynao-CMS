@@ -56,8 +56,8 @@
         
         <div id="tool">
         	<ul>
-            	<li><a href="" class="fa fa-globe"></a></li>
-            	<li><a href="" class="fa fa-sign-out"></a></li>
+            	<li><a href="http://dynao.de" target="_blank" class="fa fa-globe"></a></li>
+            	<li><a href="index.php?logout=1" class="fa fa-sign-out"></a></li>
             </ul>
         </div>
     
