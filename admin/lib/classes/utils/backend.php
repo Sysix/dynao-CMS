@@ -92,6 +92,7 @@ class backend {
 	
 	public static function getSubNavi() {
 		
+		if(count(self::$subnavi) > 1)
 		return self::generateNavi(self::$subnavi, self::getSubpageName(), 'subnav', false);
 		
 	}
