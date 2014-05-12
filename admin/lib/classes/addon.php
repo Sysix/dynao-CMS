@@ -135,7 +135,24 @@ class addon {
 		    ->setWhere('`name` = "'.$this->name.'"')
 			->delete();
 			
-		unlink(dir::addon($this->name));
+		$dir = dir::addon($this->name);
+		$it = new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS);
+		$files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
+		
+		foreach($files as $file) {
+			
+			if ($file->getFilename() === '.' || $file->getFilename() === '..') {
+				continue;
+			}
+			if ($file->isDir()){
+				rmdir($file->getRealPath());
+			} else {
+				unlink($file->getRealPath());
+			}
+			
+		}
+		
+		rmdir($dir);
 			
 		return message::success(sprintf(lang::get('addon_deleted'), $this->name));
 		
