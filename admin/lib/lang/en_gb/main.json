@@ -111,7 +111,7 @@
 	"start_page":				"Startpage",
 	"error_page":				"Errorpage",
 	"delete_cache":				"Delete cache",
-	"load_template":			"Load template config",
+	"load_template":			"Load template",
 	"delete_cache_success":		"Cache completely deleted",
 	"load_template_success":	"Template config loaded",
 	"load_template_failed":		"Cant load template config",
