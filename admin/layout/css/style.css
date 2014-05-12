@@ -178,6 +178,10 @@ fieldset[disabled] .btn-default.active {
 	border-left:3px solid #bf1e2e;
 }
 
+#left hr {
+	display:none;
+}
+
 #left  li.active ul {
 	display:block;
 }
@@ -538,6 +542,15 @@ ul.news li .btn {
 	#logo {
 		width:80px;
 		padding:18px 25px 0 25px;
+	}
+	
+	#left hr {
+		display:block;
+		width:100%;
+		height:1px;
+		background:#22262c;
+		border:0;
+		margin:15px 0;
 	}
 	
 	#logo img {

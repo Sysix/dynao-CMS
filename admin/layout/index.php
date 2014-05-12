@@ -50,6 +50,8 @@
         
         <h4>Addons</h4>
         
+        <hr />
+        
         <?php echo backend::getAddonNavi(); ?>
         
         <div id="tool">
