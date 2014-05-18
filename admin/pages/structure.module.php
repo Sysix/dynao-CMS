@@ -24,9 +24,8 @@ if($action == 'delete') {
 	
 	$sql = sql::factory();
 	$num = $sql->num('SELECT id FROM '.sql::table('structure_area').' WHERE modul = '.$id);
-	$num2 = $sql->num('SELECT id FROM '.sql::table('blocks').' WHERE modul = '.$id);
 	
-	if($num || $num2) {
+	if($num) {
 		
 		echo message::danger(lang::get('module_in_use'));
 		
