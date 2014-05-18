@@ -30,7 +30,11 @@
 			<div class="panel-footer">			
 				<button type="submit" class="btn btn-default pull-right" name="login">Login</button>				
 				<div id="remember">
-					<input type="checkbox" name="" /> <label><?php echo lang::get("login_remember"); ?></label>
+                	<div class="checkbox">
+    					<label>
+							<input type="checkbox" name="" /><?php echo lang::get("login_remember"); ?>
+                    	</label>
+                    </div>
 				</div>				
 				<div class="clearfix"></div>   				
 			</div>

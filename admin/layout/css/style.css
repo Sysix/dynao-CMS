@@ -47,11 +47,11 @@ h4 {
 /* Bootstrap Styles */
 
 textarea:hover, 
-input:hover, 
+input[type=text]:hover, 
 textarea:active, 
-input:active, 
+input[type=text]:active, 
 textarea:focus, 
-input:focus,
+input[type=text]:focus,
 .form-control:focus {
 	outline:none!important;
 	-webkit-appearance:none;
