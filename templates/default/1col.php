@@ -50,8 +50,8 @@
         		<div class="col-lg-12">
 				<?php
                 
-                if(block::getBlock('welcome'))
-                    echo block::getBlock('welcome');
+                if(block::getBlock('Startseite Headertext'))
+                    echo block::getBlock('Startseite Headertext');
                 else
                     echo '<h1>'.$this->get('name').'</h1>';
                 

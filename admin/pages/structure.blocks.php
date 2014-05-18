@@ -6,8 +6,10 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	
 	// Bugfix, das neu erstelle Blöcke nicht einzgezeigt werden
 	if(!is_null(type::post('save-back')) || !is_null(type::post('save'))) {
+		
 		pageAreaAction::saveBlock();
-		page::generateArticle($structure_id);
+		pageCache::generateArticle($structure_id);
+		
 		echo message::success(lang::get('structure_content_save'), true);
 	}
 	
@@ -40,7 +42,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 			$sql->update();
 		}
 		
-		$field = $form->addRawField('<select name="modul" class="form-control">'.pageAreaHtml::moduleList($form->get('modul')).'</select>');
+		$field = $form->addRawField('<select name="modul" class="form-control">'.pageAreaHtml::moduleList($form->get('modul'), true).'</select>');
 		$field->fieldName(lang::get('module'));
 		
 		ajax::addReturn(message::success(lang::get('save_sorting'), true));
@@ -51,6 +53,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	if($action == 'delete') {
 	
 		$id = pageAreaAction::delete($id);
+		pageCache::deleteFile($id);
 		echo message::success(lang::get('structure_content_delete'));
 		
 	}
@@ -110,7 +113,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                     
                         } else {
                             
-                            echo pageAreaHtml::selectBlock($module->getStructureId());
+                            echo pageAreaHtml::selectBlock($module->getStructureId(), false, true);
                             
                         }
                         
@@ -165,12 +168,12 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 						
 						$form_id = type::super('modul', 'int');
 						
-						$form = pageAreaHtml::formBlock(new pageArea(0));
+						$form = pageAreaHtml::formBlock(new pageArea(new sql()));
 						echo pageAreaHtml::formOut($form);
 						
 					} else {
 						
-						echo pageAreaHtml::selectBlock($structure_id,  $sql->num()+1);
+						echo pageAreaHtml::selectBlock($structure_id,  $sql->num()+1, true);
 						
 					}
 					?>

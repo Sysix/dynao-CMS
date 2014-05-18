@@ -5,12 +5,14 @@ class pageAreaHtml {
 	public static $modulList = [];
 	public static $modulListAll = [];
 
-	public static function selectBlock($structureID, $sort = false)  {
-	
+	public static function selectBlock($structureID, $sort = false, $block = false)  {
+		
+		$value = ($block) ? 'blocks' : 'pages';
+		
 		$return  = '<div class="structure-addmodul-box">';
 		$return .= '	<form action="index.php" method="get">';
 		$return .= '		<input type="hidden" name="page" value="structure" />';
-		$return .= '		<input type="hidden" name="subpage" value="pages" />';	
+		$return .= '		<input type="hidden" name="subpage" value="'.$value.'" />';	
 		$return .= '		<input type="hidden" name="structure_id" value="'.$structureID.'" />';
 		$return .= '		<input type="hidden" name="action" value="add" />';			
 		
@@ -19,7 +21,7 @@ class pageAreaHtml {
 		
 		$return .= '		<select name="modul" class="form-control">';
 		$return .= '		<option>'.lang::get('module_add').'</option>';
-		$return .= self::moduleList(false, true);
+		$return .= self::moduleList(false, $block);
 		$return .= '		</select>';
 		$return .= '	</form>';
 		$return .= '</div>';
@@ -28,9 +30,9 @@ class pageAreaHtml {
 		
 	}
 	
-	public static function moduleList($active = false, $onlySlots = false) {
+	public static function moduleList($active = false, $blocks = false) {
 		
-		if($onlySlots) {
+		if(!$blocks) {
 			$where = ' WHERE `blocks` != 1';
 			$mlist = &self::$modulList;
 		} else {
