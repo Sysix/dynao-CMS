@@ -51,7 +51,7 @@ class module {
 		$return = [];
 		$classname = __CLASS__;
 		
-		$where = ($block) ?: 'AND a.block=1';
+		$where = ($block) ? 'AND a.block=1' : '';
 		
 		$sql = sql::factory();
 		$sql->query('

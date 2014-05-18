@@ -15,7 +15,9 @@ class block {
 	 */
 	public function __construct($name) {
 		
-		$this->sql = self::getSql($name);
+		$this->sql = sql::factory();
+		$this->sql->query("SELECT * FROM ".sql::table('blocks')." WHERE name = '".$name."'")->result();	
+			
 	}
 	
 	/*
@@ -25,11 +27,10 @@ class block {
 	 */
 	public function getContent() {
 		
-		if(!self::isInCategory($this->sql->get('is-structure'), $this->sql->getArray('structure'))) {
+		if(!self::isInCategory($this->sql->get('is-structure'), $this->sql->getArray('structure')))
 			return '';
-		}
-		
-		return module::getByStructureId($this->sql->get('id'), true);
+		else
+			return module::getByStructureId($this->sql->get('id'), true);
 		
 	}
 	
