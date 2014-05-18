@@ -46,10 +46,13 @@ class module {
 		return $pageArea->OutputFilter($this->sql->get('output'), $this->sql);
 	}
 	
-	public static function getByStructureId($id) {
+	public static function getByStructureId($id, $block = false) {
 		
 		$return = [];
 		$classname = __CLASS__;
+		
+		$where = ($block) ?: 'AND a.block=1';
+		
 		$sql = sql::factory();
 		$sql->query('
 		SELECT
@@ -62,6 +65,7 @@ class module {
 			  m.id = a.modul
 		WHERE
 		  a.structure_id='.$id.'
+		  '.$where.'
 		  AND
 		  a.online = 1
 		ORDER BY

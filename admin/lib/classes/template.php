@@ -52,6 +52,9 @@ class template {
 		$modulSql = sql::factory();
 		$modulSql->setTable('module');
 		
+		$structureAreaSql = sql::factory();
+		$structureAreaSql->setTable('structure_area');
+		
 		foreach($module as $modulName=>$modul) {
 				
 			$modulExists = $modulSql->num('SELECT id FROM '.sql::table('module').' WHERE `name` = "'.$modulName.'"');

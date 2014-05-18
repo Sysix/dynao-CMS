@@ -15,7 +15,6 @@ class block {
 	 */
 	public function __construct($name) {
 		
-		self::generateAll();
 		$this->sql = self::getSql($name);
 	}
 	
@@ -30,9 +29,8 @@ class block {
 			return '';
 		}
 		
-		$pageArea = new pageArea($this->sql);
+		return module::getByStructureId($this->sql->get('id'), true);
 		
-		return $pageArea->OutputFilter($this->sql->get('output'), $this->sql);		
 	}
 	
 	/*
@@ -87,47 +85,6 @@ class block {
 		}
 		
 		return self::$blocks[$name];
-	}
-	
-	/*
-	 * Alle Blocks aus der Datenbank holen und statische Variable speichern
-	 */
-	protected static function generateAll() {
-		
-		if(empty(self::$blocks)) {
-			
-			$sql = sql::factory();
-			$sql->query('
-			SELECT 
-			  b.*, m.output 
-			FROM 
-			  '.sql::table('blocks').' AS b
-			  LEFT JOIN
-			  	'.sql::table('module').' AS m
-					ON m.id = b.modul
-			')->result();
-			while($sql->isNext()) {
-				$sql2 = clone $sql;
-				self::$blocks[$sql->get('name')] = $sql2;
-				
-				$sql->next();
-			}
-			
-		}
-		
-	}
-	
-	/*
-	 * Alle Blocks zurückgeben
-	 *
-	 * @return	array
-	 */
-	public static function getArray() {
-		
-		self::generateAll();
-		
-		return self::$blocks;
-		
 	}
 	
 	/*
