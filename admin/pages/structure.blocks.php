@@ -7,8 +7,8 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	// Bugfix, das neu erstelle Blöcke nicht einzgezeigt werden
 	if(!is_null(type::post('save-back')) || !is_null(type::post('save'))) {
 		
-		pageAreaAction::saveBlock();
-		pageCache::generateArticle($structure_id);
+		pageAreaAction::saveBlock(true);
+		pageCache::generateArticle($structure_id, true);
 		
 		echo message::success(lang::get('structure_content_save'), true);
 	}
@@ -25,7 +25,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		$sql->addPost('online', $online);
 		$sql->update();
 		
-		page::generateArticle($structure_id);
+		pageCache::generateArticle($structure_id, true);
 		
 		echo message::success(lang::get('save_status'));
 		

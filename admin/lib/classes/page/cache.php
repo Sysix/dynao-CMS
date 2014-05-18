@@ -24,9 +24,9 @@ class pageCache extends cache {
 			
 	}
 	
-	public static function write($content, $id) {
+	public static function write($content, $id, $type = 'article') {
 		
-		$file = self::getFileName($id, 'article');
+		$file = self::getFileName($id, $type);
 	
 		if(!file_put_contents(dir::cache(self::FOLDER.DIRECTORY_SEPARATOR.$file), $content, LOCK_EX)) {
 				return false;
@@ -36,38 +36,40 @@ class pageCache extends cache {
 		
 	}
 	
-	static public function deleteFile($id) {
+	static public function deleteFile($id, $type = 'article') {
 		
-		$file = self::getFileName($id, 'article');
+		$file = self::getFileName($id, $type);
 	
 		parent::deleteFile(self::FOLDER.DIRECTORY_SEPARATOR.$file);
 		
 	}
 	
-	static public function exist($id, $time = false) {
+	static public function exist($id, $time = false, $type = 'article') {
 		
-		$file = self::getFileName($id, 'article');
+		$file = self::getFileName($id, $type);
 	
 		return parent::exist(self::FOLDER.DIRECTORY_SEPARATOR.$file, $time);
 		
 	}
 	
-	static public function read($id) {
+	static public function read($id, $type = 'article') {
 		
-		$file = self::getFileName($id, 'article');
+		$file = self::getFileName($id, $type);
 		
 		return parent::read(self::FOLDER.DIRECTORY_SEPARATOR.$file);
 		
 	}
 	
-	public static function generateArticle($id) {
+	public static function generateArticle($id, $block = false) {
 		
 		$return = [];
+		
+		$type = ($block) ? 'block' : 'article';
 		
 		$backend = dyn::get('backend');
 		dyn::add('backend', false);
 		
-		$page = new page($id);
+		$page = new page($id, true, $block);
 		$blocks = $page->getBlocks();
 		
 		foreach($blocks as $block) {
@@ -75,11 +77,11 @@ class pageCache extends cache {
 			$return[] =  $block->getContent();
 		}	
 		
-		if(self::exist($id)) {
-			self::deleteFile($id);
+		if(self::exist($id, false, $type)) {
+			self::deleteFile($id, $type);
 		}
 		
-		self::write(implode(PHP_EOL, $return), $id);
+		self::write(implode(PHP_EOL, $return), $id, $type);
 		
 		dyn::add('backend', $backend);
 		

@@ -21,40 +21,31 @@ class block {
 	}
 	
 	/*
-	 * Gibt den Content des Block aus
-	 *
-	 * @return	string
-	 */
-	public function getContent() {
-		
-		if(!self::isInCategory($this->sql->get('is-structure'), $this->sql->getArray('structure')))
-			return '';
-		else
-			return module::getByStructureId($this->sql->get('id'), true);
-		
-	}
-	
-	/*
 	 * Gibt den Block direkt aus
 	 *
 	 * @param	string	$name			Blockname
 	 * @return	string
 	 */
+	
 	public static function getBlock($name) {
 		
-		$class = __CLASS__;
+		$sql = sql::factory();
+		$sql->query("SELECT * FROM ".sql::table('blocks')." WHERE name = '".$name."'")->result();	
 		
-		try {
+		if(!self::isInCategory($sql->get('is-structure'), $sql->getArray('structure')))
+			return '';
+		else {
 		
-			$block = new $class($name);
+			if(!pageCache::exist($sql->get('id'), false, 'block')) {
+				pageCache::generateArticle($sql->get('id'), true);
+			}
+					
+			$content = pageCache::read($sql->get('id'), 'block');
 			
-			return $block->getContent();
-			
-		} catch(Exception $e) {
-			
-			return $e->getMessage();
-				
+			return pageArea::getEval($content);
+		
 		}
+		
 	}
 	
 	/*

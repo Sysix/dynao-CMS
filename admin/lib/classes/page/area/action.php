@@ -2,7 +2,7 @@
 
 class pageAreaAction {	
 	
-	public static function saveBlock() {
+	public static function saveBlock($block) {
 		
 		$id = type::post('id', 'int');
 		
@@ -15,6 +15,9 @@ class pageAreaAction {
 			'structure_id'=>'int',
 			'sort'=>'int'
 		]);
+		
+		if($block)
+			$sql->addPost('block', 1);
 		
 		foreach(pageArea::$types as $class) {
 			$class = new $class();

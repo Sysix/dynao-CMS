@@ -65,7 +65,7 @@
     	<div class="row">
         	<div class="col-lg-12">
                 <section id="content">
-                	<?= block::getBlock('boxen'); ?>
+                	<?= block::getBlock('Startseite 3er Box'); ?>
                     
                     <div class="row">
         				<div class="col-md-8">

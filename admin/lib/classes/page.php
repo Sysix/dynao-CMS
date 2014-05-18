@@ -4,9 +4,13 @@ class page {
 	use traitFactory;
 	use traitMeta;
 	
+	private $block;
+	
 	protected $sql;
 	
-	public function __construct($id, $offlinePages = true) {
+	public function __construct($id, $offlinePages = true, $block = false) {
+		
+		$this->block = $block;
 		
 		if(is_object($id)) {
 			
@@ -16,11 +20,13 @@ class page {
 			
 			$extraWhere = '';
 			
-			if(!$offlinePages) {				
-				$extraWhere =  'AND WHERE online = 1';				
-			}
+			if(!$offlinePages)		
+				$extraWhere =  'AND WHERE online = 1';
+			
+			$table = ($this->block) ? sql::table('blocks') : sql::table('structure');				
+
 			$this->sql = sql::factory();
-			$this->sql->query('SELECT *	FROM '.sql::table('structure').' WHERE id = '.$id.$extraWhere)->result();		
+			$this->sql->query('SELECT * FROM '.$table.' WHERE id = '.$id.$extraWhere)->result();		
 		
 		}
 		
@@ -39,7 +45,7 @@ class page {
 	}
 	
 	public function getBlocks() {
-		return module::getByStructureId($this->get('id'));
+		return module::getByStructureId($this->get('id'), $this->block);
 	}
 	
 	public function getTemplate() {
