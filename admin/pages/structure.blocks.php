@@ -42,8 +42,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 			$sql->update();
 		}
 		
-		$field = $form->addRawField('<select name="modul" class="form-control">'.pageAreaHtml::moduleList($form->get('modul'), true).'</select>');
-		$field->fieldName(lang::get('module'));
+		pageCache::generateArticle($structure_id, true);
 		
 		ajax::addReturn(message::success(lang::get('save_sorting'), true));
 		
@@ -192,7 +191,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	if(!is_null($secondpage) && dyn::get('user')->hasPerm('page[content]')) {
 		
 		if(!is_null(type::post('save-back')) || !is_null(type::post('save'))) {
-			block::saveBlock();
+			block::saveBlock(true);
 			echo message::success(lang::get('structure_content_save'), true);
 		}
 		

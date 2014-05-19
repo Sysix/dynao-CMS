@@ -61,15 +61,32 @@ input[type=text]:focus,
 	transition: all 0.3s ease-in-out;
 }
 
-a.btn {
+a.btn,
+a.btn:visited {
 	color:#fff;
 }
 
 .btn-default,
 .btn-danger {
-	color: #ffffff;
+	color:#fff;
 	background-color: #bf1e2e;
 	border-color: #bf1e2e;
+}
+
+a.btn-warning,
+a.btn-warning:visited {
+    color: #777;
+    background-color: #f1f5f7;
+    border-color: #f1f5f7;
+}
+
+.btn-warning:hover,
+.btn-warning:focus,
+.btn-warning:active,
+.btn-warning.active {
+    color: #000;
+    background-color: #f1f5f7;
+    border-color: #f1f5f7;
 }
 
 .btn-default:hover,
