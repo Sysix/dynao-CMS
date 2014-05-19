@@ -50,7 +50,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		
 	}
 	
-	if($action == 'delete') {
+	if($action == 'delete' && dyn::get('user')->hasPerm('page[delete]')) {
 	
 		$id = pageAreaAction::delete($id);
 		pageCache::deleteFile($id);

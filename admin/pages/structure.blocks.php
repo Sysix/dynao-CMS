@@ -52,7 +52,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	if($action == 'delete') {
 	
 		$id = pageAreaAction::delete($id);
-		pageCache::deleteFile($id);
+		pageCache::deleteFile($id, 'block');
 		echo message::success(lang::get('structure_content_delete'));
 		
 	}
@@ -239,17 +239,10 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		
 	} else {
 		
-		if($action == 'delete' && dyn::get('user')->hasPerm('page[delete]')) {
-			
-			$sql = sql::factory();
-			$sql->setTable('blocks');
-			$sql->setWhere('id='.$id);
-			$sql->delete();
-			
-			echo message::success(lang::get('block_deleted'), true);
-			
-			$action = '';	
+		if($action == 'delete'  && dyn::get('user')->hasPerm('page[delete]')) {
+			//Ganzen Block löschen
 		}
+		
 		
 		if($action == 'add' || $action == 'edit' && dyn::get('user')->hasPerm('page[edit]')) {
 			
