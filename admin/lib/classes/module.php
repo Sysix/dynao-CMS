@@ -48,7 +48,7 @@ class module {
 
     public static function getExport($id) {
 		$sql = sql::factory();
-		$sql->query('SELECT id, name, input, output FROM '.sql::table('module').' WHERE id = '.$id)->result();
+		$sql->query('SELECT id, name, input, output, blocks FROM '.sql::table('module').' WHERE id = '.$id)->result();
 		
 		$return = [];
 		
@@ -59,7 +59,8 @@ class module {
 			"name": '.json_encode(utf8_decode($sql->get("name"))).',
 			"install": {
 				"input": '.json_encode(utf8_decode($sql->get("input"))).',
-				"output": '.json_encode(utf8_decode($sql->get("output"))).'
+				"output": '.json_encode(utf8_decode($sql->get("output"))).',
+				"blocks": '.$sql->get("blocks").'
 			}
 		}';
 		
