@@ -19,19 +19,13 @@ if(ajax::is()) {
 	ajax::addReturn(message::success(lang::get('save_sorting'), true));
 	
 }
-if($action == 'export') {
-
-    module::sendExport($id);
-	$action = '';
-}
 
 if($action == 'delete') {
 	
 	$sql = sql::factory();
 	$num = $sql->num('SELECT id FROM '.sql::table('structure_area').' WHERE modul = '.$id);
-	$num2 = $sql->num('SELECT id FROM '.sql::table('blocks').' WHERE modul = '.$id);
 	
-	if($num || $num2) {
+	if($num) {
 		
 		echo message::danger(lang::get('module_in_use'));
 		
@@ -44,6 +38,14 @@ if($action == 'delete') {
 		echo message::success(lang::get('module_deleted'));
 	
 	}
+	$action = '';
+	
+}
+	
+if($action == 'export') {
+
+	module::sendExport($id);
+	echo message::success(lang::get('module_export'));
 	$action = '';
 	
 }
@@ -78,7 +80,7 @@ if($action == 'import') {
 		foreach($content as $id=>$modul) {
 			
 			$code = '<a href="'.$modul['link'].'" class="btn btn-sm btn-success">Code anzeigen</a>';
-			$import = '<a href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'import', 'id'=>$id]).'">Importieren</a>';
+			$import = '<a href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'import', 'id'=>$id]).'">'.lang::get('import').'</a>';
 			
 			$table->addRow()
 			->addCell($id)
@@ -133,7 +135,11 @@ if($action == 'add' || $action == 'edit') {
 			<div class="panel-heading">
                 <h3 class="panel-title pull-left"><?php echo ($action == 'add') ? lang::get('module_add') : '"'.$form->get('name').'" '.lang::get('edit'); ?></h3>
                 <div class="btn-group pull-right">
-					<a class="btn btn-sm btn-warning" href="<?= url::backend('structure', ['subpage'=>'module', 'action'=>'import']) ?>"><?= lang::get('import') ?></a>
+                	<?php if($action == 'edit') { ?>
+					<a class="btn btn-sm btn-warning" href="<?= url::backend('structure', ['subpage'=>'module', 'action'=>'export', 'id'=>$id]) ?>"><?= lang::get('export'); ?></a>
+                    <?php } else { ?>
+					<a class="btn btn-sm btn-warning" href="<?= url::backend('structure', ['subpage'=>'module', 'action'=>'import']) ?>"><?= lang::get('import'); ?></a>
+                    <?php } ?>
                     <a class="btn btn-sm btn-default" href="<?= url::backend('structure', ['subpage'=>'module']) ?>"><?= lang::get('back'); ?></a>
                 </div>
                 <div class="clearfix"></div>
@@ -172,12 +178,11 @@ if($action == '') {
 			
 			$edit = '<a href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'edit', 'id'=>$id]).'" class="btn btn-sm btn-default fa fa-pencil-square-o"></a>';
 			$delete = '<a href="'.url::backend('structure', ['subpage'=>'module','action'=>'delete', 'id'=>$id]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
-			$export = '<a href="'.url::backend('structure', ['subpage'=>'module','action'=>'export', 'id'=>$id]).'"title="Export" class="btn btn-sm btn-default fa fa-download"></a>';
 
 			$table->addRow(['data-id'=>$id])
 			->addCell('<i class="fa fa-sort"></i>')
 			->addCell($table->get('name'))
-			->addCell('<span class="btn-group">'.$edit.$delete.$export.'</span>');
+			->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
 			
 			$table->next();	
 		}

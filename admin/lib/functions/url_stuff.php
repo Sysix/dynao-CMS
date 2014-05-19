@@ -27,5 +27,20 @@ function url_addParam($key, $value) {
 	
 }
 
+function filterValue($value) {
+		
+		$value = mb_strtolower($value);
+	
+		$search = ['ä', 'ü', 'ö', 'ß', '&'];
+		$replace = ['ae', 'ue', 'oe', 'ss', 'und'];
+		
+		$value = str_replace($search, $replace, $value);
+		
+		$value = preg_replace('/[^a-z0-9]/', '-',  $value);
+		
+		return $value;
+	
+	}
+
 
 ?>

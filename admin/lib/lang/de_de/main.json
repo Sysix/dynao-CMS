@@ -132,6 +132,9 @@
 	"input":					"Eingabe",
 	"output":					"Ausgabe",
 	"module_deleted":			"Modul erfolgreich gelöscht",
+	"module_export":			"Modul erfolgreich exportiert - Download gestartet",
+	"import":					"Importieren",
+	"export":					"Exportieren",
 	"module_in_use":			"Das Modul wird noch verwendet",
 	
 	#Block

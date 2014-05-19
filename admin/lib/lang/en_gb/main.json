@@ -130,6 +130,9 @@
 	"module":					"Module",
 	"modules":					"Modules",
 	"module_deleted":			"Module successfully deleted",
+	"module_export":			"Modul export successful - download started",
+	"import":					"Import",
+	"export":					"Export",
 	"module_in_use":			"The module is still in use",
 	
 	#Blocks
