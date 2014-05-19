@@ -42,12 +42,12 @@ function getDeleteModal($title, $content) {
     	<div class="modal-content">
         	<div class="modal-header">
             	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><?= $title ?></h4>
+                <h3 class="modal-title"><?= $title ?></h3>
             </div>
             <div class="modal-body"><?= $content; ?></div>
             <div class="modal-footer">
-            	<button type="button" class="btn btn-sm btn-warning confirm"><?= lang::get('delete') ?></button>
-                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"><?= lang::get('close') ?></button>
+            	<button type="button" class="btn btn-sm btn-default confirm"><?= lang::get('delete') ?></button>
+                <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal"><?= lang::get('close') ?></button>
             </div>
         </div>
     </div>

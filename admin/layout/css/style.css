@@ -74,7 +74,9 @@ a.btn:visited {
 }
 
 a.btn-warning,
-a.btn-warning:visited {
+a.btn-warning:visited,
+.btn-warning,
+.btn-warning:visited {
     color: #777;
     background-color: #f1f5f7;
     border-color: #f1f5f7;
@@ -131,9 +133,11 @@ fieldset[disabled] .btn-default.active {
 	outline:none;
 }
 
-.panel-heading h3 {
+.panel-heading h3,
+.modal-header h3 {
 	line-height:30px;
 	font-weight:300;
+	font-size:16px;
 	color:#000;
 }
 
