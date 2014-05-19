@@ -1,14 +1,14 @@
 <?php
   
- if(type::get('checkversion', 'int', 0) == 1) {
+if(type::get('checkversion', 'int', 0) == 1) {
 	$cacheFile = cache::getFileName(0, 'dynaoVersion');
 	cache::exist($cacheFile, 0);
 	echo message::success(lang::get('connection_again'), true); 
- }
+}
   
   
 	$versionCheck = dyn::checkDynVersion();
-  
+	
     if($versionCheck === lang::get('version_fail_connect')) {
 		
         $message = lang::get('version_fail_connect');

@@ -87,7 +87,6 @@ class dyn {
 			'You have a Old Version',
 		];
 		
-		
 		foreach($version1 as $i => $version) {
 			
 			if(isset($version2[$i])) {
@@ -137,11 +136,11 @@ class dyn {
 		$cacheFile = cache::getFileName(0, 'dynaoVersion');
 		
 		// jeden Tag
-		if(cache::exist($cacheFile, 86400)) {
+		if(cache::exist($cacheFile, 86400))
 			
 			$content = json_decode(cache::read($cacheFile), true);
 				
-		} else {
+		else {
 		
 			$content = apiserver::getVersionFile();
 			
