@@ -19,13 +19,19 @@ if(ajax::is()) {
 	ajax::addReturn(message::success(lang::get('save_sorting'), true));
 	
 }
+if($action == 'export') {
+
+    module::sendExport($id);
+	$action = '';
+}
 
 if($action == 'delete') {
 	
 	$sql = sql::factory();
 	$num = $sql->num('SELECT id FROM '.sql::table('structure_area').' WHERE modul = '.$id);
+	$num2 = $sql->num('SELECT id FROM '.sql::table('blocks').' WHERE modul = '.$id);
 	
-	if($num) {
+	if($num || $num2) {
 		
 		echo message::danger(lang::get('module_in_use'));
 		
@@ -166,11 +172,12 @@ if($action == '') {
 			
 			$edit = '<a href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'edit', 'id'=>$id]).'" class="btn btn-sm btn-default fa fa-pencil-square-o"></a>';
 			$delete = '<a href="'.url::backend('structure', ['subpage'=>'module','action'=>'delete', 'id'=>$id]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
-			
+			$export = '<a href="'.url::backend('structure', ['subpage'=>'module','action'=>'export', 'id'=>$id]).'"title="Export" class="btn btn-sm btn-default fa fa-download"></a>';
+
 			$table->addRow(['data-id'=>$id])
 			->addCell('<i class="fa fa-sort"></i>')
 			->addCell($table->get('name'))
-			->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
+			->addCell('<span class="btn-group">'.$edit.$delete.$export.'</span>');
 			
 			$table->next();	
 		}
