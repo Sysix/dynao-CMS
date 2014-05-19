@@ -65,9 +65,7 @@
 	
 	#Versioncheck
 	"version_fail_connect":		"Verbindung zum Server konnte nicht hergestellt werden",
-	"version_fail_version1":	"Sie verwenden eine veraltete Version",
-	"version_fail_version2":	"Sie verwenden eine veraltete Nebenversion",
-	"version_fail_version3":	"Sie verwenden eine veraltete Minor-Version",
+	"version_fail_version":	"Sie verwenden eine veraltete Version",
 	
 	#Login	
 	"login_form_notfull":		"Formular wurde nicht vollständig gesendet!",

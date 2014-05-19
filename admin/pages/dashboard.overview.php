@@ -15,7 +15,7 @@ if(type::get('checkversion', 'int', 0) == 1) {
         $message .= '<br /><a href="'.url::backend('dashboard', ['subpage'=>'overview', 'checkversion'=>1]).'">'.lang::get('try_again').'</a>';
         echo message::danger($message, true);  
 		
-	} elseif($versionCheck !== true) {
+	} elseif($versionCheck) {
         echo message::danger($versionCheck, true);
     }
 	

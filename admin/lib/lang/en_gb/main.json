@@ -65,9 +65,7 @@
 	
 	#Versioncheck
 	"version_fail_connect":		"Connection to the server could not be established",
-	"version_fail_version1":	"You are using an outdated version",
-	"version_fail_version2":	"You are using an outdated minor version",
-	"version_fail_version3":	"You are using an outdated minor version",
+	"version_fail_version":	"You are using an outdated version",
 	
 	#Login	
 	"login_form_notfull":		"Form was not completely sent!",

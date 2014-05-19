@@ -77,57 +77,10 @@ class dyn {
 		$version1 = str_replace(' ', '.', $version1);
 		$version2 = str_replace(' ', '.', $version2);
 		
-		$version1 = explode('.', $version1);
-		$version2 = explode('.', $version2);
-		
-		$depth = [
-			lang::get('version_fail_version1'),
-			lang::get('version_fail_version2'),
-			lang::get('version_fail_version3'),
-			'You have a Old Version',
-		];
-		
-		foreach($version1 as $i => $version) {
-			
-			if(isset($version2[$i])) {
-				
-				if(is_int($version) && is_int($version2[$i])) {
-				
-					if($version2[$i] > $version) {
-						return $depth[$i];
-					}
-					
-				} else {
-					
-					// 1.1.1 > 1.1 RC
-					if(is_int($version2[$i])) {
-						return $depth[4];	
-					}
-					
-					$versionArray = array_flip(['RC1', 'RC', 'RC2', 'RC3', 'b', 'beta', 'a', 'alpha', 'dev']);
-					
-					if(isset($versionArray[$version])) {
-						$version = $versionArray[$version];
-					}
-					
-					if(isset($versionArray[$version2[$i]])) {
-						$version2[$i] = $versionArray[$version2[$i]];
-					}
-					
-					if($version2[$i] > $version) {
-						return $depth[4];	
-					}
-					
-				}
-					
-			// 1.1.1 > 1.1
-			} else {			
-				return true;			
-			}
-						
-		}
-		
-		return true;
+		if(version_compare($version1, $version2)  > 0)
+			return lang::get('version_fail_version');
+		else
+			return '';
 		
 	}
 	
