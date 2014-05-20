@@ -1,0 +1,14 @@
+{
+	"imexport":						"Im/Export",
+	"import":						"Import",
+	"imports":						"Importieren",
+	"sqlexport":					"SQL Exportieren",
+	"sqlimport":					"SQL Importieren",
+	"sqlimportsuccess":				"Import war erfolgreich",
+	"sqlimporttext":				"Die Import-Datei muss aus reinen Textinhalten bestehen. Mit dieser Funktion können keine Inhalte aus älteren oder anderen Software-Systemen importiert werden.",
+	"exports":						"Exportieren",
+	"exportSelect":					"Bitte wählen Sie mindestens eine Tabelle zum Exportieren aus!",
+	"name":							"Name",
+	"export":						"Export"
+	
+}

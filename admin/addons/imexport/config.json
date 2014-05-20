@@ -1,0 +1,10 @@
+{
+	"name": "Im/Export SQL",
+	"version": 0.1,
+	"author": "Olaf Braun",
+	"supportlink" : "https://wbb-elite.de/",
+	"need": {
+		"version": "0.1.0 Beta"
+	}
+	
+}
