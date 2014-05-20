@@ -8,7 +8,8 @@
                     <h3 class="panel-title"><?php echo lang::get('db_connect'); ?></h3>
                 </div>
                 <div class="panel-body">
-                
+                    <?php if(isset($_GET["error"]) && !empty($_GET["error"])) echo  message::danger($_GET["error"]); ?>
+
                     <?php
 						
 						$form = form_install::factory('', '', 'index.php');
@@ -85,7 +86,7 @@
 								$form->addParam('page', 'finish');
 								
 							} else {
-								echo message::danger($sql);
+                                $form->addParam('error', $sql);
 							}
 													
 						}
