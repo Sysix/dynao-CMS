@@ -106,9 +106,8 @@ class module {
 			  m.id = a.modul
 		WHERE
 		  a.structure_id='.$id.'
-		  AND
 		  '.$where.'
-		  a.online = 1
+		  AND a.online = 1
 		ORDER BY
 		  a.sort')->result();
 		while($sql->isNext()) {
