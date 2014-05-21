@@ -1,10 +1,10 @@
 <?php
   
-if(type::get('checkversion', 'int', 0) == 1) {
-	$cacheFile = cache::getFileName(0, 'dynaoVersion');
-	cache::exist($cacheFile, 0);
-	echo message::success(lang::get('connection_again'), true); 
-}
+	if(type::get('checkversion', 'int', 0) == 1) {
+		$cacheFile = cache::getFileName(0, 'dynaoVersion');
+		cache::exist($cacheFile, 0);
+		echo message::success(lang::get('connection_again'), true); 
+	}
   
   
 	$versionCheck = dyn::checkDynVersion();
@@ -19,26 +19,69 @@ if(type::get('checkversion', 'int', 0) == 1) {
         echo message::danger($versionCheck, true);
     }
 	
-	echo extension::get('DASHBOARD_OVERVIEW', '');
-?>		
-<div class="row">
+	$stats = [];
+	
+	$stats[] = ['num'=>12, 'text'=>'Text here'];
+	$stats[] = ['num'=>12, 'text'=>'Text here'];
+	$stats[] = ['num'=>12, 'text'=>'Text here'];
+	$stats[] = ['num'=>12, 'text'=>'Text here'];
+	$stats[] = ['num'=>12, 'text'=>'Text here'];
+	$stats[] = ['num'=>12, 'text'=>'Text here'];
+	
+	$stats = extension::get('DASHBOARD_STATS', $stats);
 
-	<div class="col-lg-6">
-        <div class="panel panel-default">
-        	<div class="panel-heading">
-        		<h3 class="panel-title pull-left">dynaoCMS</h3>
-        		<div class="btn-group pull-right">
-        			<a href="http://dynao.de" target="_blank" class="btn btn-sm btn-default"><?php echo lang::get('visit_site'); ?></a>
-        		</div>
-        		<div class="clearfix"></div>
-        	</div>
-        	<div class="panel-body">
-        		<ul class="news">
-                	<?php echo dyn::getNews(); ?>        			
-        		</ul>
-        	</div>
-        </div>
+?>
+<section id="slide">
+	<div class="row">
+    
+    	<?php
+			
+			$i = 1;
+			foreach($stats as $stat) {
+				
+				echo '
+					<div class="col-sm-4 col-md-2">
+                	
+						<div class="stat">
+							<span>'.$stat['num'].'</span>
+							'.$stat['text'].'
+						</div>
+						
+					</div>
+				';
+				
+				$i++;
+			}
+			
+		?>
+        
     </div>
+    <div class="row">
+    
+    	<div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title pull-left">dynaoCMS</h3>
+                    <div class="btn-group pull-right">
+                        <a href="http://dynao.de" target="_blank" class="btn btn-sm btn-default"><?php echo lang::get('visit_site'); ?></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    <ul class="news">
+                        <?php echo dyn::getNews(); ?>        			
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="expand">
+    	<i class="fa fa-chevron-up"></i>
+    </div>
+</section>
+		
+<div class="row">
     
 	<div class="col-lg-6">
         <div class="panel panel-default">
@@ -56,3 +99,5 @@ if(type::get('checkversion', 'int', 0) == 1) {
     </div>
 
 </div>
+
+<?php echo extension::get('DASHBOARD_OVERVIEW', ''); ?>

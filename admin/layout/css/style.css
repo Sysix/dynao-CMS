@@ -300,6 +300,43 @@ fieldset[disabled] .btn-default.active {
 	padding:30px;
 }
 
+/* Slide Dashboard */
+
+#slide {
+	padding:30px;
+	background:#fff;
+	border-bottom:1px solid #dce1e4;
+	position:relative;
+	margin:-30px -30px 30px -30px;
+}
+
+#slide .stat {
+	border-left:3px solid #bf1e2e;
+	padding-left:15px;
+	margin-bottom:30px;
+}
+
+#slide .stat span {
+	display:block;
+	font-size:24px;
+	font-weight:300;
+	color:#000;
+}
+
+#slide .expand {
+	position:absolute;
+	left:50%;
+	width:40px;
+	height:40px;
+	margin:0 0 0 -20px;
+	bottom:-20px;
+	border:1px solid #dce1e4;
+	background:#fff;
+	text-align:center;
+	line-height:40px;
+	cursor:pointer;
+}
+
 /* Head */
 
 #head {
@@ -674,6 +711,11 @@ ul.news li .btn {
 	
 	#content {
 		padding:10px;
+	}
+	
+	#slide {
+		padding:10px;
+		margin:-10px -10px 10px -10px;
 	}
 	
 	#panel i.fa-user,
