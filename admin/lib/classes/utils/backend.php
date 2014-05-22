@@ -139,7 +139,7 @@ class backend {
 	
 	public static function getAddonNavi() {
 		
-		return self::generateNavi(self::$addonNavi, self::getPageName());
+		return self::generateNavi(self::$addonNavi, self::getPageName(), '', true);
 		
 	}
 	
