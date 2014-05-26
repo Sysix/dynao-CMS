@@ -608,6 +608,7 @@ ul.news li .btn {
 	#left {
 		width:80px;
 		text-align:center;
+		overflow:auto;
 	}
 	
 	#left ul a {
@@ -760,7 +761,6 @@ ul.news li .btn {
 		-o-transition: 0.4s all;
 		transition: 0.4s all;
 		left:-100%;
-		overflow:auto;
 	}
 	
 	#tool {
