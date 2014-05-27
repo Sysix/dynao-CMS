@@ -31,11 +31,11 @@ class pageAreaAction {
 			$sql->save();
 		}
 		
-		self::saveSortUp($sql->getPost('structure_id'), $sql->getPost('sort'));
+		self::saveSortUp($sql->getPost('structure_id'), $sql->getPost('sort'), $block);
 		
 	}	
 	
-	public static function delete($id) {
+	public static function delete($id, $block = false) {
 	
 		$sql = sql::factory();		
 		$sql->query('SELECT `structure_id`, `sort` FROM '.sql::table('structure_area').' WHERE id='.$id)->result();
@@ -45,15 +45,16 @@ class pageAreaAction {
 		$delete->setWhere('id='.$id);
 		$delete->delete();
 		
-		self::saveSortUp($sql->get('structure_id'), $sql->get('sort'));
+		self::saveSortUp($sql->get('structure_id'), $sql->get('sort'), $block);
 		
 		return $sql->get('structure_id');
 		
 	}
 	
-	protected static function saveSortUp($id, $sort) {		
-	
-		sql::sortTable('structure_area', $sort, '`structure_id` = '.$id);
+	protected static function saveSortUp($id, $sort, $block) {		
+		
+		$block = ($block) ? 1 : 0;
+		sql::sortTable('structure_area', $sort, '`structure_id` = '.$id.' AND `block` = '.$block);
 		
 	}
 		
