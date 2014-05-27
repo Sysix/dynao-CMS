@@ -171,7 +171,7 @@ class dyn {
 		
 		$table->addSection('tbody');
 		
-		if(is_null($content)) {
+		if(is_null($content) || !$content) {
 			
 			$table->addRow()
 			->addCell(lang::get('no_entries'), ['colspan'=>4]);
@@ -194,6 +194,67 @@ class dyn {
 				->addCell($addon['title'])
 				->addCell($addon['description'])
 				->addCell('<a href="'.$addon['link'].'" target="_blank" class="btn btn-sm btn-default">'.lang::get('download').'</a>');
+						
+			}
+		
+		}
+		
+		return $table->show();
+		
+	}
+	
+	static public function getModules() {
+		
+		$cacheFile = cache::getFileName(0, 'dynaoModules');
+		
+		// jeden halben Tag
+		if(cache::exist($cacheFile, 43200)) {
+			
+			$content = json_decode(cache::read($cacheFile), true);
+				
+		} else {
+		
+			$content = apiserver::getModulesFile();
+			
+			cache::write($content, $cacheFile);
+			
+		}
+		
+		$table = table::factory(['class'=> ['table', 'table-spriped', 'table-hover']]);
+				
+		$table->addCollsLayout('60, 140, *, 110');
+		
+		$table->addRow()
+		->addCell(lang::get('vote'))
+		->addCell(lang::get('name'))
+		->addCell(lang::get('description'))
+		->addCell();
+		
+		$table->addSection('tbody');
+		
+		if(is_null($content) || !$content) {
+			
+			$table->addRow()
+			->addCell(lang::get('no_entries'), ['colspan'=>4]);
+			
+		} else {
+		
+			foreach($content as $addon) {
+				
+				$perc = round($addon['rate_sum'] / $addon['rate_ppl'] * 10);
+				
+				if($perc < 33)
+					$class = 'danger';
+				elseif($perc < 66)
+					$class = 'warning';
+				else
+					$class = 'success';
+				
+				$table->addRow()
+				->addCell('<span class="label label-'.$class.'">'.$perc.'%</span>')
+				->addCell($addon['title'])
+				->addCell($addon['description'])
+				->addCell('<a href="'.$addon['link'].'" target="_blank" class="btn btn-sm btn-default">'.lang::get('import').'</a>');
 						
 			}
 		

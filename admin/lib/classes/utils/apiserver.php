@@ -5,6 +5,7 @@ class apiserver {
 	const VERSION = 'http://api.dynao.de/version.json';
 	const NEWS = 'http://api.dynao.de/news.json';
 	const ADDON = 'http://api.dynao.de/addons.json';
+	const MODULES = 'http://api.dynao.de/modules.json';
 	const MODULE = 'http://api.dynao.de/module.json';
 	
 	public static function getFile($file) {
@@ -37,6 +38,12 @@ class apiserver {
 	public static function getAddonFile() {
 		
 		return json_decode(self::getFile(self::ADDON), true);
+		
+	}
+	
+	public static function getModulesFile() {
+		
+		return json_decode(self::getFile(self::MODULES), true);
 		
 	}
 	
