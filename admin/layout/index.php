@@ -44,11 +44,11 @@
         	<img src="layout/img/logo.svg" alt="dynao CMS Logo" /> <span>dynao CMS
         </a>
         
-        <h4>Navigation</h4>
+        <h4><? echo lang::get('main_navi'); ?></h4>
         
         <?php echo backend::getNavi(); ?>
         
-        <h4>Addons</h4>
+        <h4><? echo lang::get('addon_navi'); ?></h4>
         
         <hr />
         

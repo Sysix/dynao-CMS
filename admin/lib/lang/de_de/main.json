@@ -25,6 +25,7 @@
 	"back":						"Zurück",
 	"apply":					"Übernehmen",
 	"try_again":				"Erneut versuchen",
+	"logout":					"Abmelden",
 	
 	#Misc
 	"save_status":				"Status erfoglreich geändert",
@@ -35,7 +36,8 @@
 	"connection_again":			"Verbindung wurde erneut hergestellt",
 	"template":					"Template",
 	"dashboard":				"Dashboard",
-	"addon_navi":				"Addon Navi",
+	"addon_navi":				"Addons",
+	"main_navi":				"Navigation",
 	"visit_site":				"Seite besuchen",
 	"read_more":				"Weiterlesen",
 	"download":					"Download",
@@ -74,6 +76,15 @@
 	"login_remember":			"Login merken",
 	"login_pwd_forget":			"Passwort vergessen ?",
 	"login_logout_success":		"Erfolgreich ausgeloggt",
+	
+	#Dashboard
+	"numpages":						"Seiten vorhanden",
+	"nummodule":						"Module vorhanden",
+	"numaddons":						"Addons vorhanden",
+	"numblocks":						"Blöcke vorhanden",
+	"page_add":							"Seite hinzufügen",
+	"module_add":							"Modul erstellen",
+	"block_add":							"Block erstellen",
 	
 	#Addon
 	"addons":					"Addons",
@@ -129,6 +140,7 @@
 	"block_status":				"Block Status",
 	"module":					"Modul",
 	"modules":					"Module",
+	"all_modules":				"Alle Module",
 	"input":					"Eingabe",
 	"output":					"Ausgabe",
 	"module_deleted":			"Modul erfolgreich gelöscht",
