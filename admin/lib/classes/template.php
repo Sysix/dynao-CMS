@@ -52,9 +52,6 @@ class template {
 		$modulSql = sql::factory();
 		$modulSql->setTable('module');
 		
-		$structureAreaSql = sql::factory();
-		$structureAreaSql->setTable('structure_area');
-		
 		foreach($module as $modulName=>$modul) {
 				
 			$modulExists = $modulSql->num('SELECT id FROM '.sql::table('module').' WHERE `name` = "'.$modulName.'"');
@@ -106,12 +103,11 @@ class template {
 				continue;
 			}
 			
-			$modul_id = $this->installModule($block['module'], $update);
+			$this->installModule($block['module'], $update);
 			
 			$blocks->addPost('name', $name);
 			$blocks->addPost('description', $block['description']);
 			$blocks->addPost('template', $this->name);
-			$blocks->addPost('modul', $modul_id);
 				
 			if(!$blockExists) {
 				$blocks->save();
