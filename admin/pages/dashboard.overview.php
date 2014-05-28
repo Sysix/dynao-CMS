@@ -73,7 +73,7 @@
     	<div class="col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title pull-left">dynaoCMS</h3>
+                    <h3 class="panel-title pull-left">dynao CMS</h3>
                     <div class="btn-group pull-right">
                         <a href="http://dynao.de" target="_blank" class="btn btn-sm btn-default"><?php echo lang::get('visit_site'); ?></a>
                     </div>

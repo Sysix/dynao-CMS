@@ -349,7 +349,8 @@ fieldset[disabled] .btn-default.active {
 
 #idea textarea {
 	border-radius:2px;
-	height:117px;
+	height:116px;
+	resize:vertical;
 }
 
 #idea .btn {
