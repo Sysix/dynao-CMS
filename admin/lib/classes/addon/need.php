@@ -17,7 +17,7 @@ class addonNeed {
 	
 	public static function checkVersion($version) {
 		
-		if(dyn::checkVersion(dyn::get('version'), $version) === true) {
+		if(dyn::checkVersion(dyn::get('version'), $version) !== lang::get('version_fail_connect')) {
 			return true;	
 		}
 		
