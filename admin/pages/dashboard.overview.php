@@ -68,7 +68,7 @@
 		?>
         
     </div>
-    <div class="row">
+    <div class="row display">
     
     	<div class="col-lg-6">
             <div class="panel panel-default">
@@ -83,6 +83,28 @@
                     <ul class="news">
                         <?php echo dyn::getNews(); ?>        			
                     </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6" id="idea">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><?php echo lang::get('your_idea'); ?></h3>
+                </div>
+                <div class="panel-body">
+                	<div class="row">
+                    	<div class="col-lg-12">
+                        <?php echo lang::get('idea_text'); ?>
+                        <hr />
+                        </div>
+                        <div class="col-md-9">
+                        	<textarea class="form-control"></textarea>
+                        </div>
+                        <div class="col-md-3">
+                        	<button class="btn btn-default">Senden</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

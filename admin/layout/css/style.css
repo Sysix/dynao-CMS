@@ -347,6 +347,17 @@ fieldset[disabled] .btn-default.active {
 	cursor:pointer;
 }
 
+#idea textarea {
+	border-radius:2px;
+	height:117px;
+}
+
+#idea .btn {
+	width:100%;
+	text-align:center;
+	box-sizing:border-box;
+}
+
 /* Head */
 
 #head {

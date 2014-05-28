@@ -85,6 +85,8 @@
 	"page_add":							"Add page",
 	"module_add":							"Create module",
 	"block_add":							"Add block",
+	"your_idea":							"Your idea",
+	"idea_text":							"<strong>dynao CMS</strong> is currently at beta status and is still under development - and you can affect the CMS with your ideas! Send us a description of your idea and we will take a look (of course you can also use our <a target='_blank' href='http://dynao.de/forum'> Forum</a>):",
 	
 	#Addon
 	"addons":					"Addons",
