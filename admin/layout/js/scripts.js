@@ -224,6 +224,32 @@ $(document).ready(function() {
 		$('#panel').children('ul').fadeToggle();	
 	});
 	
+	$(document).on('touchstart click', '#slide .expand', function() {
+		
+		var slide = $.session.get('slide');
+		
+		if(slide) {
+			
+			$('#slide .display').slideDown();
+			$('#slide .expand').html('<i class="fa fa-chevron-up"></i>');
+			
+			$.session.remove('slide');
+			
+		} else {
+			
+			$('#slide .display').slideUp();
+			$('#slide .expand').html('<i class="fa fa-chevron-down"></i>');
+			
+			$.session.set('slide', true);
+		}
+		
+	});
+	
+	if($.session.get('slide')) {
+		$('#slide .display').hide();
+		$('#slide .expand').html('<i class="fa fa-chevron-down"></i>');
+	}
+	
 	$("#head").headroom({
 		tolerance: 10,
         offset : 205,

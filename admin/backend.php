@@ -8,6 +8,7 @@ layout::addCSS('layout/css/style.css');
 layout::addJS('http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js');
 layout::addJS('http://code.jquery.com/ui/1.10.3/jquery-ui.js');
 layout::addJS('http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js');
+layout::addJS('layout/js/session.js');
 layout::addJS('layout/js/headroom.js');
 layout::addJS('layout/js/swipe.js');
 layout::addJS('layout/js/scripts.js');
