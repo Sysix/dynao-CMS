@@ -1,78 +1,80 @@
 ﻿<?php
 
 $navi = array(
-	'licence' => array(lang::get('licence'), ''),
-	'general' => array(lang::get('general')),
-	'database' => array(lang::get('db')),
-	'finish' => array(lang::get('finish'))
+	'licence' => array(lang::get('licence'), 'graduation-cap'),
+	'general' => array(lang::get('general'), 'cogs'),
+	'database' => array(lang::get('db'), 'database'),
+	'finish' => array(lang::get('finish'), 'thumbs-o-up')
 	);
+	
+layout::addCSS('http://fonts.googleapis.com/css?family=Lato:300,400,700');
+layout::addCSS('http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css');
+layout::addCSS('http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css');
+layout::addCSS('../admin/layout/css/style.css');
+
+layout::addJS('http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js');
+layout::addJS('http://code.jquery.com/ui/1.10.3/jquery-ui.js');
+layout::addJS('http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js');
+layout::addJS('../admin/layout/js/session.js');
+layout::addJS('../admin/layout/js/headroom.js');
+layout::addJS('../admin/layout/js/swipe.js');
+layout::addJS('../admin/layout/js/scripts.js');
 
 ?>
 <!DOCTYPE html>
-<html lang="de">
+<html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><?php echo lang::get('installation'); ?> - dynaoCMS</title>
-	
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700|Open+Sans+Condensed:300,700" media="screen">
-	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css" media="screen">
-	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" media="screen">
-    <link rel="stylesheet" href="../admin/layout/css/style.css" media="screen">
-    <link rel="stylesheet" href="layout/css/style.css" media="screen">
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+	<title><?php echo lang::get('installation'); ?> - dynao CMS</title>
+    
+    <?php echo layout::getCSS(); ?>
+    
 </head>
 
 <body>
-	<div class="container">
-    	<div class="col-12">
-        	<div id="navi">
-                <ul>
-                    <?php
-					
-						foreach($navi as $href=>$options) {
-						
-							$class = ($href == $page) ? 'active ' : '';
-							
-							echo '<li class="'.$class.'"><a>'.$options[0].'</a></li>';
-							
-						}
-					
-					?>
-                </ul>
-            </div><!--end #navi-->
-            <div id="wrap">
-                <div id="subnavi">
-                    
-                    <h1><?php echo lang::get('installation'); ?></h1>
-                    
-                    <ul class="subnav">
-                        <?php
-						
-							foreach($navi as $href=>$options) {
-							
-								$class = ($href == $page) ? ' class="active"' : '';
-								
-								echo '<li'.$class.'>'.$options[0].'</li>';
-								
-							}
-						
-						?>
-                    </ul>
-                    
-                </div><!--end #subnavi-->
-                
-                <div id="content">
-                	<?php
-                		include('pages/'.$page.'.php');
-					?>
-                </div><!--end #content-->
-                
-                <div class="clearfix"></div>
-            </div><!--end #wrap-->
-    	</div>
-	</div>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+	<header id="head">
+    
+    	<h1><?php echo lang::get('installation'); ?></h1>
+        
+    	<div id="expand" class="fa fa-bars"></div>
+        
+        <div class="clearfix"></div>
+    
+    </header>
+
+	<section id="left">
+    
+    	<a id="logo" href="http://dynao.de" target="_blank">
+        	<img src="../admin/layout/img/logo.svg" alt="dynao CMS Logo" /> <span>dynao CMS</span>
+        </a>
+        
+        <h4><? echo lang::get('main_navi'); ?></h4>
+        <ul>
+			<?php
+            
+				foreach($navi as $href=>$options) {
+				
+					$class = ($href == $page) ? 'active ' : '';
+				
+					echo '<li class="'.$class.'"><a><i class="fa fa-'.$options[1].'"></i><span>'.$options[0].'</span></a></li>';
+				
+				}
+            
+            ?>
+        </ul>
+    
+    </section>
+    
+    <section id="content">
+        <?php
+        	include('pages/'.$page.'.php');
+		?>
+    </section>
+
+	<?php echo layout::getJS(); ?>
 </body>
 </html>

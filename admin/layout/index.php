@@ -40,8 +40,8 @@
 
 	<section id="left">
     
-    	<a id="logo" href="http://dynao.de">
-        	<img src="layout/img/logo.svg" alt="dynao CMS Logo" /> <span>dynao CMS
+    	<a id="logo" href="http://dynao.de" target="_blank">
+        	<img src="layout/img/logo.svg" alt="dynao CMS Logo" /> <span>dynao CMS</span>
         </a>
         
         <h4><? echo lang::get('main_navi'); ?></h4>
