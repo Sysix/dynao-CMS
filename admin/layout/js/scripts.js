@@ -224,6 +224,13 @@ $(document).ready(function() {
 		$('#panel').children('ul').fadeToggle();	
 	});
 	
+	$(document).on('touchstart click', '#idea button', function() {
+		var text = $('#idea textarea').val();
+		$.post('index.php?text='+encodeURIComponent(text), function(data) {
+			$('#ajax-content').html(data).fadeIn(200);
+		});	
+	});
+	
 	$(document).on('touchstart click', '#slide .expand', function() {
 		
 		var slide = $.session.get('slide');

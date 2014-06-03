@@ -555,6 +555,10 @@ ul.news li .btn {
     visibility:visible !important;
 }
 
+#ajax-content {
+	display:none;
+}
+
 .input-group-addon .fa {
     display:block;
     margin:2px 0px;

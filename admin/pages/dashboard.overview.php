@@ -5,7 +5,22 @@
 		cache::exist($cacheFile, 0);
 		echo message::success(lang::get('connection_again'), true); 
 	}
-  
+  	
+	if(ajax::is()) {
+		
+		if(type::super('text')) {
+			
+			$mail = mail('info@dynao.de', 'Neue Idee', type::super('text'), 'From: '.dyn::get('user')->get('firstname').' '.dyn::get('user')->get('name').'<'.dyn::get('user')->get('email').'>');
+			
+			if($mail)
+				ajax::addReturn(message::success(lang::get('idea_send')));
+			else
+				ajax::addReturn(message::danger(lang::get('idea_error')));
+		
+		} else
+			ajax::addReturn(message::danger(lang::get('idea_empty')));
+			
+	}
   
 	$versionCheck = dyn::checkDynVersion();
 	
@@ -102,7 +117,8 @@
                         	<textarea class="form-control"></textarea>
                         </div>
                         <div class="col-md-3">
-                        	<button class="btn btn-default">Senden</button>
+                        	<p><button class="btn btn-default"><?php echo lang::get('send'); ?></button></p>
+                            <div id="ajax-content"></div>
                         </div>
                     </div>
                 </div>

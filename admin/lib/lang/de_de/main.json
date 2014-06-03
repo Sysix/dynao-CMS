@@ -87,6 +87,10 @@
 	"block_add":							"Block erstellen",
 	"your_idea":							"Deine Idee",
 	"idea_text":							"<strong>dynao CMS</strong> ist momentan im Beta - Status und wird stets weiterentwickelt - und du kannst dich einbringen und das CMS mit deinen Ideen beeinflussen! Sende uns hier eine kurze Beschreibung und wir setzen uns damit auseinander (natürlich kannst du auch unser <a target='_blank' href='http://dynao.de/forum'>Forum</a> nutzen):",
+	"idea_send":						"Idee gesendet, danke!",
+	"idea_error":						"Konnte nicht verschickt werden",
+	"idea_empty":						"Bitte Text eingeben",
+	"send":								"Senden",
 	
 	#Addon
 	"addons":					"Addons",
