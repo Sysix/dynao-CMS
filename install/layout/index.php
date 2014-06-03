@@ -8,7 +8,7 @@ $navi = array(
 	);
 	
 layout::addCSS('http://fonts.googleapis.com/css?family=Lato:300,400,700');
-layout::addCSS('http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css');
+layout::addCSS('http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css');
 layout::addCSS('http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css');
 layout::addCSS('../admin/layout/css/style.css');
 
