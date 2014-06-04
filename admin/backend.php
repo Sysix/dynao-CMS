@@ -11,6 +11,7 @@ layout::addJS('http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.j
 layout::addJS('layout/js/session.js');
 layout::addJS('layout/js/headroom.js');
 layout::addJS('layout/js/swipe.js');
+layout::addJS('layout/js/dropzone.js');
 layout::addJS('layout/js/scripts.js');
 
 userPerm::add('page[edit]', lang::get('page[edit]'));

@@ -88,7 +88,7 @@ class pageMisc {
 				$select .= self::getTreeStructurePage($sql->get('id'), $lvl+1);
 				
 				if($sql->counter+1 == $sql->num()) {
-					$select .= '<div class="dropzone"></div>';
+					$select .= '<div class="droppages"></div>';
 				}
 				$select .= '</li>'.PHP_EOL;
 				

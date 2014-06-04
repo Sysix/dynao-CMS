@@ -67,39 +67,64 @@ if($action == 'import') {
 		echo message::success('Modul '.$content[$id]['name'].' wurde erfolgreich installiert', true);
 		$action = '';
 		
-	} else {
+	}
 	
-		$table = table::factory();
+	$table = table::factory();
+	
+	$table->addRow()
+	->addCell('Id')
+	->addCell('')
+	->addCell('Downloads')
+	->addCell('Aktionen');
+
+	foreach($content as $id=>$modul) {
+		
+		$code = '<a href="'.$modul['link'].'" class="btn btn-sm btn-success">Code anzeigen</a>';
+		$import = '<a href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'import', 'id'=>$id]).'">'.lang::get('import').'</a>';
 		
 		$table->addRow()
-		->addCell('Id')
-		->addCell('')
-		->addCell('Downloads')
-		->addCell('Aktionen');
-
-		foreach($content as $id=>$modul) {
+		->addCell($id)
+		->addCell('<h3>'.$modul['name'].'</h3><br />'.$modul['info'])
+		->addCell($modul['downloads'])
+		->addCell('<span class="btn-group">'.$code.$import.'</span>');
 			
-			$code = '<a href="'.$modul['link'].'" class="btn btn-sm btn-success">Code anzeigen</a>';
-			$import = '<a href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'import', 'id'=>$id]).'">'.lang::get('import').'</a>';
-			
-			$table->addRow()
-			->addCell($id)
-			->addCell('<h3>'.$modul['name'].'</h3><br />'.$modul['info'])
-			->addCell($modul['downloads'])
-			->addCell('<span class="btn-group">'.$code.$import.'</span>');
-				
-		}
-
-        if(!count($content)) {
-
-            $table->addRow()->addCell('Keine Addon\'s verfügbar', ['colspan'=>4]);
-
-        }
-		
-		echo $table->show();
-	
 	}
-		
+
+	if(!count($content)) {
+
+		$table->addRow()->addCell('Keine Addon\'s verfügbar', ['colspan'=>4]);
+
+	}
+	
+	?>
+	<div class="row">
+		<div class="col-lg-12">
+        
+        	<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title pull-left"><?php echo lang::get('import'); ?></h3>
+					<div class="btn-group pull-right">
+						<a class="btn btn-sm btn-warning" href="<?= url::backend('structure', ['subpage'=>'module']) ?>"><?php echo lang::get('back'); ?></a>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="panel-body">
+                
+				</div>
+			</div>
+        
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title"><?php echo lang::get('module_more'); ?></h3>
+				</div>
+				<div class="panel-body">
+				<?php echo $table->show(); ?>
+				</div>
+			</div>
+            
+		</div>
+	</div>
+	<?php
 }
 
 if($action == 'add' || $action == 'edit') {

@@ -47,6 +47,7 @@
 	"start":					"Start",
 	"close":					"Schließen",
 	"really_delete":			"Wirklich löschen?",
+	"status":					"Status",
 	
 	#Kategorien
 	"category_save":			"Kategorie speichern",
@@ -154,6 +155,7 @@
 	"import":					"Importieren",
 	"export":					"Exportieren",
 	"module_in_use":			"Das Modul wird noch verwendet",
+	"module_more":				"Weitere Module",
 	
 	#Block
 	"blocks_current_page":		"Blöcke im aktuellen Template",
