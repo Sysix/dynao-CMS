@@ -156,6 +156,7 @@
 	"export":					"Exportieren",
 	"module_in_use":			"Das Modul wird noch verwendet",
 	"module_more":				"Weitere Module",
+	"module_install_success":		"Modul \"%s\" erfolgreich installiert",
 	
 	#Block
 	"blocks_current_page":		"Blöcke im aktuellen Template",

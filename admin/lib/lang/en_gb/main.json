@@ -154,6 +154,7 @@
 	"export":					"Export",
 	"module_in_use":			"The module is still in use",
 	"module_more":				"More modules",
+	"module_install_success":		"Modul \"%s\" successfully installed",
 	
 	#Blocks
 	"blocks_current_page":		"Blocks at the current template",
