@@ -4,22 +4,6 @@ if(!dyn::get('user')->hasPerm('page[module]')) {
 	return;	
 }
 
-if(ajax::is()) {
-	
-	$sort = type::post('array', 'array');
-	
-	$sql = sql::factory();
-	$sql->setTable('module');
-	foreach($sort as $s=>$id) {
-		$sql->setWhere('id='.$id);
-		$sql->addPost('sort', $s+1);
-		$sql->update();	
-	}
-	
-	ajax::addReturn(message::success(lang::get('save_sorting'), true));
-	
-}
-
 if($action == 'delete') {
 	
 	$sql = sql::factory();
@@ -64,42 +48,67 @@ if($action == 'import') {
 		$sql->addPost('blocks', $content[$id]['install']['blocks']);
 		$sql->save();
 		
-		echo message::success('Modul '.$content[$id]['name'].' wurde erfolgreich installiert', true);
-		$action = '';
+		echo message::success(sprintf(lang::get('module_install_success'), $content[$id]['name']), true);
 		
 	}
 	
+	if(ajax::is()) {
+	
+		$file = type::files('file');
+		$fileDir = dir::generated('modul_temp.json');
+		
+		move_uploaded_file($file['tmp_name'], $fileDir);
+		
+		$string = file_get_contents($fileDir);
+		$content = json_decode($string, true);
+		
+		$sql = sql::factory();
+        $sql->setTable('module');
+		$sql->addPost('name', $content['name']);
+		$sql->addPost('input', $content['install']['input']);
+		$sql->addPost('output', $content['install']['output']);
+		$sql->addPost('blocks', $content['install']['blocks']);
+		$sql->save();
+		
+		unlink($fileDir);
+		
+		ajax::addReturn(message::success(sprintf(lang::get('module_install_success'), $content['name']), true));
+
+	}
+	
 	$table = table::factory();
+	$table->addCollsLayout('30, 200, *,110');
 	
 	$table->addRow()
-	->addCell('Id')
-	->addCell('')
-	->addCell('Downloads')
-	->addCell('Aktionen');
+	->addCell('ID')
+	->addCell(lang::get('name'))
+	->addCell(lang::get('description'))
+	->addCell();
 
+	$table->addSection('tbody');
+	
 	foreach($content as $id=>$modul) {
 		
-		$code = '<a href="'.$modul['link'].'" class="btn btn-sm btn-success">Code anzeigen</a>';
-		$import = '<a href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'import', 'id'=>$id]).'">'.lang::get('import').'</a>';
+		$import = '<a class="btn btn-sm btn-default" href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'import', 'id'=>$id]).'">'.lang::get('import').'</a>';
 		
 		$table->addRow()
 		->addCell($id)
-		->addCell('<h3>'.$modul['name'].'</h3><br />'.$modul['info'])
-		->addCell($modul['downloads'])
-		->addCell('<span class="btn-group">'.$code.$import.'</span>');
+		->addCell($modul['name'])
+		->addCell($modul['info'])
+		->addCell('<span class="btn-group">'.$import.'</span>');
 			
 	}
 
 	if(!count($content)) {
 
-		$table->addRow()->addCell('Keine Addon\'s verfügbar', ['colspan'=>4]);
+		$table->addRow()->addCell('Keine Module verfügbar', ['colspan'=>4]);
 
 	}
 	
 	?>
 	<div class="row">
 		<div class="col-lg-12">
-        
+        	<div id="ajax-content"></div>
         	<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title pull-left"><?php echo lang::get('import'); ?></h3>
@@ -109,7 +118,7 @@ if($action == 'import') {
 					<div class="clearfix"></div>
 				</div>
 				<div class="panel-body">
-                
+                	<div id="dropzone" class="dropzone"></div>
 				</div>
 			</div>
         
@@ -181,6 +190,22 @@ if($action == 'add' || $action == 'edit') {
 }
 
 if($action == '') {
+	
+	if(ajax::is()) {
+	
+		$sort = type::post('array', 'array');
+		
+		$sql = sql::factory();
+		$sql->setTable('module');
+		foreach($sort as $s=>$id) {
+			$sql->setWhere('id='.$id);
+			$sql->addPost('sort', $s+1);
+			$sql->update();	
+		}
+		
+		ajax::addReturn(message::success(lang::get('save_sorting'), true));
+		
+	}
 
 	$table = table::factory(['class'=>['js-sort']]);
 	

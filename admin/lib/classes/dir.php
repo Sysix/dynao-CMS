@@ -64,9 +64,15 @@ class dir {
 
 	}
 	
+	public static function generated($file = '') {
+
+		return self::backend('generated'.DIRECTORY_SEPARATOR.$file);
+
+	}
+	
 	public static function cache($file = '') {
 
-		return self::backend('generated'.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.$file);
+		return self::generated('cache'.DIRECTORY_SEPARATOR.$file);
 
 	}
 

@@ -55,7 +55,6 @@ class module {
 		$return['name'] = $sql->get('name');
 		$return['json'] = '
 		{
-			"'.$id.'": {
 			"name": '.json_encode(utf8_decode($sql->get("name"))).',
 			"install": {
 				"input": '.json_encode(utf8_decode($sql->get("input"))).',

@@ -187,6 +187,17 @@ $(document).ready(function() {
         body_width = window.innerHeight;
     });
 	
+	$('#dropzone').dropzone({
+		url: "index.php?page=structure&subpage=module&action=import",
+		paramName: "file",
+		acceptedFiles: ".json",
+		init: function() {
+			this.on("success", function(file, data) {
+				$('#ajax-content').html(data).fadeIn(200);
+			});
+		}
+	});
+	
 	$('#left').on('leftClick', function(object,action) {
         var _left = $(this);
         action = action || auto;
