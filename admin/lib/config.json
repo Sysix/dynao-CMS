@@ -1,22 +1,22 @@
 {
     "author": "Dynao",
     "hp_name": "Dynao CMS",
-    "hp_url": "http:\/localhost\/",
-    "version": "0.1.0 Beta",
-    "setup": false,
+    "hp_url": "http:\/\/",
+    "version": "0.2.0 Beta",
+    "setup": true,
     "debug": true,
     "cache": false,
     "DB": {
-        "host": "localhost",
-        "user": "root",
-        "password": "dynao",
-        "database": "dynao",
-        "prefix": "pref_"
+        "host": "",
+        "user": "",
+        "password": "",
+        "database": "",
+        "prefix": null
     },
     "timezone": "Europe\/Berlin",
     "logincookie": 86400,
     "lang": "de_de",
     "template": "default",
-    "start_page": 1,
-    "error_page": 2
+    "start_page": null,
+    "error_page": null
 }
