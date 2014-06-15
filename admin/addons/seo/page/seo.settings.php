@@ -28,10 +28,18 @@ if($form->isSubmit()) {
 	if(!$config->saveConfig()) {
 		$this->setErrorMessage('SEO Einstellungen konnten nicht gespeichert werden');
 	}
+
+    addonConfig::loadAllConfig();
+    seo_rewrite::generatePathlist();
 		
 }
-
-echo $form->show();
-
-
 ?>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title"><?= lang::get('settings') ?></h3>
+	</div>
+	<div class="panel-body">
+		<?= $form->show(); ?>
+	</div>
+</div>
+

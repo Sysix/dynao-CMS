@@ -28,6 +28,8 @@ if(!dyn::get('backend')) {
 		return dir::addon('seo', 'page'.DIRECTORY_SEPARATOR.'seo.php');
 	});
 
+    seo::setPageId(dyn::get('start_page'));
+
 	$page = type::super('page', 'string');
 	$subpage = type::super('subpage', 'string');
 	$action = type::super('action', 'string');

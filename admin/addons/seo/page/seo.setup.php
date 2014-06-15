@@ -26,9 +26,13 @@
 				if(isset($urlPath['path'])) {
 					$subdir = trim($urlPath['path'], '/');
 				}
-				
+
+                if($subdir == '') {
+                    $subdir = '/';
+                }
+
 				$field = $form->addTextField('rewrite_base', $subdir);
-				$field->setAttribute('readonly', 'readonly');
+				$field->addAttribute('readonly', 'readonly');
 				$field->fieldName('Rewrite Base');
 				
 				if($form->isSubmit()) {
@@ -50,7 +54,7 @@
 					}
 						
 					$htaccessContent = str_replace('{www_rewriteCond}', $rewriteCond, $htaccessContent);
-					$htaccessContent = str_replace('{rewrite_base}', $form->get('rewrite_base'));
+					$htaccessContent = str_replace('{rewrite_base}', $form->get('rewrite_base'), $htaccessContent);
 					
 					if(!file_put_contents($htaccessRoot, $htaccessContent)) {
 						$form->setErrorMessage('.htaccess Datei konnte nicht geändert werden');	
@@ -58,7 +62,7 @@
 					
 				}
 				
-				$form->show();
+				echo $form->show();
 				
 				?>				
 			</div>
@@ -71,9 +75,7 @@
 				<h3 class="panel-title">Template ergänzen</h3>
 			</div>
 			<div class="panel-body">
-				<pre>
-	<?php echo htmlspecialchars('<head>'.seo::getHTML().'</head>'); ?>
-				</pre>
+				<pre><?php echo htmlspecialchars('<head>'.PHP_EOL.seo::getHTML().'</head>'); ?></pre>
 			</div>
 		</div>
 	</div>

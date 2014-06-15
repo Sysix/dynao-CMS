@@ -207,11 +207,9 @@ class seo_rewrite {
 		$name = preg_replace('/[^a-z0-9]/', '-',  $name);
 		
 		$name = preg_replace('/-{2,}/', '-', $name);
-		
-		if($html) {
-			$name .= '.html';
-		}
-		
+
+		$name .= dyn::get('addons')['seo']['ending'];
+
 		return $name;
 	
 	}

@@ -96,18 +96,11 @@ class addonConfig {
 	
 	public static function loadAllConfig() {
 
-       $addons = dyn::get('addons');
-		if(empty($addons)) {
-
-
-			foreach(self::getAll() as $name) {
-				$addons[$name] = self::getConfig($name);
-
-			}
-			
-			dyn::add('addons', $addons);
-		
+		foreach(self::getAll() as $name) {
+			$addons[$name] = self::getConfig($name);
 		}
+			
+		dyn::add('addons', $addons);
 		
 		return true;
 		

@@ -24,7 +24,7 @@ class seo {
 			
 		}
 		
-		return $title.' | '.dyn::get('hp_name');		
+		return $title.' '.dyn::get('addons')['seo']['delimiter'].' '.dyn::get('hp_name');
 			
 	}
 	/*
@@ -102,7 +102,7 @@ class seo {
 					
 			self::$currentPage = page::factory(self::$pageId);	
 		
-		}
+        }
 		
 	}
 	
