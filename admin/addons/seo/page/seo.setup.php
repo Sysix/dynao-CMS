@@ -75,7 +75,7 @@
 				<h3 class="panel-title"><?= lang::get('seo_template_compl') ?></h3>
 			</div>
 			<div class="panel-body">
-				<pre><?php echo htmlspecialchars('<head>'.PHP_EOL.seo::getHTML().'</head>'); ?></pre>
+                <pre><?= htmlspecialchars('<head>'.PHP_EOL.'    <?= seo::getHTML() ?>'.PHP_EOL.'</head>') ?></pre>
 			</div>
 		</div>
 	</div>
