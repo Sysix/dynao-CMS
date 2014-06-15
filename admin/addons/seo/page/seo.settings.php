@@ -7,17 +7,17 @@ $form->setSave(false);
 $form->delButton('save-back');
 
 $field = $form->addSelectField('ending', $form->get('ending', $config->get('ending')));
-$field->fieldName('Endung');
+$field->fieldName(lang::get('ending'));
 $field->add('/', '/');
 $field->add('.html', '.html');
 
 $field = $form->addSelectField('start_url', $form->get('start_url', $config->get('start_url')));
-$field->fieldName('Startseite');
+$field->fieldName(lang::get('start_page'));
 $field->add('0', dyn::get('hp_url'));
 $field->add('1', dyn::get('hp_url').seo_rewrite::rewriteId(dyn::get('start_page')));
 
 $field = $form->addCheckboxField('robots', $form->get('robots', $config->get('robots')));
-$field->fieldName('Seite indexieren?');
+$field->fieldName(lang::get('seo_site_indexing'));
 $field->add('1', '');
 
 if($form->isSubmit()) {
@@ -27,7 +27,7 @@ if($form->isSubmit()) {
 	$config->add('robots', $form->get('robots'), true);
 	
 	if(!$config->saveConfig()) {
-		$this->setErrorMessage('SEO Einstellungen konnten nicht gespeichert werden');
+		$this->setErrorMessage(lang::get('seo_not_saved'));
 	}
 
     addonConfig::loadAllConfig();

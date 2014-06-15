@@ -39,28 +39,28 @@
     </header>
 
 	<section id="left">
-    
+
     	<a id="logo" href="http://dynao.de" target="_blank">
         	<img src="layout/img/logo.svg" alt="dynao CMS Logo" /> <span>dynao CMS</span>
         </a>
-        
-        <h4><? echo lang::get('main_navi'); ?></h4>
-        
+
+        <h4><?= lang::get('main_navi'); ?></h4>
+
         <?php echo backend::getNavi(); ?>
-        
-        <h4><? echo lang::get('addon_navi'); ?></h4>
-        
+
+        <h4><?= lang::get('addon_navi'); ?></h4>
+
         <hr />
-        
+
         <?php echo backend::getAddonNavi(); ?>
-        
+
         <div id="tool">
         	<ul>
             	<li><a href="http://dynao.de" target="_blank" class="fa fa-globe"></a></li>
             	<li><a href="index.php?logout=1" class="fa fa-sign-out"></a></li>
             </ul>
         </div>
-    
+
     </section>
     
     <section id="content">

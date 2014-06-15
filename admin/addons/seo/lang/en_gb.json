@@ -1,6 +1,21 @@
 {
-	"seo":			"SEO",
-	"seo_keywords":	"Keywords",
-	"seo_index":	"allow Indexing",
-	"seo_self_url":	"define own URL"
+	"seo":			         "SEO",
+	"seo_keywords":          "Keywords",
+	"seo_index":	         "allow Indexing",
+	"seo_self_url":          "define own URL",
+    "setup":                 "Setup",
+    "ending":                "ending",
+    "start_page":            "startpage",
+    "seo_site_indexing":     "indexing page?",
+    "seo_not_saved":         "SEO settings could not be saved",
+    "htacces_install":       ".htaccess file setup",
+    "seo_redirect_to":       "redirect to",
+    "seo_no_www":            "without www.",
+    "seo_htaccess_not_save": ".htaccess file could not be changed",
+    "seo_template_compl":    "complete Template",
+    "faq":                   "F.A.Q",
+    "seo_faq_question_1":    "Is there something to keep in mind when dynaoCMS is installed in a subfolder?",
+    "seo_faq_anwer_1":       "Yes!, the .htaccess <code>RewriteBase /</code> to <code>RewriteBase /unterordner</code> rename",
+    "seo_faq_question_2":    "I get a `500 Internal Server Error`",
+    "seo_faq_anwer_2":       "It is probably because <code>Options -Indexes</code> in the .htaccess file, this line comment out or delete"
 }

@@ -2,7 +2,7 @@
 	<div class="col-md-6">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">.htaccess Datei einrichten</h3>
+				<h3 class="panel-title"><?= lang::get('htacces_install') ?></h3>
 			</div>
 			<div class="panel-body">
 				<?php
@@ -16,9 +16,9 @@
 				$htaccessOrg = dir::addon('seo', '_htaccess');
 				
 				$field = $form->addRadioField('redirect', 'www');
-				$field->fieldName('Umleiten auf');
+				$field->fieldName(lang::get('seo_redirect_to'));
 				$field->add('www', 'www.');
-				$field->add('no_www', 'Nicht wwww.');
+				$field->add('no_www', lang::get('seo_no_www'));
 				
 				$urlPath = parse_url(dyn::get('hp_url'));
 				
@@ -57,7 +57,7 @@
 					$htaccessContent = str_replace('{rewrite_base}', $form->get('rewrite_base'), $htaccessContent);
 					
 					if(!file_put_contents($htaccessRoot, $htaccessContent)) {
-						$form->setErrorMessage('.htaccess Datei konnte nicht geändert werden');	
+						$form->setErrorMessage(lang::get('seo_htaccess_not_save'));
 					}
 					
 				}
@@ -72,7 +72,7 @@
 	<div class="col-md-6">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Template ergänzen</h3>
+				<h3 class="panel-title"><?= lang::get('seo_template_compl') ?></h3>
 			</div>
 			<div class="panel-body">
 				<pre><?php echo htmlspecialchars('<head>'.PHP_EOL.seo::getHTML().'</head>'); ?></pre>
