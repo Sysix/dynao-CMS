@@ -44,28 +44,5 @@ ADD `medialist8`	varchar(255) NOT NULL,
 ADD `medialist9`	varchar(255) NOT NULL,
 ADD `medialist10`	varchar(255) NOT NULL');
 
-$sql->query('ALTER TABLE '.sql::table('slots').' 
-ADD `media1` 		int(16) NOT NULL,
-ADD `media2` 		int(16) NOT NULL,
-ADD `media3` 		int(16) NOT NULL,
-ADD `media4` 		int(16) NOT NULL,
-ADD `media5` 		int(16) NOT NULL,
-ADD `media6` 		int(16) NOT NULL,
-ADD `media7` 		int(16) NOT NULL,
-ADD `media8` 		int(16) NOT NULL,
-ADD `media9` 		int(16) NOT NULL,
-ADD `media10` 		int(16) NOT NULL,
-ADD `medialist1`	int(16) NOT NULL,
-ADD `medialist2`	int(16) NOT NULL,
-ADD `medialist3`	int(16) NOT NULL,
-ADD `medialist4`	int(16) NOT NULL,
-ADD `medialist5`	int(16) NOT NULL,
-ADD `medialist6`	int(16) NOT NULL,
-ADD `medialist7`	int(16) NOT NULL,
-ADD `medialist8`	int(16) NOT NULL,
-ADD `medialist9`	int(16) NOT NULL,
-ADD `medialist10`	int(16) NOT NULL');
-
-
 
 ?>
