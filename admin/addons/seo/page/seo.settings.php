@@ -4,6 +4,7 @@ $config = new addon('seo');
 
 $form = form::factory('user', 'id='.dyn::get('user')->get('id'), 'index.php');
 $form->setSave(false);
+$form->delButton('save-back');
 
 $field = $form->addSelectField('ending', $form->get('ending', $config->get('ending')));
 $field->fieldName('Endung');

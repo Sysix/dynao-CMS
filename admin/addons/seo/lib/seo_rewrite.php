@@ -192,10 +192,10 @@ class seo_rewrite {
 	 * URL-Freundliche Namen erstellen
 	 *
 	 * @param string $name Der Name
-	 * @param bool $html .html ransetzten oder nicht
+	 * @param bool $ending .html bzw / ransetzten oder nicht
 	 * @return string
 	 */
-	public static function makeSEOName($name, $html = true) {
+	public static function makeSEOName($name, $ending = true) {
 		
 		$name = mb_strtolower($name);
 	
@@ -208,7 +208,9 @@ class seo_rewrite {
 		
 		$name = preg_replace('/-{2,}/', '-', $name);
 
-		$name .= dyn::get('addons')['seo']['ending'];
+        if($ending) {
+		    $name .= dyn::get('addons')['seo']['ending'];
+        }
 
 		return $name;
 	

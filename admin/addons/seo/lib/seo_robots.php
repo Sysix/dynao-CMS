@@ -5,6 +5,11 @@ class seo_robots {
 	public function get() {
 		
 		$return = '';
+
+        // Not indexing
+        if(!dyn::get('addons')['seo']['robots']) {
+            return 'User-agent: *'.PHP_EOL.'Disallow: /';
+        }
 		
 		$sql = sql::factory();
 		$sql->query('SELECT id FROM '.sql::table('structure').' WHERE seo_robots = 0');
