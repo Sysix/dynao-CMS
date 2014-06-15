@@ -2,12 +2,16 @@
 class install {
 	
 	public static function update0_1to0_2() {
-		
-		$sql = sql::factory();
+
+        $sql = sql::factory();
 		$sql->query('ALTER TABLE '.sql::table('module').' ADD `blocks` int(1) unsigned NOT NULL');
-		$sql->query('ALTER TABLE '.sql::table('user').' ADD `salt` VARCHAR(255) NOT NULL');		
-		
-	}
+        $sql->query('ALTER TABLE '.sql::table('user').' ADD `salt` VARCHAR(255) NOT NULL');
+        $sql->query('ALTER TABLE '.sql::table('structure_area').' ADD `block` int(1) NOT NULL AFTER `id`');
+        $sql->query('ALTER TABLE '.sql::table('pref_structure').' ADD `createdAt` DATETIME NOT NULL,
+        ADD `updatedAt` DATETIME NOT NULL');
+
+
+    }
 	
 	public static function newInstall() {
 		
@@ -31,6 +35,8 @@ class install {
 		  `sort`		int(16)		unsigned	NOT NULL,
 		  `parent_id`	int(16)		unsigned	NOT NULL,
 		  `online`		int(1)		unsigned	NOT NULL,
+		  `createdAt`	DATETIME                NOT NULL,
+		  `updatedAt`	DATETIME                NOT NULL,
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 								

@@ -221,6 +221,16 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		if($action == 'edit') {
 			$form->addHiddenField('id', $id);
 		}
+
+        if($form->isSubmit()) {
+
+            if($action == 'add') {
+                pageMisc::updateTime($id, true);
+            } else {
+                pageMisc::updateTime($id);
+            }
+
+        }
 		
 ?>
 	<div class="row">

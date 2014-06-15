@@ -146,25 +146,41 @@ class pageMisc {
 	
 	public static function sortStructure($sort, $pid = 0) {
 			
-			$sql = sql::factory();
-			$sql->setTable('structure');
-			$i = 1;
-			foreach($sort as $name=>$value) {
-				
-				$sql->addPost('sort', $i);
-				$sql->addPost('parent_id', $pid);
-				$sql->setWhere('id='.$value['id']);
-				$sql->update();				
-				
-				if(isset($value['children']) && count($value['children'])) {
-					
-					self::sortStructure($value['children'], $value['id']);	
-				}
-				
-				$i++;
+	    $sql = sql::factory();
+		$sql->setTable('structure');
+		$i = 1;
+		foreach($sort as $name=>$value) {
+
+			$sql->addPost('sort', $i);
+			$sql->addPost('parent_id', $pid);
+			$sql->setWhere('id='.$value['id']);
+			$sql->update();
+
+			if(isset($value['children']) && count($value['children'])) {
+
+				self::sortStructure($value['children'], $value['id']);
+
 			}
-			
+
+			$i++;
 		}
+			
+	}
+
+    public static function updateTime($id, $created = false) {
+
+        $sql = sql::factory();
+        $sql->setTable('structure');
+        $sql->setWhere('id='.$id);
+        $sql->addDatePost('updatedAt');
+
+        if($created) {
+            $sql->addDatePost('createdAt');
+        }
+
+        $sql->update();
+
+    }
 	
 }
 

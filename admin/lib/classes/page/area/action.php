@@ -16,13 +16,16 @@ class pageAreaAction {
 			'sort'=>'int'
 		]);
 		
-		if($block)
+		if($block) {
 			$sql->addPost('block', 1);
+        }
 		
 		foreach(pageArea::$types as $class) {
 			$class = new $class();
 			$sql = $class->addSaveValues($sql);
 		}
+
+        pageMisc::updateTime($sql->getPost('structure_id'));
 		
 		if($id) {
 			$sql->setWhere('id='.$id);
