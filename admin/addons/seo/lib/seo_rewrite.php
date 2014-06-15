@@ -152,7 +152,11 @@ class seo_rewrite {
 			if($sql->get('parent_id')) {
 				$name = self::getParentsName($sql->get('parent_id')).'/'.$name;
 			}
-			
+
+            if($sql->get('id') == dyn::get('start_page') && dyn::get('addons')['seo']['start_url'] == 0) {
+                $name = '';
+            }
+
 			$return[$name] = $sql->get('id');
 			
 			$sql->next();
