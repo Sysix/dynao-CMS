@@ -44,14 +44,13 @@ if(!dyn::get('backend')) {
 	$action = type::super('action', 'string');
 	$structure_id = type::super('structure_id', 'int', 0);
 	$id = type::super('id', 'int', 0);
-	
+
 	// Falls was an der Page geändert worden ist
 	if($page == 'structure' && $subpage == 'pages' && in_array($action, ['add', 'edit', 'seo']) && !$structure_id) {
-			
-		extension::add('FORM_AFTER_SAVE', function($form) {
-			seo_rewrite::generatePathlist();
-			return $form;
-		});	
+		extension::add('FORM_AFTER_SAVE', function($sql) {
+            seo_rewrite::generatePathlist();
+			return $sql;
+		});
 		
 	}
 	

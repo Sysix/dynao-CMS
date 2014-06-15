@@ -222,15 +222,19 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 			$form->addHiddenField('id', $id);
 		}
 
-        if($form->isSubmit()) {
+        extension::add('FORM_AFTER_SAVE', function($sql) use($action, $id) {
 
             if($action == 'add') {
+                $id = $sql->insertId();
                 pageMisc::updateTime($id, true);
             } else {
                 pageMisc::updateTime($id);
             }
 
-        }
+            return $sql;
+
+        });
+
 		
 ?>
 	<div class="row">

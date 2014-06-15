@@ -16,21 +16,23 @@ class extension {
 	public static function add($name, $function, $position = -1) {
 		
 		try {
-		
-			
+
+
 			if(!is_callable($function)) {
-			
+
 				throw new Exception(sprintf(lang::get('extension_callable_func'), _CLASS__));
 				return false;
 				
 			}
-			
-			self::$extensions[$name] = [];
-			
+
+            if(!isset(self::$extensions[$name])) {
+			    self::$extensions[$name] = [];
+            }
+
 			if($position < 0) {
 				$position = count(self::$extensions[$name]);
 			}
-			
+
 			// Funktion hinzufügen zum $name mit der Position $position
 			array_splice(self::$extensions[$name], $position, 0, $function);
 			return true;
@@ -84,9 +86,9 @@ class extension {
 		}
 		
 		$extension = self::$extensions[$name];
-		
+
 		foreach($extension as $function) {
-			
+
 			$object = $function($object);
 			
 		}
