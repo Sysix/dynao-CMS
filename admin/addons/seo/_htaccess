@@ -8,6 +8,7 @@
         RewriteBase {rewrite_base}
 
         RewriteRule ^robots\.txt$ index.php?seo_func=robots [NC,L]
+        RewriteRule ^sitemap\.xml$ index.php?seo_func=sitemap [NC,L]
 
 		{www_rewriteCond}
 

@@ -19,6 +19,15 @@ if(!dyn::get('backend')) {
 		die();
 		
 	}
+
+    if($seoFunc == 'sitemap') {
+
+        $sitemap = new seo_sitemap();
+        $sitemap->setArticles(dyn::get('addons')['seo']['sitemap']['offlines']);
+        $sitemap->send();
+        die();
+
+    }
 	
 } else {
 	

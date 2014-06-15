@@ -6,5 +6,8 @@
 	"delimiter": "|",
 	"ending": ".html",
 	"start_url": 0,
-	"robots": 1	
+	"robots": 1,
+    "sitemap": {
+        "offlines": false
+    }
 }
