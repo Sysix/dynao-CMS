@@ -7,7 +7,7 @@ class install {
 		$sql->query('ALTER TABLE '.sql::table('module').' ADD `blocks` int(1) unsigned NOT NULL');
         $sql->query('ALTER TABLE '.sql::table('user').' ADD `salt` VARCHAR(255) NOT NULL');
         $sql->query('ALTER TABLE '.sql::table('structure_area').' ADD `block` int(1) NOT NULL AFTER `id`');
-        $sql->query('ALTER TABLE '.sql::table('pref_structure').' ADD `createdAt` DATETIME NOT NULL,
+        $sql->query('ALTER TABLE '.sql::table('structure').' ADD `createdAt` DATETIME NOT NULL,
         ADD `updatedAt` DATETIME NOT NULL');
 
 
