@@ -86,7 +86,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                     LEFT JOIN 
                         '.sql::table('module').' as m
                             ON m.id = s.modul
-                    WHERE s.id = '.$id.' AND block = 0
+                    WHERE structure_id = '.$structure_id.' AND block = 0
                     ORDER BY `sort`');
 					
                     $i = 1;
