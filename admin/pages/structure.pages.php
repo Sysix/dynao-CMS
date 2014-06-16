@@ -86,7 +86,6 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                         $where = '';
                     }
 
-                    var_dump($where);
                     
                     $sql = sql::factory();
                     $sql->result('SELECT s.*, m.name, m.output, m.input
