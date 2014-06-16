@@ -2,7 +2,7 @@
     "author": "Dynao",
     "hp_name": "Dynao CMS",
     "hp_url": "http:\/\/",
-    "version": "0.2.0 Beta",
+    "version": "0.2.1 Beta",
     "setup": true,
     "debug": true,
     "cache": false,
