@@ -79,6 +79,14 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                     <div id="ajax-content"></div>
                     <ul id="structure-content">
                     <?php
+
+                    if($action == 'add' || $action == 'edit') {
+                        $where = 'AND s.id = '.$id;
+                    } else {
+                        $where = '';
+                    }
+
+                    var_dump($where);
                     
                     $sql = sql::factory();
                     $sql->result('SELECT s.*, m.name, m.output, m.input
@@ -86,7 +94,9 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                     LEFT JOIN 
                         '.sql::table('module').' as m
                             ON m.id = s.modul
-                    WHERE structure_id = '.$structure_id.' AND block = 0
+                    WHERE structure_id = '.$structure_id.'
+                     '.$where.'
+                     AND block = 0
                     ORDER BY `sort`');
 					
                     $i = 1;
