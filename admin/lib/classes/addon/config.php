@@ -95,7 +95,8 @@ class addonConfig {
 	}
 	
 	public static function loadAllConfig() {
-
+		
+		$addons = [];
 		foreach(self::getAll() as $name) {
 			$addons[$name] = self::getConfig($name);
 		}
