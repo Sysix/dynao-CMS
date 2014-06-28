@@ -25,6 +25,12 @@ class seo_control {
 
     }
 
+    /*
+     * return the addon table id
+     * @param array List of Urls
+     *
+     * @return int|null
+     */
     public static function getId($addonUrls) {
 
        $addonUrls = array_flip($addonUrls);
@@ -39,6 +45,17 @@ class seo_control {
         }
 
         return null;
+
+    }
+
+    /*
+     * add a filter
+     * @param string $name filtername
+     * @param string $regex SQL-Regex
+     */
+    public static function addFilter($name, $regex) {
+
+        self::$filter[$name] = $regex;
 
     }
 
