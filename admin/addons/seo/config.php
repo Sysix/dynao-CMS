@@ -32,6 +32,8 @@ if(!dyn::get('backend')) {
 } else {
 	
 	userPerm::add('admin[seo]', 'SEO Administrator');
+
+    seo_control::addToPathlist('default', seo_control::getUrlsFromTable('addons', ['id', 'name']));
 	
 	backend::addAddonNavi(lang::get('seo'), url::backend('seo'), 'flag', -1, function() {
 		return dir::addon('seo', 'page'.DIRECTORY_SEPARATOR.'seo.php');

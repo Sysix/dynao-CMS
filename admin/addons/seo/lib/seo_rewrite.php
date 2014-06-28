@@ -43,13 +43,7 @@ class seo_rewrite {
 		}
 		
 		// Überflüssige Zeichen löschen, damit eine reine URL angezeigt wird
-		foreach(['?', '#'] as $char) {
-			
-			if(($pos = strpos($url, $char)) !== false) {
-				$url = substr($url, 0, $pos);	
-			}
-			
-		}
+        $url = self::removeWastedParts($url);
 		
 		if(isset(self::$pathlist[$url])) {
 			
@@ -72,6 +66,20 @@ class seo_rewrite {
 		return $id;
 		
 	}
+
+    public static function removeWastedParts($url) {
+
+        foreach(['?', '#'] as $char) {
+
+            if(($pos = strpos($url, $char)) !== false) {
+                $url = substr($url, 0, $pos);
+            }
+
+        }
+
+        return $url;
+
+    }
 	
 	/*
 	 * Falls im Unterordner installiert, von $url löschen
@@ -157,10 +165,12 @@ class seo_rewrite {
                 $name = '';
             }
 
-			$return[$name] = $sql->get('id');
+			$return[$name] = (int)$sql->get('id');
 			
 			$sql->next();
 		}
+
+        $return = extension::get('SEO_GENERATE_PATHLIST', $return);
 		
 		return file_put_contents(dir::addon('seo', 'pathlist.json'), json_encode($return, JSON_PRETTY_PRINT));	
 		
@@ -219,7 +229,7 @@ class seo_rewrite {
 		return $name;
 	
 	}
-	
+
 }
 
 ?>
