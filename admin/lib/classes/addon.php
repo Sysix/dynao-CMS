@@ -1,6 +1,7 @@
 <?php
 
 class addon {
+    use traitNeed;
 	
 	public $config = [];
 	public $name;
@@ -77,39 +78,46 @@ class addon {
 		return $this->getSql('active', 0) == 1;
 		
 	}
-	
-	public function checkNeed() {
+
+    public function isAvaible() {
+
+        return ($this->isActive() && $this->isInstall());
+
+    }
+
+    /*
+     * install the Addon
+     *
+     * @return bool
+     */
+    public function install() {
+
+        try {
+
+            $success = true;
 		
-		$errors = [];
-		foreach($this->get('need', []) as $key=>$value) {
-			
-			$check = addonNeed::check($key, $value);
-			// Typcheck, because $check can be a string
-			if($check !== true) {
-				$errors[] = $check;
-			}
-				
-		}
-		
-		if(!empty($errors)) {
-			echo message::danger(implode('<br />', $errors));
-			return false;	
-		}
-		
-		return true;
-			
-	}
-	
-	public function install() {
-		
-		if(!$this->checkNeed()) {
-			return false;	
-		}
-		
-		$file = dir::addon($this->name, self::INSTALL_FILE);
-		if(file_exists($file)) {
-			include $file;	
-		}
+            if(!$this->checkNeed()) {
+                return false;
+            }
+
+            $file = dir::addon($this->name, self::INSTALL_FILE);
+            if(file_exists($file)) {
+               $success = include $file;
+            }
+
+            if(!$success) {
+                return false;
+            }
+
+        } catch(mysqli_sql_exception $e) {
+
+            echo message::warning('<b>SQL Error:<br />'.$e->getMessage());
+
+        } catch(Exception $e) {
+
+            echo message::danger($e->getMessage());
+
+        }
 		
 		return true;
 				

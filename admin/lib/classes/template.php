@@ -2,6 +2,7 @@
 
 class template {
 	use traitFactory;
+    use traitNeed;
 	
 	public $name;
 	public $config = [];
@@ -24,28 +25,7 @@ class template {
 		return $default;
 		
 	}
-	
-	public function checkNeed() {		
-		
-		$errors = [];
-		foreach($this->get('need', []) as $key=>$value) {
-			
-			$check = templateNeed::check($key, $value);
-			// Typcheck, because $check can be a string
-			if($check !== true) {
-				$errors[] = $check;
-			}
-				
-		}
-		
-		if(!empty($errors)) {
-			echo message::danger(implode('<br />', $errors));
-			return false;	
-		}
-		
-		return true;
-			
-	}
+
 	
 	public function installModule($module, $update = false) {
 		
@@ -121,12 +101,24 @@ class template {
 	}
 	
 	public function install($update = false) {
-		
-		if(!$this->checkNeed()) {
-			return false;	
-		}
-		
-		$this->installBlocks($update);
+
+        try {
+
+            if(!$this->checkNeed()) {
+                return false;
+            }
+
+            $this->installBlocks($update);
+
+        } catch (mysqli_sql_exception $e) {
+
+            echo message::warning('<b>SQL Error:<br />'.$e->getMessage());
+
+        } catch(Exception $e) {
+
+            echo message::danger($e->getMessage());
+
+        }
 		
 		return true;
 				

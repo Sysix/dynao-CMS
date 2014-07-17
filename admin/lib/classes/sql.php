@@ -42,10 +42,10 @@ class sql {
 			self::$sql->set_charset('utf8');
 			
 			if(self::$sql->connect_error && dyn::get('debug')) {
-				throw new MySQLi_Sql_Exception('<b>Fehler mit der Verbindung zum Server:</b><br />'.self::$sql->connect_error);
+				throw new mysqli_sql_exception('<b>Fehler mit der Verbindung zum Server:</b><br />'.self::$sql->connect_error);
 			}
 			
-		} catch(MySQLi_Sql_Exception $e) {
+		} catch(mysqli_sql_exception $e) {
 			echo message::danger($e->getMessage());	
 		}
 		
@@ -69,7 +69,7 @@ class sql {
 		try {
 			
 			if(!$this->query) {
-				throw new Exception($query.'<br />'.self::$sql->error);
+				throw new mysqli_sql_exception($query.'<br />'.self::$sql->error);
 			}
 			
 		} catch(Exception $e) {
@@ -95,7 +95,7 @@ class sql {
 			
 			if(!in_array($type, self::$QUERY_TYPE)) {
 				
-				throw new Exception(sprintf(lang::get('sql_result_invalid_type'), __CLASS__));
+				throw new mysqli_sql_exception(sprintf(lang::get('sql_result_invalid_type'), __CLASS__));
 				
 			}	
 			

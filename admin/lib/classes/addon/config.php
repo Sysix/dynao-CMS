@@ -5,14 +5,25 @@ class addonConfig {
 	static $all = [];
 	static $allConfig = [];
 	
-	public static function isSaved($addon, $save = true) {
-	
-		$sql = sql::factory();
+	public static function isSaved($addon, $plugin = null, $save = true) {
+
+        $sql = sql::factory();
+
+        $where = '';
+        if($plugin) {
+            $where = ' AND plugin = '.$sql->escape($plugin);;
+        }
+
 		$num = $sql->num('SELECT 1 FROM '.sql::table('addons').' WHERE `name` = "'.$addon.'"');
 		if(!$num && $save) {
 			$save = sql::factory();
 			$save->setTable('addons');
 			$save->addPost('name', $addon);
+
+            if($plugin) {
+                $save->addPost('plugin', $plugin);;
+            }
+
 			$save->save();
 		}
 		
@@ -25,7 +36,7 @@ class addonConfig {
 		if(!count(self::$all)) {
 
 			$sql = sql::factory();		
-			$sql->query('SELECT name FROM '.sql::table('addons').' WHERE `install` = 1  AND `active` = 1')->result();
+			$sql->query('SELECT name FROM '.sql::table('addons').' WHERE `install` = 1  AND `active` = 1 ORDER BY `plugin`')->result();
             while($sql->isNext()) {
 				self::$all[] = $sql->get('name');
 				$sql->next();		

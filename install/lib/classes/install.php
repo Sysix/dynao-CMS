@@ -1,5 +1,11 @@
 <?php
 class install {
+
+    public static function update0_2to0_2_1() {
+
+        $sql->query('ALTER TABLE '.sql::table('addons').' ADD `plugin` VARCHAR(255) NOT NULL');
+
+    }
 	
 	public static function update0_1to0_2() {
 
