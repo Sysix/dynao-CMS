@@ -23,7 +23,19 @@ abstract class formField {
 		$this->validator = validator::factory();
 		
 	}
-	
+
+    public function setName($name) {
+
+        $this->name = $name;
+
+    }
+
+    public function setValue($value) {
+
+        $this->value = $value;
+
+    }
+
 	public function setSuffix($suffix) {
 		
 		$this->suffix = $suffix;
