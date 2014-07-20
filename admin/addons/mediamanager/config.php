@@ -43,10 +43,12 @@ if(addonConfig::isActive('metainfos')) {
 	metainfosPage::addType('DYN_MEDIA_LIST');
 	
 	if($page == 'meta') {
-		
-		backend::addSubNavi(lang::get('media'),	url::backend('meta', ['subpage'=>'media']), 'circle', -1, function() {
+
+
+		backend::addSubNavi(lang::get('media'),	url::backend('meta', ['subpage'=>'media']), -1, function() {
 			return dir::addon('mediamanager', 'page'.DIRECTORY_SEPARATOR.'meta.media.php');
 		});
+
 		
 	}
 	

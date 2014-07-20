@@ -2,6 +2,10 @@
 
 ob_end_clean();
 
+foreach(pluginConfig::includeAllConfig() as $file) {
+    include($file);
+}
+
 foreach(addonConfig::includeAllConfig() as $file) {
 	include($file);	
 }

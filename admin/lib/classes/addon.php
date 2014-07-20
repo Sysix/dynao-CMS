@@ -17,16 +17,14 @@ class addon {
 		$this->name = $addon;
 		
 		if($config) {
-						
-			$configfile = dir::addon($addon, 'config.json');
+			$configfile = $this->getFile('config.json');
 			$this->config = json_decode(file_get_contents($configfile), true);
 		}
 		
 		addonConfig::isSaved($addon);
 		
-		$this->sql = sql::factory();
-		$this->sql->query('SELECT * FROM '.sql::table('addons').' WHERE `name` = "'.$addon.'"')->result();
-		
+		$this->sql = $this->getSqlObj()->select()->result();
+
 	}
 	
 	public function getSql($name, $default = null) {
@@ -63,7 +61,7 @@ class addon {
 			
 		$newEntrys = array_merge($this->config, $this->newEntrys);
 			
-		return file_put_contents(dir::addon($this->name, 'config.json'), json_encode($newEntrys, JSON_PRETTY_PRINT));
+		return file_put_contents($this->getFile('config.json'), json_encode($newEntrys, JSON_PRETTY_PRINT));
 		
 	}
 	
@@ -85,6 +83,21 @@ class addon {
 
     }
 
+    public function getFile($file = '') {
+
+        return dir::addon($this->name, $file);
+
+    }
+
+    public function getSqlObj() {
+
+        $sql = sql::factory();
+        return $sql->setTable('addons')
+            ->setWhere('`name` = "'.$this->name.'" AND `plugin` = ""');
+
+
+    }
+
     /*
      * install the Addon
      *
@@ -100,7 +113,7 @@ class addon {
                 return false;
             }
 
-            $file = dir::addon($this->name, self::INSTALL_FILE);
+            $file = $this->getFile(self::INSTALL_FILE);
             if(file_exists($file)) {
                $success = include $file;
             }
@@ -125,10 +138,15 @@ class addon {
 	
 	public function uninstall() {
 		
-		$file = dir::addon($this->name, self::UNINSTALL_FILE);
+		$file = $this->getFile(self::UNINSTALL_FILE);
 		if(file_exists($file)) {
 			include $file;	
 		}
+
+        foreach($this->showPluginFolder() as $plugin) {
+            $plugin->uninstall();
+            $plugin->getSqlObj()->addPost('install', 0)->addPost('active', 0)->update();
+        }
 		
 		return $this;
 				
@@ -138,12 +156,9 @@ class addon {
 	
 		$this->uninstall();
 		
-		$sql = sql::factory();
-		$sql->setTable('addons')
-		    ->setWhere('`name` = "'.$this->name.'"')
-			->delete();
+		$this->getSqlObj()->delete();
 			
-		$dir = dir::addon($this->name);
+		$dir = $this->getFile();
 		$it = new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS);
 		$files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
 		
@@ -165,6 +180,28 @@ class addon {
 		return message::success(sprintf(lang::get('addon_deleted'), $this->name));
 		
 	}
+
+    public function showPluginFolder() {
+
+        $pluginPath = $this->getFile('plugins'.DIRECTORY_SEPARATOR);
+
+        if(!file_exists($pluginPath)) {
+            return [];
+        }
+
+        $dir = new DirectoryIterator($pluginPath);
+        $list = [];
+        foreach($dir as $file) {
+
+            if($file->isDot()) {
+                continue;
+            }
+            $list[$file->getFileName()] = new plugin($this->name, $file->getFileName());
+        }
+
+        return $list;
+
+    }
 	
 	public function getConfig() {
 		

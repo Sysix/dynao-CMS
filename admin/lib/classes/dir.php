@@ -88,6 +88,12 @@ class dir {
 
 	}
 
+    public static function plugin($addon, $name, $file = '') {
+
+        return self::addon($addon.DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.$name, $file);
+
+    }
+
 }
 
 ?>

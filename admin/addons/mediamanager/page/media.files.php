@@ -12,7 +12,7 @@ if($action == 'delete' && dyn::get('user')->hasPerm('media[delete]')) {
 	
 }
 
-if($action == 'deleteFiles') {
+if($action == 'deleteFiles' && dyn::get('user')->hasPerm('media[edit]')) {
 	
 	$files = type::post('file', '', []);
 	
@@ -40,10 +40,13 @@ if(in_array($action, ['add', 'edit']) && dyn::get('user')->hasPerm('media[edit]'
 	
 	$field = $form->addRawField('<input type="file" name="file" />');
 	$field->fieldName(lang::get('select_file'));
+    $field->setName('fileinput');
 	
 	if($action == 'edit') {
 		$form->addHiddenField('id', $id);
 	}
+
+    $form = extension::get('MEDIAMANAGER_FILE_FORM', $form);
 	
 	if($form->isSubmit()) {
 		

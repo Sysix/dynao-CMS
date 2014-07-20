@@ -5,16 +5,24 @@ if(!dyn::get('user')->hasPerm('admin[addon]')) {
 	return;	
 }
 
+$plugin = type::super('plugin', 'string');
+
+if($action != '') {
+
+    if($plugin) {
+        $addonClass = new plugin($addon, $plugin);
+    } else {
+        $addonClass= new addon($addon);
+    }
+
+}
+
 if($action == 'delete') {
-	
-	$addonClass = new addon($addon, false);
-	echo $addonClass->delete();
+	$addonClass->delete();
 }
 
 if($action == 'install') {
 
-	$addonClass= new addon($addon);	
-	
 	$success = true;
 	
 	if(!$addonClass->isInstall()) {
@@ -28,11 +36,8 @@ if($action == 'install') {
 	if($success) {
 		
 		$install = ($addonClass->isInstall()) ? 0 : 1;
-	
-		$sql = sql::factory();
-		$sql->setTable('addons');
-		$sql->setWhere('`name` = "'.$addon.'"');
-		$sql->addPost('install', $install);
+
+		$sql = $addonClass->getSqlObj()->addPost('install', $install);
 		
 		if(!$install)
 			$sql->addPost('active', 0);
@@ -45,8 +50,7 @@ if($action == 'install') {
 }
 
 if($action == 'active') {
-	
-	$addonClass = new addon($addon, false);	
+
 	$active = ($addonClass->isActive()) ? 0 : 1;
 	
 	if(!$addonClass->isInstall()) {
@@ -55,11 +59,7 @@ if($action == 'active') {
 			
 	} else {
 	
-		$sql = sql::factory();
-		$sql->setTable('addons');
-		$sql->setWhere('`name` = "'.$addon.'"');
-		$sql->addPost('active', $active);
-		$sql->update();
+		$addonClass->getSqlObj()->addPost('active', $active)->update();
 		
 		echo message::success(lang::get('addon_save_success'));
 		
@@ -68,7 +68,6 @@ if($action == 'active') {
 }
 
 if($action == 'help') {
-	$curAddon = new addon($addon);
 ?>
 	<div class="row">
 		<div class="col-lg-12">
@@ -109,7 +108,7 @@ if($action == 'help') {
 	
 	$table->addSection('tbody');
 	
-	$addons = scandir(dir::backend('addons/'));
+	$addons = scandir(dir::backend('addons').DIRECTORY_SEPARATOR);
 	
 	if(count($addons)) {
 	
@@ -124,25 +123,57 @@ if($action == 'help') {
 		$active_url = url::backend('addons', ['subpage'=>'overview', 'addon'=>$dir, 'action'=>'active']);
 		$delete_url = url::backend('addons', ['subpage'=>'overview', 'addon'=>$dir, 'action'=>'delete']);
 		$help_url = url::backend('addons', ['subpage'=>'overview', 'addon'=>$dir, 'action'=>'help']);
-		
-		if($curAddon->isInstall()) {
-			$install = '<a href="'.$install_url.'" class="btn btn-sm dyn-online">'.lang::get('addon_installed').'</a>';
-		} else {
-			$install = '<a href="'.$install_url.'" class="btn btn-sm dyn-offline">'.lang::get('addon_not_installed').'</a>';
-		}
-		
-		if($curAddon->isActive()) {
-			$active = '<a href="'.$active_url.'" class="btn btn-sm dyn-online fa fa-check" title="'.lang::get('addon_actived').'"></a>';
-		} else {
-			$active = '<a href="'.$active_url.'" class="btn btn-sm dyn-offline fa fa-times" title="'.lang::get('addon_not_actived').'"></a>';
-		}
-				
+
+        if($curAddon->isInstall()) {
+            $install = '<a href="'.$install_url.'" class="btn btn-sm dyn-online">'.lang::get('addon_installed').'</a>';
+        } else {
+            $install = '<a href="'.$install_url.'" class="btn btn-sm dyn-offline">'.lang::get('addon_not_installed').'</a>';
+        }
+
+        if($curAddon->isActive()) {
+            $active = '<a href="'.$active_url.'" class="btn btn-sm dyn-online fa fa-check" title="'.lang::get('addon_actived').'"></a>';
+        } else {
+            $active = '<a href="'.$active_url.'" class="btn btn-sm dyn-offline fa fa-times" title="'.lang::get('addon_not_actived').'"></a>';
+        }
+
 		$delete = '<a href="'.$delete_url.'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
-		
+
 		$table->addRow()
 		->addCell('<a class="fa fa-question" href="'.$help_url.'"></a>')
 		->addCell($curAddon->get('name').' <small>'.$curAddon->get('version').'</small>')
 		->addCell('<span class="btn-group">'.$install.$active.$delete.'</span>');
+
+        if($curAddon->isInstall()) {
+            $plugins = $curAddon->showPluginFolder();
+
+            foreach($plugins as $pluginName => $plugin) {
+
+                $install_url = url::backend('addons', ['subpage'=>'overview', 'addon'=>$dir, 'plugin'=>$pluginName, 'action'=>'install']);
+                $active_url = url::backend('addons', ['subpage'=>'overview', 'addon'=>$dir, 'plugin'=>$pluginName, 'action'=>'active']);
+                $delete_url = url::backend('addons', ['subpage'=>'overview', 'addon'=>$dir, 'plugin'=>$pluginName, 'action'=>'delete']);
+                $help_url = url::backend('addons', ['subpage'=>'overview', 'addon'=>$dir, 'plugin'=>$pluginName, 'action'=>'help']);
+
+                if($plugin->isInstall()) {
+                    $install = '<a href="'.$install_url.'" class="btn btn-xs dyn-online">'.lang::get('addon_installed').'</a>';
+                } else {
+                    $install = '<a href="'.$install_url.'" class="btn btn-xs dyn-offline">'.lang::get('addon_not_installed').'</a>';
+                }
+
+                if($plugin->isActive()) {
+                    $active = '<a href="'.$active_url.'" class="btn btn-xs dyn-online fa fa-check" title="'.lang::get('addon_actived').'"></a>';
+                } else {
+                    $active = '<a href="'.$active_url.'" class="btn btn-xs dyn-offline fa fa-times" title="'.lang::get('addon_not_actived').'"></a>';
+                }
+
+                $delete = '<a href="'.$delete_url.'" class="btn btn-xs btn-danger fa fa-trash-o delete"></a>';
+
+                $table->addRow(['class'=>'addon-plugin'])
+                    ->addCell('')
+                    ->addCell('<a class="fa fa-question" href="'.$help_url.'"></a> '.$pluginName.' <small>'.$plugin->get('version').'</small>')
+                    ->addCell('<span class="btn-group">'.$install.$active.$delete.'</span>');
+            }
+
+        }
 			
 	}
 	

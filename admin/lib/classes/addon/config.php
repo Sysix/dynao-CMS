@@ -1,6 +1,8 @@
 <?php
 
 class addonConfig {
+
+    const TYPE = 'addons';
 	
 	static $all = [];
 	static $allConfig = [];
@@ -11,17 +13,17 @@ class addonConfig {
 
         $where = '';
         if($plugin) {
-            $where = ' AND plugin = '.$sql->escape($plugin);;
+            $where = ' AND plugin = "'.$sql->escape($plugin).'"';
         }
 
-		$num = $sql->num('SELECT 1 FROM '.sql::table('addons').' WHERE `name` = "'.$addon.'"');
+		$num = $sql->num('SELECT 1 FROM '.sql::table('addons').' WHERE `name` = "'.$addon.'" '.$where);
 		if(!$num && $save) {
 			$save = sql::factory();
 			$save->setTable('addons');
 			$save->addPost('name', $addon);
 
             if($plugin) {
-                $save->addPost('plugin', $plugin);;
+                $save->addPost('plugin', $plugin);
             }
 
 			$save->save();
@@ -33,33 +35,33 @@ class addonConfig {
 	
 	public static function getAll() {
 
-		if(!count(self::$all)) {
+		if(!count(static::$all)) {
 
 			$sql = sql::factory();		
-			$sql->query('SELECT name FROM '.sql::table('addons').' WHERE `install` = 1  AND `active` = 1 ORDER BY `plugin`')->result();
+			$sql->query('SELECT name FROM '.sql::table('addons').' WHERE `install` = 1  AND `active` = 1 AND `plugin` = ""')->result();
             while($sql->isNext()) {
-				self::$all[] = $sql->get('name');
+				static::$all[dir::addon($sql->get('name'))] = $sql->get('name');
 				$sql->next();		
 			}
 			
 		}
 
-		return self::$all;
+		return static::$all;
 
 	}
 	
 	public static function includeAllLibs() {
 		
-		foreach(self::getAll() as $name) {
+		foreach(static::getAll() as $dir=>$name) {
 
-            $dir = dir::addon($name, 'vendor');
-            if(file_exists($dir)) {
-                autoload::addDir($dir);
+            $vendor = $dir.'vendor'.DIRECTORY_SEPARATOR;
+            if(file_exists($vendor)) {
+                autoload::addDir($vendor);
             }
-			
-			$dir = dir::addon($name, 'lib');
-			if(file_exists($dir)) {
-				autoload::addDir($dir);
+
+            $lib = $dir.'lib'.DIRECTORY_SEPARATOR;
+			if(file_exists($lib)) {
+				autoload::addDir($lib);
 			}
 
 		}
@@ -69,8 +71,8 @@ class addonConfig {
 	public static function includeAllConfig() {
 		
 		$return = [];
-		foreach(self::getAll() as $name) {
-			$return[] = dir::addon($name, 'config.php');
+		foreach(static::getAll() as $dir=>$name) {
+			$return[] = $dir.'config.php';
 		}
 		return $return;
 		
@@ -78,14 +80,14 @@ class addonConfig {
 	
 	public static function includeAllLangFiles() {
 		
-		foreach(self::getAll() as $name) {
-			
-			$file = dir::addon($name, 'lang/'.lang::getLang().'.json');
+		foreach(static::getAll() as $dir=>$name) {
+
+            $file = $dir.'lang'.DIRECTORY_SEPARATOR.lang::getLang().'.json';
 			if(file_exists($file)) {				
 				lang::loadLang($file);
 			}
-			
-			$defaultFile = dir::addon($name, 'lang/'.lang::getDefaultLang().'.json');
+
+            $defaultFile = $dir.'lang'.DIRECTORY_SEPARATOR.lang::getDefaultLang().'.json';
 			if(file_exists($defaultFile)) {				
 				lang::loadLang($defaultFile, true);
 			}
@@ -93,26 +95,18 @@ class addonConfig {
 		}
 		
 	}
+
 	
-	public static function getConfig($name) {
-	
-		$configFile = dir::addon($name, 'config.json');
-		if(file_exists($configFile)) {
-			return json_decode(file_get_contents($configFile), true);
-		}
-		
-		return false;
-			
-	}
-	
-	public static function loadAllConfig() {
+	public static function loadAllConfig($toName = self::TYPE) {
 		
 		$addons = [];
-		foreach(self::getAll() as $name) {
-			$addons[$name] = self::getConfig($name);
+		foreach(static::getAll() as $dir=>$name) {
+			if(file_exists($dir.'config.json')) {
+                $addons[$name] = json_decode(file_get_contents($dir.'config.json'), true);
+            }
 		}
 			
-		dyn::add('addons', $addons);
+		dyn::add($toName, $addons);
 		
 		return true;
 		
@@ -120,7 +114,7 @@ class addonConfig {
 	
 	public static function isActive($name) {
 		
-		return in_array($name, self::$all);
+		return in_array($name, static::$all);
 	}
 	
 }

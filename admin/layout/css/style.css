@@ -578,16 +578,25 @@ ul.news li .btn {
 }
 
 .form-submit-area {
-    padding:0px;
+    padding:0;
 }
 
 .form-horizontal .form-submit-area {
-    padding:0px 15px;
+    padding:0 15px;
 }
 
 .panel form .table {
-    margin-bottom:0px;
+    margin-bottom:0;
 }
+
+.addon-plugin {
+    background:#e8e8e8;
+}
+
+.addon-plugin td {
+    padding:4px 8px !important;
+}
+
 
 /* Mobil */
 

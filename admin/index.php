@@ -56,9 +56,15 @@ dyn::add('user', new user(userLogin::getUser()));
 
 cache::setCache(dyn::get('cache'));
 
+
+pluginConfig::loadAllConfig();
+pluginConfig::includeAllLangFiles();
+pluginConfig::includeAllLibs();
+
 addonConfig::loadAllConfig();
 addonConfig::includeAllLangFiles();
 addonConfig::includeAllLibs();
+
 
 if(dyn::get('backend')) {
 	

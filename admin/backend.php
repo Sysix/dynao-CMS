@@ -44,6 +44,10 @@ if(dyn::get('user')->isAdmin()) {
 	backend::addNavi(lang::get('settings'), url::backend('settings'), 'cogs');
 }
 
+foreach(pluginConfig::includeAllConfig() as $file) {
+    include($file);
+}
+
 foreach(addonConfig::includeAllConfig() as $file) {
 	include($file);	
 }

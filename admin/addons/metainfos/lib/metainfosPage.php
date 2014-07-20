@@ -107,8 +107,9 @@ class metainfosPage {
 					$type = 'VARCHAR(255)';
 					break;	
 			}
-			
-			$colum = sql::showColums($tablename, $prefix.$form->get('name'), false);
+
+
+			$colum = sql::factory()->query('SHOW COLUMNS FROM '.$tablename.'  LIKE "'.$prefix.$form->get('name').'"');
 			$colum->result();
 			
 			$isRight = function() use($action, $colum, $form, $prefix) {

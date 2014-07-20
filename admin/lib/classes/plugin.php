@@ -1,7 +1,6 @@
 <?php
 
-class plugin {
-    use traitNeed;
+class plugin extends addon {
 
     public $addonname;
     public $name;
@@ -13,16 +12,39 @@ class plugin {
      * @param string $addon addonname
      * @param string $plugin pluginname
      */
-    public function __construct($addon, $plugin) {
+    public function __construct($addon, $plugin, $config = true) {
 
         $this->addonname = $addon;
         $this->name = $plugin;
 
+        if($config) {
+            $configfile = $this->getFile('config.json');
+            $this->config = json_decode(file_get_contents($configfile), true);
+        }
+
         addonConfig::isSaved($addon, $plugin);
 
-        $this->sql = sql::factory();
-        $this->sql->query('SELECT * FROM '.sql::table('addons').' WHERE `name` = "'.$addon.'" AND `plugin` = "'.$plugin.'"')->result();
+        $this->sql = $this->getSqlObj()->select()->result();
 
+    }
+
+    public function getFile($file = '') {
+
+        return dir::plugin($this->addonname, $this->name, $file);
+
+    }
+
+    public function getSqlObj() {
+
+        $sql = sql::factory();
+        return $sql->setTable('addons')
+            ->setWhere('`name` = "'.$this->addonname.'" AND `plugin` = "'.$this->name.'"');
+
+
+    }
+
+    public function showPluginFolder() {
+        return [];
     }
 
 }

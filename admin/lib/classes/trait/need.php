@@ -20,7 +20,7 @@ trait traitNeed {
 
         }
 
-        if($error = true) {
+        if($error == true) {
             return false;
         }
 
