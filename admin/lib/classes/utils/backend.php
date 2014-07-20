@@ -170,8 +170,8 @@ class backend {
 			
 		} else {
 			
-			if(file_exists(dir::addon($addon, 'page/'.$page.'.php'))) {
-				return dir::addon($addon, 'page/'.$page.'.php');
+			if(file_exists(dir::addon($addon, 'page'.DIRECTORY_SEPARATOR.$page.'.php'))) {
+				return dir::addon($addon, 'page'.DIRECTORY_SEPARATOR.$page.'.php');
 			}
 			
 		}

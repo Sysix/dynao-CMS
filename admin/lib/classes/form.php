@@ -348,7 +348,7 @@ class form {
 	 * Ein Freies Feld erstellen
 	 *
 	 * @param	string	$value			Der Inhalt
-	 * @return	class
+	 * @return	formRaw
 	 *
 	 */
 	public function addRawField($value) {
@@ -362,7 +362,7 @@ class form {
 	 *
 	 * @param	string	$name			Der Name
 	 * @param	string	$value			Der Value
-	 * @return	class
+	 * @return	formLink
 	 *
 	 */
 	public function addLinkField($name, $value, $attributes = []) {
@@ -650,7 +650,7 @@ class form {
 	 *
 	 * @param	string	$name			Der Name
 	 * @param	string	$value			Der Inhalt
-	 * @return	this
+	 * @return	$this
 	 */
 	public function addFormAttribute($name, $value) {
 		
@@ -659,11 +659,22 @@ class form {
 		return $this;
 		
 	}
-	
-	/**
+
+    /**
+     * Gibt ein Formular element zurück
+     *
+     * @return	class
+     */
+    public function getElement($name) {
+
+        return $this->return[$name];
+
+    }
+
+        /**
 	 * Löscht ein Formular Feld
 	 *
-	 * @return	this
+	 * @return	$this
 	 */
 	public function deleteElement($name) {
 	
