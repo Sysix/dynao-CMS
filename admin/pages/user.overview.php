@@ -44,7 +44,7 @@ if($action == 'add' || $action == 'edit') {
 	$field->addValidator('email', lang::get('user_wrong_email'));
 	
 	if($form->get('password') != $form->sql->getValue('password')) {
-		$password = userLogin::hash($form->get('password'));
+		$password = userLogin::hash($form->get('password'), $form->get('salt'));
 	} else {
 		$password = $form->sql->getValue('password');
 	}
@@ -80,9 +80,7 @@ if($action == 'add' || $action == 'edit') {
 	if($form->isSubmit()) {
 		
 		if($form->get('password') != $form->sql->getValue('password')) {
-			
-			$form->addPost('password', userLogin::hash($form->get('password', $form->sql->getValue('salt'))));
-			
+			$form->addPost('password', userLogin::hash($form->get('password'), $form->sql->getValue('salt')));
 		}
 		
 	}
