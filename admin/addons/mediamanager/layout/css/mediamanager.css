@@ -6,3 +6,7 @@
 .media-table .fa {
 	font-size:30px;
 }
+
+.media-table .btn.fa {
+    font-size:12px;
+}

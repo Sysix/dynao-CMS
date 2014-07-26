@@ -72,7 +72,7 @@ class media {
 		if(!is_object($media))
 			return false;
 		
-		return is_a($media, get_class($this));
+		return is_a($media, __CLASS__);
 		
 	}
 	
@@ -124,15 +124,15 @@ class media {
 	public function getIcon() {
 		
 		if($this->isImage()) {
-			return '<img src="'.$this->getPath().'" alt="'.$this->get('filename').' />';	
+			return '<img src="'.$this->getPath().'" alt="'.$this->get('filename').'" />';
 		}
 		
 		if($this->isVideo()) {
-			return '<i class="fa fa-youtube-play"></i>';	
+			return '<i class="fa fa-file-video-o"></i>';
 		}
 		
 		if($this->isAudio()) {
-			return '<i class="fa fa-volume-down"></i>';	
+			return '<i class="fa fa-file-audio-o"></i>';
 		}
 		
 		return '<i class="fa fa-file"></i>';
@@ -154,7 +154,7 @@ class media {
 		
 		if(is_null(self::$extension)) {
 			
-			self::$extension = dyn::get('addons')['extensions'];
+			self::$extension = dyn::get('addons')['mediamanager']['extensions'];
 		
 		}
 		

@@ -1,6 +1,7 @@
 <?php
 
 layout::addJs('addons/mediamanager/layout/js/mediamanager.js');
+layout::addCSS('addons/mediamanager/layout/css/mediamanager.css');
 
 userPerm::add('media[edit]', lang::get('media[edit]'));
 userPerm::add('media[delete]', lang::get('media[delete]'));

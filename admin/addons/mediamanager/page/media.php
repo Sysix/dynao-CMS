@@ -16,8 +16,6 @@ $action = type::super('action', 'string', '');
 $id = type::super('id', 'int', 0);
 $subpage = type::super('subpage', 'string');
 
-layout::addCSS('addons/mediamanager/layout/css/mediamanager.css');
-
 if($subpage == 'popup') {
 	
 	backend::addSubnavi('Popup',		url::backend('media', ['subpage'=>'popup']));
