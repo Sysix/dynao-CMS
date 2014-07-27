@@ -167,7 +167,7 @@ if($action == 'loadTemplate') {
 			->addCell($template->get('version'));
 			
 			$table->addRow()
-			->addCell('<a href="'.$template->get('supportlink').'" class="btn btn-sm btn-default btn-block" target="_blank">Support besuchen</a>', ['colspan'=>2]);	
+			->addCell('<a href="'.$template->get('supportlink').'" class="btn btn-sm btn-default btn-block" target="_blank">'.lang::get('support_visit').'</a>', ['colspan'=>2]);	
 			
 			echo $table->show();
 			

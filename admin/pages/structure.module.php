@@ -213,8 +213,8 @@ if($action == '') {
 	
 	$table->addRow()
 	->addCell()
-	->addCell('Name')
-	->addCell('Aktion');
+	->addCell(lang::get('name'))
+	->addCell(lang::get('action'));
 	
 	$table->addSection('tbody');
 

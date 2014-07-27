@@ -14,7 +14,8 @@
 	"select":					"Select",
 	"selected":					"Selected",
 	"description":				"Description",
-	"access_denied":			"Access denied!",	
+	"access_denied":			"Access denied!",
+	"support_visit":			"Visit support",	
 	
 	#Aktionen
 	"update":					"Update",
