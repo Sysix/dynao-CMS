@@ -20,6 +20,7 @@
 	"install_delete":		"Bitte <strong>löschen</strong> Sie den Installations-Ordner \"/install\"!",
 	"dynao_site":			"dynaoCMS Webseite",
 	"dynao_forum":			"dynaoCMS Forum",
-	"visit_admin":			"Admin Login"
-
+	"visit_admin":			"Admin Login",
+	"repeat_password":		"Passwort (Wiederholung)",
+	"not_same_password":	"Passwörter stimmen nicht überein"
 }

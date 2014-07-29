@@ -56,36 +56,49 @@
 						$field = $form->addPasswordField('password', '');
 						$field->setRequired(true);
 						$field->fieldName(lang::get('password'));
+
+						$field = $form->addPasswordField('password2', '');
+						$field->setRequired(true);
+						$field->fieldName(lang::get('repeat_password'));
 						
 						if($form->isSubmit()) {
 							
 							$sql = sql::connect($form->get('db_host'), $form->get('db_user'), $form->get('db_password'), $form->get('db_database'));
 							
 							if(is_null($sql)) {
+
+								if($form->get('password') == $form->get('password2')) {
 								
-								$DB = [
-									'host' => $form->get('db_host'),
-									'user' => $form->get('db_user'),
-									'password' => $form->get('db_password'),
-									'database' => $form->get('db_database'),
-									'prefix' => $form->get('db_prefix')
-								];
+									$DB = [
+										'host' => $form->get('db_host'),
+										'user' => $form->get('db_user'),
+										'password' => $form->get('db_password'),
+										'database' => $form->get('db_database'),
+										'prefix' => $form->get('db_prefix')
+									];
+									
+									dyn::add('DB', $DB, true);
+									dyn::add('setup', false, true);
+									dyn::save();
+									
+									install::newInstall();
+									install::insertDemoContent();
+									
+									$template = new template(dyn::get('template'));
+									if($template->install() !== true) {
+										$form->setSuccessMessage(null);
+										$error = true;
+									}
+									
+									$form->addParam('page', 'finish');
 								
-								dyn::add('DB', $DB, true);
-								dyn::add('setup', false, true);
-								dyn::save();
-								
-								install::newInstall();
-								install::insertDemoContent();
-								
-								$template = new template(dyn::get('template'));
-								if($template->install() !== true) {
-									$form->setSuccessMessage(null);
+								} else {
+
+									$form->addParam('error', lang::get('not_same_password'));
 									$error = true;
+
 								}
-								
-								$form->addParam('page', 'finish');
-								
+
 							} else {
                             	$form->addParam('error', $sql);
 							}

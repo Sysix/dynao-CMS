@@ -20,5 +20,7 @@
 	"install_delete":		"Please <strong>delete</strong> the install-folder \"/install\"!",
 	"dynao_site":			"dynaoCMS Website",
 	"dynao_forum":			"dynaoCMS Forum",
-	"visit_admin":			"Admin Login"
+	"visit_admin":			"Admin Login",
+	"repeat_password":		"Password (Repeat)",
+	"not_same_password":	"Passwords are not the same"
 }
