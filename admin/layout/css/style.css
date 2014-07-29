@@ -226,6 +226,10 @@ fieldset[disabled] .btn-default.active {
 	display:none;
 }
 
+#left > ul > li {
+	border-left:3px solid #0f1114;
+}
+
 #left > ul > li:hover {
 	background:#0f1114;
 	border-left:3px solid #bf1e2e;
