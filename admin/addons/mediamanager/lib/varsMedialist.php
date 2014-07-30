@@ -46,10 +46,10 @@ class varsMedialist extends vars {
 			if($type == $this->DynType.'_ID') {
 				//nothing
 			} else {
-				$entrys = explode('|', trim('|', $sqlEntry));
+				$entrys = explode('|', trim($sqlEntry, '|'));
 				foreach($entrys as $id) {
-					$class = new media($sqlEntry);
-					$sqlEntry = str_replace('|'.$sqlEntry.'|', '|'.$class->get('filename').'|', $sqlEntry);
+					$class = new media($id);
+					$sqlEntry = str_replace('|'.$id.'|', '|'.$class->get('filename').'|', $sqlEntry);
 				}
 			}
 			
