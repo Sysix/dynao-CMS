@@ -46,15 +46,24 @@ h4 {
 
 /* Bootstrap Styles */
 
+input,
 textarea:hover, 
-input[type=text]:hover, 
+input:hover, 
 textarea:active, 
-input[type=text]:active, 
+input:active, 
 textarea:focus, 
-input[type=text]:focus,
-.form-control:focus {
-	outline:none!important;
+input:focus,
+button:focus,
+button:active,
+button:hover,
+select:focus,
+select:hover {
+	outline:none !important;
+	box-shadow:none!important;
+	-moz-box-shadow:none!important;
+	-webkit-box-shadow:none!important;
 	-webkit-appearance:none;
+	border:1px solid #ddd!important;
 }
 
 .btn {
