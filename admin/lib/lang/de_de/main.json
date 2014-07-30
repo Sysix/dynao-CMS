@@ -141,6 +141,7 @@
 	"article_save":				"Artikel speichern",
 	"content":				"Inhalt",
 	"pages":					"Seiten",
+	"visit_page":				"Seite besuchen",
 	
 	#Modul
 	"modul_php_error":			"Der Modulcode hat einen PHP Fehler und kann deshalb nicht ausgeführt werden",

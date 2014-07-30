@@ -105,7 +105,7 @@ class seoPage {
 		@$dom->loadHTML($output);
 		
 		$xpath = new DOMXpath($dom);
-		$buttons = $xpath->query(".//div[@class='pull-right']")->item(0);
+		$buttons = $xpath->query(".//div[@class='pull-right btn-group']")->item(0);
 		
 		// Neuen Button erstellen
 		$seobutton = $dom->createElement('a', lang::get('seo'));

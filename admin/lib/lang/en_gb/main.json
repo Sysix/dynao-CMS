@@ -141,6 +141,7 @@
 	"article_save":				"Save page",
 	"content":				"Content",
 	"pages":					"Pages",
+	"visit_page":				"Visit page",
 	
 	#Modul
 	"modul_php_error":			"The code module has a PHP error and therefore can not be executed",
