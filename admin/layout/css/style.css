@@ -62,7 +62,6 @@ select:hover {
 	box-shadow:none!important;
 	-moz-box-shadow:none!important;
 	-webkit-box-shadow:none!important;
-	-webkit-appearance:none;
 	border:1px solid #ddd!important;
 }
 
