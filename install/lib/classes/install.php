@@ -1,5 +1,25 @@
 <?php
 class install {
+
+    public static function update_0_2_2to0_3() {
+
+        $sql = sql::factory();
+        $sql->query('ALTER TABLE `'.sql::table('structure').'` ADD `lang` INT(16) UNSIGNED NOT NULL AFTER `id`');
+        $sql->query('ALTER TABLE `'.sql::table('structure').'` DROP PRIMARY KEY');
+        $sql->query('ALTER TABLE `'.sql::table('structure').'` ADD `art_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`art_id`)');
+        $sql->query('ALTER TABLE `'.sql::table('structure').'` ADD UNIQUE (`id`, `lang`)');
+
+        $sql->query('ALTER TABLE `'.sql::table('structure_area').'` ADD `lang` INT(16) UNSIGNED NOT NULL AFTER `id`');
+        $sql->query('ALTER TABLE `'.sql::table('structure_area').'` ADD UNIQUE (`structure_id`, `lang`)');
+
+        $sql->query('DROP TABLE IF EXISTS `'.sql::table('lang').'`');
+        $sql->query('CREATE TABLE `'.sql::table("lang").'` (
+		  `id` 			int(16)		unsigned 	NOT NULL 	auto_increment,
+		  `name`		varchar(255) 			NOT NULL,
+		  `sort`		int(16)		unsigned 	NOT NULL,
+		  PRIMARY KEY  (`id`) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
+
+    }
 	
 	public static function update0_1to0_2() {
 
@@ -29,7 +49,9 @@ class install {
 		
 		$sql->query('DROP TABLE IF EXISTS `'.sql::table('structure').'`');				
 		$sql->query('CREATE TABLE `'.sql::table("structure").'` (
-		  `id` 			int(16)		unsigned	NOT NULL 	auto_increment,
+		  `art_id`      int(16)     unsigned    NOT NULL    auto_increment,
+		  `id` 			int(16)		unsigned	NOT NULL,
+		  `lang`        int(16)     unsigned    NOT NULL,
 		  `name`		varchar(255) 			NOT NULL,
 		  `template`	varchar(255) 			NOT NULL,
 		  `sort`		int(16)		unsigned	NOT NULL,
@@ -37,7 +59,8 @@ class install {
 		  `online`		int(1)		unsigned	NOT NULL,
 		  `createdAt`	DATETIME                NOT NULL,
 		  `updatedAt`	DATETIME                NOT NULL,
-		  PRIMARY KEY  (`id`)
+		  PRIMARY KEY  (`art_id`),
+		  UNIQUE KEY (`id`, `lang`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 								
 		$sql->query('DROP TABLE IF EXISTS `'.sql::table('user').'`');
@@ -66,6 +89,7 @@ class install {
 		$sql->query('DROP TABLE IF EXISTS `'.sql::table('structure_area').'`');				
 		$sql->query('CREATE TABLE `'.sql::table("structure_area").'` (
 		  `id`			int(16)		unsigned	NOT NULL		auto_increment,
+		  `lang`        int(16)     unsigned    NOT NULL,
 		  `block`		int(1)		unsigned	NOT NULL,
 		  `structure_id`int(16) 	unsigned	NOT NULL,
 		  `sort`		int(16)		unsigned	NOT NULL,
@@ -108,7 +132,8 @@ class install {
 		  `linklist10`	varchar(255) 			NOT NULL,
 		  `php1` 		text 					NOT NULL,
 		  `php2` 		text 					NOT NULL,
-		  PRIMARY KEY  (`id`)
+		  PRIMARY KEY  (`id`),
+		  UNIQUE KEY (`structure_id`, `lang`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 		
 		$sql->query('DROP TABLE IF EXISTS `'.sql::table('addons').'`');				

@@ -179,7 +179,7 @@ class form {
 	 * @param	string	$name			Der Name
 	 * @param	string	$value			Der Value
 	 * @param	array	$attributes		Die HTML Attribute
-	 * @return	class
+	 * @return	formInput
 	 *
 	 */
 	public function addTextField($name, $value, $attributes = []) {
@@ -195,7 +195,7 @@ class form {
 	 * @param	string	$name			Der Name
 	 * @param	string	$value			Der Value
 	 * @param	array	$attributes		Die HTML Attribute
-	 * @return	class
+	 * @return	formInput
 	 *
 	 */
 	public function addPasswordField($name, $value, $attributes = []) {
@@ -211,7 +211,7 @@ class form {
 	 * @param	string	$name			Der Name
 	 * @param	string	$value			Der Value
 	 * @param	array	$attributes		Die HTML Attribute
-	 * @return	class
+	 * @return	formInput
 	 *
 	 */
 	public function addHiddenField($name, $value, $attributes = []) {
@@ -228,7 +228,7 @@ class form {
 	 * @param	string	$value			Der Value
 	 * @param	array	$attributes		Die HTML Attribute
 	 * @param	bool	$toButtons		Soll das Feld zu den Standardbuttons hinzugefügt werden
-	 * @return	class
+	 * @return	formButton
 	 *
 	 */
 	public function addSubmitField($name, $value, $attributes = [], $toButtons = true) {

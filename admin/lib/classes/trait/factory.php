@@ -1,7 +1,7 @@
 <?php
 
 trait traitFactory {
-	
+
 	public static function factory() {
 		
 		$class = get_called_class();
