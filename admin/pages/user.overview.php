@@ -74,8 +74,15 @@ if($action == 'add' || $action == 'edit') {
 	}
 	
 	if($action == 'edit') {
+
 		$form->addHiddenField('id', $id);
-	}
+        $title = '"'.$form->get('firstname').' '.$form->get('name').'" '.lang::get('edit');
+
+	} else {
+
+        $title = lang::get('add');
+
+    }
 	
 	if($form->isSubmit()) {
 		
@@ -84,29 +91,11 @@ if($action == 'add' || $action == 'edit') {
 		}
 		
 	}
+
+    $button = '<a href="'.url::backend('user', ['subpage'=>'overview']).'" class="btn btn-sm btn-default">'.lang::get('back').'</a>';
 	
 	?>
-	<div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                	<?php if($action == 'edit') { ?>
-                    	<h3 class="panel-title pull-left">"<?php echo $form->get('firstname')." ".$form->get('name'); ?>" <?php echo lang::get('edit'); ?></h3>
-                    <?php } else { ?>
-                    	<h3 class="panel-title pull-left"><?php echo lang::get('add'); ?></h3>
-                    <?php } ?>
-                    <div class="btn-group pull-right">
-						<a href="<?php echo url::backend('user', ['subpage'=>'overview']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('back'); ?></a>
-					</div>
-					<div class="clearfix"></div>
-                </div>
-            	<div class="panel-body">
-					<?php echo $form->show(); ?>
-                </div>
-            </div>
-        </div>
-    </div>
-    
+	<div class="row"><?= bootstrap::panel($title, [$button], $form->show()); ?></div>
     <?php
 	
 }
@@ -140,23 +129,11 @@ if($action == '') {
 		$table->next();	
 		
 	}
+
+    $button = '<a href="'.url::backend('user', ['subpage'=>'overview', 'action'=>'add']).'" class="btn btn-sm btn-default">'.lang::get('add').'</a>';
 	
 	?>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title pull-left"><?php echo lang::get('user'); ?></h3>
-					<div class="btn-group pull-right">
-						<a href="<?php echo url::backend('user', ['subpage'=>'overview', 'action'=>'add']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('add'); ?></a>
-					</div>
-					<div class="clearfix"></div>
-                </div>
-                <?php echo $table->show(); ?>
-            </div>
-        </div>
-    </div>
-    
+    <div class="row"><?= bootstrap::panel(lang::get('user'), [$button], $table->show(), ['table' => true]) ?></div>
     <?php
 	
 }

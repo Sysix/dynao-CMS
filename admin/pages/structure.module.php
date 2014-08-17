@@ -155,36 +155,26 @@ if($action == 'add' || $action == 'edit') {
 	$field->add(1, '');
 	
 	if($action == 'edit') {
+
 		$form->addHiddenField('id', $id);
-	}
+        $button = '<a class="btn btn-sm btn-warning" href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'export', 'id'=>$id]).'">'.lang::get('export').'</a>';
+        $title = '"'.$form->get('name').'" '.lang::get('edit');
+
+	} else {
+
+        $button = '<a class="btn btn-sm btn-warning" href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'import']).'">'.lang::get('import').'</a>';
+        $title = lang::get('module_add');
+
+    }
 	
 	if($form->isSubmit()) {
 		pageCache::clearAll();
 	}
+
+    $back = '<a class="btn btn-sm btn-default" href="'.url::backend('structure', ['subpage'=>'module']).'">'.lang::get('back').'</a>';
 	
 	?>
-<div class="row">
-	<div class="col-lg-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-                <h3 class="panel-title pull-left"><?php echo ($action == 'add') ? lang::get('module_add') : '"'.$form->get('name').'" '.lang::get('edit'); ?></h3>
-                <div class="btn-group pull-right">
-                	<?php if($action == 'edit') { ?>
-					<a class="btn btn-sm btn-warning" href="<?= url::backend('structure', ['subpage'=>'module', 'action'=>'export', 'id'=>$id]) ?>"><?= lang::get('export'); ?></a>
-                    <?php } else { ?>
-					<a class="btn btn-sm btn-warning" href="<?= url::backend('structure', ['subpage'=>'module', 'action'=>'import']) ?>"><?= lang::get('import'); ?></a>
-                    <?php } ?>
-                    <a class="btn btn-sm btn-default" href="<?= url::backend('structure', ['subpage'=>'module']) ?>"><?= lang::get('back'); ?></a>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <div class="panel-body">
-			<?php echo $form->show();?>
-            </div>
-		</div>
-	</div>
-</div>
-
+    <div class="row"><?= bootstrap::panel($title, [$button, $back], $form->show()) ?></div>
 <?php
 	
 }
@@ -244,31 +234,17 @@ if($action == '') {
 		
 	}
 
-	?>
-    
-    <div class="row">
-        <div class="col-lg-12">
-        	<div id="ajax-content"></div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title pull-left"><?php echo lang::get('modules'); ?></h3>
-                    <?php
-					if(dyn::get('user')->hasPerm('page[edit]')) { 
-					?>
-                    <div class="btn-group pull-right">
-						<a class="btn btn-sm btn-warning" href="<?= url::backend('structure', ['subpage'=>'module', 'action'=>'import']) ?>"><?= lang::get('import') ?></a>
-                        <a class="btn btn-sm btn-default" href="<?= url::backend('structure', ['subpage'=>'module', 'action'=>'add']) ?>"><?= lang::get('add'); ?></a>
-                    </div>
-                    <?php
-					}
-					?>
-                    <div class="clearfix"></div>
-                </div>
-                <?php echo $table->show(); ?>
-            </div>
-        </div>
-    </div>
+    $button = [];
 
+    if(dyn::get('user')->hasPerm('page[edit]')) {
+        $button = [
+            '<a class="btn btn-sm btn-warning" href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'import']).'">'.lang::get('import').'</a>',
+            '<a class="btn btn-sm btn-warning" href="'.url::backend('structure', ['subpage'=>'module', 'action'=>'add']).'">'.lang::get('add').'</a>'
+        ];
+    }
+
+	?>    
+    <div class="row"><?= bootstrap::panel(lang::get('modules'), $button, $form->show()) ?></div>
 	<?php
 
 }
