@@ -296,8 +296,15 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 			$form->addElement('pages', $select);
 			
 			if($action == 'edit') {
-				$form->addHiddenField('id', $id);	
-			}
+
+				$form->addHiddenField('id', $id);
+                $title = $form->get('name');
+
+			} else {
+
+                $title = lang::get('add');
+
+            }
 			
 			if($form->isSubmit()) {
 				
@@ -306,18 +313,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 			}
 			
 		?>
-			<div class="row">
-			<div class="col-lg-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title"><?php echo ($form->get('name')) ? $form->get('name') : lang::get('add'); ?></h3>
-					</div>
-					<div class="panel-body">
-						<?php echo $form->show(); ?>
-					</div>
-				</div>
-			</div>
-		</div>    
+		<div class="row"><?= bootstrap::panel($title, [], $form->show()) ?></div>
 		<?php
 		}
 		
@@ -367,27 +363,15 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 				->addCell(lang::get('no_entries'), ['colspan'=>3]);
 			
 			}
+
+            $button = '';
+
+            if(dyn::get('user')->hasPerm('page[edit]')) {
+                $button = '<a href="'.url::backend('structure', ['subpage'=>'blocks', 'action'=>'add']).'" class="btn btn-sm btn-default">'.lang::get('add').'</a>';
+            }
+
 		?>
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title pull-left"><?php echo lang::get('blocks_current_page'); ?></h3>
-						<?php
-						if(dyn::get('user')->hasPerm('page[edit]')) { 
-						?>
-						<span class="btn-group pull-right">
-							<a href="<?php echo url::backend('structure', ['subpage'=>'blocks', 'action'=>'add']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('add'); ?></a>
-						</span>
-						<?php
-						}
-						?>
-						<div class="clearfix"></div>
-					</div>
-					<?php echo $table->show(); ?>
-				</div>
-			</div>
-		</div>
+		<div class="row"><?= bootstrap::panel(lang::get('blocks_current_page'), [$button], $table->show(), ['table'=>'false']) ?></div>
 		<?php
 		}
 		

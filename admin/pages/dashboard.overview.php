@@ -61,7 +61,7 @@
     
     	<?php
 			
-			$i = 1;
+
 			foreach($stats as $stat) {
 				
 				$link = ($stat['btn']) ? ' <a class="btn btn-warning btn-xs" href="'.$stat['btn']['url'].'"><i class="fa fa-plus"></i> '.$stat['btn']['text'].'</a>' : '';
@@ -76,55 +76,36 @@
 						
 					</div>
 				';
-				
-				$i++;
+
 			}
 			
 		?>
         
     </div>
     <div class="row display">
-    
-    	<div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title pull-left">dynao CMS</h3>
-                    <div class="btn-group pull-right">
-                        <a href="http://dynao.de" target="_blank" class="btn btn-sm btn-default"><?php echo lang::get('visit_site'); ?></a>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="panel-body">
-                    <ul class="news">
-                        <?php echo dyn::getNews(); ?>        			
-                    </ul>
-                </div>
-            </div>
+
+    <?php
+
+    $button = '<a http://dynao.de" target="_blank" class="btn btn-sm btn-default">'.lang::get('visit_site').'</a>';
+
+    echo bootstrap::panel('dynao CMS', [$button], '<ul class="news">'.dyn::getNews().'</ul>', ['col'=>'lg-6']);
+
+    echo bootstrap::panel(lang::get('your_idea'), [], '
+    <div class="row">
+        <div class="col-lg-12">
+            '.lang::get('idea_text').'
+            <hr />
         </div>
-        
-        <div class="col-lg-6" id="idea">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><?php echo lang::get('your_idea'); ?></h3>
-                </div>
-                <div class="panel-body">
-                	<div class="row">
-                    	<div class="col-lg-12">
-                        <?php echo lang::get('idea_text'); ?>
-                        <hr />
-                        </div>
-                        <div class="col-md-9">
-                        	<textarea class="form-control"></textarea>
-                        </div>
-                        <div class="col-md-3">
-                        	<p><button class="btn btn-default"><?php echo lang::get('send'); ?></button></p>
-                            <div id="ajax-content"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="col-md-9">
+           <textarea class="form-control"></textarea>
         </div>
-        
+        <div class="col-md-3">
+           <p><button class="btn btn-default">'.lang::get('send').'</button></p>
+            <div id="ajax-content"></div>
+        </div>
+    </div>
+    ', ['id'=>'idea', 'col'=>'lg-6']);
+    ?>
     </div>
     <div class="expand">
     	<i class="fa fa-chevron-up"></i>
@@ -132,37 +113,17 @@
 </section>
 		
 <div class="row">
-    
-	<div class="col-lg-6">
-        <div class="panel panel-default">
-        	<div class="panel-heading">
-        		<h3 class="panel-title pull-left"><?php echo lang::get('addons'); ?></h3>
-        		<div class="btn-group pull-right">
-        			<a href="http://dynao.de" target="_blank" class="btn btn-sm btn-default"><?php echo lang::get('all_addons'); ?></a>
-        		</div>
-        		<div class="clearfix"></div>
-        	</div>
-            <div class="table-responsive">
-        	<?php echo dyn::getAddons(); ?>  
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-lg-6">
-        <div class="panel panel-default">
-        	<div class="panel-heading">
-        		<h3 class="panel-title pull-left"><?php echo lang::get('modules'); ?></h3>
-        		<div class="btn-group pull-right">
-        			<a href="http://dynao.de" target="_blank" class="btn btn-sm btn-default"><?php echo lang::get('all_modules'); ?></a>
-        		</div>
-        		<div class="clearfix"></div>
-        	</div>
-            <div class="table-responsive">
-        	<?php echo dyn::getModules(); ?>  
-            </div>
-        </div>
-    </div>
+    <?php
 
+    $button = '<a href="http://dynao.de" target="_blank" class="btn btn-sm btn-default">'.lang::get('all_addons').'</a>';
+
+    echo bootstrap::panel(lang::get('addons'), [$button], dyn::getAddons(), ['table' => true, 'col'=>'lg-6']);
+
+    $button = '<a href="http://dynao.de" target="_blank" class="btn btn-sm btn-default">'.lang::get('all_modules').'</a>';
+
+    echo bootstrap::panel(lang::get('modules'), [$button], dyn::getModules(), ['table' => true, 'col'=>'lg-6']);
+
+    ?>
 </div>
 
 <?php echo extension::get('DASHBOARD_OVERVIEW', ''); ?>

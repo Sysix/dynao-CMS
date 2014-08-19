@@ -60,6 +60,27 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	
 	$pageSql = sql::factory();
 	$pageSql->result('SELECT name FROM '.sql::table('structure').' WHERE id = '.$structure_id);
+
+
+    if($action == 'add' || $action == 'edit') {
+        $where = 'AND s.id = '.$id;
+    } else {
+        $where = '';
+    }
+
+
+    $sql = sql::factory();
+    $sql->result('SELECT s.*, m.name, m.output, m.input
+                    FROM '.sql::table('structure_area').' as s
+                    LEFT JOIN
+                        '.sql::table('module').' as m
+                            ON m.id = s.modul
+                    WHERE structure_id = '.$structure_id.'
+                     '.$where.'
+                     AND block = 0
+                    ORDER BY `sort`');
+
+    $i = 1;
 	
 	?>
     <div class="row">
@@ -80,42 +101,24 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                     <ul id="structure-content">
                     <?php
 
-                    if($action == 'add' || $action == 'edit') {
-                        $where = 'AND s.id = '.$id;
-                    } else {
-                        $where = '';
-                    }
-
-                    
-                    $sql = sql::factory();
-                    $sql->result('SELECT s.*, m.name, m.output, m.input
-                    FROM '.sql::table('structure_area').' as s
-                    LEFT JOIN 
-                        '.sql::table('module').' as m
-                            ON m.id = s.modul
-                    WHERE structure_id = '.$structure_id.'
-                     '.$where.'
-                     AND block = 0
-                    ORDER BY `sort`');
-					
-                    $i = 1;
                     while($sql->isNext()) {
-                        
+
                         $sqlId = ($action == 'add') ? 0 : $sql->get('id');
-						
+
                         $module = new pageArea($sql);
                         if(in_array($action, ['add', 'edit'])) {
-                            
+
                             if($action == 'add') {
                                 $module->setNew(true);
                             }
-                            
+
                             $form = pageAreaHtml::formBlock($module);
-                        
+
                         }
                     ?>
                             <li data-id="<?php echo $sql->get('id'); ?>">
-                    <?php
+                                <div class="row">
+                        <?php
                         // Wenn Aktion == add
                         // UND Wenn Sortierung von SQL gleich der $_GET['sort']
                         // UND Wenn Formular noch nicht abgeschickt worden
@@ -147,34 +150,26 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                             } else {
                                 $class = 'offline fa fa-times';
                             }
-                            
-                            ?>
-                            <div class="panel panel-default">
-                              <div class="panel-heading">
-                                <h3 class="panel-title pull-left"><?php echo $sql->get('name'); ?></h3>
-                                <div class="pull-right btn-group">
-                                    <a href="<?php echo url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'action'=>'online', 'id'=>$sql->get('id')]); ?>" class="btn btn-sm dyn-<?php echo $class; ?>"></a>
-                                    <a href="<?php echo url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'action'=>'edit', 'id'=>$sql->get('id')]); ?>" class="btn btn-default btn-sm fa fa-edit"></a>
-                                    <a href="<?php echo url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'action'=>'delete', 'id'=>$sql->get('id')]); ?>" class="btn btn-danger btn-sm fa fa-trash-o delete"></a>
-                                </div>
-                                <div class="clearfix"></div>
-                              </div>
-                              <div class="panel-body">
-                                <?php echo $module->OutputFilter($sql->get('output'), $sql); ?>
-                              </div>
-                            </div>
-                            <?php
+
+                            $button = [
+                                '<a href="'.url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-'.$class.'"></a>',
+                                '<a href="'.url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'action'=>'edit', 'id'=>$sql->get('id')]).'" class="btn btn-default btn-sm fa fa-edit"></a>',
+                                '<a href="'.url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'action'=>'delete', 'id'=>$sql->get('id')]).'" class="btn btn-danger btn-sm fa fa-trash-o delete"></a>',
+                            ];
+
+                            echo bootstrap::panel($sql->get('name'), $button, $module->OutputFilter($sql->get('output'), $sql));
+
                         }
                         ?>
+                            </div>
                         </li>
                         <?php
                         $sql->next();
                         $i++;
                         
                     }
-                    ?>	
+                    ?>
                     </ul>
-                    
                     <?php
 					if((!$sql->num() || ($i == $sort)) && $action == 'add') {
 						
@@ -244,27 +239,20 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 
         });
 
+        if($action == 'edit') {
+            $title = $form->get('name');
+        } else {
+            $title = lang::get('add');
+        }
+
+        $buttons = [
+            '<a class="btn btn-sm btn-warning" href="'.url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$form->get('id')]).'">'.lang::get('modules').'</a>',
+            '<a class="btn btn-sm btn-default" href="'.url::backend('structure').'">'.lang::get('back').'</a>',
+        ]
+
 		
 ?>
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title pull-left"><?php echo ($form->get('name')) ? $form->get('name') : lang::get('add'); ?></h3>
-                    <div class="pull-right btn-group">
-						<a class="btn btn-sm btn-warning" href="<?php echo url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$form->get('id')]); ?>"><?php echo lang::get('modules'); ?></a>
-						<a class="btn btn-sm btn-default" href="<?php echo url::backend('structure'); ?>"><?php echo lang::get('back'); ?></a>
-					</div>
-					<div class="clearfix"></div>
-				</div>
-				<div class="panel-body">
-				<?php
-					echo $form->show();
-				?>
-				</div>
-			</div>
-		</div>
-	</div>
+	<div class="row"><?= bootstrap::panel($title, $buttons, $form->show()); ?></div>
 <?php
 
 	} 
@@ -333,33 +321,17 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 			echo pageMisc::getTreeStructurePage();
 			exit();
 		}
-	
+
+        $button = [];
+
+        if(dyn::get('user')->hasPerm('page[edit]')) {
+            $button = [
+                '<a class="btn btn-sm btn-default" href="'.url::backend('structure', ['subpage'=>'pages', 'action'=>'add']).'">'.lang::get('add').'</a>'
+            ];
+        }
+
 	?>
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title pull-left"><?php echo lang::get('pages'); ?></h3>
-                    <?php
-					if(dyn::get('user')->hasPerm('page[edit]')) {
-					?>
-					<div class="btn-group pull-right">
-						<a class="btn btn-sm btn-default" href="<?php echo url::backend('structure', ['subpage'=>'pages', 'action'=>'add']); ?>"><?php echo lang::get('add'); ?></a>
-					</div>
-                    <?php
-					}
-					?>
-					<div class="clearfix"></div>
-				</div>
-				<div class="panel-body" id="structure-body">
-				<?php
-					echo pageMisc::getTreeStructurePage();
-				?>
-				</div>
-			</div>
-		</div>
-	</div>
-	
+	<div class="row" id="structure-body"><?= bootstrap::panel(lang::get('pages'), $button, pageMisc::getTreeStructurePage()) ?></div>
 	<?php
 	
 		if(dyn::get('user')->hasPerm('page[edit]')) {
