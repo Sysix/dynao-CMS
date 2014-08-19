@@ -62,7 +62,7 @@ function makeDroppable() {
 			setTimeout(function() {
 				getAjaxLoad();
 				$.post('index.php?'+getString, {array: returnArray() }, function(data) {
-					$('#structure-body').html(data);
+					$('#structure-body .panel-body').html(data);
 					$('#structure-tree li div.handle').parent().prepend('<div class="droppages"></div>');
 					makeDroppable();
 					removeAjaxLoad();

@@ -109,7 +109,7 @@ if($action == 'help') {
 	
 	$table->addSection('tbody');
 	
-	$addons = scandir(dir::backend('addons/'));
+	$addons = scandir(dir::backend('addons'.DIRECTORY_SEPARATOR));
 	
 	if(count($addons)) {
 	
@@ -154,16 +154,7 @@ if($action == 'help') {
 	}
 	
 	?>
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title"><?php echo lang::get('addons'); ?></h3>
-				</div>
-				<?php echo $table->show(); ?>
-			</div>
-		</div>
-	</div>
+	<div class="row"><?= bootstrap::panel(lang::get('addons'), [], $table->show()) ?></div>
 <?php
 }
 ?>
