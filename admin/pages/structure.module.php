@@ -230,7 +230,7 @@ if($action == '') {
 	} else {
 		
 		$table->addRow()
-		->addCell(lang::get('no_entries'), ['colspan'=>2]);
+		->addCell(lang::get('no_entries'), ['colspan'=>3]);
 		
 	}
 

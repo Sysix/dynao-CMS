@@ -626,6 +626,16 @@ ul.news li .btn {
     margin-bottom:0px;
 }
 
+#structure-language {
+    background:#fff;
+    margin:0 15px 10px 15px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border:1px solid #ddd;
+    padding:5px 15px;
+}
+
 /* Mobil */
 
 #expand {

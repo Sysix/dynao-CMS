@@ -19,6 +19,11 @@ class install {
 		  `sort`		int(16)		unsigned 	NOT NULL,
 		  PRIMARY KEY  (`id`) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 
+        $sql->setTable('lang');
+        $sql->addPost('name', 'deutsch');
+        $sql->addPost('sort', 1);
+        $sql->save();
+
     }
 	
 	public static function update0_1to0_2() {
@@ -155,6 +160,18 @@ class install {
 		  `structure` 	varchar(255)			NOT NULL,
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
+
+        $sql->query('DROP TABLE IF EXISTS `'.sql::table('lang').'`');
+        $sql->query('CREATE TABLE `'.sql::table("lang").'` (
+		  `id` 			int(16)		unsigned 	NOT NULL 	auto_increment,
+		  `name`		varchar(255) 			NOT NULL,
+		  `sort`		int(16)		unsigned 	NOT NULL,
+		  PRIMARY KEY  (`id`) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
+
+        $sql->setTable('lang');
+        $sql->addPost('name', 'deutsch');
+        $sql->addPost('sort', 1);
+        $sql->save();
 		
 	}
 	

@@ -298,8 +298,10 @@ class sql {
 	}
 	
 	public function select($select = '*') {
+
+        $where = ($this->where) ? ' WHERE '.$this->where : '';
 		
-		$this->query('SELECT '.$select.' FROM `'.$this->table.'` WHERE '.$this->where);
+		$this->query('SELECT '.$select.' FROM `'.$this->table.'`'.$where);
 		
 		return $this;
 		
@@ -324,17 +326,21 @@ class sql {
 			$entrys .= ' `'.$key.'` = "'.$val.'",';
 		}
 		
-		$entrys = substr($entrys , 0, -1);		
+		$entrys = substr($entrys , 0, -1);
+
+        $where = ($this->where) ? ' WHERE '.$this->where : '';
 		
-		$this->query('UPDATE `'.$this->table.'` SET'.$entrys.' WHERE '.$this->where);
+		$this->query('UPDATE `'.$this->table.'` SET'.$entrys.$where);
 		
 		return $this;
 		
 	}
 	
 	public function delete() {
+
+        $where = ($this->where) ? ' WHERE '.$this->where : '';
 	
-		$this->query('DELETE FROM `'.$this->table.'` WHERE '.$this->where);
+		$this->query('DELETE FROM `'.$this->table.'`'.$where);
 		
 		return $this;
 		

@@ -10,7 +10,7 @@ $subpage = type::super('subpage', 'string');
 $action = type::super('action', 'string');
 
 backend::addSubnavi(lang::get('general'),	url::backend('settings', ['subpage'=>'main']));
-backend::addSubnavi(lang::get('lang'),	url::backend('settings', ['subpage'=>'lang']));
+backend::addSubnavi(lang::get('languages'),	url::backend('settings', ['subpage'=>'lang']));
 	
 include_once(backend::getSubnaviInclude());
 ?>

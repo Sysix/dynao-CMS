@@ -330,9 +330,11 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
             ];
         }
 
-	?>
-	<div class="row" id="structure-body"><?= bootstrap::panel(lang::get('pages'), $button, pageMisc::getTreeStructurePage()) ?></div>
-	<?php
+
+        echo '<div class="row" id="structure-body">';
+        echo lang::getStructureSelection();
+        echo bootstrap::panel(lang::get('pages'), $button, pageMisc::getTreeStructurePage());
+        echo '</div>';
 	
 		if(dyn::get('user')->hasPerm('page[edit]')) {
 			

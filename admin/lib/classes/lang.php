@@ -107,6 +107,35 @@ class lang {
 		self::loadLang($file, true);
 		
 	}
+
+    /*
+     * return a HTML DOM for the language-switcher
+     * @return string
+     */
+    static public function getStructureSelection() {
+
+        $subpage = type::super('subpage', 'string', 'pages');
+
+        $return = '';
+
+        $sql = new sql();
+        $sql->result('SELECT * FROM `'.sql::table('lang').'` ORDER BY `sort`');
+        if($sql->num() != 1) {
+            $return .= '
+            <ul class="nav nav-pills" id="structure-language">';
+            while($sql->isNext()) {
+                //TODO: lang::getLangId()
+                $active = (0 == $sql->get('id')) ? ' class="active"' : '';
+                $return .= '<li><a href="'.url::backend('structure', ['subpage'=>$subpage]).'"'.$active.'>'.$sql->get('name').'</a></li>';
+                $sql->next();
+            }
+            $return .= '
+            </ul>';
+        }
+
+        return $return;
+
+    }
 	
 }
 
