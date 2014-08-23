@@ -39,7 +39,11 @@ if($action == 'loadTemplate') {
 				
 				if($form->isSubmit()) {
 					
-					$url = 'http://'.str_replace('http://', '', $form->get('hp_url'));
+					if(substr($form->get('hp_url'), 0, 5) == 'https')
+						$url = 'https://'.str_replace(['http://', 'https://'], '', $form->get('hp_url'));
+					else
+						$url = 'http://'.str_replace(['http://', 'https://'], '', $form->get('hp_url'));
+						
 					$endSlash = substr($url, -1, 1);
 					
 					if($endSlash != '/') {
