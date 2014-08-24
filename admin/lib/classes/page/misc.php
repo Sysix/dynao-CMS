@@ -43,14 +43,14 @@ class pageMisc {
 		
 	}
 	
-	public static function getTreeStructurePage($parentId = 0, $lvl = 0) {
+	public static function getTreeStructurePage($parentId = 0, $lang, $lvl = 0) {
 		
 		$select = '';
 		
 		$id = (!$lvl) ? 'id="structure-tree"' : '';
 		
 		$sql = sql::factory();
-		$sql->query('SELECT * FROM '.sql::table('structure').' WHERE parent_id = '.$parentId.' ORDER BY sort')->result();
+		$sql->query('SELECT * FROM '.sql::table('structure').' WHERE parent_id = '.$parentId.' AND `lang` = '.$lang.' ORDER BY sort')->result();
 		
 		if($sql->num()) {
 			

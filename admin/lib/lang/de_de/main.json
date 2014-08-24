@@ -209,6 +209,11 @@
 	"element_to_up":			"Element nach oben verschieben",
 	"element_to_down":			"Element nach unten verschieben",
 	"element_to_bottom":		"Element nach ganz unten verschieben",
-	"element_delete":			"Element löschen"
+	"element_delete":			"Element löschen",
+
+    #Errors
+    "error_input_number_min":   "Bitte wählen Sie eine Zahl, die größer als %d ist",
+    "error_input_number_max":   "Bitte wählen Sie eine Zahl, die kleiner als %d ist",
+    "error_input_number_between": "Bitte wählen Sie eine Zahl, die zwischen %d und %d liegt"
 	
 }

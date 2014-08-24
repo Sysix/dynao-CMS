@@ -174,16 +174,30 @@ class validator {
 	 * @return	bool
 	 */
 	public function max($value, $max) {
-		
+
 		return $value <= $max;
-		
+
 	}
+
+    /*
+     * between 2 numbers
+     * @param string $value
+     * @param array $numbers The 2 Numbers
+     * @return bool
+     */
+    public function between($value,array $numbers) {
+
+        var_dump($value >= $numbers[0]);
+
+        return ($value >= $numbers[0] && $value <= $numbers[1]);
+
+    }
 	
 	/**
 	 * Überprüfen ob der Wert gleich einen anderen Wert ist
 	 *
 	 * @param	string	$value			Der zu überprüfende Wert
-	  * @param	string	$value2			Der Wert der er haben sollte			
+	 * @param	string	$value2			Der Wert der er haben sollte
 	 * @return	bool
 	 */
 	public function is($value, $value2) {
@@ -191,6 +205,7 @@ class validator {
 		return $value == $value2;
 		
 	}
+
 	
 	/**
 	 * Überprüfen ob der Wert eine Email ist

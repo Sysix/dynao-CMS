@@ -27,7 +27,12 @@ class table {
 		$this->tableAttr = $attributes;
 	}
 	
-	//rows zu der zuletzt aufgerufenden Section hinzufügen
+	/*
+	 * switch to tbody, tfoot or thead
+	 * @param string $section Section to switch
+	 * @param  array $attributes HTML attributes
+	 * @return this
+	 */
 	public function addSection($section, $attributes = []) {
 		
 		if(in_array($section, ['thead', 'tfoot'])) {
@@ -39,6 +44,22 @@ class table {
 			$this->current_section = 'tbody';
 			
 		}
+
+        switch($section) {
+            case 'thead':
+            case 'head':
+                $this->current_section = 'thead';
+                break;
+            case 'tfoot':
+            case 'foot':
+                $this->current_section = 'tfoot';
+                break;
+            case 'tbody':
+            case 'body':
+            default:
+                $this->current_section = 'body';
+                break;
+        }
 		
 		$ref = $this->getCurrentSection();
 	
@@ -185,7 +206,7 @@ class table {
 		return $this;
 		
 	}
-	
+
 	public function getSql() {
 		
 		return $this->sql;
@@ -207,7 +228,13 @@ class table {
 		return $this;
 		
 	}
-	
+
+    /*
+     * add a td tag
+     * @param $value string Inhalt
+     * @param $attributes array HTML attributes from the td tag
+     * @return this
+     */
 	public function addCell($value = '', $attributes = []) {
 		
 		$type = ($this->current_section === 'thead') ? 'th' : 'td';
@@ -240,6 +267,16 @@ class table {
 		return $this;
 		
 	}
+
+    /*
+     * add a td tag with span.btn-group
+     * @see self::addCell()
+     */
+    public  function addBtnCell($value = '', $attributes = []) {
+
+        return $this->addCell('<span class="btn-group">'.$value.'</span>');
+
+    }
 	
 	public function addCells($values, $attributes = []) {
 	

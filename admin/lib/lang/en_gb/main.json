@@ -207,5 +207,10 @@
 	"element_to_up":			"Move item up",
 	"element_to_down":			"Move item down",
 	"element_to_bottom":		"Move item to the bottom",
-	"element_delete":			"Delete item"
+	"element_delete":			"Delete item",
+
+    #Errors
+    "error_input_number_min":   "Please select a number that is greater than %d",
+    "error_input_number_max":   "Please select a number that is less than %d",
+    "error_input_number_between": "Please take a pick a number that is between %d and %d"
 }

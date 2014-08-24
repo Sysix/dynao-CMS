@@ -149,15 +149,15 @@ class sql {
 		
 	}
 	
-	public function getJson($row) {
+	public function getJson($row, $default = '{}') {
 	
-		return json_decode($this->get($row), true);
+		return json_decode($this->get($row, $default), true);
 		
 	}
 	
-	public function getSerialize($row) {
+	public function getSerialize($row, $default = 'a:0:{}') {
 	
-		return unserialize($row);
+		return unserialize($this->get($row, $default));
 		
 	}
 	
@@ -311,7 +311,7 @@ class sql {
 		
 		$keys = '`'.implode('`,`', array_keys($this->values)).'`';
 		$entrys = '"'.implode('","', $this->values).'"';
-		
+
 		$this->query('INSERT INTO `'.$this->table.'` ('.$keys.') VALUES ('.$entrys.')');
 		
 		return $this;

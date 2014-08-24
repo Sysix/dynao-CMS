@@ -79,17 +79,22 @@ class addon {
 	}
 	
 	public function checkNeed() {
-		
-		$errors = [];
-		foreach($this->get('need', []) as $key=>$value) {
-			
-			$check = addonNeed::check($key, $value);
-			// Typcheck, because $check can be a string
-			if($check !== true) {
-				$errors[] = $check;
-			}
-				
-		}
+
+        try {
+
+            foreach($this->get('need', []) as $key=>$value) {
+
+                $check = addonNeed::check($key, $value);
+                // Typcheck, because $check can be a string
+                if($check !== true) {
+                    $errors[] = $check;
+                }
+
+            }
+
+        } catch(Exception $e) {
+            echo message::danger($e->getMessage());
+        }
 		
 		if(!empty($errors)) {
 			echo message::danger(implode('<br />', $errors));
