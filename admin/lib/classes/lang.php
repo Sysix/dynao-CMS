@@ -34,18 +34,31 @@ class lang {
 	 *
 	 */
 	static public function get($name) {
+
+        $vars = func_get_args();
+        array_shift($vars);
 		
 		if(isset(self::$langs[$name])) {
-			return self::$langs[$name];	
+			return self::getVars(self::$langs[$name], $vars);
 		}
 		
 		if(isset(self::$default[$name])) {
-			return self::$default[$name];
+            return self::getVars(self::$default[$name], $vars);
 		}
 		
 		return $name;
 		
 	}
+
+    static public function getVars($name, $vars = []) {
+
+        if(empty($vars)) {
+            return $name;
+        }
+
+        return vsprintf($name, $vars);
+
+    }
 	
 	/**
 	 * Gibt die aktuelle Sprache zurück
