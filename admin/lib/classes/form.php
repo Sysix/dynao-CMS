@@ -161,7 +161,7 @@ class form {
 	 * @param	string	$value			Der Value
 	 * @param	string	$class			Die entsprechende PHP Klasse
 	 * @param	array	$attributes		Die HTML Attribute
-	 * @return	class
+	 * @return	formField
 	 *
 	 */
 	private function addField($name, $value, $class, $attributes = []) {
@@ -179,14 +179,28 @@ class form {
 	 * @param	string	$name			Der Name
 	 * @param	string	$value			Der Value
 	 * @param	array	$attributes		Die HTML Attribute
-	 * @return	formInput
-	 *
+	 * @return	formInput	 *
 	 */
 	public function addTextField($name, $value, $attributes = []) {
 		
 		$attributes['type'] = 'text';
 		return $this->addField($name, $value, 'formInput', $attributes);
 		
+	}
+
+    /**
+     * Ein Zahlenfeld erstellen
+     *
+     * @param	string	$name			Der Name
+     * @param	string	$value			Der Value
+     * @param	array	$attributes		Die HTML Attribute
+     * @return	formInput	 *
+     */
+    public function addNumberField($name, $value, $attributes = []) {
+
+		$attributes['type'] = 'number';
+		return $this->addField($name, $value, 'formInput', $attributes);
+
 	}
 	
 	/**
@@ -249,7 +263,7 @@ class form {
 	 * @param	string	$value			Der Value
 	 * @param	array	$attributes		Die HTML Attribute
 	 * @param	bool	$toButtons		Soll das Feld zu den Standardbuttons hinzugefügt werden
-	 * @return	class
+	 * @return	formButton
 	 *
 	 */
 	public function addButtonField($name, $value, $attributes = [], $toButtons = true) {
@@ -270,7 +284,7 @@ class form {
 	 * @param	string	$value			Der Value
 	 * @param	array	$attributes		Die HTML Attribute
 	 * @param	bool	$toButtons		Soll das Feld zu den Standardbuttons hinzugefügt werden
-	 * @return	class
+	 * @return	formButton
 	 *
 	 */
 	public function addResetField($name, $value, $attributes = [], $toButtons = true) {
@@ -290,7 +304,7 @@ class form {
 	 * @param	string	$name			Der Name
 	 * @param	string	$value			Der Value
 	 * @param	array	$attributes		Die HTML Attribute
-	 * @return	class
+	 * @return	formTextarea
 	 *
 	 */
 	public function addTextareaField($name, $value, $attributes = []) {
@@ -305,7 +319,7 @@ class form {
 	 * @param	string	$name			Der Name
 	 * @param	string	$value			Der Value
 	 * @param	array	$attributes		Die HTML Attribute
-	 * @return	class
+	 * @return	formRadio
 	 *
 	 */
 	public function addRadioField($name, $value, $attributes = []) {
@@ -320,7 +334,7 @@ class form {
 	 * @param	string	$name			Der Name
 	 * @param	string	$value			Der Value
 	 * @param	array	$attributes		Die HTML Attribute
-	 * @return	class
+	 * @return	formCheckbox
 	 *
 	 */
 	public function addCheckboxField($name, $value, $attributes = []) {
@@ -335,7 +349,7 @@ class form {
 	 * @param	string	$name			Der Name
 	 * @param	string	$value			Der Value
 	 * @param	array	$attributes		Die HTML Attribute
-	 * @return	class
+	 * @return	formSelect
 	 *
 	 */
 	public function addSelectField($name, $value, $attributes = []) {
@@ -376,7 +390,7 @@ class form {
 	 *
 	 * @param	string	$name			Der Name
 	 * @param	string	$value			Der Value
-	 * @return	class
+	 * @return	formLinklist
 	 *
 	 */
 	public function addLinklistField($name, $value, $attributes = []) {
@@ -566,7 +580,7 @@ class form {
 		
 	}
 	
-	/**
+	/*
 	 * Fügt eine SQL Spalte hinzu
 	 *
 	 * @param	string	$name			Die Spalte
@@ -594,8 +608,18 @@ class form {
 		return $this;
 		
 	}
+
+    /*
+     * return the sql object
+     * @return sql
+     */
+    public function getSql() {
+
+        return $this->sql;
+
+    }
 	
-	/**
+	/*
 	 * Setzt einen Paramater, der später dazu führt, ob das Formular gespeichert wird oder nicht
 	 *
 	 * @param	bool	$bool			Ja/Nein
@@ -617,10 +641,10 @@ class form {
 	private function saveForm() {
 		
 		extension::get('FORM_BEFORE_SAVE', $this->sql);
-	
+
 		if(!$this->toSave)
 			return $this;
-			
+
 		if($this->isEditMode()) {
 			$this->sql->update();
 		} else {
@@ -797,8 +821,14 @@ class form {
 			if(!$ausgabe->hasAttribute('id')) {
 				$ausgabe->addAttribute('id', 'form_'.$x);
 			}
+
+            $class = '';
+
+            if(!$ausgabe->isValid()) {
+                $class = ' class="has-error"';
+            }
 				
-			$return[] = '<div class="form-group">';
+			$return[] = '<div class="form-group"'.$class.'>';
 			$return[] = '<label for="'.$ausgabe->getAttribute('id').'">'.$ausgabe->fieldName.'</label>';
 			$return[] = '<div class="form-wrap-input">'.$ausgabe->prefix . $ausgabe->get() . $ausgabe->suffix.'</div>';
 			$return[] = '</div>';

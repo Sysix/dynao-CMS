@@ -12,6 +12,10 @@ abstract class formField {
 	var $prefix;
 	var $fieldName;
 	var $toSave = true;
+
+    /*
+     * @var validator
+     */
 	var $validator;
 	
 	public function __construct($name, $value, $attributes = []) {
@@ -123,7 +127,10 @@ abstract class formField {
 		return $this;
 		
 	}
-	
+
+    /*
+     * @see validator::add
+     */
 	public function addValidator($type, $message = null, $option = null) {
 	
 		$this->validator->add($type, $message, $option);
@@ -227,6 +234,33 @@ abstract class formField {
 		return $this->name;
 		
 	}
+
+    public function setMin($min) {
+
+        $this->addAttribute('min', $min);
+        $this->addValidator('min', lang::get('error_input_number_min', $min), $min);
+
+        return $this;
+
+    }
+
+    public function setMax($max) {
+
+        $this->addAttribute('max', $max);
+        $this->addValidator('max', lang::get('error_input_number_min', $max), $max);
+
+        return $this;
+
+    }
+
+    public function setBetween($min, $max) {
+
+        $this->addAttribute('min', $min);
+        $this->addAttribute('max', $max);
+        $this->addAttribute('between', lang::get('error_input_number_between', $min, $max), [$min, $max]);
+
+        return $this;
+    }
 	
 	abstract public function get();
 }
