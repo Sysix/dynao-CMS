@@ -167,6 +167,9 @@ class autoload {
 		$files = scandir($dir);
 		
 		foreach($files as $file) {
+            if(is_dir($dir.DIRECTORY_SEPARATOR.$file) && !in_array($file, ['.', '..'])) {
+                self::addDir($dir.DIRECTORY_SEPARATOR.$file);
+            }
 				
 			if(strrchr($file, '.') != '.php')
 				continue;
