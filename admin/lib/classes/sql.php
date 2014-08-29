@@ -157,7 +157,9 @@ class sql {
 	
 	public function getSerialize($row, $default = 'a:0:{}') {
 	
-		return unserialize($this->get($row, $default));
+		$return = unserialize($this->get($row, $default));
+
+        return ($return) ? $return : $default;
 		
 	}
 	

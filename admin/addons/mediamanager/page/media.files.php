@@ -50,6 +50,7 @@ if(in_array($action, ['add', 'edit']) && dyn::get('user')->hasPerm('media[edit]'
 		type::addSession('media_cat', $form->get('category'));
 		
 		$file = type::files('file');
+        var_dump($file);
 		if(!is_uploaded_file($file['tmp_name']) && !$form->isEditMode()) {
 			
 			$form->setErrorMessage(lang::get('please_load_file'));

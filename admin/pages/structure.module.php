@@ -244,7 +244,7 @@ if($action == '') {
     }
 
 	?>
-    <div class="row"><?= bootstrap::panel(lang::get('modules'), $button, $form->show()) ?></div>
+    <div class="row"><?= bootstrap::panel(lang::get('modules'), $button, $table->show(), ['table'=>true]) ?></div>
 	<?php
 
 }
