@@ -72,7 +72,7 @@ abstract class vars {
 				continue;	
 			}
 			
-			$sqlName = $this->getSqlPrefix($type, $this->dynVars[2][$key]);
+			$sqlName = $this->getSqlPrefix($this->DynType, $this->dynVars[2][$key]);
 			
 			$sql->addPost($sqlName, $this->dynVars[0][$key]);
 		

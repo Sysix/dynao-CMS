@@ -16,6 +16,7 @@
     "timezone": "Europe\/Berlin",
     "logincookie": 86400,
     "lang": "de_de",
+    "langId": 1,
     "template": "default",
     "start_page": null,
     "error_page": null

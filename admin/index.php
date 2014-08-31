@@ -14,9 +14,9 @@ if(version_compare(PHP_VERSION, 5.4) < 0) {
 include('lib'.DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'dir.php');
 
 if(isset($DYN['root'])) {
-	new dir($DYN['root']);	
+	new dir($DYN['root']);
 } else {
-	new dir();	
+	new dir();
 }
 
 include(dir::classes('autoload.php'));
@@ -43,6 +43,7 @@ include(dir::functions('url_stuff.php'));
 
 lang::setDefault();
 lang::setLang(dyn::get('lang'));
+lang::setDefaultLangId(dyn::get('langId'));
 
 $DB = dyn::get('DB');
 sql::connect($DB['host'], $DB['user'], $DB['password'], $DB['database']);
@@ -61,13 +62,13 @@ addonConfig::includeAllLangFiles();
 addonConfig::includeAllLibs();
 
 if(dyn::get('backend')) {
-	
+
 	include(dir::backend('backend.php'));
-	
+
 } else {
-	
+
 	include(dir::backend('frontend.php'));
-	
+
 }
 
 ?>

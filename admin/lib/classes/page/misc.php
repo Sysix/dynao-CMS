@@ -49,9 +49,8 @@ class pageMisc {
 		
 		$id = (!$lvl) ? 'id="structure-tree"' : '';
 		
-		$sql = sql::factory();
+		$sql = new sql();
 		$sql->query('SELECT * FROM '.sql::table('structure').' WHERE parent_id = '.$parentId.' AND `lang` = '.$lang.' ORDER BY sort')->result();
-		
 		if($sql->num()) {
 			
 			$select .= '<ul '.$id.'>';
@@ -65,17 +64,17 @@ class pageMisc {
 				$name = $sql->get('name');
 				
 				if(dyn::get('user')->hasPerm('page[content]')) {
-					$name = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$sql->get('id')]).'">'.$sql->get('name').'</a>';
+					$name = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$sql->get('id'), 'lang'=>$lang]).'">'.$sql->get('name').'</a>';
 				}
 				
 				if(dyn::get('user')->hasPerm('page[edit]')) {
-					$edit = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'action'=>'edit', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';
-					$online = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-online fa fa-check" title="'.lang::get('online').'"></a>';	
-					$offline = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-offline fa fa-times" title="'.lang::get('offline').'"></a>';	
+					$edit = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'lang'=>$lang, 'action'=>'edit', 'id'=>$sql->get('id')]).'" class="btn btn-sm  btn-default fa fa-pencil-square-o"></a>';
+					$online = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'lang'=>$lang, 'action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-online fa fa-check" title="'.lang::get('online').'"></a>';
+					$offline = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'lang'=>$lang, 'action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-offline fa fa-times" title="'.lang::get('offline').'"></a>';
 				}
 				
 				if(dyn::get('user')->hasPerm('page[delete]')) {
-					$delete = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'action'=>'delete', 'id'=>$sql->get('id')]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
+					$delete = '<a href="'.url::backend('structure', ['subpage'=>'pages', 'lang'=>$lang, 'action'=>'delete', 'id'=>$sql->get('id')]).'" class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
 				}
 
 				$online = ($sql->get('online')) ? $online : $offline;
@@ -85,7 +84,7 @@ class pageMisc {
 						<span class="btn-group">'.$online.$edit.$delete.'</span>'.PHP_EOL.'
 					</div>'.PHP_EOL;
 				
-				$select .= self::getTreeStructurePage($sql->get('id'), $lvl+1);
+				$select .= self::getTreeStructurePage($sql->get('id'), $lang, $lvl+1);
 				
 				if($sql->counter+1 == $sql->num()) {
 					$select .= '<div class="droppages"></div>';
@@ -106,14 +105,14 @@ class pageMisc {
 		
 	}
 	
-	public static function getTreeStructurePagePopup($parentId = 0, $lvl = 0) {
+	public static function getTreeStructurePagePopup($parentId = 0, $lang, $lvl = 0) {
 		
 		$select = '';
 		
 		$id = (!$lvl) ? 'id="structure-tree"' : '';
 		
 		$sql = sql::factory();
-		$sql->query('SELECT * FROM '.sql::table('structure').' WHERE parent_id = '.$parentId.' ORDER BY sort')->result();
+		$sql->query('SELECT * FROM '.sql::table('structure').' WHERE `parent_id` = '.$parentId.' AND `lang` = '.$lang.' ORDER BY sort')->result();
 		if($sql->num()) {
 			
 			$select .= '<ul '.$id.'>';
@@ -144,7 +143,7 @@ class pageMisc {
 		
 	}
 	
-	public static function sortStructure($sort, $pid = 0) {
+	public static function sortStructure($sort, $lang, $pid = 0) {
 			
 	    $sql = sql::factory();
 		$sql->setTable('structure');
@@ -153,7 +152,7 @@ class pageMisc {
 
 			$sql->addPost('sort', $i);
 			$sql->addPost('parent_id', $pid);
-			$sql->setWhere('id='.$value['id']);
+			$sql->setWhere('`id` = '.$value['id'].' AND `lang` = '.$lang);
 			$sql->update();
 
 			if(isset($value['children']) && count($value['children'])) {
@@ -171,7 +170,7 @@ class pageMisc {
 
         $sql = sql::factory();
         $sql->setTable('structure');
-        $sql->setWhere('id='.$id);
+        $sql->setWhere('`id`='.$id);
         $sql->addDatePost('updatedAt');
 
         if($created) {
@@ -180,6 +179,30 @@ class pageMisc {
 
         $sql->update();
 
+    }
+
+    public static function getNewSaveId() {
+
+        $sql = sql::factory();
+        $sql->result('SELECT id FROM '.sql::table('structure').' ORDER BY `id` DESC LIMIT 1');
+
+        return $sql->get('id') + 1;
+
+    }
+
+    public static function saveLangPages($sql) {
+
+        $lang = sql::factory();
+        $lang->result('SELECT `id` FROM `'.sql::table('lang').'` WHERE `id` != '.$sql->get('id'));
+        while($lang->isNext()) {
+            $sql->addPost('lang', $lang->get('id'));
+            $sql->addPost('online', 0);
+            $sql->save();
+
+            $lang->next();
+        }
+
+        return $sql;
     }
 	
 }

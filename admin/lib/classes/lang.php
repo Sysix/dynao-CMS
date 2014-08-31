@@ -6,6 +6,8 @@ class lang {
 	static $langs = [];
 	static $default = [];
 	static $defaultLang = 'en_gb';
+
+    static $defaultLangId = 1;
 	
 	/**
 	 * Die Sprache ersetzen, mit automaitschen laden der main Datei
@@ -125,7 +127,7 @@ class lang {
      * return a HTML DOM for the language-switcher
      * @return string
      */
-    static public function getStructureSelection() {
+    static public function getStructureSelection($page = 'structure', $params = []) {
 
         $subpage = type::super('subpage', 'string', 'pages');
 
@@ -137,16 +139,37 @@ class lang {
             $return .= '
             <ul class="nav nav-pills" id="structure-language">';
             while($sql->isNext()) {
-                //TODO: lang::getLangId()
-                $active = (0 == $sql->get('id')) ? ' class="active"' : '';
-                $return .= '<li><a href="'.url::backend('structure', ['subpage'=>$subpage]).'"'.$active.'>'.$sql->get('name').'</a></li>';
+
+                $active = (lang::getLangId() == $sql->get('id')) ? ' class="active"' : '';
+
+                $urlParam = array_merge(['subpage'=>$subpage, 'lang' => $sql->get('id')], $params);
+
+                $return .= '<li><a href="'.url::backend($page, $urlParam).'"'.$active.'>'.$sql->get('name').'</a></li>';
                 $sql->next();
+
             }
             $return .= '
             </ul>';
         }
 
         return $return;
+
+    }
+
+    public static function setDefaultLangId($id) {
+        self::$defaultLangId = $id;
+    }
+
+    public static function getLangId() {
+
+        if(dyn::get('backend')) {
+
+            return type::session('backend-lang', 'int', self::$defaultLangId);
+
+        }
+
+        return type::super('lang', 'int', self::$defaultLangId);
+
 
     }
 	

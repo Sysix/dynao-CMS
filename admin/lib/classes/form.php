@@ -638,7 +638,7 @@ class form {
 	 *
 	 * @return	this
 	 */
-	private function saveForm() {
+	public function saveForm() {
 		
 		extension::get('FORM_BEFORE_SAVE', $this->sql);
 

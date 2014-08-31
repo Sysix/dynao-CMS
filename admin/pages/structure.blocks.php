@@ -1,5 +1,8 @@
 <?php
 
+$langId = type::super('lang', 'int', lang::getLangId());
+type::addSession('backend-lang', $langId);
+
 if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	
 	$sort = type::super('sort', 'int');

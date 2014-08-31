@@ -39,7 +39,7 @@ class varsLink extends vars {
 				continue;	
 			}
 			
-			$sqlEntry = strtolower($this->DynType).$this->outVars[2][$key];	
+			$sqlEntry = strtolower($this->DynType).$this->outVars[2][$key];
 			$sqlEntry = $sql->get($sqlEntry);
 			
 			//DYN_LINK_ID bleibt unberührt

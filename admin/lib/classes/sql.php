@@ -225,13 +225,7 @@ class sql {
 	//
 	// Methoden zur Speicherung der Einträge
 	//	
-	public function getPosts($post) {
-	
-		if(!is_array($post) && dyn::get('debug')) {
-		
-			throw new InvalidArgumentException(__CLASS__.'::'.__METHOD__.' ertwartet als 1. Parameter ein array');
-			
-		}
+	public function getPosts(array $post) {
 		
 		foreach($post as $val=>$cast) {
 			$this->values[$val] = $this->escape(type::post($val, $cast, '')); 	
@@ -248,6 +242,18 @@ class sql {
 		return $this;
 		
 	}
+
+    public function addPosts(array $posts) {
+
+        foreach($posts as $name => $val) {
+
+            $this->addPost($name, $val);
+
+        }
+
+        return $this;
+
+   }
 	
 	public function addDatePost($name, $val = 'now') {
 	

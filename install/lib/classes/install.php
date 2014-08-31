@@ -10,7 +10,6 @@ class install {
         $sql->query('ALTER TABLE `'.sql::table('structure').'` ADD UNIQUE (`id`, `lang`)');
 
         $sql->query('ALTER TABLE `'.sql::table('structure_area').'` ADD `lang` INT(16) UNSIGNED NOT NULL AFTER `id`');
-        $sql->query('ALTER TABLE `'.sql::table('structure_area').'` ADD UNIQUE (`structure_id`, `lang`)');
 
         $sql->query('DROP TABLE IF EXISTS `'.sql::table('lang').'`');
         $sql->query('CREATE TABLE `'.sql::table("lang").'` (
@@ -137,8 +136,7 @@ class install {
 		  `linklist10`	varchar(255) 			NOT NULL,
 		  `php1` 		text 					NOT NULL,
 		  `php2` 		text 					NOT NULL,
-		  PRIMARY KEY  (`id`),
-		  UNIQUE KEY (`structure_id`, `lang`)
+		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 		
 		$sql->query('DROP TABLE IF EXISTS `'.sql::table('addons').'`');				

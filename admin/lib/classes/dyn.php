@@ -77,7 +77,7 @@ class dyn {
 		$version1 = str_replace(' ', '.', $version1);
 		$version2 = str_replace(' ', '.', $version2);
 		
-		if(version_compare($version1, $version2)  > 0)
+		if(version_compare($version1, $version2, '<'))
 			return lang::get('version_fail_version');
 		else
 			return '';

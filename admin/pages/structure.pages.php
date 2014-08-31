@@ -1,18 +1,24 @@
 <?php
 
+$langId = type::super('lang', 'int', lang::getLangId());
+type::addSession('backend-lang', $langId);
+
 if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	
 	$sort = type::super('sort', 'int');
 	
 	// Bugfix, das neu erstelle Blöcke nicht einzgezeigt werden
+    /*
 	if(!is_null(type::post('save-back')) || !is_null(type::post('save'))) {
 		
-		pageAreaAction::saveBlock(false);
+
 		pageCache::generateArticle($structure_id);
-		
+		$action = '';
+
 		echo message::success(lang::get('structure_content_save'), true);
 		
 	}
+    */
 	
 	if($action == 'online') {
 	
@@ -22,7 +28,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		$online = ($sql->get('online')) ? 0 : 1;
 		
 		$sql->setTable('structure_area');
-		$sql->setWhere('id='.$id);
+		$sql->setWhere('`id`='.$id.' AND `block` = 0 AND `lang` = '.$langId);
 		$sql->addPost('online', $online);
 		$sql->update();
 		
@@ -38,7 +44,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		$sql = sql::factory();
 		$sql->setTable('structure_area');
 		foreach($sort as $s=>$s_id) {
-			$sql->setWhere('id='.$s_id.' AND block = 0');
+			$sql->setWhere('`id`='.$s_id.' AND `block` = 0 AND `lang` = '.$langId);
 			$sql->addPost('sort', $s+1);
 			$sql->update();
 		}
@@ -62,13 +68,6 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	$pageSql->result('SELECT name FROM '.sql::table('structure').' WHERE id = '.$structure_id);
 
 
-    if($action == 'add' || $action == 'edit') {
-        $where = 'AND s.id = '.$id;
-    } else {
-        $where = '';
-    }
-
-
     $sql = sql::factory();
     $sql->result('SELECT s.*, m.name, m.output, m.input
                     FROM '.sql::table('structure_area').' as s
@@ -76,22 +75,23 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                         '.sql::table('module').' as m
                             ON m.id = s.modul
                     WHERE structure_id = '.$structure_id.'
-                     '.$where.'
-                     AND block = 0
+                     AND `block` = 0
+                     AND `lang` = '.$langId.'
                     ORDER BY `sort`');
 
     $i = 1;
-	
+
 	?>
     <div class="row">
+        <?= lang::getStructureSelection('structure', ['structure_id' => $structure_id]); ?>
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title pull-left"><a href="<?= url::backend('structure', array('subpage'=>'pages', 'structure_id'=> $structure_id)) ?>"><?php echo $pageSql->get('name'); ?></a></h3>
+                    <h3 class="panel-title pull-left"><a href="<?= url::backend('structure', array('subpage'=>'pages', 'lang'=>$langId, 'structure_id'=> $structure_id)) ?>"><?php echo $pageSql->get('name'); ?></a></h3>
                     <div class="pull-right btn-group">
 						<a href="<?php echo dyn::get('hp_url').url::fe($structure_id); ?>" target="_blank" class="btn btn-sm btn-warning"><?php echo lang::get('visit_page'); ?></a>
-                    	<a href="<?php echo url::backend('structure', ['subpage'=>'pages', 'action'=>'edit', 'id'=>$structure_id]); ?>" class="btn btn-sm btn-warning"><?php echo lang::get('edit'); ?></a>
-						<a href="<?php echo url::backend('structure', ['subpage'=>'pages']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('back'); ?></a>
+                    	<a href="<?php echo url::backend('structure', ['subpage'=>'pages', 'lang'=>$langId, 'action'=>'edit', 'id'=>$structure_id]); ?>" class="btn btn-sm btn-warning"><?php echo lang::get('edit'); ?></a>
+						<a href="<?php echo url::backend('structure', ['subpage'=>'pages', 'lang'=>$langId]); ?>" class="btn btn-sm btn-default"><?php echo lang::get('back'); ?></a>
 					</div>
 					<div class="clearfix"></div>
                 </div>
@@ -103,46 +103,44 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 
                     while($sql->isNext()) {
 
-                        $sqlId = ($action == 'add') ? 0 : $sql->get('id');
+                        $module = new pageArea(clone $sql);
+                        $module->setLang($langId);
 
-                        $module = new pageArea($sql);
-                        if(in_array($action, ['add', 'edit'])) {
+                        $form = pageAreaHtml::formBlock($module);
 
-                            if($action == 'add') {
-                                $module->setNew(true);
-                            }
-
-                            $form = pageAreaHtml::formBlock($module);
-
+                        if($form->get('id') == $id && $form->isSubmit()) {
+                            $form->saveForm();
+                            $form->setSave(false);
                         }
+
                     ?>
                             <li data-id="<?php echo $sql->get('id'); ?>">
                                 <div class="row">
                         <?php
-                        // Wenn Aktion == add
-                        // UND Wenn Sortierung von SQL gleich der $_GET['sort']
-                        // UND Wenn Formular noch nicht abgeschickt worden
-                        if($action == 'add' && $sort == $i && !$form->isSubmit()) {
-                            
-                            echo pageAreaHtml::formOut($form);
+
+                        if($action == 'add' && $sort == $i) {
+
+                            $sql2 = new sql();
+                            $sql2->result('SELECT * FROM `'.sql::table('module').'` WHERE `id` = '.type::super('modul', 'int', 0));
+
+                            $module2 = new pageArea($sql2);
+                            $module2->setLang($langId);
+                            $module2->setNew(true);
+
+                            $form2 = pageAreaHtml::formBlock($module2);
+
+                            echo pageAreaHtml::formOut($form2);
                     
                         } else {
                             
-                            echo pageAreaHtml::selectBlock($module->getStructureId());
+                            echo pageAreaHtml::selectBlock($module->getStructureId(), $langId);
                             
                         }
-                        
-                        // Wenn Aktion == edit
-                        // UND Wenn ID von SQL gleich der $_GET['id']
-                        // UND
-                        // Wenn Formular noch nicht abgeschickt worden
-                        // ODER Abgeschickt worden ist und ein Übernehmen geklickt worden ist
-                        if($action == 'edit' && $id == $sql->get('id') && 
-                        (!$form->isSubmit() || ($form->isSubmit() && !is_null(type::post('save-back'))))
-                        ) {
+
+                        if($action == 'edit' && $form->get('id') == $id) {
                     
                             echo pageAreaHtml::formOut($form);
-                    
+
                         } else {
                             
                             if($sql->get('online')) {
@@ -152,12 +150,12 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                             }
 
                             $button = [
-                                '<a href="'.url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-'.$class.'"></a>',
-                                '<a href="'.url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'action'=>'edit', 'id'=>$sql->get('id')]).'" class="btn btn-default btn-sm fa fa-edit"></a>',
-                                '<a href="'.url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'action'=>'delete', 'id'=>$sql->get('id')]).'" class="btn btn-danger btn-sm fa fa-trash-o delete"></a>',
+                                '<a href="'.url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'lang'=>$langId, 'action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-'.$class.'"></a>',
+                                '<a href="'.url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'lang'=>$langId, 'action'=>'edit', 'id'=>$sql->get('id')]).'" class="btn btn-default btn-sm fa fa-edit"></a>',
+                                '<a href="'.url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'lang'=>$langId, 'action'=>'delete', 'id'=>$sql->get('id')]).'" class="btn btn-danger btn-sm fa fa-trash-o delete"></a>',
                             ];
 
-                            echo bootstrap::panel($sql->get('name'), $button, $module->OutputFilter($sql->get('output'), $sql));
+                            echo bootstrap::panel($sql->get('name'), $button, $module->OutputFilter($sql->get('output'), $form));
 
                         }
                         ?>
@@ -172,15 +170,26 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                     </ul>
                     <?php
 					if((!$sql->num() || ($i == $sort)) && $action == 'add') {
-						
-						$form_id = type::super('modul', 'int');
-						
-						$form = pageAreaHtml::formBlock(new pageArea(new sql()));
+
+                        $sql = new sql();
+                        $sql->result('SELECT * FROM `'.sql::table('module').'` WHERE `id` = '.type::super('modul', 'int', 0));
+
+                        $module = new pageArea($sql);
+                        $module->setLang($langId);
+                        $module->setNew(true);
+
+                        $form = pageAreaHtml::formBlock($module);
+
+                        if($form->isSubmit()) {
+                            $form->saveForm();
+                            $form->setSave(false);
+                        }
+
 						echo pageAreaHtml::formOut($form);
 						
 					} else {
 						
-						echo pageAreaHtml::selectBlock($structure_id,  $sql->num()+1);
+						echo pageAreaHtml::selectBlock($structure_id, $langId, $sql->num()+1);
 						
 					}
 					?>
@@ -198,7 +207,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		$post = type::super('array');
 		$sort = json_decode($post, true);
 		
-		pageMisc::sortStructure($sort, 0);
+		pageMisc::sortStructure($sort, $langId, 0);
 		
 		echo message::success(lang::get('save_sorting'), true);
 		
@@ -206,29 +215,36 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	
 	if(in_array($action, ['edit', 'add']) && dyn::get('user')->hasPerm('page[edit]')) {
 	
-		$form = form::factory('structure', 'id='.$id, 'index.php');
+		$form = form::factory('structure', '`id` = '.$id.' AND `lang` = '.$langId, 'index.php');
 		
-		$field = $form->addTextField('name', $form->get('name'));
-		$field->fieldName(lang::get('name'));
-		$field->autofocus();
+		$form->addTextField('name', $form->get('name'))
+            ->fieldName(lang::get('name'))
+            ->autofocus();
 		
 		$template = template::factory(dyn::get('template'));
 		
-		$field = $form->addElement('template', $template->getTemplates('template', $form->get('template')));
-		$field->fieldName(lang::get('template'));
+		$form->addElement('template', $template->getTemplates('template', $form->get('template')))
+             ->fieldName(lang::get('template'));
 		
-		$field = $form->addRadioField('online', $form->get('online'));
-		$field->fieldName(lang::get('status'));
-		$field->add(1, lang::get('online'));
-		$field->add(0, lang::get('offline'));
-		
+		$form->addRadioField('online', $form->get('online'))
+            ->fieldName(lang::get('status'))
+            ->add(1, lang::get('online'))
+            ->add(0, lang::get('offline'));
+
+        $form->addHiddenField('lang', $langId);
+
 		if($action == 'edit') {
 			$form->addHiddenField('id', $id);
-		}
+            $title = '"'.$form->get('name').'" '.lang::get('edit');
+		} else {
+            $form->addHiddenField('id', pageMisc::getNewSaveId());
+            $title = lang::get('add');
+        }
 
         extension::add('FORM_AFTER_SAVE', function($sql) use($action, $id) {
 
             if($action == 'add') {
+                pageMisc::saveLangPages($sql);
                 $id = $sql->insertId();
                 pageMisc::updateTime($id, true);
             } else {
@@ -239,15 +255,9 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 
         });
 
-        if($action == 'edit') {
-            $title = $form->get('name');
-        } else {
-            $title = lang::get('add');
-        }
-
         $buttons = [
-            '<a class="btn btn-sm btn-warning" href="'.url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$form->get('id')]).'">'.lang::get('modules').'</a>',
-            '<a class="btn btn-sm btn-default" href="'.url::backend('structure').'">'.lang::get('back').'</a>',
+            '<a class="btn btn-sm btn-warning" href="'.url::backend('structure', ['subpage'=>'pages', 'lang'=>$langId, 'structure_id'=>$form->get('id')]).'">'.lang::get('modules').'</a>',
+            '<a class="btn btn-sm btn-default" href="'.url::backend('structure', ['subpage'=>'pages', 'lang'=>$langId]).'">'.lang::get('back').'</a>',
         ]
 
 		
@@ -271,7 +281,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 				
 				$delete = sql::factory();
 				$delete->setTable('structure');
-				$delete->setWhere('id='.$id);
+				$delete->setWhere('`id` = '.$id.' AND `lang` = '.$langId);
 				$delete->delete();			
 				
 			} else {
@@ -286,7 +296,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		
 		$delete = sql::factory();
 		$delete->setTable('structure');
-		$delete->setWhere('id='.$orginal_id);
+		$delete->setWhere('`id` = '.$orginal_id.' AND `lang` = '.$langId);
 		$delete->delete();
 		
 		sql::sortTable('structure', 0, '`parent_id` = '.$sql->get('parent_id'));
@@ -305,7 +315,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		$online = ($sql->get('online')) ? 0 : 1;
 		
 		$sql->setTable('structure');
-		$sql->setWhere('id='.$id);
+		$sql->setWhere('`id` = '.$id.' AND `lang` = '.$langId);
 		$sql->addPost('online', $online);
 		$sql->update();
 		
@@ -318,7 +328,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	if($action == '') {
 		
 		if(ajax::is()) {
-			echo pageMisc::getTreeStructurePage();
+			echo pageMisc::getTreeStructurePage(0, $langId);
 			exit();
 		}
 
@@ -326,14 +336,13 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 
         if(dyn::get('user')->hasPerm('page[edit]')) {
             $button = [
-                '<a class="btn btn-sm btn-default" href="'.url::backend('structure', ['subpage'=>'pages', 'action'=>'add']).'">'.lang::get('add').'</a>'
+                '<a class="btn btn-sm btn-default" href="'.url::backend('structure', ['subpage'=>'pages', 'lang'=>$langId, 'action'=>'add']).'">'.lang::get('add').'</a>'
             ];
         }
 
-
         echo '<div class="row" id="structure-body">';
         echo lang::getStructureSelection();
-        echo bootstrap::panel(lang::get('pages'), $button, pageMisc::getTreeStructurePage());
+        echo bootstrap::panel(lang::get('pages'), $button, pageMisc::getTreeStructurePage(0, $langId));
         echo '</div>';
 	
 		if(dyn::get('user')->hasPerm('page[edit]')) {

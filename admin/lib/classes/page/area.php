@@ -5,6 +5,7 @@ class pageArea {
 
 	public $isNew;
 	public $sql;
+    public $lang;
 	
 	public $eval = true;
 	
@@ -33,7 +34,20 @@ class pageArea {
 		}		
 		
 	}
-	
+
+    public function setLang($lang) {
+
+        $this->lang = $lang;
+
+        return $this;
+
+    }
+
+    public function getLang() {
+
+        return $this->lang;
+
+    }
 	
 	public static function addType($class) {
 		
@@ -174,25 +188,25 @@ class pageArea {
 		return $output;
 	}
 	
-	public function OutputFilter($content, $sql) {
-		
+	public function OutputFilter($content, $form) {
 			
 		try {
 			
-			if(!(is_object($sql) && is_a($sql, 'sql'))) {
-				throw new Exception(__CLASS__.'::__construct Parameter muss SQL Object sein');
+			if(!(is_object($form) && (is_a($form, 'form')))) {
+				throw new Exception(__CLASS__.'::OutputFilter Parameter muss Form Object sein');
 			}
 			
 		} catch(Exception $e) {
 			echo $e->getMessage();	
 		}
-		
+
 		foreach(self::$types as $class) {
 			$class = new $class($content);
-			$class->getOutValue($sql);
+			$class->getOutValue($form);
+
 			$content = $class->getContent();
 		}
-		
+
 		preg_match_all('/\/\/DYN-NOT-EVAL(.*)\/\/DYN-NOT-EVAL-END/us', $content, $matches);
 		
 		if(is_array($matches)) {

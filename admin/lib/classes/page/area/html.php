@@ -5,7 +5,7 @@ class pageAreaHtml {
 	public static $modulList = [];
 	public static $modulListAll = [];
 
-	public static function selectBlock($structureID, $sort = false, $block = false)  {
+	public static function selectBlock($structureID, $lang, $sort = false, $block = false)  {
 		
 		$value = ($block) ? 'blocks' : 'pages';
 		
@@ -14,7 +14,8 @@ class pageAreaHtml {
 		$return .= '		<input type="hidden" name="page" value="structure" />';
 		$return .= '		<input type="hidden" name="subpage" value="'.$value.'" />';	
 		$return .= '		<input type="hidden" name="structure_id" value="'.$structureID.'" />';
-		$return .= '		<input type="hidden" name="action" value="add" />';			
+		$return .= '		<input type="hidden" name="action" value="add" />';
+        $return .= '        <input type="hidden" name="lang" value="'.$lang.'" />';
 		
 		if($sort)
 			$return .= '		<input type="hidden" name="sort" value="'.$sort.'" />';
@@ -58,48 +59,42 @@ class pageAreaHtml {
 		return implode(PHP_EOL, $mlist);
 		
 	}
-	
-	public static function formBlock($module) {
-		
-		$form = form::factory('module', 'id='.$module->getModulId(), 'index.php');
-		$form->setSave(false);
+
+    /*
+     * return form
+     */
+	public static function formBlock(pageArea $module) {
+
+		$form = form::factory('structure_area', 'id='.$module->getId(), 'index.php');
 		$form->addFormAttribute('class', '');
-		$form->setSuccessMessage(null);
-		
-		$input = $module->OutputFilter($form->get('input'), $module->getSql());
-		
+
+        $form = pageAreaAction::saveBlock($form);
+
+		$input = $module->OutputFilter($module->sql->get('input'), $form);
+
 		$form->addRawField($input);
-		$form->addHiddenField('structure_id', $module->getStructureId());
-		
-		
-		
-		if($module->getId()) {
-			
-			$form->setMode('edit');
-			$online = $module->get('online');
-			
-			
-		} else {
-			
-			$form->setMode('add');	
-			$online = 1;
-			
-			$form->delButton('save-back');
-						
-		}
-		
-		$form->addHiddenField('modul', $module->getModulId());
-		
-		$form->addHiddenField('sort', $module->getSort());
-		
-		$field = $form->addRadioField('online', $online);
-		$field->fieldName(lang::get('block_status'));
-		$field->add(1, lang::get('online'));
-		$field->add(0, lang::get('offline'));
-		
-		
-		$form->addHiddenField('id', $module->getId());
-		$form->addParam('structure_id', type::super('structure_id', 'int'));
+
+        $field = $form->addRadioField('online', $form->get('online', 1));
+        $field->fieldName(lang::get('block_status'));
+        $field->add(1, lang::get('online'));
+        $field->add(0, lang::get('offline'));
+
+        $form->addHiddenField('structure_id', $form->get('structure_id', $module->getStructureId()));
+		$form->addHiddenField('modul', $form->get('modul', $module->getModulId()));
+		$form->addHiddenField('sort', $form->get('sort', $module->getSort()));
+        $form->addHiddenField('lang', $form->get('lang', $module->getLang()));
+
+        if($form->isEditMode()) {
+            $form->addHiddenField('id', $module->getId());
+        }
+
+		$form->addParam('structure_id', $module->getStructureId());
+        $form->addParam('lang', $module->getLang());
+
+        if($form->isSubmit()) {
+            pageMisc::updateTime($form->get('structure_id'));
+            pageAreaAction::saveSortUp($form->get('structure_id'), $form->get('sort'), false);
+        }
 
 		return $form;
 		
