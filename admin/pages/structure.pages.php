@@ -81,17 +81,20 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 
     $i = 1;
 
+    $back = url::be('structure', ['subpage' => 'pages', 'lang' => $langId]);
+    $url = clone $back->addParam('structure_id', $structure_id);
+
 	?>
     <div class="row">
         <?= lang::getStructureSelection('structure', ['structure_id' => $structure_id]); ?>
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title pull-left"><a href="<?= url::backend('structure', array('subpage'=>'pages', 'lang'=>$langId, 'structure_id'=> $structure_id)) ?>"><?php echo $pageSql->get('name'); ?></a></h3>
+                    <h3 class="panel-title pull-left"><a href="<?= $url ?>"><?php echo $pageSql->get('name'); ?></a></h3>
                     <div class="pull-right btn-group">
 						<a href="<?php echo dyn::get('hp_url').url::fe($structure_id); ?>" target="_blank" class="btn btn-sm btn-warning"><?php echo lang::get('visit_page'); ?></a>
-                    	<a href="<?php echo url::backend('structure', ['subpage'=>'pages', 'lang'=>$langId, 'action'=>'edit', 'id'=>$structure_id]); ?>" class="btn btn-sm btn-warning"><?php echo lang::get('edit'); ?></a>
-						<a href="<?php echo url::backend('structure', ['subpage'=>'pages', 'lang'=>$langId]); ?>" class="btn btn-sm btn-default"><?php echo lang::get('back'); ?></a>
+                    	<a href="<?= $url->get(['action'=>'edit', 'id' => $structure_id]) ?>" class="btn btn-sm btn-warning"><?php echo lang::get('edit'); ?></a>
+						<a href="<?= $back ?>" class="btn btn-sm btn-default"><?php echo lang::get('back'); ?></a>
 					</div>
 					<div class="clearfix"></div>
                 </div>
@@ -149,10 +152,12 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                                 $class = 'offline fa fa-times';
                             }
 
+                            $buttonUrl = clone $url->addParam('id', $sql->get('id'));
+
                             $button = [
-                                '<a href="'.url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'lang'=>$langId, 'action'=>'online', 'id'=>$sql->get('id')]).'" class="btn btn-sm dyn-'.$class.'"></a>',
-                                '<a href="'.url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'lang'=>$langId, 'action'=>'edit', 'id'=>$sql->get('id')]).'" class="btn btn-default btn-sm fa fa-edit"></a>',
-                                '<a href="'.url::backend('structure', ['subpage'=>'pages', 'structure_id'=>$structure_id, 'lang'=>$langId, 'action'=>'delete', 'id'=>$sql->get('id')]).'" class="btn btn-danger btn-sm fa fa-trash-o delete"></a>',
+                                '<a href="'.$buttonUrl->get(['action' => 'online']).'" class="btn btn-sm dyn-'.$class.'"></a>',
+                                '<a href="'.$buttonUrl->get(['action' => 'edit']).'" class="btn btn-default btn-sm fa fa-edit"></a>',
+                                '<a href="'.$buttonUrl->get(['action' => 'delete']).'" class="btn btn-danger btn-sm fa fa-trash-o delete"></a>',
                             ];
 
                             echo bootstrap::panel($sql->get('name'), $button, $module->OutputFilter($sql->get('output'), $form));
