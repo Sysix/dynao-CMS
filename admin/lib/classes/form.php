@@ -7,7 +7,8 @@ class form {
 	
 	var $method;
 	var $action;
-	
+
+    /** @var sql $sql */
 	var $sql;
 	
 	var $mode = 'add';
@@ -46,9 +47,10 @@ class form {
 		
 		if($this->sql->num() == 1) {
 			$this->setMode('edit');
-			$this->setWhere($where);
 		}
-		
+
+        $this->setWhere($where);
+
 		$this->setTable($table);
 		
 		if(dyn::get('backend')) {
@@ -65,6 +67,19 @@ class form {
 		$this->addParam('action', $this->mode);
 		
 	}
+
+    /**
+     * @param sql $sql
+     * @return $this
+     */
+    public function setSql(sql $sql) {
+
+        $this->sql = $sql;
+
+        return $this;
+    }
+
+
 	
 	/**
 	 * Ausgabe der SQL Spalte, falls nichts gefunden nimmt er $default
@@ -477,6 +492,8 @@ class form {
 	public function setMode($mode) {	
 			
 		$this->mode = $mode;
+
+        $this->addParam('action', $this->mode);
 		
 		return $this;
 		
@@ -490,7 +507,7 @@ class form {
 	 */
 	public function isEditMode() {
 	
-		return $this->sql->num() == 1;
+		return $this->mode == 'edit';
 		
 	}
 	
@@ -548,6 +565,17 @@ class form {
 		return $this;
 		
 	}
+
+    /**
+     * get whereparam
+     *
+     * @return	string
+     */
+    public function getWhere() {
+
+        return $this->sql->where;
+
+    }
 	
 	/**
 	 * Geht die ganzen Felder durch, und speichert sie in der SQL für die spätere Speicherung
@@ -724,7 +752,7 @@ class form {
 			
 		}
 		
-		$this->delParam('action');	
+		$this->delParam('action');
 	
 		$params = url_addParam(
 			array_keys($this->getParams()), 
@@ -783,34 +811,61 @@ class form {
 			$param = $this->addHiddenField($key, $value);
 			$param->setSave(false);
 		}
+
+        $return = [];
+        $buttons = [];
+        $hidden = [];
+        $x = 1;
+
+        $return[] = '<form'.html_convertAttribute($this->formAttributes).'>'.PHP_EOL;
 		
 		if($this->isSubmit(true)) {
-			
-			$this->saveForm();
-			
+
+            $where = $this->getWhere();
+
+            $regex = '/[`\s]*([\w_-]+)[`\s]*=\s*[\'|"]?(\d*)[\'|"]?/';
+
+            if(preg_match($regex, $where, $match)) {
+
+                if(!$this->isEditMode()) {
+                    $this->setWhere('');
+                } else {
+                    $this->deleteElement($match[1]);
+                }
+
+                $this->saveForm();
+
+                $this->addParam('action', 'edit');
+                $this->setMode('edit');
+
+                $col = ($match[1] == 'id' && !$this->isEditMode()) ? $this->getSql()->insertId() : $this->get($match[1]);
+
+                $this->setWhere('`'.$match[1].'` = '.$col);
+
+                $this->addHiddenField($match[1], $col);
+                $this->addHiddenField('action', $this->mode);
+                $this->action = $this->mode;
+
+            }
+
 			if(!$this->isSaveEdit() && is_null($this->errorMessage)) {		
 				$this->redirect();
 			}
 			
 			if(!is_null($this->errorMessage)) {
 			
-				echo message::danger($this->errorMessage);	
+				$return[] = message::danger($this->errorMessage);
 			
 			} elseif(!is_null($this->successMessage)) {
 				
-				echo message::success($this->successMessage);
+				$return[] = message::success($this->successMessage);
 					
 			}
 			
 		}
-		
-		$return = [];
-		$buttons = [];
-		$hidden = [];
-		$x = 1;
-		
-		$return[] = '<form'.html_convertAttribute($this->formAttributes).'>'.PHP_EOL;
-		
+
+
+
 		foreach($this->return as $ausgabe) {
 			
 			if($ausgabe->getAttribute('type') == 'hidden') {

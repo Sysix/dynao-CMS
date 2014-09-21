@@ -28,7 +28,7 @@ if($action == 'add' || $action == 'edit') {
 				page_admin_content.stop().slideDown(300);
 			}
 	});");
-	
+
 	$form = form::factory('user','id='.$id,'index.php');
 	
 	$field = $form->addTextField('firstname', $form->get('firstname'));

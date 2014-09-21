@@ -14,7 +14,7 @@ class urlBe
      * @param array $params List of Params
      * @return this
      */
-    public function __construct($page,array $params = [])
+    public function __construct($page, array $params = [])
     {
         $params['page'] = $page;
 
@@ -86,7 +86,7 @@ class urlBe
         $params = array_merge($this->params, $params);
         $params = self::sortParams($params);
 
-        $return = 'index.php?';
+        $return = 'index.php';
         $x = 0;
         foreach ($params as $name => $value) {
 
@@ -99,9 +99,14 @@ class urlBe
         return $return;
     }
 
-    public function __toString(array $params = [])
+    public function __invoke(array $params = [])
     {
         return $this->get($params);
+    }
+
+    public function __toString()
+    {
+        return $this->get();
     }
 
     /*

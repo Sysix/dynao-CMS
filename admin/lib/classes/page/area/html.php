@@ -65,12 +65,25 @@ class pageAreaHtml {
      */
 	public static function formBlock(pageArea $module) {
 
+
 		$form = form::factory('structure_area', 'id='.$module->getId(), 'index.php');
+        /** @var form $form */
+
+
+        $form->setSql($module->getSql());
+        $form->setWhere('id='.$module->getId());
+
+        $mode = ($module->isNew()) ? 'add' : 'edit';
+
+        $form->setMode($mode);
+        $form->setTable('structure_area');
+
+
 		$form->addFormAttribute('class', '');
 
         $form = pageAreaAction::saveBlock($form);
 
-		$input = $module->OutputFilter($module->sql->get('input'), $form);
+		$input = $module->OutputFilter($module->getSql()->get('input'), $form);
 
 		$form->addRawField($input);
 
@@ -84,16 +97,16 @@ class pageAreaHtml {
 		$form->addHiddenField('sort', $form->get('sort', $module->getSort()));
         $form->addHiddenField('lang', $form->get('lang', $module->getLang()));
 
+		$form->addParam('structure_id', $module->getStructureId());
+        $form->addParam('lang', $module->getLang());
+
         if($form->isEditMode()) {
             $form->addHiddenField('id', $module->getId());
         }
 
-		$form->addParam('structure_id', $module->getStructureId());
-        $form->addParam('lang', $module->getLang());
-
         if($form->isSubmit()) {
             pageMisc::updateTime($form->get('structure_id'));
-            pageAreaAction::saveSortUp($form->get('structure_id'), $form->get('sort'), false);
+            pageAreaAction::saveSortUp($form->get('structure_id'), $module->getLang(), $form->get('sort'), false);
         }
 
 		return $form;
@@ -101,19 +114,8 @@ class pageAreaHtml {
 	}
 	
 	public static function formOut($form) {
-		
-		$return = '<div class="panel panel-default">';
-		$return .= '	<div class="panel-heading">';
-		$return .= '		<h3 class="panel-title pull-left">'.$form->get('name').'</h3>';
-		$return .= '		<div class="clearfix"></div>';
-		$return .= '	</div>';
-		$return .= '	<div class="panel-body">';			
-		$return .= 		$form->show();
-		$return .= '	</div>';
-		$return .= '</div>';
-		
-		return $return;
-		
+
+        return bootstrap::panel($form->get('name'), [], $form->show());
 		
 	}
 	

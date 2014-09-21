@@ -15,26 +15,21 @@ class pageArea {
 		'varsLinklist',
 		'varsPhp',
 	];
-		
 
-	public function __construct($sql) {
-		
-		try {
-			
-			if(!(is_object($sql) && is_a($sql, 'sql'))) {
-				throw new InvalidArgumentException(__CLASS__.'::__construct Parameter muss SQL Object sein');
-			}
-			
-			$this->sql = $sql;	
-			
-			$this->setNew($this->sql->num() == 0);		
-			
-		} catch(InvalidArgumentException $e) {
-			echo $e->getMessage();
-		}		
-		
+
+    /**
+     * @param sql $sql
+     */
+	public function __construct(sql $sql) {
+
+        $this->sql = $sql;
+
 	}
 
+    /**
+     * @param string $lang
+     * @return $this
+     */
     public function setLang($lang) {
 
         $this->lang = $lang;
@@ -43,6 +38,9 @@ class pageArea {
 
     }
 
+    /**
+     * @return string
+     */
     public function getLang() {
 
         return $this->lang;
@@ -88,7 +86,10 @@ class pageArea {
 		return $this->sql->get($value);
 		
 	}
-	
+
+    /**
+     * @return sql
+     */
 	public function getSql() {
 		
 		return $this->sql;
@@ -192,8 +193,8 @@ class pageArea {
 			
 		try {
 			
-			if(!(is_object($form) && (is_a($form, 'form')))) {
-				throw new Exception(__CLASS__.'::OutputFilter Parameter muss Form Object sein');
+			if(!(is_object($form) && (is_a($form, 'form') || is_a($form, 'sql')))) {
+				throw new Exception(__CLASS__.'::OutputFilter Parameter muss Form/SQL Object sein');
 			}
 			
 		} catch(Exception $e) {

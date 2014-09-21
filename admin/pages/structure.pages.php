@@ -61,6 +61,8 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		$id = pageAreaAction::delete($id);
 		pageCache::deleteFile($id);
 		echo message::success(lang::get('structure_content_delete'));
+
+        $action = '';
 		
 	}
 	
@@ -106,46 +108,51 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 
                     while($sql->isNext()) {
 
+                        echo '<li data-id="'.$sql->get('id').'">
+                                <div class="row">';
+
                         $module = new pageArea(clone $sql);
                         $module->setLang($langId);
+                        $module->setNew(false);
 
-                        $form = pageAreaHtml::formBlock($module);
+                        if(($action == 'edit' || $action == 'add') && ($module->getId() == $id || ($sort == $i && $sort != 1))) {
 
-                        if($form->get('id') == $id && $form->isSubmit()) {
-                            $form->saveForm();
-                            $form->setSave(false);
+                            if($action == 'add') {
+
+                                $sql2 = new sql();
+                                $sql2->result('SELECT s.*, m.name, m.output, m.input
+                                    FROM '.sql::table('module').' as m
+                    LEFT JOIN
+                    '.sql::table('structure_area').' as s
+                            ON s.`id`= -1
+                        WHERE m.id = '.type::super('modul', 'int'));
+
+
+                                $module2 = new pageArea($sql2);
+                                $module2->setLang($langId);
+                                $module2->setNew(true);
+
+                                $form2 = pageAreaHtml::formBlock($module2);
+
+                                echo pageAreaHtml::formOut($form2);
+
+
+                            } else {
+
+                                $form = pageAreaHtml::formBlock($module);
+
+                                echo pageAreaHtml::selectBlock($module->getStructureId(), $langId);
+
+                                echo pageAreaHtml::formOut($form);
+
+                            }
+
                         }
 
-                    ?>
-                            <li data-id="<?php echo $sql->get('id'); ?>">
-                                <div class="row">
-                        <?php
+                        if($action != 'edit' || $id != $module->getId()) {
 
-                        if($action == 'add' && $sort == $i) {
-
-                            $sql2 = new sql();
-                            $sql2->result('SELECT * FROM `'.sql::table('module').'` WHERE `id` = '.type::super('modul', 'int', 0));
-
-                            $module2 = new pageArea($sql2);
-                            $module2->setLang($langId);
-                            $module2->setNew(true);
-
-                            $form2 = pageAreaHtml::formBlock($module2);
-
-                            echo pageAreaHtml::formOut($form2);
-                    
-                        } else {
-                            
                             echo pageAreaHtml::selectBlock($module->getStructureId(), $langId);
-                            
-                        }
 
-                        if($action == 'edit' && $form->get('id') == $id) {
-                    
-                            echo pageAreaHtml::formOut($form);
-
-                        } else {
-                            
                             if($sql->get('online')) {
                                 $class = 'online fa fa-check';
                             } else {
@@ -160,13 +167,13 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                                 '<a href="'.$buttonUrl->get(['action' => 'delete']).'" class="btn btn-danger btn-sm fa fa-trash-o delete"></a>',
                             ];
 
-                            echo bootstrap::panel($sql->get('name'), $button, $module->OutputFilter($sql->get('output'), $form));
+                            echo bootstrap::panel($sql->get('name'), $button, $module->OutputFilter($sql->get('output'), $sql));
 
                         }
-                        ?>
-                            </div>
-                        </li>
-                        <?php
+
+                        echo '</div>
+                        </li>';
+
                         $sql->next();
                         $i++;
                         
@@ -174,10 +181,15 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                     ?>
                     </ul>
                     <?php
-					if((!$sql->num() || ($i == $sort)) && $action == 'add') {
+					if($i == $sort && $action == 'add') {
 
                         $sql = new sql();
-                        $sql->result('SELECT * FROM `'.sql::table('module').'` WHERE `id` = '.type::super('modul', 'int', 0));
+                        $sql->result('SELECT s.*, m.name, m.output, m.input
+                                    FROM '.sql::table('module').' as m
+                    LEFT JOIN
+                    '.sql::table('structure_area').' as s
+                            ON s.`id`= -1
+                        WHERE m.id = '.type::super('modul', 'int'));
 
                         $module = new pageArea($sql);
                         $module->setLang($langId);

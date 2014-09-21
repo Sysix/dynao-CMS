@@ -337,7 +337,7 @@ class sql {
 		$entrys = substr($entrys , 0, -1);
 
         $where = ($this->where) ? ' WHERE '.$this->where : '';
-		
+
 		$this->query('UPDATE `'.$this->table.'` SET'.$entrys.$where);
 		
 		return $this;
