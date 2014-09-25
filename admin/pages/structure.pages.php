@@ -46,7 +46,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	if($action == 'delete' && dyn::get('user')->hasPerm('page[delete]')) {
 	
 		$id = pageAreaAction::delete($id);
-		pageCache::deleteFile($id);
+		pageCache::deleteFile($id, $langId);
 		echo message::success(lang::get('structure_content_delete'));
 
         $action = '';
