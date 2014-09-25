@@ -48,6 +48,8 @@ lang::setDefaultLangId(dyn::get('langId'));
 $DB = dyn::get('DB');
 sql::connect($DB['host'], $DB['user'], $DB['password'], $DB['database']);
 
+url::init();
+
 ob_start();
 
 date_default_timezone_set(dyn::get('timezone', 'Europe/Berlin'));

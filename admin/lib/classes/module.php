@@ -86,12 +86,11 @@ class module {
 		exit;
 	}
 
-	public static function getByStructureId($id, $block = false) {
+	public static function getByStructureId($id, $lang, $block = 'article') {
 
 		$return = [];
-		$classname = __CLASS__;
 		
-		$where = ($block) ? 'AND block = 1' : 'AND block = 0';
+		$where = ($block != 'article') ? 'AND a.`block` = 1' : 'AND a.`block` = 0';
 		
 		$sql = sql::factory();
 		$sql->query('
@@ -103,15 +102,16 @@ class module {
 		    '.sql::table('module').' AS m
 			ON
 			  m.id = a.modul
-		WHERE
-		  a.structure_id='.$id.'
-		  '.$where.'
-		  AND a.online = 1
+		WHERE a.`structure_id` = '.$id.'
+		  AND a.`lang` = '.$lang.'
+		  AND a.`online` = 1
+            '.$where.'
 		ORDER BY
-		  a.sort')->result();
+		  a.`sort`')->result();
+
 		while($sql->isNext()) {
 			$sql2 = clone $sql;
-			$return[] = new $classname($sql2);
+			$return[] = new self($sql2);
 			$sql->next();
 
 		}

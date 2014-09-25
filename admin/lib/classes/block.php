@@ -8,7 +8,7 @@ class block {
 	
 	public $sql;
 	
-	/*
+	/**
 	 * Einen Block aufrufen
 	 *
 	 * @param	string	$name			Blockname
@@ -20,7 +20,7 @@ class block {
 			
 	}
 	
-	/*
+	/**
 	 * Gibt den Block direkt aus
 	 *
 	 * @param	string	$name			Blockname
@@ -30,25 +30,25 @@ class block {
 	public static function getBlock($name) {
 		
 		$sql = sql::factory();
-		$sql->query("SELECT * FROM ".sql::table('blocks')." WHERE name = '".$name."'")->result();	
+		$sql->query("SELECT * FROM ".sql::table('blocks')." WHERE name = '".$name."'")->result();
 		
 		if(!self::isInCategory($sql->get('is-structure'), $sql->getArray('structure')))
 			return '';
 		else {
 		
-			if(!pageCache::exist($sql->get('id'), false, 'block')) {
-				pageCache::generateArticle($sql->get('id'), true);
+			if(!pageCache::exist($sql->get('id'), $sql->get('lang',  lang::getLangId()), false, 'block')) {
+				pageCache::generateArticle($sql->get('id'), $sql->get('lang',  lang::getLangId()), 'block');
 			}
 					
-			$content = pageCache::read($sql->get('id'), 'block');
-			
+			$content = pageCache::read($sql->get('id'), $sql->get('lang',  lang::getLangId()), 'block');
+
 			return pageArea::getEval($content);
 		
 		}
 		
 	}
 	
-	/*
+	/**
 	 * Überprüfen ob der Block in der Kategorie angezeigt werden darf
 	 *
 	 * @param	int		$is-structure	Ob in allen Kategorien oder nicht
@@ -64,7 +64,7 @@ class block {
 			
 	}
 	
-	/*
+	/**
 	 * SQL Eintrag rausholen
 	 *
 	 * @param	string	$name			Name des Block
@@ -73,7 +73,7 @@ class block {
 	public static function getSql($name) {
 	
 		if(!isset(self::$blocks[$name])) {
-			throw new Exception(sprintf(lang::get('block_name_not_exist'), $name));
+			throw new Exception(lang::get('block_name_not_exist', $name));
 		}
 		
 		return self::$blocks[$name];

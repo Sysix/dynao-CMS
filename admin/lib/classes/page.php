@@ -8,9 +8,9 @@ class page {
 	
 	protected $sql;
 	
-	public function __construct($id, $offlinePages = true, $block = false) {
+	public function __construct($id, $offlinePages = true, $type = 'article') {
 		
-		$this->block = $block;
+		$this->block = $type;
 		
 		if(is_object($id)) {
 			
@@ -19,14 +19,20 @@ class page {
 		} else {
 			
 			$extraWhere = '';
+
+            $lang = '';
+
+            //TODO:: add sql table blocks add column lang
+            if($this->block == 'article')
+                $lang = ' AND `lang` ='.lang::getLangId();
 			
 			if(!$offlinePages)		
-				$extraWhere =  'AND WHERE online = 1';
+				$extraWhere =  ' AND WHERE online = 1';
 			
-			$table = ($this->block) ? sql::table('blocks') : sql::table('structure');				
+			$table = ($this->block != 'article') ? sql::table('blocks') : sql::table('structure');
 
 			$this->sql = sql::factory();
-			$this->sql->query('SELECT * FROM '.$table.' WHERE id = '.$id.$extraWhere)->result();		
+			$this->sql->query('SELECT * FROM `'.$table.'` WHERE id = '.$id.$lang.$extraWhere)->result();
 		
 		}
 		
@@ -45,18 +51,18 @@ class page {
 	}
 	
 	public function getBlocks() {
-		return module::getByStructureId($this->get('id'), $this->block);
+		return module::getByStructureId($this->get('id'), $this->get('lang', lang::getLangId()), $this->block);
 	}
 	
 	public function getTemplate() {
 		
 		ob_start();
 		
-		if(!pageCache::exist($this->get('id'))) {
-			pageCache::generateArticle($this->get('id'));
+		if(!pageCache::exist($this->get('id'), $this->get('lang', lang::getLangId()))) {
+			pageCache::generateArticle($this->get('id'), $this->get('lang', lang::getLangId()));
 		}
 				
-		$content = pageCache::read($this->get('id'));
+		$content = pageCache::read($this->get('id'), $this->get('lang',  lang::getLangId()));
 		
 		$content = pageArea::getEval($content);
 		
@@ -105,9 +111,11 @@ class page {
 	}
 	
 	public static function isValid($id) {
+
+        $lang = lang::getLangId();
 		
 		$sql = sql::factory();
-		return (bool)$sql->num('SELECT id FROM '.sql::table('structure').' WHERE id = '.$id);
+		return (bool)$sql->num('SELECT id FROM `'.sql::table('structure').'` WHERE id = '.$id.' AND `lang` = '.$lang);
 	}
 	
 	public function isStart() {

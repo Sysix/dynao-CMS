@@ -164,8 +164,10 @@ class install {
 		  `id` 			int(16)		unsigned 	NOT NULL 	auto_increment,
 		  `name`		varchar(255) 			NOT NULL,
 		  `sort`		int(16)		unsigned 	NOT NULL,
-		  PRIMARY KEY  (`id`) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
+		  PRIMARY KEY  (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
 
+        $sql->reset();
         $sql->setTable('lang');
         $sql->addPost('name', 'deutsch');
         $sql->addPost('sort', 1);
@@ -203,22 +205,31 @@ class install {
 		$sql->addPost('output', $output);
 		$sql->save();
 		
-		$sql = sql::factory();
+		$sql = new sql();
 		$sql->setTable('structure');
 		
 		$sql->addPost('name', 'Home');
 		$sql->addPost('template', 'template.php');
+        $sql->addPost('id', 1);
+        $sql->addPost('lang', 1);
 		$sql->addPost('sort', 1);
 		$sql->addPost('online', 1);
+        $sql->addDatePost('createdAt');
+        $sql->addDatePost('updatedAt');
 		$sql->save();
 		
 		$sql->addPost('name', '404 Error');
+        $sql->addPost('id', 2);
+        $sql->addPost('lang', 1);
 		$sql->addPost('sort', 2);
 		$sql->addPost('online', 0);
+        $sql->addDatePost('createdAt');
+        $sql->addDatePost('updatedAt');
 		$sql->save();
 			
 		dyn::add('start_page', 1, true);
 		dyn::add('error_page', 2, true);
+        dyn::add('langId', 1);
 		dyn::save();
 		
 	}

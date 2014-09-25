@@ -63,7 +63,7 @@ class sql {
 	
 	// Query durchführen
 	public function query($query) {
-		
+
 		$this->query = self::$sql->query($query);
 			
 		try {
@@ -85,7 +85,6 @@ class sql {
 	// Ruckgabe der Einträge als Array
 	// Standart = Nur Spaltenname
 	public function result($query = false, $type = MYSQL_ASSOC) {
-		
 		
 		try {
 			
@@ -180,6 +179,15 @@ class sql {
 		return $this->result;
 			
 	}
+
+    public function reset() {
+        $this->query = null;
+        $this->values = [];
+        $this->table = null;
+        $this->where = null;
+        $this->result = null;
+        $this->counter = 0;
+    }
 	
 	public static function showColums($table, $prefix = '', $like = true) {
 		
