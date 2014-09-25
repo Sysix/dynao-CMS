@@ -7,19 +7,6 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	
 	$sort = type::super('sort', 'int');
 	
-	// Bugfix, das neu erstelle Blöcke nicht einzgezeigt werden
-    /*
-	if(!is_null(type::post('save-back')) || !is_null(type::post('save'))) {
-		
-
-		pageCache::generateArticle($structure_id);
-		$action = '';
-
-		echo message::success(lang::get('structure_content_save'), true);
-		
-	}
-    */
-	
 	if($action == 'online') {
 	
 		$sql = sql::factory();
@@ -32,7 +19,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		$sql->addPost('online', $online);
 		$sql->update();
 		
-		pageCache::generateArticle($structure_id);
+		pageCache::generateArticle($structure_id, $langId);
 		
 		echo message::success(lang::get('save_status'));
 		
@@ -49,7 +36,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 			$sql->update();
 		}
 		
-		pageCache::generateArticle($structure_id);
+		pageCache::generateArticle($structure_id, $langId);
 		
 		ajax::addReturn(message::success(lang::get('save_sorting'), true));
 		
@@ -291,7 +278,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		while($id) {
 		
 			$sql = sql::factory();
-			$sql->query('SELECT id FROM '.sql::table('structure').' WHERE `parent_id` = '.$id)->result();
+			$sql->query('SELECT id FROM '.sql::table('structure').' WHERE `parent_id` = '.$id.' AND `lang` = '.$langId)->result();
 			if($sql->num()) {
 				
 				$id = $sql->get('id');
@@ -327,7 +314,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	if($action == 'online' && dyn::get('user')->hasPerm('page[edit]')) {
 	
 		$sql = sql::factory();
-		$sql->query('SELECT online FROM '.sql::table('structure').' WHERE id='.$id)->result();
+		$sql->query('SELECT online FROM '.sql::table('structure').' WHERE id='.$id.' AND `lang` = '.$langId)->result();
 		
 		$online = ($sql->get('online')) ? 0 : 1;
 		

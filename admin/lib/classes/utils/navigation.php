@@ -13,7 +13,7 @@ class navigation {
 		} else {
 		
 			$this->sql = sql::factory();
-			$this->sql->query('SELECT * FROM '.sql::table('structure').' WHERE id = '.$id)->result();
+			$this->sql->query('SELECT * FROM '.sql::table('structure').' WHERE id = '.$id.' AND `lang` = '.lang::getLangId())->result();
 			
 		}
 				
@@ -28,7 +28,7 @@ class navigation {
 		}		
 		$sql = sql::factory();
 		
-		return $sql->num('SELECT * FROM '.sql::table('structure').' WHERE parent_id = '.$this->sql->get('id').$extraWhere.' ORDER BY sort') != 0;
+		return $sql->num('SELECT * FROM '.sql::table('structure').' WHERE parent_id = '.$this->sql->get('id').$extraWhere.' AND `lang` = '.lang::getLangId().' ORDER BY sort') != 0;
 		
 	}
 	
@@ -63,7 +63,7 @@ class navigation {
 		
 		$return = [];
 		
-		$sql->query('SELECT * FROM '.sql::table('structure').' WHERE parent_id = '.$parentId.$extraWhere.' ORDER BY sort')->result();
+		$sql->query('SELECT * FROM '.sql::table('structure').' WHERE parent_id = '.$parentId.$extraWhere.' AND `lang` = '.lang::getLangId().' ORDER BY sort')->result();
 		while($sql->isNext()) {
 			$sql2 = clone $sql;
 			$return[] =  new $class($sql2);
