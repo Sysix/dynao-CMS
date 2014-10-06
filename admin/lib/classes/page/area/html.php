@@ -96,6 +96,7 @@ class pageAreaHtml {
 		$form->addHiddenField('modul', $form->get('modul', $module->getModulId()));
 		$form->addHiddenField('sort', $form->get('sort', $module->getSort()));
         $form->addHiddenField('lang', $form->get('lang', $module->getLang()));
+        $form->addHiddenField('block', $form->get('block', $module->getBlock()));
 
 		$form->addParam('structure_id', $module->getStructureId());
         $form->addParam('lang', $module->getLang());

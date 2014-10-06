@@ -12,10 +12,10 @@ class pageAreaAction {
         return $form;
 	}	
 	
-	public static function delete($id, $block = false) {
+	public static function delete($id, $lang, $block = 0) {
 	
 		$sql = sql::factory();		
-		$sql->query('SELECT `structure_id`, `sort`, `lang` FROM '.sql::table('structure_area').' WHERE id='.$id)->result();
+		$sql->query('SELECT `structure_id`, `sort`, `lang` FROM '.sql::table('structure_area').' WHERE id='.$id. ' AND `lang` = '.$lang.' AND block = '.$block)->result();
 		
 		$delete = sql::factory();
 		$delete->setTable('structure_area');

@@ -6,6 +6,7 @@ class pageArea {
 	public $isNew;
 	public $sql;
     public $lang;
+    public $block = false;
 	
 	public $eval = true;
 	
@@ -44,6 +45,23 @@ class pageArea {
     public function getLang() {
 
         return $this->lang;
+
+    }
+
+    /**
+     * @param bool $block
+     * @return $this
+     */
+    public function setBlock($block = false) {
+
+        $this->block = $block;
+
+        return $this;
+    }
+
+    public function getBlock() {
+
+        return $this->block;
 
     }
 	
@@ -161,7 +179,7 @@ class pageArea {
 		$block = ($this->block) ? 1 : 0;
 		
 		$sql = sql::factory();
-		$sql->query('SELECT sort FROM '.sql::table('structure_area').' WHERE block = '.$block.' AND structure_id = '.$this->getStructureId());
+		$sql->query('SELECT sort FROM '.sql::table('structure_area').' WHERE block = '.$block.' AND '.$this->lang.' AND structure_id = '.$this->getStructureId());
 			
 		return $sql->num() == $this->getSort();
 		

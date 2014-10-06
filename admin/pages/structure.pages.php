@@ -10,7 +10,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	if($action == 'online') {
 	
 		$sql = sql::factory();
-		$sql->query('SELECT online FROM '.sql::table('structure_area').' WHERE id='.$id)->result();
+		$sql->query('SELECT online FROM '.sql::table('structure_area').' WHERE id='.$id.' AND `block` = 0 AND `lang` = '.$langId)->result();
 		
 		$online = ($sql->get('online')) ? 0 : 1;
 		
@@ -45,7 +45,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	
 	if($action == 'delete' && dyn::get('user')->hasPerm('page[delete]')) {
 	
-		$id = pageAreaAction::delete($id);
+		$id = pageAreaAction::delete($id, $langId);
 		pageCache::deleteFile($id, $langId);
 		echo message::success(lang::get('structure_content_delete'));
 
@@ -54,7 +54,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	}
 	
 	$pageSql = sql::factory();
-	$pageSql->result('SELECT name FROM '.sql::table('structure').' WHERE id = '.$structure_id);
+	$pageSql->result('SELECT name FROM '.sql::table('structure').' WHERE `id` = '.$structure_id.' AND `lang` = '.$langId);
 
 
     $sql = sql::factory();
@@ -71,7 +71,8 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
     $i = 1;
 
     $back = url::be('structure', ['subpage' => 'pages', 'lang' => $langId]);
-    $url = clone $back->addParam('structure_id', $structure_id);
+    $url = clone $back;
+    $url->addParam('structure_id', $structure_id);
 
 	?>
     <div class="row">
@@ -197,7 +198,6 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 						
 					}
 					?>
-                    
     			</div>
             </div>
         </div>
@@ -211,7 +211,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		$post = type::super('array');
 		$sort = json_decode($post, true);
 		
-		pageMisc::sortStructure($sort, $langId, 0);
+		pageMisc::sortStructure($sort, $langId);
 		
 		echo message::success(lang::get('save_sorting'), true);
 		

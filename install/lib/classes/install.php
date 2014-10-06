@@ -9,6 +9,8 @@ class install {
         $sql->query('ALTER TABLE `'.sql::table('structure').'` ADD `art_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`art_id`)');
         $sql->query('ALTER TABLE `'.sql::table('structure').'` ADD UNIQUE (`id`, `lang`)');
 
+        $sql->query('ALTER TABLE `'.sql::table('blocks').'` ADD `lang` INT(16) NOT NULL AFTER `name`');
+
         $sql->query('ALTER TABLE `'.sql::table('structure_area').'` ADD `lang` INT(16) UNSIGNED NOT NULL AFTER `id`');
 
         $sql->query('DROP TABLE IF EXISTS `'.sql::table('lang').'`');
@@ -152,6 +154,7 @@ class install {
 		$sql->query('CREATE TABLE `'.sql::table("blocks").'` (
 		  `id` 			int(11) 	unsigned	NOT NULL	auto_increment,
 		  `name` 		varchar(255)			NOT NULL,
+		  `lang`        int(16)                 NOT NULL
 		  `description`	varchar(255)			NOT NULL,
 		  `template` 	varchar(255)			NOT NULL,
 		  `is-structure`int(1)		unsigned	NOT NULL	DEFAULT "1",

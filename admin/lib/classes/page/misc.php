@@ -143,7 +143,7 @@ class pageMisc {
 		
 	}
 	
-	public static function sortStructure($sort, $lang, $pid = 0) {
+	public static function sortStructure($sort, $lang, $block = 0, $pid = 0) {
 			
 	    $sql = sql::factory();
 		$sql->setTable('structure');
@@ -152,7 +152,7 @@ class pageMisc {
 
 			$sql->addPost('sort', $i);
 			$sql->addPost('parent_id', $pid);
-			$sql->setWhere('`id` = '.$value['id'].' AND `lang` = '.$lang);
+			$sql->setWhere('`id` = '.$value['id'].' AND `block` = '.$block.' `lang` = '.$lang);
 			$sql->update();
 
 			if(isset($value['children']) && count($value['children'])) {
