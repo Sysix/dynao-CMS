@@ -19,7 +19,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
         $sql->addPost('online', $online);
         $sql->update();
 		
-		pageCache::generateArticle($structure_id, true);
+		pageCache::generateArticle($structure_id, $langId, 'block');
 		
 		echo message::success(lang::get('save_status'));
 		
@@ -36,7 +36,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 			$sql->update();
 		}
 		
-		pageCache::generateArticle($structure_id, true);
+		pageCache::generateArticle($structure_id, $langId, 'block');
 		
 		ajax::addReturn(message::success(lang::get('save_sorting'), true));
 		
@@ -220,7 +220,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 			}
 	});");
 
-		$form = form::factory('blocks', 'id = '.$id.' AND `lang` = '.$langId, 'index.php');
+		$form = form::factory('blocks', '`id` = '.$id.' AND `lang` = '.$langId, 'index.php');
 
 		$field = $form->addTextField('name', $form->get('name'));
 		$field->fieldName(lang::get('name'));
@@ -295,7 +295,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		->addCell(lang::get('action'));
 
 		$table->addSection('tbody');
-		$table->setSql("SELECT * FROM ".sql::table('blocks')." WHERE template = '".dyn::get('template')."'");
+		$table->setSql("SELECT * FROM ".sql::table('blocks')." WHERE `template` = '".dyn::get('template')."'");
 		if($table->numSql()) {
 			while($table->isNext()) {
 
@@ -303,23 +303,23 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 				$deleted = '';
 
 				if(dyn::get('user')->hasPerm('page[content]')) {
-					$name = '<a href="'.url::backend('structure', ['subpage'=>'blocks', 'structure_id'=>$table->get('id')]).'">'.$table->get('name').'</a>';
+					$name = '<a href="'.url::be('structure', ['subpage'=>'blocks', 'structure_id'=>$table->get('id')]).'">'.$table->get('name').'</a>';
 				} else {
 					$name = $table->get('name');
 				}
 
 				if(dyn::get('user')->hasPerm('page[edit]')) {
-					$edit = '<a href='.url::backend('structure', ['subpage'=>'blocks', 'action'=>'edit', 'id'=>$table->get('id')]).' class="btn btn-sm btn-default fa fa-pencil-square-o"></a>';
+					$edit = '<a href='.url::be('structure', ['subpage'=>'blocks', 'action'=>'edit', 'id'=>$table->get('id')]).' class="btn btn-sm btn-default fa fa-pencil-square-o"></a>';
 				}
 
 				if(dyn::get('user')->hasPerm('page[delete]')) {
-					$delete = '<a href='.url::backend('structure', ['subpage'=>'blocks', 'action'=>'delete', 'id'=>$table->get('id')]).' class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
+					$delete = '<a href='.url::be('structure', ['subpage'=>'blocks', 'action'=>'delete', 'id'=>$table->get('id')]).' class="btn btn-sm btn-danger fa fa-trash-o delete"></a>';
 				}
 
 				$table->addRow()
 				->addCell($name)
 				->addCell($table->get('description'))
-				->addCell('<span class="btn-group">'.$edit.$delete.'</span>');
+				->addBtnCell($edit . $delete);
 
 				$table->next();
 			}
@@ -333,7 +333,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
         $button = '';
 
         if(dyn::get('user')->hasPerm('page[edit]')) {
-            $button = '<a href="'.url::backend('structure', ['subpage'=>'blocks', 'action'=>'add']).'" class="btn btn-sm btn-default">'.lang::get('add').'</a>';
+            $button = '<a href="'.url::be('structure', ['subpage'=>'blocks', 'action'=>'add']).'" class="btn btn-sm btn-default">'.lang::get('add').'</a>';
         }
 
 	?>

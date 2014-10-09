@@ -111,7 +111,7 @@ class pageArea {
 	public function getSql() {
 		
 		return $this->sql;
-			
+
 	}
 	
 	public function getModulId() {

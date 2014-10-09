@@ -7,7 +7,7 @@ if(!dyn::get('user')->hasPerm('page[module]')) {
 if($action == 'delete') {
 	
 	$sql = sql::factory();
-	$num = $sql->num('SELECT id FROM '.sql::table('structure_area').' WHERE modul = '.$id);
+	$num = $sql->num('SELECT id FROM '.sql::table('structure_area').' WHERE `modul` = ' . $id);
 	
 	if($num) {
 		

@@ -260,8 +260,8 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
         });
 
         $buttons = [
-            '<a class="btn btn-sm btn-warning" href="'.url::backend('structure', ['subpage'=>'pages', 'lang'=>$langId, 'structure_id'=>$form->get('id')]).'">'.lang::get('modules').'</a>',
-            '<a class="btn btn-sm btn-default" href="'.url::backend('structure', ['subpage'=>'pages', 'lang'=>$langId]).'">'.lang::get('back').'</a>',
+            '<a class="btn btn-sm btn-warning" href="'.url::be('structure', ['subpage'=>'pages', 'lang'=>$langId, 'structure_id'=>$form->get('id')]).'">'.lang::get('modules').'</a>',
+            '<a class="btn btn-sm btn-default" href="'.url::be('structure', ['subpage'=>'pages', 'lang'=>$langId]).'">'.lang::get('back').'</a>',
         ]
 
 		

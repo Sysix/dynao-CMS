@@ -70,15 +70,12 @@ class pageAreaHtml {
         /** @var form $form */
 
 
-        $form->setSql($module->getSql());
-        $form->setWhere('id='.$module->getId());
-
         $mode = ($module->isNew()) ? 'add' : 'edit';
 
+        $form->setSql($module->getSql());
+        $form->setWhere('id='.$module->getId());
         $form->setMode($mode);
         $form->setTable('structure_area');
-
-
 		$form->addFormAttribute('class', '');
 
         $form = pageAreaAction::saveBlock($form);
