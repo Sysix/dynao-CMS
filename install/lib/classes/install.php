@@ -154,7 +154,7 @@ class install {
 		$sql->query('CREATE TABLE `'.sql::table("blocks").'` (
 		  `id` 			int(11) 	unsigned	NOT NULL	auto_increment,
 		  `name` 		varchar(255)			NOT NULL,
-		  `lang`        int(16)                 NOT NULL
+		  `lang`        int(16)                 NOT NULL,
 		  `description`	varchar(255)			NOT NULL,
 		  `template` 	varchar(255)			NOT NULL,
 		  `is-structure`int(1)		unsigned	NOT NULL	DEFAULT "1",
