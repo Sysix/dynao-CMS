@@ -58,11 +58,11 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 
     $sql = sql::factory();
     $sql->result('SELECT s.*, m.name, m.output, m.input
-                    FROM '.sql::table('blocks').' as s
+                    FROM '.sql::table('structure_area').' as s
                     LEFT JOIN
                         '.sql::table('module').' as m
                             ON m.id = s.modul
-                    WHERE `block` = 1
+                    WHERE s.block = 1
                      AND `lang` = '.$langId.'
                     ORDER BY `sort`');
 
