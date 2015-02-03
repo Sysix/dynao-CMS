@@ -10,6 +10,7 @@ class addon {
 	protected $newEntrys = [];
 	
 	const INSTALL_FILE = 'install.php';
+	const CONFIG_FILE = 'config.php';
 	const UNINSTALL_FILE = 'uninstall.php';
 	
 	public function __construct($addon, $config = true) {
@@ -89,13 +90,14 @@ class addon {
 
     }
 
+	/**
+	 * @return sql
+	 */
     public function getSqlObj() {
 
         $sql = sql::factory();
         return $sql->setTable('addons')
             ->setWhere('`name` = "'.$this->name.'" AND `plugin` = ""');
-
-
     }
 
     /*
@@ -114,6 +116,11 @@ class addon {
             }
 
             $file = $this->getFile(self::INSTALL_FILE);
+
+			addonConfig::loadConfig($this->name, dir::addon($this->name));
+			addonConfig::includeLangFiles(dir::addon($this->name));
+			addonConfig::includeLibs(dir::addon($this->name));
+
             if(file_exists($file)) {
                $success = include $file;
             }
@@ -181,6 +188,28 @@ class addon {
 		
 	}
 
+
+	public function active($active) {
+
+		$this->getSqlObj()->addPost('active', $active)->update();
+
+		if($active) {
+			addonConfig::loadConfig($this->name, dir::addon($this->name));
+			addonConfig::includeLangFiles(dir::addon($this->name));
+			addonConfig::includeLibs(dir::addon($this->name));
+		}
+
+		$config = $this->getFile(self::CONFIG_FILE);
+		if($active && file_exists($config)) {
+			include $config;
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @return plugin[]
+	 */
     public function showPluginFolder() {
 
         $pluginPath = $this->getFile('plugins'.DIRECTORY_SEPARATOR);

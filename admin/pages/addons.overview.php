@@ -58,8 +58,8 @@ if($action == 'active') {
 		echo message::danger(sprintf(lang::get('addon_install_first'), $addon));
 			
 	} else {
-	
-		$addonClass->getSqlObj()->addPost('active', $active)->update();
+
+		$addonClass->active($active);
 		
 		echo message::success(lang::get('addon_save_success'));
 		
@@ -68,15 +68,16 @@ if($action == 'active') {
 }
 
 if($action == 'help') {
+
 ?>
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-                    <h3 class="panel-title pull-left"><?php echo $curAddon->get('name'); ?></h3>
+                    <h3 class="panel-title pull-left"><?php echo $addonClass->get('name'); ?></h3>
                     <div class="pull-right">
-                    	<?php if($curAddon->get('supportlink')) { ?>
-						<a href="<?php echo $curAddon->get('supportlink'); ?>" class="btn btn-sm btn-warning" target="_blank"><?php echo lang::get('visit_site'); ?></a>
+                    	<?php if($addonClass->get('supportlink')) { ?>
+						<a href="<?php echo $addonClass->get('supportlink'); ?>" class="btn btn-sm btn-warning" target="_blank"><?php echo lang::get('visit_site'); ?></a>
                         <?php } ?>
 						<a href="<?php echo url::backend('addons', ['subpage'=>'overview']); ?>" class="btn btn-sm btn-default"><?php echo lang::get('back'); ?></a>
 					</div>
@@ -84,7 +85,7 @@ if($action == 'help') {
 				</div>
                 <div class="panel-body">              
 					<?php
-                        $file = dir::addon($addon, 'README.md');
+                        $file = $addonClass->getFile('README.md');
                         if(file_exists($file)) {
                             echo markdown::parse(file_get_contents($file));
                         } else {

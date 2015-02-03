@@ -51,21 +51,21 @@ class addonConfig {
 	}
 	
 	public static function includeAllLibs() {
-		
 		foreach(static::getAll() as $dir=>$name) {
-
-            $vendor = $dir.'vendor'.DIRECTORY_SEPARATOR;
-            if(file_exists($vendor)) {
-                autoload::addDir($vendor);
-            }
-
-            $lib = $dir.'lib'.DIRECTORY_SEPARATOR;
-			if(file_exists($lib)) {
-				autoload::addDir($lib);
-			}
-
+			self::includeLibs($dir);
 		}
-		
+	}
+
+	public static function includeLibs($dir) {
+		$vendor = $dir.'vendor'.DIRECTORY_SEPARATOR;
+		if(file_exists($vendor)) {
+			autoload::addDir($vendor);
+		}
+
+		$lib = $dir.'lib'.DIRECTORY_SEPARATOR;
+		if(file_exists($lib)) {
+			autoload::addDir($lib);
+		}
 	}
 	
 	public static function includeAllConfig() {
@@ -81,35 +81,42 @@ class addonConfig {
 	public static function includeAllLangFiles() {
 		
 		foreach(static::getAll() as $dir=>$name) {
-
-            $file = $dir.'lang'.DIRECTORY_SEPARATOR.lang::getLang().'.json';
-			if(file_exists($file)) {				
-				lang::loadLang($file);
-			}
-
-            $defaultFile = $dir.'lang'.DIRECTORY_SEPARATOR.lang::getDefaultLang().'.json';
-			if(file_exists($defaultFile)) {				
-				lang::loadLang($defaultFile, true);
-			}
-			
+			self::includeLangFiles($dir);
 		}
-		
+	}
+
+	public static function includeLangFiles($dir) {
+
+		$file = $dir.'lang'.DIRECTORY_SEPARATOR.lang::getLang().'.json';
+		if(file_exists($file)) {
+			lang::loadLang($file);
+		}
+
+		$defaultFile = $dir.'lang'.DIRECTORY_SEPARATOR.lang::getDefaultLang().'.json';
+		if(file_exists($defaultFile)) {
+			lang::loadLang($defaultFile, true);
+		}
+
 	}
 
 	
 	public static function loadAllConfig($toName = self::TYPE) {
-		
-		$addons = [];
+
 		foreach(static::getAll() as $dir=>$name) {
-			if(file_exists($dir.'config.json')) {
-                $addons[$name] = json_decode(file_get_contents($dir.'config.json'), true);
-            }
+			self::loadConfig($name, $dir);
 		}
-			
-		dyn::add($toName, $addons);
 		
 		return true;
-		
+	}
+
+	public static function loadConfig($name, $dir) {
+		$addons = dyn::get(self::TYPE);
+
+		if(file_exists($dir.'config.json')) {
+			$addons[$name] = json_decode(file_get_contents($dir.'config.json'), true);
+		}
+
+		dyn::add(self::TYPE, $addons);
 	}
 	
 	public static function isActive($name) {

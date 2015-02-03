@@ -34,6 +34,9 @@ class plugin extends addon {
 
     }
 
+    /**
+     * @return sql
+     */
     public function getSqlObj() {
 
         $sql = sql::factory();
