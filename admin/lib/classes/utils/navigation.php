@@ -46,7 +46,7 @@ class navigation {
 	
 	public function getUrl() {
 	
-		return url::fe($this->get('id'));
+		return url::fe($this->get('id'), ['lang' => $this->get('lang')]);
 		
 	}
 	

@@ -54,14 +54,14 @@ class pageArea {
      */
     public function setBlock($block = false) {
 
-        $this->block = $block;
+        $this->block = (int) $block;
 
         return $this;
     }
 
     public function getBlock() {
 
-        return $this->block;
+        return (int) $this->block;
 
     }
 	

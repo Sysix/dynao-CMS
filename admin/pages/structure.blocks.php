@@ -24,14 +24,14 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 		echo message::success(lang::get('save_status'));
 		
 	}
-	
+
 	if(ajax::is()) {
 		
 		$sort = type::post('array', 'array');
 		$sql = sql::factory();
 		$sql->setTable('structure_area');
 		foreach($sort as $s=>$s_id) {
-			$sql->setWhere('id='.$s_id.' AND block = 1 `lang` = '.$langId);
+			$sql->setWhere('id='.$s_id.' AND block = 1 AND `lang` = '.$langId);
 			$sql->addPost('sort', $s+1);
 			$sql->update();
 		}
@@ -74,6 +74,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 	
 	?>
     <div class="row">
+        <?= lang::getStructureSelection('structure', ['structure_id' => $structure_id]); ?>
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -100,7 +101,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                         $module->setNew(false);
                         $module->setBlock(true);
 
-                        if(($action == 'edit' || $action == 'add') && ($module->getId() == $id || ($sort == $i && $sort != 1))) {
+                        if(($action == 'edit' || $action == 'add') && ($module->getId() == $id || $sort == $i)) {
 
                             if ($action == 'add') {
 
@@ -116,7 +117,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                                 $module2 = new pageArea($sql2);
                                 $module2->setLang($langId);
                                 $module2->setNew(true);
-                                $module->setBlock(true);
+                                $module2->setBlock(true);
 
                                 $form2 = pageAreaHtml::formBlock($module2);
 
@@ -145,7 +146,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
                             }
 
                             $buttonUrl = clone $url;
-                            $button->addParam('id', $sql->get('id'));
+                            $buttonUrl->addParam('id', $sql->get('id'));
 
                             $button = [
                                 '<a href="'.$buttonUrl->get(['action' => 'online']).'" class="btn btn-sm dyn-'.$class.'"></a>',
@@ -193,7 +194,7 @@ if(!is_null($structure_id) && dyn::get('user')->hasPerm('page[content]')) {
 
                     } else {
 
-                        echo pageAreaHtml::selectBlock($structure_id, $langId, $sql->num()+1, false, true);
+                        echo pageAreaHtml::selectBlock($structure_id, $langId, $sql->num()+1, true);
 
                     }
                     ?>

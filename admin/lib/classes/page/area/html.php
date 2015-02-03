@@ -6,7 +6,6 @@ class pageAreaHtml {
 	public static $modulListAll = [];
 
 	public static function selectBlock($structureID, $lang, $sort = false, $block = false)  {
-		
 		$value = ($block) ? 'blocks' : 'pages';
 		
 		$return  = '<div class="structure-addmodul-box">';
