@@ -19,6 +19,11 @@ class seo_rewrite {
 			if(is_file($pathlist)) {
 				self::$pathlist = json_decode(file_get_contents($pathlist), true);
 			}
+
+			if(empty(self::$pathlist)) {
+				self::generatePathlist();
+				self::loadPathlist();
+			}
 			
 		}
 		
@@ -37,18 +42,22 @@ class seo_rewrite {
 		$url = ltrim($url, '/');
 		
 		//Redirect falls alte URL
-		preg_match('/.*?page_id=(\d)*.*/', $url, $match);
+		preg_match('/.*?page_id=(\d*).*[&lang=](\d*)/', $url, $match);
 		if(isset($match[1]) && page::isValid($match[1])) {
-			$this->redirect($match[1]);
+			$this->redirect($match[1], $match[2]);
 		}
 		
 		// Überflüssige Zeichen löschen, damit eine reine URL angezeigt wird
         $url = self::removeWastedParts($url);
-		
+
+
 		if(isset(self::$pathlist[$url])) {
-			
-			$id = self::$pathlist[$url];
-			extension::add('SET_PAGE_ID', function() use ($id) {
+
+			$id =  self::$pathlist[$url]['id'];
+			$lang =  self::$pathlist[$url]['lang'];
+			lang::setDefaultLangId($lang);
+
+			extension::add('SET_PAGE_ID', function() use ($id, $lang) {
 				return $id;
 			});
 			
@@ -104,16 +113,17 @@ class seo_rewrite {
 	 * Weiterleitung auf einer SEO-freundliche URL
 	 *
 	 * @param int $id Page_id
+	 * @param int $lang Lang ID
 	 */
-	public function redirect($id) {
+	public function redirect($id, $lang) {
 		
 		header('HTTP/1.1 301 Moved Permanently');
 		
 		while(ob_get_level()){
 		  ob_end_clean();
 		}
-		
-		header('Location:'.self::rewriteId($id));
+
+		header('Location:'.self::rewriteId($id, $lang));
    		exit();
 		
 	}
@@ -124,17 +134,17 @@ class seo_rewrite {
 	 * @param int $id Page_id
 	 * @return string
 	 */
-	public static function rewriteId($id) {
+	public static function rewriteId($id, $lang) {
 		
 		self::loadPathlist();
-		
-		$pathlist = array_flip(self::$pathlist);
-		
-		if(isset($pathlist[$id])) {
-			return $pathlist[$id];
+
+		foreach(self::$pathlist as $url => $params) {
+			if($params['id'] == $id && $params['lang'] == $lang) {
+				return $url;
+			}
 		}
 		
-		return 'index.php?page_id='.$id;
+		return 'index.php?page_id='.$id .'&lang=' . $lang;
 		
 	}
 	
@@ -146,11 +156,12 @@ class seo_rewrite {
 	public static function generatePathlist() {
 		
 		$return = [];
-		
+
 		$sql = sql::factory();
-		$sql->query('SELECT name, id, seo_costum_url, parent_id FROM '.sql::table('structure'))->result();
+		$sql->query('SELECT * FROM '.sql::table('structure'))->result();
 		while($sql->isNext()) {
-			
+
+
 			if($sql->get('seo_costum_url')) {
 				$name = $sql->get('seo_costum_url');
 			} else {			
@@ -158,34 +169,38 @@ class seo_rewrite {
 			}
 			
 			if($sql->get('parent_id')) {
-				$name = self::getParentsName($sql->get('parent_id')).'/'.$name;
+				$name = self::getParentsName($sql->get('parent_id'), $sql->get('lang')).'/'.$name;
 			}
 
             if($sql->get('id') == dyn::get('start_page') && dyn::get('addons')['seo']['start_url'] == 0) {
                 $name = '';
             }
 
-			$return[$name] = (int)$sql->get('id');
+			$return[self::getLangSlug($sql->get('lang')) . $name] =  [
+				'id' => (int)$sql->get('id'),
+				'lang' => (int) $sql->get('lang')
+			];
 			
 			$sql->next();
 		}
 
-        $return = extension::get('SEO_GENERATE_PATHLIST', $return);
+		$return = extension::get('SEO_GENERATE_PATHLIST', $return);
 		
 		return file_put_contents(dir::addon('seo', 'pathlist.json'), json_encode($return, JSON_PRETTY_PRINT));	
 		
 	}
 	
-	/*
+	/**
 	 * Ausgabe des Namen's von der Vater-Seite
 	 *
 	 * @param int $id structure-Id
+	 * @param int $lang langId
 	 * @return string
 	 */
-	public static function getParentsName($id) {
+	public static function getParentsName($id, $lang) {
 		
 		$sql = sql::factory();
-		$sql->query('SELECT name, id, seo_costum_url, parent_id FROM '.sql::table('structure').' WHERE id = '.$id)->result();
+		$sql->query('SELECT name, id, seo_costum_url, parent_id FROM '.sql::table('structure').' WHERE id = '. $id . ' AND `lang` = ' . $lang)->result();
 			
 		if($sql->get('seo_costum_url')) {
 			$name = $sql->get('seo_costum_url');
@@ -195,7 +210,7 @@ class seo_rewrite {
 		}
 		
 		if($sql->get('parent_id')) {			
-			$name = self::getParentsName($sql->get('parent_id')).'/'.$name;			
+			$name = self::getParentsName($sql->get('parent_id'), $lang) . '/' . $name;
 		}	
 		
 		return $name;
@@ -227,7 +242,17 @@ class seo_rewrite {
         }
 
 		return $name;
-	
+	}
+
+	public static function getLangSlug($id) {
+
+		$langs = lang::getAvailableLangs();
+
+		if(!isset($langs[$id]) || count($langs) == 1) {
+			return '';
+		}
+
+		return self::makeSEOName($langs[$id], false) . '/';
 	}
 
 }

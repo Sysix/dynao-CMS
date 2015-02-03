@@ -41,13 +41,11 @@ unset($DYN);
 include(dir::functions('html_stuff.php'));
 include(dir::functions('url_stuff.php'));
 
-lang::setDefault();
-lang::setLang(dyn::get('lang'));
-lang::setDefaultLangId(dyn::get('langId'));
 
 $DB = dyn::get('DB');
 sql::connect($DB['host'], $DB['user'], $DB['password'], $DB['database']);
 
+lang::init();
 url::init();
 
 ob_start();

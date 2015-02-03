@@ -69,7 +69,7 @@ class seo_control {
     public static function addToPathlist($filter, $addonsUrls) {
 
         $addonnames = [];
-        foreach(seo_control::getArticleNames(seo_control::getArticleByFilter($filter)) as $id=>$name) {
+        foreach(seo_control::getArticleNames(seo_control::getArticleByFilter($filter)) as $name => $params) {
 
             $name = rtrim($name, dyn::get('addons')['seo']['ending']);
             if($name) {
@@ -77,7 +77,7 @@ class seo_control {
             }
 
             foreach($addonsUrls as $addonname) {
-                $addonnames[$name.$addonname] = $id;
+                $addonnames[$name.$addonname] = $params;
             }
         }
 
@@ -166,7 +166,10 @@ class seo_control {
 			ORDER BY
 			  a.sort');
         while($sql->isNext()) {
-            $return[] = $sql->get('id');
+            $return[$sql->get('id') . '/' . $sql->get('lang')] = [
+                'id' => $sql->get('id'),
+                'lang' => $sql->get('lang')
+            ];
             $sql->next();
         }
 
@@ -177,16 +180,15 @@ class seo_control {
     public static function getArticleNames(array $ids) {
 
         seo_rewrite::loadPathlist();
-        $pathlist = array_flip(seo_rewrite::$pathlist);
-
+        $pathlist = seo_rewrite::$pathlist;
         $return = [];
-        foreach($ids as $id) {
 
-            $return[$id] = $pathlist[$id];
+        foreach($pathlist as $url => $params) {
+            if(isset($ids[$params['id'] . '/' . $params['lang']])) {
+                $return[$url] = $params;
+            }
         }
-
         return $return;
-
     }
 
 } 

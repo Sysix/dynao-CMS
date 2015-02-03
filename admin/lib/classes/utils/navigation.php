@@ -46,7 +46,7 @@ class navigation {
 	
 	public function getUrl() {
 	
-		return url::fe($this->get('id'), ['lang' => $this->get('lang')]);
+		return url::fe($this->get('id'), $this->get('lang'));
 		
 	}
 	
@@ -62,7 +62,7 @@ class navigation {
 		$sql = sql::factory();
 		
 		$return = [];
-		
+
 		$sql->query('SELECT * FROM '.sql::table('structure').' WHERE parent_id = '.$parentId.$extraWhere.' AND `lang` = '.lang::getLangId().' ORDER BY sort')->result();
 		while($sql->isNext()) {
 			$sql2 = clone $sql;

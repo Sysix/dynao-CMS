@@ -1,2 +1,26 @@
 {
+    "deutsch\/": {
+        "id": 1,
+        "lang": 1
+    },
+    "deutsch\/404-error.html": {
+        "id": 2,
+        "lang": 1
+    },
+    "english\/": {
+        "id": 1,
+        "lang": 2
+    },
+    "english\/404-error.html": {
+        "id": 2,
+        "lang": 2
+    },
+    "deutsch\/ueber-uns.html": {
+        "id": 3,
+        "lang": 1
+    },
+    "english\/ueber-uns.html": {
+        "id": 3,
+        "lang": 2
+    }
 }

@@ -22,7 +22,7 @@ class seo_sitemap {
             $freq = self::getChangeFreq($updatedAt);
 
             self::$articles[] = [
-                'loc' => dyn::get('hp_url').seo_rewrite::rewriteId($sql->get('id')),
+                'loc' => dyn::get('hp_url').seo_rewrite::rewriteId($sql->get('id'), $sql->get('lang')),
                 'prio' => $prio,
                 'freq' => $freq,
                 'lastmod' => $updatedAt->format('c')

@@ -3,7 +3,7 @@
 if(!dyn::get('backend')) {
 	
 	extension::add('URL_REWRITE', function($return) {
-		return seo_rewrite::rewriteId($return['id']);
+		return seo_rewrite::rewriteId($return['id'], $return['lang']);
 	});
 	
 	$seo = new seo_rewrite();
@@ -46,6 +46,15 @@ if(!dyn::get('backend')) {
 	$action = type::super('action', 'string');
 	$structure_id = type::super('structure_id', 'int', 0);
 	$id = type::super('id', 'int', 0);
+
+
+	// Falls die Sprache geändert worden ist
+	if($page == 'settings' && $subpage == 'lang') {
+		extension::add('FORM_AFTER_SAVE', function($sql) {
+			seo_rewrite::generatePathlist();
+			return $sql;
+		});
+	}
 
 	// Falls was an der Page geändert worden ist
 	if($page == 'structure' && $subpage == 'pages' && in_array($action, ['add', 'edit', 'seo']) && !$structure_id) {

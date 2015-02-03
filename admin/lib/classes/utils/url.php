@@ -3,14 +3,10 @@
 class url
 {
     public static $langId = 1;
-    public static $langNum = 1;
 
     public static function init() {
 
         self::$langId = lang::getLangId();
-        $sql = sql::factory();
-        self::$langNum = $sql->num('SELECT id FROM `'.sql::table('lang').'`');
-
     }
     /**
      * @see urlBe::__construct()
@@ -50,11 +46,10 @@ class url
         }
 
         $url = extension::get('URL_REWRITE', ['id' => $id, 'lang' => $lang, 'params' => $params]);
-
         if (!extension::has('URL_REWRITE')) {
 
             $url = 'index.php?page_id=' . $id;
-            if(self::$langNum > 1) {
+            if(count(lang::getAvailableLangs()) > 1) {
                 $url .= '&amp;lang='.$lang;
             }
             foreach ($params as $name => $value) {
